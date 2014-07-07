@@ -1,0 +1,61 @@
+.actionMessage {
+	background-color: lightyellow;
+	color: black;
+	border-width: 2px;
+	border-style: solid;
+	border-radius: 10px;
+	padding: 5px;
+}
+
+.lifeBarMiddle {
+	
+}
+
+.lifeBarMiddle td {
+	width: 10px;
+	height: 10px;
+	border-width: 1px;
+	border-color: black;
+	border-style: solid;
+	padding: 0px;
+	margin: 0px;
+}
+
+.lifeBarMiddle_before {
+	background: chartreuse;
+}
+
+.lifeBarMiddle_middle {
+	background: yellow;
+	color: black;
+}
+
+.lifeBarMiddle_after {
+	background: red;
+}
+
+.lifeBarMiddle_value {
+	border-color: white !important;
+}
+
+.lifeBar {
+	
+}
+
+.lifeBar td {
+	width: 10px;
+	height: 10px;
+	border-width: 1px;
+	border-color: black;
+	border-style: solid;
+	padding: 0px;
+	margin: 0px;
+}
+
+.lifeBar_before {
+	background: blue;
+}
+
+.lifeBar_after {
+	background: navy;
+}
