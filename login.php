@@ -11,7 +11,7 @@ if (isset($_REQUEST['logout'])) {
 if (isset($_POST['login']) && isset($_POST['pass'])) {
 	try {
 		$res = Player::login($_POST['login'], $_POST['pass']);
-		if ($res === false) {
+		if ($res === null) {
 			$errorMessage = 'Mot de passe ou login incorrect.';
 		} else {
 			$_SESSION['user'] = $res;

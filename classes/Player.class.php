@@ -3,43 +3,230 @@ class Player {
 
 	public $id = 0;
 
-	public $nom = '';
+	public function getId() {
+		return $this->id;
+	}
+
+	public function setId($id) {
+		$this->id = $id;
+	}
+
+	public $nom = 0;
+
+	public function getNom() {
+		return $this->nom;
+	}
+
+	public function setNom($nom) {
+		$this->nom = $nom;
+	}
 
 	public $pass = '';
 
+	public function getPass() {
+		return $this->pass;
+	}
+
+	public function setPass($pass) {
+		$this->pass = $pass;
+	}
+
 	public $lieu = '';
+
+	public function getLieu() {
+		return $this->lieu;
+	}
+
+	public function setLieu($lieu) {
+		$this->lieu = $lieu;
+	}
 
 	public $points = 0;
 
+	public function getPoints() {
+		return $this->points;
+	}
+
+	public function setPoints($points) {
+		$this->points = $points;
+	}
+
 	public $notoriete = 0;
+
+	public function getCalculatedNotoriete() {
+		return $this->calculated['notoriete'];
+	}
+
+	public function getNotoriete() {
+		return $this->notoriete;
+	}
+
+	public function setNotoriete($notoriete) {
+		if ($notoriete < 0) {
+			$this->notoriete = 0;
+		} else {
+			$this->notoriete = $notoriete;
+		}
+	}
 
 	public $alcoolemie = 0;
 
+	public function getCalculatedAlcoolemie() {
+		return $this->calculated['alcoolemie'];
+	}
+
+	public function getAlcoolemie() {
+		return $this->alcoolemie;
+	}
+
+	public function setAlcoolemie($alcoolemie) {
+		if ($alcoolemie < 0) {
+			$this->alcoolemie = 0;
+		} else {
+			$this->alcoolemie = $alcoolemie;
+		}
+		if (Action::haveToGoToPls($this)) {
+			Action::sendToPls($this);
+		}
+	}
+
 	public $alcoolemie_optimum = 0;
+
+	public function getCalculatedAlcoolemie_optimum() {
+		return $this->calculated['alcoolemie_optimum'];
+	}
+
+	public function getAlcoolemie_optimum() {
+		return $this->alcoolemie_optimum;
+	}
+
+	public function setAlcoolemie_optimum($alcoolemie_optimum) {
+		if ($alcoolemie_optimum < 1) {
+			$this->alcoolemie_optimum = 1;
+		} else if ($alcoolemie_optimum >= $this->alcoolemie_max) {
+			$this->alcoolemie_optimum = $this->alcoolemie_max - 1;
+		} else {
+			$this->alcoolemie_optimum = $alcoolemie_optimum;
+		}
+	}
 
 	public $alcoolemie_max = 0;
 
+	public function getCalculatedAlcoolemie_max() {
+		return $this->calculated['alcoolemie_max'];
+	}
+
+	public function getAlcoolemie_max() {
+		return $this->alcoolemie_max;
+	}
+
+	public function setAlcoolemie_max($alcoolemie_max) {
+		if ($alcoolemie_max <= $this->alcoolemie_optimum + 1) {
+			$this->$alcoolemie_max = $this->alcoolemie_optimum - 1;
+		} else {
+			$this->alcoolemie_max = $alcoolemie_max;
+		}
+	}
+
 	public $fatigue = 0;
+
+	public function getCalculatedFatigue() {
+		return $this->calculated['fatigue'];
+	}
+
+	public function getFatigue() {
+		return $this->fatigue;
+	}
+
+	public function setFatigue($fatigue) {
+		if ($fatigue < 0) {
+			$this->fatigue = 0;
+		} else if ($fatigue >= $this->calculated['fatigue_max']) {
+			$this->fatigue = $this->calculated['fatigue_max'];
+		} else {
+			$this->fatigue = $fatigue;
+		}
+	}
 
 	public $fatigue_max = 0;
 
+	public function getCalculatedFatigue_max() {
+		return $this->calculated['fatigue_max'];
+	}
+
+	public function getFatigue_max() {
+		return $this->fatigue_max;
+	}
+
+	public function setFatigue_max($fatigue_max) {
+		if ($fatigue_max <= 2) {
+			$this->fatigue_max = 2;
+		} else {
+			$this->fatigue_max = $fatigue_max;
+		}
+	}
+
 	public $sex_appeal = 0;
+
+	public function getCalculatedSex_appeal() {
+		return $this->calculated['sex_appeal'];
+	}
+
+	public function getSex_appeal() {
+		return $this->sex_appeal;
+	}
+
+	public function setSex_appeal($sex_appeal) {
+		if ($sex_appeal <= 1) {
+			$this->sex_appeal = 2;
+		} else {
+			$this->sex_appeal = $sex_appeal;
+		}
+	}
 
 	public $en_pls = 0;
 
+	public function getEn_pls() {
+		return $this->sex_appeal;
+	}
+
+	public function setEn_pls($en_pls) {
+		if ($en_pls) {
+			$this->en_pls = 1;
+		} else {
+			$this->en_pls = 0;
+		}
+	}
+
 	public $debut_de_pls = 0;
+
+	public function getDebut_de_pls() {
+		return $this->debut_de_pls;
+	}
+
+	public function setDebut_de_pls($debut_de_pls) {
+		$this->debut_de_pls = $debut_de_pls;
+	}
 
 	public $inventory = array();
 
-	public $calculated = array();
+	public function getInventory() {
+		return $this->inventory;
+	}
+
+	public function setInventory(array $inventory) {
+		$this->inventory = $inventory;
+	}
+
+	private $calculated = array();
 
 	/**
-	 * 
-	 * @param int $id
+	 *
+	 * @param int $id        	
 	 * @return Player
 	 */
 	public static function load($id) {
-		$sth = $GLOBALS['DB']->query('SELECT * FROM player WHERE id='.intval($id));
+		$sth = $GLOBALS['DB']->query('SELECT * FROM player WHERE id=' . intval($id));
 		$sth->setFetchMode(PDO::FETCH_CLASS, 'Player');
 		return $sth->fetch();
 	}
@@ -53,9 +240,7 @@ class Player {
 	}
 
 	public function create() {
-		$sth = $GLOBALS['DB']->prepare('INSERT INTO player '.
-				'(nom, pass, lieu, points, notoriete, alcoolemie, alcoolemie_optimum, alcoolemie_max, fatigue, fatigue_max, sex_appeal, en_pls, debut_de_pls)'.
-				' VALUES ( :nom, :pass, :lieu, :points, :notoriete, :alcoolemie, :alcoolemie_optimum, :alcoolemie_max, :fatigue, :fatigue_max, :sex_appeal, :en_pls, :debut_de_pls);');
+		$sth = $GLOBALS['DB']->prepare('INSERT INTO player ' . '(nom, pass, lieu, points, notoriete, alcoolemie, alcoolemie_optimum, alcoolemie_max, fatigue, fatigue_max, sex_appeal, en_pls, debut_de_pls)' . ' VALUES ( :nom, :pass, :lieu, :points, :notoriete, :alcoolemie, :alcoolemie_optimum, :alcoolemie_max, :fatigue, :fatigue_max, :sex_appeal, :en_pls, :debut_de_pls);');
 		$sth->bindValue(':nom', $this->nom, PDO::PARAM_STR);
 		$sth->bindValue(':pass', $this->pass, PDO::PARAM_STR);
 		$sth->bindValue(':lieu', $this->lieu, PDO::PARAM_STR);
@@ -73,8 +258,7 @@ class Player {
 			throw new Exception(print_r($sth->errorInfo(), true));
 		}
 	}
-	
-	
+
 	public function defaultValues() {
 		$this->lieu = 'camping';
 		$this->points = 0;
@@ -115,9 +299,9 @@ class Player {
 	}
 
 	/**
-	 * 
-	 * @param String $login
-	 * @param String $pass
+	 *
+	 * @param String $login        	
+	 * @param String $pass        	
 	 * @return Player
 	 */
 	public static function login($login, $pass) {
@@ -131,10 +315,10 @@ class Player {
 		}
 		return $sth->fetch();
 	}
-	
+
 	/**
-	 * 
-	 * @param String $login
+	 *
+	 * @param String $login        	
 	 * @return Player
 	 */
 	public static function loginExists($nom) {

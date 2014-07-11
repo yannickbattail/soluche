@@ -23,8 +23,15 @@ class Objet {
 
 	public $image = "";
 
+	/**
+	 * 
+	 * @param String $id
+	 * @return Objet
+	 */
 	public static function load($id) {
-		return $GLOBALS['DB']->query('SELECT * FROM objet WHERE id=' . $id . ';')->setFetchMode(PDO::FETCH_CLASS, 'Objet')->fetch(PDOC);
+		$sth = $GLOBALS['DB']->query('SELECT * FROM objet WHERE id=' . $id . ';');
+		$sth->setFetchMode(PDO::FETCH_CLASS, 'Objet');
+		return $sth->fetch();
 	}
 
 	public function save() {

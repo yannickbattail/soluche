@@ -1,11 +1,10 @@
 <?php
 
 function logoutBar() {
-	return '<div class="login">' . $_SESSION['user']->nom . '<a href="login.php?logout=1"> quitter</a></div>';
+	return '<div class="login">' . $_SESSION['user']->nom . ' <a href="login.php?logout=1"> quitter</a></div>';
 }
 
 function printUserStats(Player $player) {
-	$playerCalc = $player->calculated; // alias + court
 	?>
 <table class="stats">
 	<tr class="even">
@@ -19,26 +18,26 @@ function printUserStats(Player $player) {
 		<th>Avec inventaire</th>
 	</tr>
 	<tr class="even">
-		<th>Notori�t�</th>
+		<th>Notoriété</th>
 		<td><?=$player->notoriete; ?></td>
-		<td><?=$playerCalc['notoriete']; ?></td>
+		<td><?=$player->getCalculatedNotoriete(); ?></td>
 	</tr>
 	<tr class="odd">
-		<th>Alcool�mie</th>
+		<th>Alcoolémie</th>
 		<td><?= lifeBarMiddle($player->alcoolemie_max, $player->alcoolemie_optimum, $player->alcoolemie); ?>
-		<?=$player->alcoolemie.'/'.$player->alcoolemie_max.' optimum � '.$player->alcoolemie_optimum; ?></td>
-		<td><?= lifeBarMiddle($playerCalc['alcoolemie_max'], $playerCalc['alcoolemie_optimum'], $playerCalc['alcoolemie']); ?>
-		<?=$playerCalc['alcoolemie'].'/'.$playerCalc['alcoolemie_max'].' optimum � '.$playerCalc['alcoolemie_optimum']; ?></td>
+		<?=$player->alcoolemie.'/'.$player->alcoolemie_max.' optimum à '.$player->alcoolemie_optimum; ?></td>
+		<td><?= lifeBarMiddle($player->getCalculatedAlcoolemie_max(), $player->getCalculatedAlcoolemie_optimum(), $player->getCalculatedAlcoolemie())?>
+		<?=$player->getCalculatedAlcoolemie().'/'.$player->getCalculatedAlcoolemie_max().' optimum à '.$player->getCalculatedAlcoolemie_optimum(); ?></td>
 	</tr>
 	<tr class="even">
 		<th>Fatigue</th>
 		<td><?=lifeBar($player->fatigue_max, $player->fatigue).$player->fatigue.'/'.$player->fatigue_max; ?></td>
-		<td><?=lifeBar($playerCalc['fatigue_max'], $playerCalc['fatigue']).$playerCalc['fatigue'].'/'.$playerCalc['fatigue_max']; ?></td>
+		<td><?=lifeBar($player->getCalculatedFatigue_max(), $player->getCalculatedFatigue()).$player->getCalculatedFatigue().'/'.$player->getCalculatedFatigue_max(); ?></td>
 	</tr>
 	<tr class="odd">
 		<th>sex_appeal</th>
 		<td><?=$player->sex_appeal; ?></td>
-		<td><?=$playerCalc['sex_appeal']; ?></td>
+		<td><?=$player->getCalculatedSex_appeal(); ?></td>
 	</tr>
 </table>
 <?php
@@ -87,10 +86,10 @@ function printInventory(Player $player) {
 	<tr>
 		<th>Nom</th>
 		<th>Permanant</th>
-		<th>Notori�t�</th>
-		<th>Alcool�mie</th>
-		<th>Alcool�mie optimum</th>
-		<th>Alcool�mie max</th>
+		<th>Notoriété</th>
+		<th>Alcoolémie</th>
+		<th>Alcoolémie optimum</th>
+		<th>Alcoolémie max</th>
 		<th>Fatigue</th>
 		<th>Fatigue max</th>
 		<th>Sexe appeal</th>
@@ -101,8 +100,10 @@ function printInventory(Player $player) {
 		$odd = ($n++ % 2) ? 'odd' : 'even';
 		?>
 	<tr class="<?= $odd ?>">
-		<td><?= $objet->nom; ?></td>
-		<td><?= $objet->permanent?'oui':'<a href="?action=useObjet&objetId='.$objet->id.'">duel</a>'; ?></td>
+		<td>
+			<img src="<?= $objet->image; ?>" class="inventoryImage" />
+			<br /><?= $objet->nom; ?></td>
+		<td><?= $objet->permanent?'oui':'<a href="main.php?action=UseObjet&objetId='.$objet->id.'" class="action">utiliser</a>'; ?></td>
 		<td><?= plus($objet->notoriete, 1); ?></td>
 		<td><?= plus($objet->alcoolemie, 0); ?></td>
 		<td><?= plus($objet->alcoolemie_optimum, 1); ?></td>
