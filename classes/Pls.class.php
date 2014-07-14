@@ -91,7 +91,7 @@ class Pls {
 	 * @param Player $player        	
 	 * @return boolean
 	 */
-	public static function isFatigue(Player $player) {
+	public static function isFatigued(Player $player) {
 		if ($player->getCalculatedFatigue() >= $player->getCalculatedFatigue_max()) {
 			return true;
 		}

@@ -4,7 +4,7 @@ function logoutBar() {
 	return '<div class="login">' . $_SESSION['user']->nom . ' <a href="login.php?logout=1"> quitter</a></div>';
 }
 
-function linkAction($action, array $actionParams, $text, $page = null) {
+function linkAction($action, array $actionParams, $text, $page = null, $forceEnable = null) {
 	$url = 'main.php?action=' . urldecode($action);
 	if ($page) {
 		$url .= '&page=' . urldecode($page);
@@ -12,10 +12,19 @@ function linkAction($action, array $actionParams, $text, $page = null) {
 	foreach ($actionParams as $pKey => $pVal) {
 		$url .= '&' . urldecode($pKey) . '=' . urldecode($pVal);
 	}
-	if (Pls::isFatigue($_SESSION['user'])) {
-		return '<span  class="actionDisabled" title="Trop fatigué pour ça.">' . $text . '</span>';
+	$enable = true;
+	
+	if ($forceEnable === true) {
+		$enable = true;
+	} else if ($forceEnable === true) {
+		$enable = false;
 	} else {
+		$enable = !Pls::isFatigued($_SESSION['user']);
+	}
+	if ($enable) {
 		return '<a href="' . $url . '"  class="action" title="' . $action . '">' . $text . '</a>';
+	} else {
+		return '<span  class="actionDisabled" title="Trop fatigué pour ça.">' . $text . '</span>';
 	}
 }
 
@@ -116,8 +125,8 @@ function printInventory(Player $player) {
 		?>
 	<tr class="<?= $odd ?>">
 		<td>
-			<img src="<?= $objet->image; ?>" class="inventoryImage" />
-			<br /><?= $objet->nom; ?></td>
+			<img src="<?= $objet->image; ?>" class="inventoryImage" title="<?= $objet->nom; ?>" />
+		</td>
 		<td><?= $objet->permanent?'oui':linkAction('UseObjet', array('objetId'=>$objet->id), 'utiliser') ?></td>
 		<td><?= plus($objet->notoriete, 1); ?></td>
 		<td><?= plus($objet->alcoolemie, 0); ?></td>
