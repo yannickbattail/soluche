@@ -4,6 +4,21 @@ function logoutBar() {
 	return '<div class="login">' . $_SESSION['user']->nom . ' <a href="login.php?logout=1"> quitter</a></div>';
 }
 
+function linkAction($action, array $actionParams, $text, $page = null) {
+	$url = 'main.php?action=' . urldecode($action);
+	if ($page) {
+		$url .= '&page=' . urldecode($page);
+	}
+	foreach ($actionParams as $pKey => $pVal) {
+		$url .= '&' . urldecode($pKey) . '=' . urldecode($pVal);
+	}
+	if (Pls::isFatigue($_SESSION['user'])) {
+		return '<span  class="actionDisabled" title="Trop fatigué pour ça.">' . $text . '</span>';
+	} else {
+		return '<a href="' . $url . '"  class="action" title="' . $action . '">' . $text . '</a>';
+	}
+}
+
 function printUserStats(Player $player) {
 	?>
 <table class="stats">
@@ -103,7 +118,7 @@ function printInventory(Player $player) {
 		<td>
 			<img src="<?= $objet->image; ?>" class="inventoryImage" />
 			<br /><?= $objet->nom; ?></td>
-		<td><?= $objet->permanent?'oui':'<a href="main.php?action=UseObjet&objetId='.$objet->id.'" class="action">utiliser</a>'; ?></td>
+		<td><?= $objet->permanent?'oui':linkAction('UseObjet', array('objetId'=>$objet->id), 'utiliser') ?></td>
 		<td><?= plus($objet->notoriete, 1); ?></td>
 		<td><?= plus($objet->alcoolemie, 0); ?></td>
 		<td><?= plus($objet->alcoolemie_optimum, 1); ?></td>

@@ -51,6 +51,13 @@ class Player {
 		$this->points = $points;
 	}
 
+	public function addPoints($points) {
+		if ($points <= 0) {
+			throw RulesException("on ne peut pas enlever des points.");
+		}
+		$this->points += $points;
+	}
+
 	public $notoriete = 0;
 
 	public function getCalculatedNotoriete() {
@@ -69,6 +76,10 @@ class Player {
 		}
 	}
 
+	public function addNotoriete($notoriete) {
+		$this->setNotoriete($this->getNotoriete() + $notoriete);
+	}
+
 	public $alcoolemie = 0;
 
 	public function getCalculatedAlcoolemie() {
@@ -85,9 +96,13 @@ class Player {
 		} else {
 			$this->alcoolemie = $alcoolemie;
 		}
-		if (Action::haveToGoToPls($this)) {
-			Action::sendToPls($this);
+		if (Pls::haveToGoToPls($this)) {
+			Pls::sendToPls($this);
 		}
+	}
+
+	public function addAlcoolemie($alcoolemie) {
+		$this->setAlcoolemie($this->getAlcoolemie() + $alcoolemie);
 	}
 
 	public $alcoolemie_optimum = 0;
@@ -110,6 +125,10 @@ class Player {
 		}
 	}
 
+	public function addAlcoolemie_optimum($alcoolemie_optimum) {
+		$this->setAlcoolemie_optimum($this->getAlcoolemie_optimum() + $alcoolemie_optimum);
+	}
+
 	public $alcoolemie_max = 0;
 
 	public function getCalculatedAlcoolemie_max() {
@@ -126,6 +145,10 @@ class Player {
 		} else {
 			$this->alcoolemie_max = $alcoolemie_max;
 		}
+	}
+
+	public function addAlcoolemie_max($alcoolemie_max) {
+		$this->setAlcoolemie_max($this->getAlcoolemie_max() + $alcoolemie_max);
 	}
 
 	public $fatigue = 0;
@@ -148,6 +171,10 @@ class Player {
 		}
 	}
 
+	public function addFatigue($fatigue) {
+		$this->setFatigue($this->getFatigue() + $fatigue);
+	}
+
 	public $fatigue_max = 0;
 
 	public function getCalculatedFatigue_max() {
@@ -166,6 +193,10 @@ class Player {
 		}
 	}
 
+	public function addFatigue_max($fatigue_max) {
+		$this->setFatigue_max($this->getFatigue_max() + $fatigue_max);
+	}
+
 	public $sex_appeal = 0;
 
 	public function getCalculatedSex_appeal() {
@@ -182,6 +213,10 @@ class Player {
 		} else {
 			$this->sex_appeal = $sex_appeal;
 		}
+	}
+
+	public function addSex_appeal($sex_appeal) {
+		$this->setSex_appeal($this->getSex_appeal() + $sex_appeal);
 	}
 
 	public $en_pls = 0;
@@ -340,6 +375,7 @@ class Player {
 		$this->calculated['fatigue'] = $this->fatigue;
 		$this->calculated['fatigue_max'] = $this->fatigue_max;
 		$this->calculated['sex_appeal'] = $this->sex_appeal;
+		$this->inventory = array();
 		
 		$sth = $GLOBALS['DB']->query('SELECT O.* FROM objet O INNER JOIN inventory I ON I.idobject = O.id WHERE I.idplayer = ' . $this->id . ';');
 		$sth->setFetchMode(PDO::FETCH_CLASS, 'Objet');

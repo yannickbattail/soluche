@@ -79,6 +79,6 @@ class Objet {
 	}
 
 	public static function desassociate($idPlayer, $idObjet) {
-		$GLOBALS['DB']->query('DELETE FROM objet WHERE idplayer=' . $idPlayer . ' AND idobject=' . $idObjet . ';');
+		$GLOBALS['DB']->query('DELETE FROM inventory WHERE idplayer=' . $idPlayer . ' AND idobject=' . $idObjet . ';');
 	}
 }

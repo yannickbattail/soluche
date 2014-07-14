@@ -14,6 +14,7 @@ if (!isset($_SESSION['user']) || !$_SESSION['user']) {
 }
 $_SESSION['user'] = Player::load($_SESSION['user']->id);
 $_SESSION['user']->loadInventory();
+Dispatcher::setPage($_SESSION['user']->lieu);
 
 if (isset($_REQUEST['page']) && $_REQUEST['page']) {
 	Dispatcher::setPage($_REQUEST['page']);
@@ -22,13 +23,10 @@ if (isset($_REQUEST['page']) && $_REQUEST['page']) {
 if (isset($_REQUEST['action']) && $_REQUEST['action']) {
 	Dispatcher::defineAction($_REQUEST['action'], $_SESSION['user'], $_REQUEST);
 	$actionResult = Dispatcher::executeAction();
-	$errorMessage .= $actionResult->message;
+	$_SESSION['user']->loadInventory(); // relaod inventory if changes has appeared
 }
-Action::haveToGoToPls($_SESSION['user']);
-
-if ($_SESSION['user']->en_pls && (basename($_SERVER['SCRIPT_FILENAME']) != 'pls.php' /*avoid redirection loops*/)) {
-	header('Location: pls.php');
-}
+Pls::haveToGoToPls($_SESSION['user']);
+Pls::redirectPLS($_SESSION['user']);
 
 $_SESSION['user']->lieu = Dispatcher::getPage();
 

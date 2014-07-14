@@ -1,4 +1,3 @@
-<?php if ($actionMessage) { ?><div class="actionMessage"><?php echo $actionMessage; ?></div><?php } ?>
 
 <table class="inventory">
 	<tr>
@@ -8,11 +7,10 @@
 		<th>Alcoolémie</th>
 		<th>Fatigue</th>
 		<!-- <th>sex_appeal</th> -->
-		<th>Duel</th>
+		<th>défis au bar</th>
 		<th>Pinser</th>
 	</tr>
 	<?php
-	
 	$stmt = $GLOBALS['DB']->query('SELECT * FROM player WHERE lieu = "bar" AND id != ' . $_SESSION['user']->id . ' ;');
 	$stmt->setFetchMode(PDO::FETCH_CLASS, 'Objet');
 	$n = 0;
@@ -28,10 +26,10 @@
 		<td><?=lifeBar($player->fatigue_max, $player->fatigue).$player->fatigue.'/'.$player->fatigue_max; ?></td>
 		<!-- <td><?=$player->sex_appeal; ?></td> -->
 		<td>
-			<a href="main.php?page=bar&action=duel&playerId=<?=$player->id; ?>" class="action">duel</a>
+			<?=linkAction('duel', array('playerId'=>$player->id), 'défis au bar', 'bar')?>
 		</td>
 		<td>
-			<a href="main.php?page=bar&action=pins&playerId=<?=$player->id; ?>" class="action">pin's</a>
+			<?=linkAction('pins', array('playerId'=>$player->id), 'pin\'s', 'bar')?>
 		</td>
 	</tr>
         <?php
