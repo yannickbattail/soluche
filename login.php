@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once ('db.php');
-require_once ('classes/player.class.php');
+require_once ('classes/Player.class.php');
 
 $errorMessage = '';
 if (isset($_REQUEST['logout'])) {
