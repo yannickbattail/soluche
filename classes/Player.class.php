@@ -364,7 +364,7 @@ class Player {
 			// var_dump($sth->errorInfo());
 			return false;
 		}
-		return true;
+		return $sth->fetch();
 	}
 
 	function loadInventory() {

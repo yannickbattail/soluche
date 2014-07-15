@@ -20,14 +20,14 @@ if (isset($_POST['login']) && isset($_POST['pass']) && isset($_POST['robot'])) {
 				echo 'Inscription ok';
 				header('Location: login.php');
 			} else {
-				$errorMessage = 'Ce surnom existe d�j�.';
+				$errorMessage = 'Ce surnom existe déja.';
 			}
 		} catch (Exception $e) {
 			echo $e;
 			$errorMessage = 'Probleme avec la BDD: ' . $e;
 		}
 	} else {
-		$errorMessage = 'Vous �tes un robot.';
+		$errorMessage = 'Vous êtes un robot.';
 	}
 }
 
@@ -36,16 +36,15 @@ if (isset($_POST['login']) && isset($_POST['pass']) && isset($_POST['robot'])) {
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Inscription</title>
-<style type="text/css">
-.errorMessage {
-	color: red;
-}
-</style>
+<title>Soluche: Inscription</title>
+<link rel="stylesheet" href="theme/theme.css" type="text/css">
+<link rel="stylesheet" href="theme/other.css" type="text/css">
 </head>
 <body>
 	<h1>Inscription</h1>
+	<?php if ($errorMessage) {?>
 	<div class="errorMessage"><?php echo $errorMessage; ?></div>
+	<?php } ?>
 
 	<form action="" method="post">
 		<table>

@@ -28,16 +28,15 @@ if (isset($_POST['login']) && isset($_POST['pass'])) {
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Soluche</title>
-<style type="text/css">
-.errorMessage {
-	color: red;
-}
-</style>
+<title>Soluche: login</title>
+<link rel="stylesheet" href="theme/theme.css" type="text/css">
+<link rel="stylesheet" href="theme/other.css" type="text/css">
 </head>
 <body>
 	<h1>Soluche</h1>
+	<?php if ($errorMessage) {?>
 	<div class="errorMessage"><?php echo $errorMessage; ?></div>
+	<?php } ?>
 
 	<form action="" method="post">
 		<table>
