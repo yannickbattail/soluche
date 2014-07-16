@@ -8,7 +8,6 @@ session_start();
 require_once ('db.php');
 require_once ('utilFunctions.php');
 
-$errorMessage = '';
 if (!isset($_SESSION['user']) || !$_SESSION['user']) {
 	header('Location: login.php');
 }

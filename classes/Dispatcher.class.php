@@ -1,20 +1,71 @@
 <?php
 class Dispatcher {
 
+	const MESSAGE_LEVEL_ERROR = 'errorException';
+
+	const MESSAGE_LEVEL_INFO = 'infoMessage';
+
+	const MESSAGE_LEVEL_SUCCES = 'successMessage';
+
+	const MESSAGE_LEVEL_FAIL = 'errorMessage';
+
+	private static $pageTitle = 'Camping';
+
+	private static $messages = array();
+
+	public static function addMessage($message, $level) {
+		self::$messages[] = array('message' => $message,'level' => $level
+		);
+	}
+
+	public static function getMessages() {
+		return self::$messages;
+	}
+
+	private static $page = 'camping';
+
+	public static function setPage($page) {
+		$filename = "./pages/" . $page . ".php";
+		if (file_exists($filename)) {
+			self::$page = $page;
+			self::$pageTitle = ucfirst(str_replace('_', ' ', self::$page));
+		} else {
+			self::addMessage(' La page ' . $page . ' n\'exite pas.', Dispatcher::MESSAGE_LEVEL_ERROR);
+		}
+	}
+
+	public static function getPage() {
+		return self::$page;
+	}
+
+	public static function displayPage() {
+		include_once ("./pages/layoutTop.php");
+		$filename = "./pages/" . self::$page . ".php";
+		include_once ($filename);
+		include_once ("./pages/layoutBottom.php");
+	}
+
 	/**
 	 *
 	 * @var ActionInterface
 	 */
 	private static $action = null;
 
-	private static $page = 'camping';
+	/**
+	 *
+	 * @param ActionInterface $action        	
+	 */
+	public static function setAction(ActionInterface $action) {
+		self::$action = $action;
+	}
 
-	private static $pageTitle = 'Camping';
-	
-	// public static $bodyHtml = 'page vide';
-	private static $errorMessage = '';
-
-	private static $succesMessage = '';
+	/**
+	 *
+	 * @return ActionInterface
+	 */
+	public static function getAction() {
+		return self::$action;
+	}
 
 	/**
 	 *
@@ -38,65 +89,12 @@ class Dispatcher {
 		if (self::$action) {
 			$actionReturn = self::$action->execute();
 			if ($actionReturn->succes) {
-				self::addSuccessMessage($actionReturn->message);
+				self::addMessage($actionReturn->message, Dispatcher::MESSAGE_LEVEL_SUCCES);
 			} else {
-				self::addErrorMessage($actionReturn->message);
+				self::addMessage($actionReturn->message, Dispatcher::MESSAGE_LEVEL_FAIL);
 			}
 			return $actionReturn->succes;
 		}
 		return null;
-	}
-
-	/**
-	 *
-	 * @param ActionInterface $action        	
-	 */
-	public static function setAction(ActionInterface $action) {
-		self::$action = $action;
-	}
-
-	/**
-	 *
-	 * @return ActionInterface
-	 */
-	public static function getAction() {
-		return self::$action;
-	}
-
-	public static function displayPage() {
-		include_once ("./pages/layoutTop.php");
-		$filename = "./pages/" . self::$page . ".php";
-		include_once ($filename);
-		include_once ("./pages/layoutBottom.php");
-	}
-
-	public static function setPage($page) {
-		$filename = "./pages/" . $page . ".php";
-		if (file_exists($filename)) {
-			self::$page = $page;
-			self::$pageTitle = ucfirst(str_replace('_', ' ', self::$page));
-		} else {
-			self::addErrorMessage(' La page ' . $page . ' n\'exite pas.');
-		}
-	}
-
-	public static function getPage() {
-		return self::$page;
-	}
-
-	public static function addSuccessMessage($succesMessage) {
-		self::$succesMessage .= '<br />' . $succesMessage;
-	}
-
-	public static function getSuccessMessage() {
-		return self::$succesMessage;
-	}
-
-	public static function addErrorMessage($errorMessage) {
-		self::$errorMessage .= '<br />' . $errorMessage;
-	}
-
-	public static function getErrorMessage() {
-		return self::$errorMessage;
 	}
 }

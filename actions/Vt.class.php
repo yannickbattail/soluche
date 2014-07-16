@@ -30,11 +30,9 @@ class Vt implements ActionInterface {
 	 */
 	public function execute() {
 		$res = new ActionResult();
-		if ($this->player->alcoolemie >= 1) {
-			$this->player->alcoolemie -= 1;
-			if ($this->player->notoriete >= 1) {
-				$this->player->notoriete -= 1;
-			}
+		if ($this->player->getAlcoolemie() >= 1) {
+			$this->player->addAlcoolemie(-1);
+			$this->player->addNotoriete(-1);
 			$res->message = 'Dégueux!';
 			$res->succes = true;
 		} else {

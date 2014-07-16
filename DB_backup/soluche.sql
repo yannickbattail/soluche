@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 14, 2014 at 08:09 PM
+-- Generation Time: Jul 16, 2014 at 07:40 PM
 -- Server version: 5.6.15-log
 -- PHP Version: 5.5.8
 
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `inventory` (
   `idplayer` int(11) DEFAULT NULL COMMENT 'Player',
   `idobject` int(11) DEFAULT NULL COMMENT 'Object',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
 
 --
 -- Dumping data for table `inventory`
@@ -41,7 +41,9 @@ INSERT INTO `inventory` (`id`, `idplayer`, `idobject`) VALUES
 (18, -1, 7),
 (19, -1, 8),
 (20, -1, 9),
-(21, -1, 10);
+(21, -1, 10),
+(22, -2, 11),
+(23, -2, 12);
 
 -- --------------------------------------------------------
 
@@ -62,23 +64,25 @@ CREATE TABLE IF NOT EXISTS `objet` (
   `sex_appeal` int(11) NOT NULL,
   `image` varchar(1024) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `objet`
 --
 
 INSERT INTO `objet` (`id`, `nom`, `permanent`, `notoriete`, `alcoolemie`, `alcoolemie_optimum`, `alcoolemie_max`, `fatigue`, `fatigue_max`, `sex_appeal`, `image`) VALUES
-(1, 'poule', 1, 1, 0, 0, 0, 0, -1, 3, 'http://www.folygraphie.com/Files/30421/Img/11/V_FI36.jpg'),
-(2, 'pachi', 1, 1, 0, 0, 0, 0, 0, -1, 'http://www.folygraphie.com/Files/30421/Img/23/V_FI32.jpg'),
-(3, 'bacchus', 1, 1, 0, 2, 2, 0, 0, 0, 'http://www.folygraphie.com/Files/30421/Img/16/V_FI03.jpg'),
-(4, 'Redbull', 0, 0, 0, 0, 0, -2, 0, 0, 'https://pbs.twimg.com/profile_images/3279882170/000d6bd25d03108d79a678c17a4fe52b_normal.jpeg'),
-(5, 'test+1 all', 0, 1, 1, 1, 1, 1, 1, 1, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQu5QpMqs1PupQHFP1O2Jy9WsdtUJ79Mfijx9kZmkWGbBt5cN6J'),
-(6, 'test-1 all', 0, -1, -1, -1, -1, -1, -1, -1, 'https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTz4kOJHKWBQOGv1jWyAGH6OnM5idwHXm0u5xNv8RIk0fDU6_F52Q'),
-(7, 'Café', 0, 0, 0, 0, 0, -2, 0, 0, 'http://www.auberge-des-fees.ch/images/pipo_espresso.png'),
-(8, 'Sandwish', 0, 0, 0, 0, 0, -3, 0, 0, 'http://images.clipartpanda.com/sandwich-clipart-sandwich-4.gif'),
-(9, 'vomi', 0, -8, 0, 0, 0, -1, 0, 0, 'http://www.soimmature.com/images/foamy_vomit.gif'),
-(10, 'Poulet', 0, 0, 0, 0, 0, -3, 0, 0, 'http://www.jonathan-menet.fr/blog/wp-content/uploads/2013/11/idee-cadeau-bonet-poulet-roti_1.jpg');
+(1, 'poule', 1, 1, 0, 0, 0, 0, -1, 3, 'images/objets/poule.png'),
+(2, 'pachi', 1, 1, 0, 0, 0, 0, 0, -1, 'images/objets/pachi.png'),
+(3, 'bacchus', 1, 1, 0, 2, 2, 0, 0, 0, 'images/objets/bacchus.png'),
+(4, 'Redbull', 0, 0, 0, 0, 0, -2, 0, 0, 'images/objets/redbull.png'),
+(5, 'test+1 all', 0, 1, 1, 1, 1, 1, 1, 1, 'images/objets/pouce-haut.png'),
+(6, 'test-1 all', 0, -1, -1, -1, -1, -1, -1, -1, 'images/objets/pouce-bas.png'),
+(12, 'biere', 0, 0, 1, 0, 0, 0, 0, 0, 'images/objets/biere.png'),
+(7, 'Café', 0, 0, 0, 0, 0, -2, 0, 0, 'images/objets/cafe.png'),
+(8, 'Sandwish', 0, 0, 0, 0, 0, -3, 0, 0, 'images/objets/sandwich.png'),
+(9, 'vomi', 0, -8, 0, 0, 0, -1, 0, 0, 'images/objets/vomi.png'),
+(10, 'Poulet', 0, 0, 0, 0, 0, -3, 0, 0, 'images/objets/poulet.png'),
+(11, 'treuse', 0, 0, 2, 0, 0, 0, 0, 0, 'images/objets/treuse.png');
 
 -- --------------------------------------------------------
 
@@ -101,15 +105,19 @@ CREATE TABLE IF NOT EXISTS `player` (
   `sex_appeal` int(11) NOT NULL,
   `en_pls` tinyint(1) NOT NULL,
   `debut_de_pls` int(11) NOT NULL,
+  `sex` int(11) NOT NULL,
+  `photo` varchar(1024) DEFAULT NULL,
+  `pnj` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 --
 -- Dumping data for table `player`
 --
 
-INSERT INTO `player` (`id`, `nom`, `pass`, `lieu`, `points`, `notoriete`, `alcoolemie`, `alcoolemie_optimum`, `alcoolemie_max`, `fatigue`, `fatigue_max`, `sex_appeal`, `en_pls`, `debut_de_pls`) VALUES
-(-1, 'cuisine', '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO `player` (`id`, `nom`, `pass`, `lieu`, `points`, `notoriete`, `alcoolemie`, `alcoolemie_optimum`, `alcoolemie_max`, `fatigue`, `fatigue_max`, `sex_appeal`, `en_pls`, `debut_de_pls`, `sex`, `photo`, `pnj`) VALUES
+(-1, 'cuisine', '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 1),
+(-2, 'bar', '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 1);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

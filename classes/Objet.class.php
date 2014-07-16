@@ -3,29 +3,117 @@ class Objet {
 
 	public $id = 0;
 
+	public function getId() {
+		return $this->id;
+	}
+
+	public function setId($id) {
+		$this->id = $id;
+	}
+
 	public $nom = '';
 
-	public $permanent = '';
+	public function getNom() {
+		return $this->nom;
+	}
+
+	public function setNom($nom) {
+		$this->nom = $nom;
+	}
+
+	public $permanent = 0;
+
+	public function getPermanent() {
+		return $this->permanent;
+	}
+
+	public function setPermanent($permanent) {
+		$this->permanent = $permanent;
+	}
 
 	public $notoriete = 0;
 
+	public function getNotoriete() {
+		return $this->notoriete;
+	}
+
+	public function setNotoriete($notoriete) {
+		$this->notoriete = $notoriete;
+	}
+
 	public $alcoolemie = 0;
+
+	public function getAlcoolemie() {
+		return $this->alcoolemie;
+	}
+
+	public function setAlcoolemie($alcoolemie) {
+		$this->alcoolemie = $alcoolemie;
+	}
 
 	public $alcoolemie_optimum = 0;
 
+	public function getAlcoolemie_optimum() {
+		return $this->alcoolemie_optimum;
+	}
+
+	public function setAlcoolemie_optimum($alcoolemie_optimum) {
+		$this->alcoolemie_optimum = $alcoolemie_optimum;
+	}
+
 	public $alcoolemie_max = 0;
+
+	public function getAlcoolemie_max() {
+		return $this->alcoolemie_max;
+	}
+
+	public function setAlcoolemie_max($alcoolemie_max) {
+		$this->alcoolemie_max = $alcoolemie_max;
+	}
 
 	public $fatigue = 0;
 
+	public function getFatigue() {
+		return $this->fatigue;
+	}
+
+	public function setFatigue($fatigue) {
+		$this->fatigue = $fatigue;
+	}
+
 	public $fatigue_max = 0;
+
+	public function getFatigue_max() {
+		return $this->fatigue_max;
+	}
+
+	public function setFatigue_max($fatigue_max) {
+		$this->fatigue_max = $fatigue_max;
+	}
 
 	public $sex_appeal = 0;
 
+	public function getSex_appeal() {
+		return $this->sex_appeal;
+	}
+
+	public function setSex_appeal($sex_appeal) {
+		$this->sex_appeal = $sex_appeal;
+	}
+
 	public $image = "";
 
+	public function getImage() {
+		return $this->image;
+	}
+
+	public function setImage($image) {
+		$this->image = $image;
+	}
+
 	/**
-	 * 
-	 * @param String $id
+	 *
+	 * @param String $id        	
 	 * @return Objet
 	 */
 	public static function load($id) {

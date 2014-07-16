@@ -10,5 +10,9 @@
 	<h1><?php echo Dispatcher::$pageTitle; ?></h1>
 	<?php echo logoutBar(); ?>
 	
-	<?php if (Dispatcher::getErrorMessage()) echo '<div class="errorMessage">'.Dispatcher::getErrorMessage().'</div>'; ?>
-	<?php if (Dispatcher::getSuccessMessage()) echo '<div class="successMessage">'.Dispatcher::getSuccessMessage().'</div>'; ?>
+	<?php
+	foreach (Dispatcher::getMessages() as $em) {
+		echo '<div class="' . $em['level'] . '">' . htmlentities($em['message']) . '</div>';
+	}
+	?>
+

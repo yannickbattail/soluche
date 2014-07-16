@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 14, 2014 at 08:09 PM
+-- Generation Time: Jul 16, 2014 at 07:40 PM
 -- Server version: 5.6.15-log
 -- PHP Version: 5.5.8
 
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `soluche`
 --
+
+-- --------------------------------------------------------
 
 --
 -- Dumping data for table `inventory`
@@ -43,12 +45,12 @@ INSERT INTO `inventory` (`id`, `idplayer`, `idobject`) VALUES
 -- Dumping data for table `player`
 --
 
-INSERT INTO `player` (`id`, `nom`, `pass`, `lieu`, `points`, `notoriete`, `alcoolemie`, `alcoolemie_optimum`, `alcoolemie_max`, `fatigue`, `fatigue_max`, `sex_appeal`, `en_pls`, `debut_de_pls`) VALUES
-(1, 'yannick', 'toto42', 'camping', 5, 7, 5, 7, 10, 5, 10, 5, 0, 0),
-(2, 'tanguy', 'rrerr', 'bar', 1, 9, 3, 7, 9, 0, 8, 4, 0, 0),
-(3, 'droit monpeul', 'droit monpeul', 'cuisine', 0, 5, 5, 7, 10, 4, 10, 5, 0, 0),
-(4, 'rose grenoble', 'rose grenoble', 'danse', 0, 8, 2, 6, 8, 1, 12, 8, 0, 0),
-(5, 'pelotik', 'toto42', 'camping', 0, 0, 0, 7, 10, 0, 10, 5, 0, 0);
+INSERT INTO `player` (`id`, `nom`, `pass`, `lieu`, `points`, `notoriete`, `alcoolemie`, `alcoolemie_optimum`, `alcoolemie_max`, `fatigue`, `fatigue_max`, `sex_appeal`, `en_pls`, `debut_de_pls`, `sex`, `photo`, `pnj`) VALUES
+(1, 'yannick', 'toto42', 'danse', 53, 16, 8, 7, 10, 4, 10, 5, 0, 0, 1, 'images/tete_faluche_noir.jpg', 0),
+(2, 'tanguy', 'rrerr', 'bar', 1, 9, 3, 7, 9, 0, 8, 4, 0, 0, 1, 'images/tete_faluche_grise.jpg', 0),
+(3, 'droit monpeul', 'droit monpeul', 'cuisine', 6, 5, 8, 7, 10, 4, 10, 5, 0, 0, 0, 'images/tete_faluche_blanc.jpg', 0),
+(4, 'rose grenoble', 'rose grenoble', 'danse', 47, 14, 3, 6, 8, 1, 12, 8, 0, 0, 0, 'images/tete_faluche_rose.jpg', 0),
+(5, 'pelotik', 'toto42', 'camping', 0, 0, 0, 7, 10, 0, 10, 5, 0, 0, 1, 'images/tete_faluche_noir.jpg', 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

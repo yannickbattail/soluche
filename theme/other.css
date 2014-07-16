@@ -32,6 +32,14 @@ tr.even {
 	background: #303030;
 }
 
+.errorException{
+	background-color: orange;
+	color: darkred;
+	border-width: 2px;
+	border-style: solid;
+	border-radius: 10px;
+	padding: 5px;
+}
 .errorMessage {
 	background-color: lightyellow;
 	color: darkred;
@@ -41,9 +49,17 @@ tr.even {
 	padding: 5px;
 }
 
+.infoMessage {
+	background-color: lightblue;
+	color: darkgreen;
+	border-width: 2px;
+	border-style: solid;
+	border-radius: 10px;
+	padding: 5px;
+}
 .successMessage {
 	background-color: lightyellow;
-	color: black;
+	color: darkgreen;
 	border-width: 2px;
 	border-style: solid;
 	border-radius: 10px;
@@ -70,6 +86,11 @@ tr.even {
 	border-radius: 3px;
 	padding: 2px;
 	margin: 2px;
+}
+
+.playerImage {
+	max-width: 64px;
+	max-height: 64px;
 }
 
 .inventoryImage {

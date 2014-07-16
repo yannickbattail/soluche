@@ -9,7 +9,7 @@ if (Pls::isPlsFinished($_SESSION['user'])) {
 	echo linkAction('EndPls', array(), 'Finir sa pls', 'camping', true);
 } else {
 	echo linkAction('EndPls', array(), 'Finir sa pls', 'camping', false);
-	echo 'Encore trop d\'alcoolémie, impossible de finir sa PLS. Wait for it.';
+	echo 'Encore trop d\'verres, impossible de finir sa PLS. Wait for it.';
 }
 ?>
 

@@ -33,8 +33,11 @@ function printUserStats(Player $player) {
 <table class="stats">
 	<tr class="even">
 		<th>Nom</th>
-		<td><?=$player->nom; ?></td>
-		<td>Points: <?=$player->points; ?></td>
+		<td>
+			<img src="<?= $player->photo; ?>" class="playerImage" title="<?= $player->nom; ?>" />
+		</td>
+		<td><?=$player->nom; ?> <?php echo $player->sex?'<span style="color:blue">&#9794;</span>':'<span style="color:pink">&#9792;</span>'; ?>
+		<br />Points: <?=$player->points; ?></td>
 	</tr>
 	<tr class="odd">
 		<th></th>
@@ -47,7 +50,7 @@ function printUserStats(Player $player) {
 		<td><?=$player->getCalculatedNotoriete(); ?></td>
 	</tr>
 	<tr class="odd">
-		<th>Alcoolémie</th>
+		<th>Verre</th>
 		<td><?= lifeBarMiddle($player->alcoolemie_max, $player->alcoolemie_optimum, $player->alcoolemie); ?>
 		<?=$player->alcoolemie.'/'.$player->alcoolemie_max.' optimum à '.$player->alcoolemie_optimum; ?></td>
 		<td><?= lifeBarMiddle($player->getCalculatedAlcoolemie_max(), $player->getCalculatedAlcoolemie_optimum(), $player->getCalculatedAlcoolemie())?>
@@ -59,7 +62,7 @@ function printUserStats(Player $player) {
 		<td><?=lifeBar($player->getCalculatedFatigue_max(), $player->getCalculatedFatigue()).$player->getCalculatedFatigue().'/'.$player->getCalculatedFatigue_max(); ?></td>
 	</tr>
 	<tr class="odd">
-		<th>sex_appeal</th>
+		<th>Sexe appeal</th>
 		<td><?=$player->sex_appeal; ?></td>
 		<td><?=$player->getCalculatedSex_appeal(); ?></td>
 	</tr>
@@ -111,9 +114,9 @@ function printInventory(Player $player) {
 		<th>Nom</th>
 		<th>Permanant</th>
 		<th>Notoriété</th>
-		<th>Alcoolémie</th>
-		<th>Alcoolémie optimum</th>
-		<th>Alcoolémie max</th>
+		<th>Verre</th>
+		<th>Verre optimum</th>
+		<th>Verre max</th>
 		<th>Fatigue</th>
 		<th>Fatigue max</th>
 		<th>Sexe appeal</th>

@@ -11,7 +11,7 @@ class Player {
 		$this->id = $id;
 	}
 
-	public $nom = 0;
+	public $nom = '';
 
 	public function getNom() {
 		return $this->nom;
@@ -243,6 +243,53 @@ class Player {
 		$this->debut_de_pls = $debut_de_pls;
 	}
 
+	/**
+	 * si quelqu'un me demande quelle valeur est homme/femme, bien qu'il regarde dans son slip
+	 *
+	 * @var int
+	 */
+	public $sex = 0;
+
+	public function getSex() {
+		return $this->sex;
+	}
+
+	public function setSex(array $sex) {
+		if (($sex === 0) || ($sex === 1)) {
+			$this->sex = $sex;
+		} else {
+			throw new RulesException('sex doit etre 0 ou 1');
+		}
+	}
+
+	public $photo = '';
+
+	public function getPhoto() {
+		return $this->photo;
+	}
+
+	public function setPhoto($photo) {
+		$this->photo = $photo;
+	}
+
+	/**
+	 * @var int
+	 */
+	public $pnj = 0;
+	
+	public function getPnj() {
+		return $this->pnj;
+	}
+	
+	public function setPnj(array $pnj) {
+		if ($pnj) {
+			$this->pnj = 1;
+		} else {
+			$this->pnj = 0;
+		}
+	}
+	
+	
 	public $inventory = array();
 
 	public function getInventory() {
@@ -275,7 +322,7 @@ class Player {
 	}
 
 	public function create() {
-		$sth = $GLOBALS['DB']->prepare('INSERT INTO player ' . '(nom, pass, lieu, points, notoriete, alcoolemie, alcoolemie_optimum, alcoolemie_max, fatigue, fatigue_max, sex_appeal, en_pls, debut_de_pls)' . ' VALUES ( :nom, :pass, :lieu, :points, :notoriete, :alcoolemie, :alcoolemie_optimum, :alcoolemie_max, :fatigue, :fatigue_max, :sex_appeal, :en_pls, :debut_de_pls);');
+		$sth = $GLOBALS['DB']->prepare('INSERT INTO player ' . '(nom, pass, lieu, points, notoriete, alcoolemie, alcoolemie_optimum, alcoolemie_max, fatigue, fatigue_max, sex_appeal, en_pls, debut_de_pls, sex, photo)' . ' VALUES ( :nom, :pass, :lieu, :points, :notoriete, :alcoolemie, :alcoolemie_optimum, :alcoolemie_max, :fatigue, :fatigue_max, :sex_appeal, :en_pls, :debut_de_pls, :sex, :photo, :pnj);');
 		$sth->bindValue(':nom', $this->nom, PDO::PARAM_STR);
 		$sth->bindValue(':pass', $this->pass, PDO::PARAM_STR);
 		$sth->bindValue(':lieu', $this->lieu, PDO::PARAM_STR);
@@ -289,6 +336,9 @@ class Player {
 		$sth->bindValue(':sex_appeal', $this->sex_appeal, PDO::PARAM_INT);
 		$sth->bindValue(':en_pls', $this->en_pls, PDO::PARAM_INT);
 		$sth->bindValue(':debut_de_pls', $this->debut_de_pls, PDO::PARAM_INT);
+		$sth->bindValue(':sex', $this->sex, PDO::PARAM_INT);
+		$sth->bindValue(':photo', $this->photo, PDO::PARAM_STR);
+		$sth->bindValue(':pnj', $this->pnj, PDO::PARAM_INT);
 		if ($sth->execute() === false) {
 			throw new Exception(print_r($sth->errorInfo(), true));
 		}
@@ -306,10 +356,13 @@ class Player {
 		$this->sex_appeal = 5;
 		$this->en_pls = 0;
 		$this->debut_de_pls = 0;
+		$this->sex = 0;
+		$this->photo = 'images/tete_faluche_grise.jpg';
+		$this->pnj = 0;
 	}
 
 	public function update() {
-		$sth = $GLOBALS['DB']->prepare('UPDATE player SET nom=:nom, pass=:pass, lieu=:lieu, points=:points, notoriete=:notoriete, alcoolemie=:alcoolemie, alcoolemie_optimum=:alcoolemie_optimum, alcoolemie_max=:alcoolemie_max, fatigue=:fatigue, fatigue_max=:fatigue_max, sex_appeal=:sex_appeal, en_pls=:en_pls, debut_de_pls=:debut_de_pls WHERE id=:id;');
+		$sth = $GLOBALS['DB']->prepare('UPDATE player SET nom=:nom, pass=:pass, lieu=:lieu, points=:points, notoriete=:notoriete, alcoolemie=:alcoolemie, alcoolemie_optimum=:alcoolemie_optimum, alcoolemie_max=:alcoolemie_max, fatigue=:fatigue, fatigue_max=:fatigue_max, sex_appeal=:sex_appeal, en_pls=:en_pls, debut_de_pls=:debut_de_pls, sex=:sex, photo=:photo, pnj=:pnj WHERE id=:id;');
 		$sth->bindValue(':id', $this->id, PDO::PARAM_INT);
 		$sth->bindValue(':nom', $this->nom, PDO::PARAM_STR);
 		$sth->bindValue(':pass', $this->pass, PDO::PARAM_STR);
@@ -324,6 +377,9 @@ class Player {
 		$sth->bindValue(':sex_appeal', $this->sex_appeal, PDO::PARAM_INT);
 		$sth->bindValue(':en_pls', $this->en_pls, PDO::PARAM_INT);
 		$sth->bindValue(':debut_de_pls', $this->debut_de_pls, PDO::PARAM_INT);
+		$sth->bindValue(':sex', $this->sex, PDO::PARAM_INT);
+		$sth->bindValue(':photo', $this->photo, PDO::PARAM_STR);
+		$sth->bindValue(':pnj', $this->pnj, PDO::PARAM_STR);
 		if ($sth->execute() === false) {
 			throw new Exception(print_r($sth->errorInfo(), true));
 		}
