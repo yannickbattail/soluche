@@ -1,6 +1,6 @@
 Se deplacer:
 <ul>
-	<li><?=linkAction('startCongres', array('congres' => 0), 'début de congrès', null)?></li>
+	<li><?=linkAction('StartCongres', array('congres' => 0), 'début de congrès', null)?></li>
 </ul>
 
 <?php

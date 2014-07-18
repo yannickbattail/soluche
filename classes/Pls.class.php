@@ -42,7 +42,7 @@ class Pls {
 	 * @return boolean
 	 */
 	public static function haveToGoToPls(Player $player) {
-		if ($player->en_pls) {
+		if ($player->en_pls == 1) {
 			return false;
 		}
 		if ($player->getCalculatedAlcoolemie() > $player->getCalculatedAlcoolemie_max()) {
@@ -58,7 +58,7 @@ class Pls {
 	 * @return boolean
 	 */
 	public static function redirectPLS(Player $player) {
-		if ($player->en_pls) {
+		if ($player->en_pls == 1) {
 			Dispatcher::setPage('pls');
 			return true;
 		}
