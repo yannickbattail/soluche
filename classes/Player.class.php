@@ -97,7 +97,7 @@ class Player {
 			$this->alcoolemie = $alcoolemie;
 		}
 		if (Pls::haveToGoToPls($this)) {
-			Pls::sendToPls($this);
+			Pls::startToPls($this);
 		}
 	}
 

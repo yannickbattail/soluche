@@ -1,11 +1,14 @@
- Se deplacer:
+Se deplacer:
 <ul>
 	<li><a href="main.php?page=bar">au bar</a></li>
-	<li><a href="main.php?page=pls&action=startPLS">se mettre en PLS</a></li>
+	<li><?=linkAction('startPLS', array(), 'se mettre en PLS', null)?></li>
 	<li><a href="main.php?page=tente">à ta tente</a></li>
 	<li><a href="main.php?page=cuisine">à la cuisine</a></li>
 	<li><a href="main.php?page=danse">à la piste de danse</a></li>
 </ul>
+
+
+<hr />
 <?php printUserStats($_SESSION['user']); ?>
 <?php printInventory($_SESSION['user']); ?>
 

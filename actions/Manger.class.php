@@ -55,7 +55,7 @@ class Manger implements ActionInterface {
 		$this->player->addFatigue_max($this->objet->fatigue_max);
 		$this->player->addSex_appeal($this->objet->sex_appeal);
 		$res->succes = true;
-		$res->message = 'j\'bien mangé, j\'bu un(e) '.$this->objet->nom.'.';
+		$res->message = 'j\'ai bien mangé, j\'ai bien bu un(e) '.$this->objet->nom.'.';
 		return $res;
 	}
 }

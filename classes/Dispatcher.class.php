@@ -93,6 +93,7 @@ class Dispatcher {
 			} else {
 				self::addMessage($actionReturn->message, Dispatcher::MESSAGE_LEVEL_FAIL);
 			}
+			$_SESSION['congres']->addHistory($actionReturn);
 			return $actionReturn->succes;
 		}
 		return null;

@@ -22,8 +22,19 @@ if (isset($_REQUEST['page']) && $_REQUEST['page']) {
 if (isset($_REQUEST['action']) && $_REQUEST['action']) {
 	Dispatcher::defineAction($_REQUEST['action'], $_SESSION['user'], $_REQUEST);
 	$actionResult = Dispatcher::executeAction();
+	if ($actionResult) {
+		$_SESSION['user']->addFatigue(-1);
+	}
+	if (isset($_SESSION['congres'])) {
+		$_SESSION['congres']->addFatigue(-1);
+	}
 	$_SESSION['user']->loadInventory(); // relaod inventory if changes has appeared
 }
+
+if (!isset($_SESSION['congres']) || !$_SESSION['congres']) {
+	Dispatcher::setPage('congres');
+}
+
 Pls::haveToGoToPls($_SESSION['user']);
 Pls::redirectPLS($_SESSION['user']);
 
