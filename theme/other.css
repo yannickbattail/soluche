@@ -32,7 +32,17 @@ tr.even {
 	background: #303030;
 }
 
-.errorException{
+.login {
+	margin: 5px;
+	font-size: 14px;
+}
+
+.congres {
+	margin: 5px;
+	font-size: 14px;
+}
+
+.errorException {
 	background-color: orange;
 	color: darkred;
 	border-width: 2px;
@@ -40,6 +50,7 @@ tr.even {
 	border-radius: 10px;
 	padding: 5px;
 }
+
 .errorMessage {
 	background-color: lightyellow;
 	color: darkred;
@@ -57,6 +68,7 @@ tr.even {
 	border-radius: 10px;
 	padding: 5px;
 }
+
 .successMessage {
 	background-color: lightyellow;
 	color: darkgreen;

@@ -11,7 +11,7 @@
 	<?php echo logoutBar(); ?>
 	<?php
 	if (isset($_SESSION['congres'])) {
-		echo '<div class="congres">au congrès ' . $_SESSION['congres']->getNom() . '. Action restantes: ' . $_SESSION['congres']->getFatigue() . '</div>';
+		echo '<div class="congres">Au congrès ' . $_SESSION['congres']->getNom() . '. Action restantes: ' . $_SESSION['congres']->getFatigue() . '</div>';
 	}
 	?>
 	<?php
