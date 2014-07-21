@@ -10,8 +10,8 @@
 	<h1><?php echo Dispatcher::$pageTitle; ?></h1>
 	<?php echo logoutBar(); ?>
 	<?php
-	if (isset($_SESSION['congres'])) {
-		echo '<div class="congres">Au congrès ' . $_SESSION['congres']->getNom() . '. Action restantes: ' . $_SESSION['congres']->getFatigue() . '</div>';
+	if (isset($_SESSION['congress'])) {
+		echo '<div class="congress">Au congrès ' . $_SESSION['congress']->getNom() . '. Action restantes: ' . $_SESSION['congress']->getFatigue() . '</div>';
 	}
 	?>
 	<?php

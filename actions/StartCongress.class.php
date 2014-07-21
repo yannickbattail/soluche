@@ -1,5 +1,5 @@
 <?php
-class StartCongres implements ActionInterface {
+class StartCongress implements ActionInterface {
 
 	/**
 	 *
@@ -9,9 +9,9 @@ class StartCongres implements ActionInterface {
 
 	/**
 	 *
-	 * @var Player
+	 * @var Congress
 	 */
-	private $congres;
+	private $congress;
 
 	/**
 	 *
@@ -28,7 +28,7 @@ class StartCongres implements ActionInterface {
 	 * @param array $params        	
 	 */
 	public function setParams(array $params) {
-		$this->congres = $params['congres'];
+		$this->congress = Congress::load($params['idCongress']);
 	}
 
 	/**
@@ -38,6 +38,6 @@ class StartCongres implements ActionInterface {
 	 * @return ActionResult
 	 */
 	public function execute() {
-		return Congres::start();
+		return $this->congress->start($this->player);
 	}
 }

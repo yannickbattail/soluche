@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once ('db.php');
+require_once ('classes/AbstractDbObject.class.php');
 require_once ('classes/Player.class.php');
 
 $errorMessage = '';

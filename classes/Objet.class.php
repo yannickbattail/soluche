@@ -1,5 +1,7 @@
 <?php
-class Objet {
+class Objet extends AbstractDbObject {
+
+	const TABLE_NAME = 'objet';
 
 	public $id = 0;
 
@@ -111,14 +113,20 @@ class Objet {
 		$this->image = $image;
 	}
 
+	public function defaultValues() {
+		$this->setNom('OBJET');
+		$this->setPermanent(0);
+		$this->setImage('images/objets/unknown.png');
+	}
+	
 	/**
 	 *
 	 * @param String $id        	
 	 * @return Objet
 	 */
 	public static function load($id) {
-		$sth = $GLOBALS['DB']->query('SELECT * FROM objet WHERE id=' . $id . ';');
-		$sth->setFetchMode(PDO::FETCH_CLASS, 'Objet');
+		$sth = $GLOBALS['DB']->query('SELECT * FROM ' . self::TABLE_NAME . ' WHERE id=' . $id . ';');
+		$sth->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
 		return $sth->fetch();
 	}
 
@@ -133,7 +141,7 @@ class Objet {
 	public function create() {}
 
 	public function update() {
-		$sth = $GLOBALS['DB']->prepare('UPDATE FROM objet SET ' . ' nom=:nom' . ' permanent=:permanent' . ' notoriete=:notoriete' . ' alcoolemie=:alcoolemie' . ' alcoolemie_optimum=:alcoolemie_optimum' . ' alcoolemie_max=:alcoolemie_max' . ' fatigue=:fatigue' . ' fatigue_max=:fatigue_max' . ' sex_appeal=:sex_appeal' . ' WHERE id=:id;');
+		$sth = $GLOBALS['DB']->prepare('UPDATE FROM ' . self::TABLE_NAME . ' SET ' . ' nom=:nom' . ' permanent=:permanent' . ' notoriete=:notoriete' . ' alcoolemie=:alcoolemie' . ' alcoolemie_optimum=:alcoolemie_optimum' . ' alcoolemie_max=:alcoolemie_max' . ' fatigue=:fatigue' . ' fatigue_max=:fatigue_max' . ' sex_appeal=:sex_appeal' . ' WHERE id=:id;');
 		$sth->bindValue(':id', $id, PDO::PARAM_INT);
 		$sth->bindValue(':nom', $nom, PDO::PARAM_STR);
 		$sth->bindValue(':permanent', $permanent, PDO::PARAM_INT);
@@ -151,7 +159,7 @@ class Objet {
 	}
 
 	public function delete() {
-		$GLOBALS['DB']->query('DELETE FROM objet WHERE id=' . $id . ';')->fetch(PDO::FETCH_ASSOC);
+		$GLOBALS['DB']->query('DELETE FROM ' . self::TABLE_NAME . ' WHERE id=' . $id . ';')->fetch(PDO::FETCH_ASSOC);
 	}
 
 	public function associatePlayer(Player $player) {

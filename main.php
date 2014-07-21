@@ -25,14 +25,14 @@ if (isset($_REQUEST['action']) && $_REQUEST['action']) {
 	if ($actionResult) {
 		$_SESSION['user']->addFatigue(-1);
 	}
-	if (isset($_SESSION['congres'])) {
-		$_SESSION['congres']->addFatigue(-1);
+	if (isset($_SESSION['congress'])) {
+		$_SESSION['congress']->addFatigue(-1);
 	}
 	$_SESSION['user']->loadInventory(); // relaod inventory if changes has appeared
 }
 
-if (!isset($_SESSION['congres']) || !$_SESSION['congres']) {
-	Dispatcher::setPage('congres');
+if (!isset($_SESSION['congress']) || !$_SESSION['congress']) {
+	Dispatcher::setPage('congress');
 }
 
 Pls::haveToGoToPls($_SESSION['user']);

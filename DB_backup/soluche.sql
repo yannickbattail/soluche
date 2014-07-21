@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 16, 2014 at 07:40 PM
+-- Generation Time: Jul 21, 2014 at 08:41 PM
 -- Server version: 5.6.15-log
 -- PHP Version: 5.5.8
 
@@ -19,6 +19,30 @@ SET time_zone = "+00:00";
 --
 -- Database: `soluche`
 --
+CREATE DATABASE IF NOT EXISTS `soluche` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `soluche`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `congress`
+--
+
+DROP TABLE IF EXISTS `congress`;
+CREATE TABLE IF NOT EXISTS `congress` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(128) NOT NULL,
+  `action_number` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `congress`
+--
+
+INSERT INTO `congress` (`id`, `nom`, `action_number`) VALUES
+(1, 'Week-end luche', 30),
+(2, 'Anniversaire', 20);
 
 -- --------------------------------------------------------
 
@@ -26,12 +50,15 @@ SET time_zone = "+00:00";
 -- Table structure for table `inventory`
 --
 
+DROP TABLE IF EXISTS `inventory`;
 CREATE TABLE IF NOT EXISTS `inventory` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `idplayer` int(11) DEFAULT NULL COMMENT 'Player',
   `idobject` int(11) DEFAULT NULL COMMENT 'Object',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
+  PRIMARY KEY (`id`),
+  KEY `idplayer` (`idplayer`),
+  KEY `idobject` (`idobject`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=30 ;
 
 --
 -- Dumping data for table `inventory`
@@ -51,6 +78,7 @@ INSERT INTO `inventory` (`id`, `idplayer`, `idobject`) VALUES
 -- Table structure for table `objet`
 --
 
+DROP TABLE IF EXISTS `objet`;
 CREATE TABLE IF NOT EXISTS `objet` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(128) NOT NULL,
@@ -64,7 +92,7 @@ CREATE TABLE IF NOT EXISTS `objet` (
   `sex_appeal` int(11) NOT NULL,
   `image` varchar(1024) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `objet`
@@ -77,12 +105,12 @@ INSERT INTO `objet` (`id`, `nom`, `permanent`, `notoriete`, `alcoolemie`, `alcoo
 (4, 'Redbull', 0, 0, 0, 0, 0, -2, 0, 0, 'images/objets/redbull.png'),
 (5, 'test+1 all', 0, 1, 1, 1, 1, 1, 1, 1, 'images/objets/pouce-haut.png'),
 (6, 'test-1 all', 0, -1, -1, -1, -1, -1, -1, -1, 'images/objets/pouce-bas.png'),
-(12, 'biere', 0, 0, 1, 0, 0, 0, 0, 0, 'images/objets/biere.png'),
 (7, 'Café', 0, 0, 0, 0, 0, -2, 0, 0, 'images/objets/cafe.png'),
 (8, 'Sandwish', 0, 0, 0, 0, 0, -3, 0, 0, 'images/objets/sandwich.png'),
 (9, 'vomi', 0, -8, 0, 0, 0, -1, 0, 0, 'images/objets/vomi.png'),
 (10, 'Poulet', 0, 0, 0, 0, 0, -3, 0, 0, 'images/objets/poulet.png'),
-(11, 'treuse', 0, 0, 2, 0, 0, 0, 0, 0, 'images/objets/treuse.png');
+(11, 'treuse', 0, 0, 2, 0, 0, 0, 0, 0, 'images/objets/treuse.png'),
+(12, 'biere', 0, 0, 1, 0, 0, 0, 0, 0, 'images/objets/biere.png');
 
 -- --------------------------------------------------------
 
@@ -90,6 +118,7 @@ INSERT INTO `objet` (`id`, `nom`, `permanent`, `notoriete`, `alcoolemie`, `alcoo
 -- Table structure for table `player`
 --
 
+DROP TABLE IF EXISTS `player`;
 CREATE TABLE IF NOT EXISTS `player` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(128) NOT NULL,
@@ -108,16 +137,18 @@ CREATE TABLE IF NOT EXISTS `player` (
   `sex` int(11) NOT NULL,
   `photo` varchar(1024) DEFAULT NULL,
   `pnj` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+  `id_congress` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_congress` (`id_congress`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
 --
 -- Dumping data for table `player`
 --
 
-INSERT INTO `player` (`id`, `nom`, `pass`, `lieu`, `points`, `notoriete`, `alcoolemie`, `alcoolemie_optimum`, `alcoolemie_max`, `fatigue`, `fatigue_max`, `sex_appeal`, `en_pls`, `debut_de_pls`, `sex`, `photo`, `pnj`) VALUES
-(-1, 'cuisine', '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 1),
-(-2, 'bar', '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 1);
+INSERT INTO `player` (`id`, `nom`, `pass`, `lieu`, `points`, `notoriete`, `alcoolemie`, `alcoolemie_optimum`, `alcoolemie_max`, `fatigue`, `fatigue_max`, `sex_appeal`, `en_pls`, `debut_de_pls`, `sex`, `photo`, `pnj`, `id_congress`) VALUES
+(-2, 'bar', '', '', 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, NULL, 1, NULL),
+(-1, 'cuisine', '', '', 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, NULL, 1, NULL);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

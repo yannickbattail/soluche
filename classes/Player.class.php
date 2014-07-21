@@ -1,5 +1,7 @@
 <?php
-class Player {
+class Player extends AbstractDbObject {
+
+	const TABLE_NAME = 'player';
 
 	public $id = 0;
 
@@ -254,7 +256,7 @@ class Player {
 		return $this->sex;
 	}
 
-	public function setSex(array $sex) {
+	public function setSex($sex) {
 		if (($sex === 0) || ($sex === 1)) {
 			$this->sex = $sex;
 		} else {
@@ -273,23 +275,61 @@ class Player {
 	}
 
 	/**
+	 *
 	 * @var int
 	 */
 	public $pnj = 0;
-	
+
 	public function getPnj() {
 		return $this->pnj;
 	}
-	
-	public function setPnj(array $pnj) {
+
+	public function setPnj($pnj) {
 		if ($pnj) {
 			$this->pnj = 1;
 		} else {
 			$this->pnj = 0;
 		}
 	}
-	
-	
+
+	/**
+	 *
+	 * @var int
+	 */
+	public $id_congress = 0;
+
+	public function getId_congress() {
+		return $this->id_congress;
+	}
+
+	public function setId_congress($id_congress) {
+		$this->id_congress = $id_congress;
+	}
+
+	/**
+	 *
+	 * @var Congress
+	 */
+	public $congress = null;
+
+	/**
+	 *
+	 * @return Congress
+	 */
+	public function getCongress() {
+		if ($this->congress === null) {
+			if (($this->id_congress != null) && ($this->id_congress > 0)) {
+				$this->congress = Congress::load($this->id_congress);
+			}
+		}
+		return $this->congress;
+	}
+
+	public function setCongress(Congress $congress) {
+		$this->congress = $congress;
+		$this->id_congress = $congress->getId();
+	}
+
 	public $inventory = array();
 
 	public function getInventory() {
@@ -300,7 +340,7 @@ class Player {
 		$this->inventory = $inventory;
 	}
 
-	private $calculated = array();
+	protected $calculated = array();
 
 	/**
 	 *
@@ -308,8 +348,8 @@ class Player {
 	 * @return Player
 	 */
 	public static function load($id) {
-		$sth = $GLOBALS['DB']->query('SELECT * FROM player WHERE id=' . intval($id));
-		$sth->setFetchMode(PDO::FETCH_CLASS, 'Player');
+		$sth = $GLOBALS['DB']->query('SELECT * FROM ' . self::TABLE_NAME . ' WHERE id=' . intval($id));
+		$sth->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
 		return $sth->fetch();
 	}
 
@@ -322,7 +362,7 @@ class Player {
 	}
 
 	public function create() {
-		$sth = $GLOBALS['DB']->prepare('INSERT INTO player ' . '(nom, pass, lieu, points, notoriete, alcoolemie, alcoolemie_optimum, alcoolemie_max, fatigue, fatigue_max, sex_appeal, en_pls, debut_de_pls, sex, photo)' . ' VALUES ( :nom, :pass, :lieu, :points, :notoriete, :alcoolemie, :alcoolemie_optimum, :alcoolemie_max, :fatigue, :fatigue_max, :sex_appeal, :en_pls, :debut_de_pls, :sex, :photo, :pnj);');
+		$sth = $GLOBALS['DB']->prepare('INSERT INTO ' . self::TABLE_NAME . ' ' . '(nom, pass, lieu, points, notoriete, alcoolemie, alcoolemie_optimum, alcoolemie_max, fatigue, fatigue_max, sex_appeal, en_pls, debut_de_pls, sex, photo, pnj, id_congress)' . ' VALUES ( :nom, :pass, :lieu, :points, :notoriete, :alcoolemie, :alcoolemie_optimum, :alcoolemie_max, :fatigue, :fatigue_max, :sex_appeal, :en_pls, :debut_de_pls, :sex, :photo, :pnj, :id_congress);');
 		$sth->bindValue(':nom', $this->nom, PDO::PARAM_STR);
 		$sth->bindValue(':pass', $this->pass, PDO::PARAM_STR);
 		$sth->bindValue(':lieu', $this->lieu, PDO::PARAM_STR);
@@ -339,6 +379,7 @@ class Player {
 		$sth->bindValue(':sex', $this->sex, PDO::PARAM_INT);
 		$sth->bindValue(':photo', $this->photo, PDO::PARAM_STR);
 		$sth->bindValue(':pnj', $this->pnj, PDO::PARAM_INT);
+		$sth->bindValue(':id_congress', $this->id_congress, PDO::PARAM_INT);
 		if ($sth->execute() === false) {
 			throw new Exception(print_r($sth->errorInfo(), true));
 		}
@@ -359,10 +400,11 @@ class Player {
 		$this->sex = 0;
 		$this->photo = 'images/tete_faluche_grise.jpg';
 		$this->pnj = 0;
+		$this->id_congress = null;
 	}
 
 	public function update() {
-		$sth = $GLOBALS['DB']->prepare('UPDATE player SET nom=:nom, pass=:pass, lieu=:lieu, points=:points, notoriete=:notoriete, alcoolemie=:alcoolemie, alcoolemie_optimum=:alcoolemie_optimum, alcoolemie_max=:alcoolemie_max, fatigue=:fatigue, fatigue_max=:fatigue_max, sex_appeal=:sex_appeal, en_pls=:en_pls, debut_de_pls=:debut_de_pls, sex=:sex, photo=:photo, pnj=:pnj WHERE id=:id;');
+		$sth = $GLOBALS['DB']->prepare('UPDATE ' . self::TABLE_NAME . ' SET nom=:nom, pass=:pass, lieu=:lieu, points=:points, notoriete=:notoriete, alcoolemie=:alcoolemie, alcoolemie_optimum=:alcoolemie_optimum, alcoolemie_max=:alcoolemie_max, fatigue=:fatigue, fatigue_max=:fatigue_max, sex_appeal=:sex_appeal, en_pls=:en_pls, debut_de_pls=:debut_de_pls, sex=:sex, photo=:photo, pnj=:pnj, id_congress=:id_congress WHERE id=:id;');
 		$sth->bindValue(':id', $this->id, PDO::PARAM_INT);
 		$sth->bindValue(':nom', $this->nom, PDO::PARAM_STR);
 		$sth->bindValue(':pass', $this->pass, PDO::PARAM_STR);
@@ -379,14 +421,15 @@ class Player {
 		$sth->bindValue(':debut_de_pls', $this->debut_de_pls, PDO::PARAM_INT);
 		$sth->bindValue(':sex', $this->sex, PDO::PARAM_INT);
 		$sth->bindValue(':photo', $this->photo, PDO::PARAM_STR);
-		$sth->bindValue(':pnj', $this->pnj, PDO::PARAM_STR);
+		$sth->bindValue(':pnj', $this->pnj, PDO::PARAM_INT);
+		$sth->bindValue(':id_congress', $this->id_congress, PDO::PARAM_INT);
 		if ($sth->execute() === false) {
 			throw new Exception(print_r($sth->errorInfo(), true));
 		}
 	}
 
 	public function delete() {
-		$GLOBALS['DB']->query('DELETE FROM player WHERE id=' . $this->id . ';')->fetch(PDO::FETCH_ASSOC);
+		$GLOBALS['DB']->query('DELETE FROM ' . self::TABLE_NAME . ' WHERE id=' . $this->id . ';')->fetch(PDO::FETCH_ASSOC);
 	}
 
 	/**
@@ -396,10 +439,10 @@ class Player {
 	 * @return Player
 	 */
 	public static function login($login, $pass) {
-		$sth = $GLOBALS['DB']->prepare('SELECT * FROM player WHERE nom=:nom AND pass=:pass;');
+		$sth = $GLOBALS['DB']->prepare('SELECT * FROM ' . self::TABLE_NAME . ' WHERE nom=:nom AND pass=:pass;');
 		$sth->bindValue(':nom', $login, PDO::PARAM_STR);
 		$sth->bindValue(':pass', $pass, PDO::PARAM_STR);
-		$sth->setFetchMode(PDO::FETCH_CLASS, 'Player');
+		$sth->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
 		if ($sth->execute() === false) {
 			// var_dump($sth->errorInfo());
 			return null;
@@ -413,9 +456,9 @@ class Player {
 	 * @return Player
 	 */
 	public static function loginExists($nom) {
-		$sth = $GLOBALS['DB']->prepare('SELECT * FROM player WHERE nom=:nom');
+		$sth = $GLOBALS['DB']->prepare('SELECT * FROM ' . self::TABLE_NAME . ' WHERE nom=:nom');
 		$sth->bindValue(':nom', $nom, PDO::PARAM_STR);
-		$sth->setFetchMode(PDO::FETCH_CLASS, 'Player');
+		$sth->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
 		if ($sth->execute() === false) {
 			// var_dump($sth->errorInfo());
 			return false;
@@ -448,5 +491,11 @@ class Player {
 			}
 		}
 		return $this;
+	}
+
+	function addRandomItem() {
+		Objet::associate($this->getId(), 4);
+		Objet::associate($this->getId(), 8);
+		Objet::associate($this->getId(), 11);
 	}
 }

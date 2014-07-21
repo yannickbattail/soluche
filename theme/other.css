@@ -37,45 +37,65 @@ tr.even {
 	font-size: 14px;
 }
 
-.congres {
+.congress {
 	margin: 5px;
 	font-size: 14px;
 }
 
 .errorException {
-	background-color: orange;
+	background-color: lightyellow;
+	background-image: url("../images/util/nuke.png");
+	background-position: left;
+	background-repeat: no-repeat;
+	background-size: 32px 32px;
 	color: darkred;
 	border-width: 2px;
 	border-style: solid;
 	border-radius: 10px;
 	padding: 5px;
+	padding-left: 32px;
 }
 
 .errorMessage {
 	background-color: lightyellow;
+	background-image: url("../images/util/warning.png");
+	background-position: left;
+	background-repeat: no-repeat;
+	background-size: 32px 32px;
 	color: darkred;
 	border-width: 2px;
 	border-style: solid;
 	border-radius: 10px;
 	padding: 5px;
+	padding-left: 32px;
 }
 
 .infoMessage {
 	background-color: lightblue;
+	background-image: url("../images/util/info.png");
+	background-position: left;
+	background-repeat: no-repeat;
+	background-size: 32px 32px;
 	color: darkgreen;
 	border-width: 2px;
 	border-style: solid;
 	border-radius: 10px;
 	padding: 5px;
+	padding-left: 32px;
 }
 
 .successMessage {
 	background-color: lightyellow;
+	background-image: url("../images/util/success.png");
+	background-position: left;
+	background-repeat: no-repeat;
+	background-size: 32px 32px;
 	color: darkgreen;
 	border-width: 2px;
 	border-style: solid;
 	border-radius: 10px;
 	padding: 5px;
+	padding-left: 32px;
 }
 
 .action {

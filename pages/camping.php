@@ -1,7 +1,6 @@
 Se deplacer:
 <ul>
 	<li><a href="main.php?page=bar">au bar</a></li>
-	<li><?=linkAction('startPLS', array(), 'se mettre en PLS', null)?></li>
 	<li><a href="main.php?page=tente">à ta tente</a></li>
 	<li><a href="main.php?page=cuisine">à la cuisine</a></li>
 	<li><a href="main.php?page=danse">à la piste de danse</a></li>
@@ -12,4 +11,5 @@ Se deplacer:
 <?php printUserStats($_SESSION['user']); ?>
 <?php printInventory($_SESSION['user']); ?>
 
+<?=linkAction('startPLS', array(), 'se mettre en PLS', null)?>
 <?=linkAction('vt', array(), 'faire un VT', 'camping')?>
