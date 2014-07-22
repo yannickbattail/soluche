@@ -9,9 +9,6 @@
 <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css" />
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
-<script>
-$( document ).tooltip();
-</script>
 </head>
 <body>
 	<h1><?php echo Dispatcher::$pageTitle; ?></h1>

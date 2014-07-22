@@ -9,7 +9,7 @@ Se deplacer:
 
 <hr />
 <?php printUserStats($_SESSION['user']); ?>
-<?php printInventory($_SESSION['user']); ?>
+<?php printInventory2($_SESSION['user']); ?>
 
 
 <?php echo (new StartPLS($_SESSION['user']))->setParams(array())->link() ;?>

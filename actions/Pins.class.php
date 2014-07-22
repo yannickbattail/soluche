@@ -75,9 +75,9 @@ class Pins implements ActionInterface {
 			$url .= '&page=' . urldecode($page);
 		}
 		$url .= '&' . self::PARAM_NAME . '=' . $this->opponent->getId();
-		
+		$htmlId = __CLASS__ . '_' . $this->opponent->getId();
 		if (!$this->player->isFatigued()) {
-			return '<a href="' . $url . '"  class="action">' . $text . '</a>';
+			return '<a href="' . $url . '"  class="action" id="' . $htmlId . '" title="">' . $text . '</a>'.$this->statsDisplay();
 		} else {
 			return '<span  class="actionDisabled" title="Trop fatigué pour ça.">' . $text . '</span>';
 		}
@@ -89,48 +89,33 @@ class Pins implements ActionInterface {
 	 */
 	public function statsDisplay() {
 		// @TODO faire tous les champs
+		$htmlId = __CLASS__ . '_' . $this->opponent->getId();
 		ob_start();
 		?>
-<table class="inventory">
+<table class="inventory" id="<?= $htmlId ?>_tooltip" style="display: none;">
+	<tr class="even">
+		<th>Pinser</th>
+		<th>
+			<img src="images/objets/pins.png" class="inventoryImage" title="pin's" />
+		</th>
+	</tr>
 	<tr class="odd">
-		<td><?= $this->opponent->nom; ?></td>
-		<td>
-			<img src="<?= $this->opponent->photo; ?>" class="inventoryImage" title="<?= $this->opponent->nom; ?>" />
-		</td>
+		<td>Points</td>
+		<td><?= plus(1, 1); ?></td>
 	</tr>
 	<tr class="even">
-		<td>Permanant</td>
-		<td><?= $objet->permanent?'oui':'non' ?></td>
-	</tr>
-	<tr class="odd">
 		<td>Notoriété</td>
-		<td><?= plus($objet->notoriete, 1); ?></td>
-	</tr>
-	<tr class="even">
-		<td>Verre</td>
-		<td><?= plus($objet->alcoolemie, 0); ?></td>
-	</tr>
-	<tr class="odd">
-		<td>Verre optimum</td>
-		<td><?= plus($objet->alcoolemie_optimum, 1); ?></td>
-	</tr>
-	<tr class="even">
-		<td>Verre max</td>
-		<td><?= plus($objet->alcoolemie_max, 1); ?></td>
+		<td><?= plus(1, 1); ?></td>
 	</tr>
 	<tr class="odd">
 		<td>Fatigue</td>
-		<td><?= plus($objet->fatigue, 0); ?></td>
-	</tr>
-	<tr class="even">
-		<td>Fatigue max</td>
-		<td><?= plus($objet->fatigue_max, 1); ?></td>
-	</tr>
-	<tr class="odd">
-		<td>Sexe appeal</td>
-		<td><?= plus($objet->sex_appeal, 1); ?></td>
+		<td><?= plus(1, 0); ?></td>
 	</tr>
 </table>
+<script type="text/javascript">
+$("#<?= $htmlId ?>").tooltip({ content: $("#<?= $htmlId ?>_tooltip").html() });
+</script>
+
 <?php
 		return ob_get_clean();
 	}

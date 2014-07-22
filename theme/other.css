@@ -24,6 +24,44 @@
 	padding: 3px 6px;
 }
 
+.inventoryBox {
+	width: 400px;
+	border-style: inset;
+	border-width: 2px;
+	border-radius: 5px;
+}
+
+.objetCard {
+	display:inline-block;
+	width: 40px;
+	border-width: 2px;
+	border-style: outset;
+	border-radius: 2px;
+}
+
+.objetTooltip {
+	display: none;
+}
+
+.playerBox {
+	width: 400px;
+	border-style: inset;
+	border-width: 2px;
+	border-radius: 5px;
+}
+
+.playerCard {
+	display:inline-block;
+	width: 40px;
+	border-width: 2px;
+	border-style: outset;
+	border-radius: 2px;
+}
+
+.playerTooltip {
+	display: none;
+}
+
 tr.odd {
 	background: #404040;
 }

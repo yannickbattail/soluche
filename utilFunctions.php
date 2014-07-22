@@ -158,6 +158,131 @@ function printInventory(Player $player) {
 <?php
 }
 
+function printInventory2(Player $player) {
+	?>
+	Inventaire:
+<div class="inventoryBox">
+
+<?php
+	$num = 0;
+	foreach ($player->inventory as $objet) {
+		printObjet($objet, $num);
+		$num++;
+	}
+	?>
+</div>
+<?php
+}
+
+function printObjet(Objet $objet, $num = 0) {
+	?>
+<div class="objetCard" id="objet_<?= $objet->id.'_'.$num; ?>">
+	<img src="<?= $objet->image; ?>" class="inventoryImage" title="<?= $objet->nom; ?>" />
+	<?= $objet->permanent?'oui':(new UseObjet($_SESSION['user']))->setParams(array(UseObjet::PARAM_NAME=>$objet))->link()?>
+</div>
+<table class="objetTooltip" id="objet_<?= $objet->id.'_'.$num ?>_tooltip" style="display: none;">
+	<tr class="odd">
+		<th>Nom</th>
+		<td><?= $objet->nom; ?></td>
+	</tr>
+	<tr class="even">
+		<th>Permanant</th>
+		<td><?= $objet->permanent?'oui':'non' ?></td>
+	</tr>
+	<tr class="odd">
+		<th>Notoriété</th>
+		<td><?= plus($objet->notoriete, 1); ?></td>
+	</tr>
+	<tr class="even">
+		<th>Verre</th>
+		<td><?= plus($objet->alcoolemie, 0); ?></td>
+	</tr>
+	<tr class="odd">
+		<th>Verre optimum</th>
+		<td><?= plus($objet->alcoolemie_optimum, 1); ?></td>
+	</tr>
+	<tr class="even">
+		<th>Verre max</th>
+		<td><?= plus($objet->alcoolemie_max, 1); ?></td>
+	</tr>
+	<tr class="odd">
+		<th>Fatigue</th>
+		<td><?= plus($objet->fatigue, 0); ?></td>
+	</tr>
+	<tr class="even">
+		<th>Fatigue max</th>
+		<td><?= plus($objet->fatigue_max, 1); ?></td>
+	</tr>
+	<tr class="odd">
+		<th>Sexe appeal</th>
+		<td><?= plus($objet->sex_appeal, 1); ?></td>
+	</tr>
+</table>
+<script type="text/javascript">
+	$("#objet_<?= $objet->id.'_'.$num; ?>").tooltip({ content: $("#objet_<?= $objet->id.'_'.$num; ?>_tooltip").html() });
+</script>
+<?php
+}
+
+function printPlayerBox(PDOStatement $stmt) {
+	?>
+<div class="playerBox">
+
+<?php
+	$num = 0;
+	$stmt->setFetchMode(PDO::FETCH_CLASS, 'Player');
+	while ($stmt && ($player = $stmt->fetch())) {
+		printPlayer($player, $num);
+		$num++;
+	}
+	?>
+</div>
+<?php
+}
+
+function printPlayer(Player $player, $num = 0) {
+	?>
+<div class="playerCard" id="player_<?= $player->id.'_'.$num; ?>">
+	<img src="<?= $player->getPhoto() ?>" class="inventoryImage" title="<?= $player->getNom() ?>" />
+</div>
+<table class="playerTooltip" id="player_<?= $player->getId().'_'.$num ?>_tooltip" style="display: none;">
+	<tr class="odd">
+		<th>Nom</th>
+		<td><?= $player->getNom(); ?> <?php echo $player->getSex()?'<span style="color:blue">&#9794;</span>':'<span style="color:pink">&#9792;</span>'; ?></td>
+	</tr>
+	<tr class="even">
+		<th>Points</th>
+		<td><?=$player->getPoints(); ?></td>
+	</tr>
+	<tr class="odd">
+		<th>Notoriété</th>
+		<td><?=$player->getNotoriete(); ?></td>
+	</tr>
+	<tr class="even">
+		<th>Verre</th>
+		<td><?= lifeBarMiddle($player->getAlcoolemie_max(), $player->getAlcoolemie_optimum(), $player->getAlcoolemie()); ?> <?=$player->getAlcoolemie().'/'.$player->getAlcoolemie_max().' optimum à '.$player->getAlcoolemie_optimum(); ?></td>
+	</tr>
+	<tr class="odd">
+		<th>Fatigue</th>
+		<td><?=lifeBar($player->getFatigue_max(), $player->getFatigue()).$player->getFatigue().'/'.$player->getFatigue_max(); ?></td>
+	</tr>
+	<!--
+	<tr class="odd">
+		<th>sex_appeal</th>
+		<td><?=$player->getSex_appeal(); ?></td>
+	</tr>
+	-->
+	<tr class="even">
+		<th>Pinser</th>
+		<td><?=(new Pins($_SESSION['user']))->setParams(array(Pins::PARAM_NAME=>$player))->link('bar')?></td>
+	</tr>
+</table>
+<script type="text/javascript">
+	$("#player_<?= $player->getId().'_'.$num; ?>").tooltip({ content: $("#player_<?= $player->getId().'_'.$num; ?>_tooltip").html() });
+</script>
+<?php
+}
+
 function plus($nb, $better) {
 	if ($nb > 0 && $better) {
 		$nb = '<span style="color: chartreuse;">+' . $nb . '</span>';
