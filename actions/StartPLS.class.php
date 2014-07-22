@@ -1,5 +1,5 @@
 <?php
-class EndPLS implements ActionInterface {
+class StartPLS implements ActionInterface {
 
 	/**
 	 *
@@ -32,29 +32,29 @@ class EndPLS implements ActionInterface {
 	 * @return ActionResult
 	 */
 	public function execute() {
-		return Pls::endPLS($this->player);
+		return Pls::startToPls($this->player);
 	}
 
 	/**
 	 *
-	 * @param array $actionParams
-	 * @param string $page
+	 * @param array $actionParams        	
+	 * @param string $page        	
 	 * @return string
 	 */
 	public function link($page = null) {
-		$text = 'Finir la PLS';
+		$text = 'Se mettre en PLS';
 		$url = 'main.php?action=' . urldecode(__CLASS__);
 		if ($page) {
 			$url .= '&page=' . urldecode($page);
 		}
 		// $url .= '&' . self::PARAM_NAME . '=' . $actionParams[self::PARAM_NAME]->getId();
-		if (Pls::isPlsFinished($this->player)) {
+		if (!$this->player->isFatigued()) {
 			return '<a href="' . $url . '"  class="action">' . $text . '</a>';
 		} else {
 			return '<span class="actionDisabled" title="Trop fatigué pour ça.">' . $text . '</span>';
 		}
 	}
-	
+
 	/**
 	 *
 	 * @return string
@@ -62,23 +62,23 @@ class EndPLS implements ActionInterface {
 	public function statsDisplay() {
 		ob_start();
 		?>
-	<table class="inventory">
-		<tr class="odd">
-			<td>PLS</td>
-			<td>
-				<img src="images/objets/unknown.png" class="inventoryImage" title="PLS" />
-			</td>
-		</tr>
-		<tr class="even">
-			<td>Notoriété</td>
-			<td><?= plus(-1, 1); ?></td>
-		</tr>
-		<tr class="odd">
-			<td>Verre</td>
-			<td><?= plus(-1, 0); ?>/60sec</td>
-		</tr>
-	</table>
-	<?php
-			return ob_get_clean();
-		}
+<table class="inventory">
+	<tr class="odd">
+		<td>PLS</td>
+		<td>
+			<img src="images/objets/unknown.png" class="inventoryImage" title="PLS" />
+		</td>
+	</tr>
+	<tr class="even">
+		<td>Notoriété</td>
+		<td><?= plus(-1, 1); ?></td>
+	</tr>
+	<tr class="odd">
+		<td>Verre</td>
+		<td><?= plus(-1, 0); ?>/60sec</td>
+	</tr>
+</table>
+<?php
+		return ob_get_clean();
+	}
 }

@@ -4,7 +4,18 @@ function logoutBar() {
 	return '<div class="login">' . $_SESSION['user']->nom . ' <a href="login.php?logout=1"> quitter</a></div>';
 }
 
+/**
+ *
+ * @deprecated use ActionInterface::link()
+ * @param string $action        	
+ * @param array $actionParams        	
+ * @param string $text        	
+ * @param string|NULL $page        	
+ * @param bool|NULL $forceEnable        	
+ * @return string
+ */
 function linkAction($action, array $actionParams, $text, $page = null, $forceEnable = null) {
+	trigger_error("linkAction() is deprecated use ActionInterface::link()", E_USER_DEPRECATED);
 	$url = 'main.php?action=' . urldecode($action);
 	if ($page) {
 		$url .= '&page=' . urldecode($page);
@@ -19,7 +30,7 @@ function linkAction($action, array $actionParams, $text, $page = null, $forceEna
 	} else if ($forceEnable === true) {
 		$enable = false;
 	} else {
-		$enable = !Pls::isFatigued($_SESSION['user']);
+		$enable = !$_SESSION['user']->isFatigued();
 	}
 	if ($enable) {
 		return '<a href="' . $url . '"  class="action" title="' . $action . '">' . $text . '</a>';
@@ -130,7 +141,8 @@ function printInventory(Player $player) {
 		<td>
 			<img src="<?= $objet->image; ?>" class="inventoryImage" title="<?= $objet->nom; ?>" />
 		</td>
-		<td><?= $objet->permanent?'oui':linkAction('UseObjet', array('objetId'=>$objet->id), 'utiliser') ?></td>
+		<td><?= $objet->permanent?'oui':(new UseObjet($_SESSION['user']))->setParams(array(UseObjet::PARAM_NAME=>$objet))->link() ?></td>
+		<!-- <td><?= $objet->permanent?'oui':linkAction('UseObjet', array('objetId'=>$objet->id), 'utiliser') ?></td> -->
 		<td><?= plus($objet->notoriete, 1); ?></td>
 		<td><?= plus($objet->alcoolemie, 0); ?></td>
 		<td><?= plus($objet->alcoolemie_optimum, 1); ?></td>
@@ -148,15 +160,15 @@ function printInventory(Player $player) {
 
 function plus($nb, $better) {
 	if ($nb > 0 && $better) {
-		$nb = '<span style="color: chartreuse;">+' . $nb . '</div>';
+		$nb = '<span style="color: chartreuse;">+' . $nb . '</span>';
 	} else if ($nb > 0 && !$better) {
-		$nb = '<span style="color: red;">+' . $nb . '</div>';
+		$nb = '<span style="color: red;">+' . $nb . '</span>';
 	} else if ($nb < 0 && !$better) {
-		$nb = '<span style="color: chartreuse;">' . $nb . '</div>';
+		$nb = '<span style="color: chartreuse;">' . $nb . '</span>';
 	} else if ($nb < 0 && $better) {
-		$nb = '<span style="color: red;">' . $nb . '</div>';
+		$nb = '<span style="color: red;">' . $nb . '</span>';
 	} else {
-		$nb = '<span style="">+' . $nb . '</div>';
+		$nb = '<span style="">+' . $nb . '</span>';
 	}
 	return $nb;
 }

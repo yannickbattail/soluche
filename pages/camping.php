@@ -11,5 +11,6 @@ Se deplacer:
 <?php printUserStats($_SESSION['user']); ?>
 <?php printInventory($_SESSION['user']); ?>
 
-<?=linkAction('startPLS', array(), 'se mettre en PLS', null)?>
-<?=linkAction('vt', array(), 'faire un VT', 'camping')?>
+
+<?php echo (new StartPLS($_SESSION['user']))->setParams(array())->link() ;?>
+<?php echo (new Vt($_SESSION['user']))->setParams(array())->link() ;?>

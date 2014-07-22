@@ -85,16 +85,20 @@ class Dispatcher {
 		}
 	}
 
+	/**
+	 * 
+	 * @return ActionResult|NULL
+	 */
 	public static function executeAction() {
 		if (self::$action) {
-			$actionReturn = self::$action->execute();
-			if ($actionReturn->succes) {
-				self::addMessage($actionReturn->message, Dispatcher::MESSAGE_LEVEL_SUCCES);
+			$actionResult = self::$action->execute();
+			if ($actionResult->succes) {
+				self::addMessage($actionResult->message, Dispatcher::MESSAGE_LEVEL_SUCCES);
 			} else {
-				self::addMessage($actionReturn->message, Dispatcher::MESSAGE_LEVEL_FAIL);
+				self::addMessage($actionResult->message, Dispatcher::MESSAGE_LEVEL_FAIL);
 			}
-			$_SESSION['congress']->addHistory($actionReturn);
-			return $actionReturn->succes;
+			$_SESSION['congress']->addHistory($actionResult);
+			return $actionResult;
 		}
 		return null;
 	}

@@ -23,9 +23,10 @@ class Pls {
 			if (($player->alcoolemie - $recup) < 0) {
 				$recup = $player->alcoolemie;
 			}
-			$player->alcoolemie -= $recup;
-			$player->en_pls = 0;
-			$player->debut_de_pls = 0;
+			$player->addAlcoolemie(-1 * $recup);
+			$player->setEn_pls(0);
+			$player->setDebut_de_pls(0);
+			$player->fatigue(1);
 			$res->message = 'vous avez recupéré ' . $recup . ' verres.';
 			$res->succes = false;
 			Dispatcher::setPage('camping');
@@ -70,8 +71,12 @@ class Pls {
 	 * @param Player $pl        	
 	 */
 	public static function startToPls(Player $player) {
+		$res = new ActionResult();
 		$player->en_pls = true;
 		$player->debut_de_pls = time();
+		$res->message = 'En PLS!';
+		$res->succes = true;
+		return $res;
 	}
 
 	/**
@@ -84,17 +89,5 @@ class Pls {
 			return true;
 		}
 		return 60 - (time() - $player->debut_de_pls);
-	}
-
-	/**
-	 *
-	 * @param Player $player        	
-	 * @return boolean
-	 */
-	public static function isFatigued(Player $player) {
-		if ($player->getCalculatedFatigue() >= $player->getCalculatedFatigue_max()) {
-			return true;
-		}
-		return false;
 	}
 }

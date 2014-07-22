@@ -13,7 +13,7 @@
 	</tr>
 	<?php
 	$stmt = $GLOBALS['DB']->query('SELECT * FROM player WHERE lieu = "danse" AND id != ' . $_SESSION['user']->id . ' ;');
-	$stmt->setFetchMode(PDO::FETCH_CLASS, 'Objet');
+	$stmt->setFetchMode(PDO::FETCH_CLASS, 'Player');
 	$n = 0;
 	while ($stmt && ($player = $stmt->fetch())) {
 		$odd = ($n++ % 2) ? 'odd' : 'even';
@@ -31,10 +31,10 @@
 		<td><?=lifeBar($player->fatigue_max, $player->fatigue).$player->fatigue.'/'.$player->fatigue_max; ?></td>
 		<!-- <td><?=$player->sex_appeal; ?></td> -->
 		<td>
-			<?=linkAction('choper', array('playerId'=>$player->id), 'essayer de choper', 'danse')?>
+			<?=(new Choper($_SESSION['user']))->setParams(array(Choper::PARAM_NAME=>$player))->link()?>
 		</td>
 		<td>
-			<?=linkAction('pins', array('playerId'=>$player->id), 'pin\'s', 'danse')?>
+			<?=(new Pins($_SESSION['user']))->setParams(array(Pins::PARAM_NAME=>$player))->link()?>
 		</td>
 	</tr>
         <?php

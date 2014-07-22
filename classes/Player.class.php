@@ -340,6 +340,17 @@ class Player extends AbstractDbObject {
 		$this->inventory = $inventory;
 	}
 
+	/**
+	 *    	
+	 * @return boolean
+	 */
+	public function isFatigued() {
+		if ($this->getCalculatedFatigue() >= $this->getCalculatedFatigue_max()) {
+			return true;
+		}
+		return false;
+	}
+
 	protected $calculated = array();
 
 	/**

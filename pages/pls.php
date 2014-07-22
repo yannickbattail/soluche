@@ -5,10 +5,8 @@ Toutes les 60 secondes vous perdez 1 verre d'acoolémie.
 <?php printInventory($_SESSION['user']); ?>
 
 <?php
-if (Pls::isPlsFinished($_SESSION['user'])) {
-	echo linkAction('EndPls', array(), 'Finir sa pls', 'camping', true);
-} else {
-	echo linkAction('EndPls', array(), 'Finir sa pls', 'camping', false);
+echo (new EndPLS($_SESSION['user']))->setParams(array())->link('camping');
+if (!Pls::isPlsFinished($_SESSION['user'])) {
 	echo 'Encore trop d\'verres, impossible de finir sa PLS. Wait for it.';
 }
 ?>

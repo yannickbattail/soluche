@@ -20,7 +20,7 @@ Les congrès du moment:
 		<td>
 			<?= $congress->getAction_number(); ?>
 		</td>
-		<td><?=linkAction('StartCongress', array('idCongress' => $congress->getId()), 'Participer au congrès', null)?></td>
+		<td><?=(new StartCongress($_SESSION['user']))->setParams(array(StartCongress::PARAM_NAME=>$player))->link('bar')?></td>
 	</tr>
         <?php
 	}

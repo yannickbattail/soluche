@@ -1,6 +1,8 @@
 <?php
 class StartCongress implements ActionInterface {
 
+	const PARAM_NAME = 'idCongress';
+
 	/**
 	 *
 	 * @var Player
@@ -28,7 +30,8 @@ class StartCongress implements ActionInterface {
 	 * @param array $params        	
 	 */
 	public function setParams(array $params) {
-		$this->congress = Congress::load($params['idCongress']);
+		$this->congress = Congress::load($params[self::PARAM_NAME]);
+		return $this;
 	}
 
 	/**
@@ -39,5 +42,26 @@ class StartCongress implements ActionInterface {
 	 */
 	public function execute() {
 		return $this->congress->start($this->player);
+	}
+
+	/**
+	 *
+	 * @param array $actionParams        	
+	 * @param string $page        	
+	 * @return string
+	 */
+	public function link($page = null) {
+		$text = 'Aller à ce congrès';
+		$url = 'main.php?action=' . urldecode(__CLASS__);
+		if ($page) {
+			$url .= '&page=' . urldecode($page);
+		}
+		$url .= '&' . self::PARAM_NAME . '=' . $actionParams[self::PARAM_NAME]->getId();
+		
+		//if (!$this->player->isFatigued()) {
+		//	return '<a href="' . $url . '"  class="action">' . $text . '</a>';
+		//} else {
+			return '<span  class="actionDisabled" title="Trop fatigué pour ça.">' . $text . '</span>';
+		//}
 	}
 }

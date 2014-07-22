@@ -2,6 +2,9 @@
 
 function __autoload($classname) {
 	$filename = "./classes/" . $classname . ".class.php";
+	if (!file_exists($filename)) {
+		$filename = "./actions/" . $classname . ".class.php";
+	}
 	include_once ($filename);
 }
 session_start();
@@ -22,11 +25,10 @@ if (isset($_REQUEST['page']) && $_REQUEST['page']) {
 if (isset($_REQUEST['action']) && $_REQUEST['action']) {
 	Dispatcher::defineAction($_REQUEST['action'], $_SESSION['user'], $_REQUEST);
 	$actionResult = Dispatcher::executeAction();
-	if ($actionResult) {
-		$_SESSION['user']->addFatigue(-1);
-	}
-	if (isset($_SESSION['congress'])) {
-		$_SESSION['congress']->addFatigue(-1);
+	if ($actionResult->succes == true) {
+		if (isset($_SESSION['congress'])) {
+			$_SESSION['congress']->addFatigue(-1);
+		}
 	}
 	$_SESSION['user']->loadInventory(); // relaod inventory if changes has appeared
 }

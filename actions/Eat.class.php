@@ -1,8 +1,8 @@
 <?php
-class UseObjet implements ActionInterface {
+class Eat implements ActionInterface {
 
 	const PARAM_NAME = 'idObjet';
-
+	
 	/**
 	 *
 	 * @var Player
@@ -30,7 +30,7 @@ class UseObjet implements ActionInterface {
 	 * @param array $params        	
 	 */
 	public function setParams(array $params) {
-		if ($params[self::PARAM_NAME] instanceof Objet) {
+			if ($params[self::PARAM_NAME] instanceof Objet) {
 			$this->objet = $params[self::PARAM_NAME];
 		} else {
 			$this->objet = Objet::load($params[self::PARAM_NAME]);
@@ -49,12 +49,11 @@ class UseObjet implements ActionInterface {
 	 */
 	public function execute() {
 		$res = new ActionResult();
-		if ($this->objet->permanent) {
+		if ($this->objet->permanent) { // useless
 			$res->succes = false;
 			$res->message = 'Cet objet est permanent et ne peut etre utilisé.';
 			return $res;
 		}
-		// @TODO verifier si l objet est bien present dans inventaire du player
 		$this->player->addNotoriete($this->objet->notoriete);
 		$this->player->addAlcoolemie($this->objet->alcoolemie);
 		$this->player->addAlcoolemie_optimum($this->objet->alcoolemie_optimum);
@@ -62,9 +61,8 @@ class UseObjet implements ActionInterface {
 		$this->player->addFatigue($this->objet->fatigue);
 		$this->player->addFatigue_max($this->objet->fatigue_max);
 		$this->player->addSex_appeal($this->objet->sex_appeal);
-		Objet::desassociate($this->player->getId(), $this->objet->id);
 		$res->succes = true;
-		$res->message = 'Object ' . $this->objet->nom . ' utilisé.';
+		$res->message = 'j\'ai bien mangé, j\'ai bien bu un(e) ' . $this->objet->nom . '.';
 		return $res;
 	}
 
@@ -75,18 +73,18 @@ class UseObjet implements ActionInterface {
 	 * @return string
 	 */
 	public function link($page = null) {
-		$text = 'Utiliser';
+		$text = 'Manger/boire';
 		$url = 'main.php?action=' . urldecode(__CLASS__);
 		if ($page) {
 			$url .= '&page=' . urldecode($page);
 		}
 		$url .= '&' . self::PARAM_NAME . '=' . $this->objet->getId();
 		
-		if (!$this->player->isFatigued()) {
+		//if (!$this->player->isFatigued()) {
 			return '<a href="' . $url . '"  class="action">' . $text . '</a>';
-		} else {
-			return '<span  class="actionDisabled" title="Trop fatigué pour ça.">' . $text . '</span>';
-		}
+		//} else {
+		//	return '<span  class="actionDisabled" title="Trop fatigué pour ça.">' . $text . '</span>';
+		//}
 	}
 
 	/**

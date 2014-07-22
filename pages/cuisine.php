@@ -18,7 +18,7 @@ while ($sth && ($objet = $sth->fetch())) {
 		<td>
 			<img src="<?= $objet->image; ?>" class="inventoryImage" title="<?= $objet->nom; ?>" />
 		</td>
-		<td><?= linkAction('Manger', array('objetId'=>$objet->id), 'miam!', null, true) ?></td>
+		<td><?= (new Eat($_SESSION['user']))->setParams(array(Eat::PARAM_NAME=>$objet))->link() ?></td>
 		<td><?= plus($objet->fatigue, 0); ?></td>
 	</tr>
         <?php
@@ -50,7 +50,7 @@ while ($sth && ($objet = $sth->fetch())) {
 			<img src="<?= $player->photo; ?>" class="playerImage" title="<?= $player->nom; ?>" />
 		</td>
 		<td><?=$player->nom; ?> <?php echo $player->sex?'<span style="color:blue">&#9794;</span>':'<span style="color:pink">&#9792;</span>'; ?></td>
-        
+
 		<td><?=$player->points; ?></td>
 		<td><?=$player->notoriete; ?></td>
 		<td><?= lifeBarMiddle($player->alcoolemie_max, $player->alcoolemie_optimum, $player->alcoolemie); ?>
@@ -58,7 +58,7 @@ while ($sth && ($objet = $sth->fetch())) {
 		<td><?=lifeBar($player->fatigue_max, $player->fatigue).$player->fatigue.'/'.$player->fatigue_max; ?></td>
 		<!-- <td><?=$player->sex_appeal; ?></td> -->
 		<td>
-			<?=linkAction('pins', array('playerId'=>$player->id), 'pin\'s', 'bar')?>
+			<?=(new Pins($_SESSION['user']))->setParams(array(Pins::PARAM_NAME=>$player))->link('bar')?>
 		</td>
 	</tr>
         <?php
