@@ -3,6 +3,12 @@ class Player extends AbstractDbObject {
 
 	const TABLE_NAME = 'player';
 
+	const PNJ_PLAYER = 0;
+
+	const PNJ_BOT = 1;
+
+	const PNJ_ORGA = 2;
+
 	public $id = 0;
 
 	public function getId() {
@@ -55,7 +61,7 @@ class Player extends AbstractDbObject {
 
 	public function addPoints($points) {
 		if ($points <= 0) {
-			throw RulesException("on ne peut pas enlever des points.");
+			throw RuleException("on ne peut pas enlever des points.");
 		}
 		$this->points += $points;
 	}
@@ -224,7 +230,7 @@ class Player extends AbstractDbObject {
 	public $en_pls = 0;
 
 	public function getEn_pls() {
-		return $this->sex_appeal;
+		return $this->en_pls;
 	}
 
 	public function setEn_pls($en_pls) {
@@ -257,10 +263,11 @@ class Player extends AbstractDbObject {
 	}
 
 	public function setSex($sex) {
+		$sex = (int) $sex;
 		if (($sex === 0) || ($sex === 1)) {
 			$this->sex = $sex;
 		} else {
-			throw new RulesException('sex doit etre 0 ou 1');
+			throw new RuleException('sex doit etre 0 ou 1');
 		}
 	}
 
@@ -341,7 +348,7 @@ class Player extends AbstractDbObject {
 	}
 
 	/**
-	 *    	
+	 *
 	 * @return boolean
 	 */
 	public function isFatigued() {

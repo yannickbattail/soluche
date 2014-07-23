@@ -77,7 +77,7 @@ class Pins implements ActionInterface {
 		$url .= '&' . self::PARAM_NAME . '=' . $this->opponent->getId();
 		$htmlId = __CLASS__ . '_' . $this->opponent->getId();
 		if (!$this->player->isFatigued()) {
-			return '<a href="' . $url . '"  class="action" id="' . $htmlId . '" title="">' . $text . '</a>'.$this->statsDisplay();
+			return '<a href="' . $url . '"  class="action" id="' . $htmlId . '" title="">' . $text . '</a>' . $this->statsDisplay();
 		} else {
 			return '<span  class="actionDisabled" title="Trop fatigué pour ça.">' . $text . '</span>';
 		}
@@ -92,28 +92,33 @@ class Pins implements ActionInterface {
 		$htmlId = __CLASS__ . '_' . $this->opponent->getId();
 		ob_start();
 		?>
-<table class="inventory" id="<?= $htmlId ?>_tooltip" style="display: none;">
-	<tr class="even">
-		<th>Pinser</th>
-		<th>
-			<img src="images/objets/pins.png" class="inventoryImage" title="pin's" />
-		</th>
-	</tr>
-	<tr class="odd">
-		<td>Points</td>
-		<td><?= plus(1, 1); ?></td>
-	</tr>
-	<tr class="even">
-		<td>Notoriété</td>
-		<td><?= plus(1, 1); ?></td>
-	</tr>
-	<tr class="odd">
-		<td>Fatigue</td>
-		<td><?= plus(1, 0); ?></td>
-	</tr>
-</table>
+<div id="<?= $htmlId ?>_tooltip" style="display: none;">
+	<table class="inventory">
+		<tr class="even">
+			<th>Pinser</th>
+			<th>
+				<img src="images/objets/pins.png" class="inventoryImage" title="pin's" />
+			</th>
+		</tr>
+		<tr class="odd">
+			<td>Points</td>
+			<td><?= plus(1, 1); ?></td>
+		</tr>
+		<tr class="even">
+			<td>Notoriété</td>
+			<td><?= plus(1, 1); ?></td>
+		</tr>
+		<tr class="odd">
+			<td>Fatigue</td>
+			<td><?= plus(1, 0); ?></td>
+		</tr>
+	</table>
+</div>
 <script type="text/javascript">
-$("#<?= $htmlId ?>").tooltip({ content: $("#<?= $htmlId ?>_tooltip").html() });
+$("#<?= $htmlId ?>").tooltip({ 
+    	"content": $("#<?= $htmlId ?>_tooltip").html(), 
+    	"hide": { "delay": 1000, "duration": 500 }
+    });
 </script>
 
 <?php

@@ -94,9 +94,9 @@ class Choper implements ActionInterface {
 			$url .= '&page=' . urldecode($page);
 		}
 		$url .= '&' . self::PARAM_NAME . '=' . $this->opponent->getId();
-		
+		$htmlId = __CLASS__ . '_' . $this->opponent->getId();
 		if (!$this->player->isFatigued()) {
-			return '<a href="' . $url . '"  class="action">' . $text . '</a>';
+			return '<a href="' . $url . '" id="' . $htmlId . '" class="action" title="">' . $text . '</a>' . $this->statsDisplay();
 		} else {
 			return '<span  class="actionDisabled" title="Trop fatigué pour ça.">' . $text . '</span>';
 		}
@@ -107,49 +107,45 @@ class Choper implements ActionInterface {
 	 * @return string
 	 */
 	public function statsDisplay() {
-		// @TODO faire tous les champs
+		$htmlId = __CLASS__ . '_' . $this->opponent->getId();
 		ob_start();
 		?>
-<table class="inventory">
+<div id="<?= $htmlId ?>_tooltip" style="display: none;">
+	<table class="playerTooltip" id="player_<?= $this->opponent->getId().'_'.$num ?>_tooltip" style="display: none;">
+		<tr class="odd">
+			<th>Nom</th>
+			<td><?= $this->opponent->getNom(); ?> <?php echo $this->opponent->getSex()?'<span style="color:blue">&#9794;</span>':'<span style="color:pink">&#9792;</span>'; ?></td>
+		</tr>
+		<tr class="even">
+			<th>Points</th>
+			<td><?=$this->opponent->getPoints(); ?></td>
+		</tr>
+		<tr class="odd">
+			<th>Notoriété</th>
+			<td><?=$this->opponent->getNotoriete(); ?></td>
+		</tr>
+		<tr class="even">
+			<th>Verre</th>
+			<td><?= lifeBarMiddle($this->opponent->getAlcoolemie_max(), $this->opponent->getAlcoolemie_optimum(), $this->opponent->getAlcoolemie()); ?> <?=$this->opponent->getAlcoolemie().'/'.$this->opponent->getAlcoolemie_max().' optimum à '.$this->opponent->getAlcoolemie_optimum(); ?></td>
+		</tr>
+		<tr class="odd">
+			<th>Fatigue</th>
+			<td><?=lifeBar($this->opponent->getFatigue_max(), $this->opponent->getFatigue()).$this->opponent->getFatigue().'/'.$this->opponent->getFatigue_max(); ?></td>
+		</tr>
+		<!--
 	<tr class="odd">
-		<td><?= $this->opponent->nom; ?></td>
-		<td>
-			<img src="<?= $this->opponent->photo; ?>" class="inventoryImage" title="<?= $this->opponent->nom; ?>" />
-		</td>
+		<th>sex_appeal</th>
+		<td><?=$this->opponent->getSex_appeal(); ?></td>
 	</tr>
-	<tr class="even">
-		<td>Permanant</td>
-		<td><?= $objet->permanent?'oui':'non' ?></td>
-	</tr>
-	<tr class="odd">
-		<td>Notoriété</td>
-		<td><?= plus($objet->notoriete, 1); ?></td>
-	</tr>
-	<tr class="even">
-		<td>Verre</td>
-		<td><?= plus($objet->alcoolemie, 0); ?></td>
-	</tr>
-	<tr class="odd">
-		<td>Verre optimum</td>
-		<td><?= plus($objet->alcoolemie_optimum, 1); ?></td>
-	</tr>
-	<tr class="even">
-		<td>Verre max</td>
-		<td><?= plus($objet->alcoolemie_max, 1); ?></td>
-	</tr>
-	<tr class="odd">
-		<td>Fatigue</td>
-		<td><?= plus($objet->fatigue, 0); ?></td>
-	</tr>
-	<tr class="even">
-		<td>Fatigue max</td>
-		<td><?= plus($objet->fatigue_max, 1); ?></td>
-	</tr>
-	<tr class="odd">
-		<td>Sexe appeal</td>
-		<td><?= plus($objet->sex_appeal, 1); ?></td>
-	</tr>
-</table>
+	-->
+	</table>
+</div>
+<script type="text/javascript">
+$("#<?= $htmlId ?>").tooltip({ 
+	"content": $("#<?= $htmlId ?>_tooltip").html(), 
+	"hide": { "delay": 1000, "duration": 500 }
+});
+</script>
 <?php
 		return ob_get_clean();
 	}

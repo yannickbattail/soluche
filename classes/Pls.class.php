@@ -26,7 +26,7 @@ class Pls {
 			$player->addAlcoolemie(-1 * $recup);
 			$player->setEn_pls(0);
 			$player->setDebut_de_pls(0);
-			$player->fatigue(1);
+			$player->addFatigue(1);
 			$res->message = 'vous avez recupéré ' . $recup . ' verres.';
 			$res->succes = false;
 			Dispatcher::setPage('camping');

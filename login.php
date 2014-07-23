@@ -7,7 +7,7 @@ require_once ('classes/Player.class.php');
 $errorMessage = '';
 if (isset($_REQUEST['logout'])) {
 	unset($_SESSION['user']);
-	unset($_SESSION['congres']);
+	unset($_SESSION['congress']);
 }
 
 if (isset($_POST['login']) && isset($_POST['pass'])) {

@@ -142,7 +142,6 @@ function printInventory(Player $player) {
 			<img src="<?= $objet->image; ?>" class="inventoryImage" title="<?= $objet->nom; ?>" />
 		</td>
 		<td><?= $objet->permanent?'oui':(new UseObjet($_SESSION['user']))->setParams(array(UseObjet::PARAM_NAME=>$objet))->link() ?></td>
-		<!-- <td><?= $objet->permanent?'oui':linkAction('UseObjet', array('objetId'=>$objet->id), 'utiliser') ?></td> -->
 		<td><?= plus($objet->notoriete, 1); ?></td>
 		<td><?= plus($objet->alcoolemie, 0); ?></td>
 		<td><?= plus($objet->alcoolemie_optimum, 1); ?></td>
@@ -178,53 +177,62 @@ function printObjet(Objet $objet, $num = 0) {
 	?>
 <div class="objetCard" id="objet_<?= $objet->id.'_'.$num; ?>">
 	<img src="<?= $objet->image; ?>" class="inventoryImage" title="<?= $objet->nom; ?>" />
-	<?= $objet->permanent?'oui':(new UseObjet($_SESSION['user']))->setParams(array(UseObjet::PARAM_NAME=>$objet))->link()?>
+
 </div>
-<table class="objetTooltip" id="objet_<?= $objet->id.'_'.$num ?>_tooltip" style="display: none;">
-	<tr class="odd">
-		<th>Nom</th>
-		<td><?= $objet->nom; ?></td>
-	</tr>
-	<tr class="even">
-		<th>Permanant</th>
-		<td><?= $objet->permanent?'oui':'non' ?></td>
-	</tr>
-	<tr class="odd">
-		<th>Notoriété</th>
-		<td><?= plus($objet->notoriete, 1); ?></td>
-	</tr>
-	<tr class="even">
-		<th>Verre</th>
-		<td><?= plus($objet->alcoolemie, 0); ?></td>
-	</tr>
-	<tr class="odd">
-		<th>Verre optimum</th>
-		<td><?= plus($objet->alcoolemie_optimum, 1); ?></td>
-	</tr>
-	<tr class="even">
-		<th>Verre max</th>
-		<td><?= plus($objet->alcoolemie_max, 1); ?></td>
-	</tr>
-	<tr class="odd">
-		<th>Fatigue</th>
-		<td><?= plus($objet->fatigue, 0); ?></td>
-	</tr>
-	<tr class="even">
-		<th>Fatigue max</th>
-		<td><?= plus($objet->fatigue_max, 1); ?></td>
-	</tr>
-	<tr class="odd">
-		<th>Sexe appeal</th>
-		<td><?= plus($objet->sex_appeal, 1); ?></td>
-	</tr>
-</table>
+<div id="objet_<?= $objet->id.'_'.$num ?>_tooltip" style="display: none;">
+	<table class="inventory">
+		<tr class="odd">
+			<th>Nom</th>
+			<td><?= $objet->nom; ?></td>
+		</tr>
+		<tr class="even">
+			<th>Permanant</th>
+			<td><?= $objet->permanent?'oui':'non' ?></td>
+		</tr>
+		<tr class="odd">
+			<th>Notoriété</th>
+			<td><?= plus($objet->notoriete, 1); ?></td>
+		</tr>
+		<tr class="even">
+			<th>Verre</th>
+			<td><?= plus($objet->alcoolemie, 0); ?></td>
+		</tr>
+		<tr class="odd">
+			<th>Verre optimum</th>
+			<td><?= plus($objet->alcoolemie_optimum, 1); ?></td>
+		</tr>
+		<tr class="even">
+			<th>Verre max</th>
+			<td><?= plus($objet->alcoolemie_max, 1); ?></td>
+		</tr>
+		<tr class="odd">
+			<th>Fatigue</th>
+			<td><?= plus($objet->fatigue, 0); ?></td>
+		</tr>
+		<tr class="even">
+			<th>Fatigue max</th>
+			<td><?= plus($objet->fatigue_max, 1); ?></td>
+		</tr>
+		<tr class="odd">
+			<th>Sexe appeal</th>
+			<td><?= plus($objet->sex_appeal, 1); ?></td>
+		</tr>
+		<tr class="odd">
+			<th>Utiliser</th>
+			<td><?= $objet->permanent?'oui':(new UseObjet($_SESSION['user']))->setParams(array(UseObjet::PARAM_NAME=>$objet))->link()?></td>
+		</tr>
+	</table>
+</div>
 <script type="text/javascript">
-	$("#objet_<?= $objet->id.'_'.$num; ?>").tooltip({ content: $("#objet_<?= $objet->id.'_'.$num; ?>_tooltip").html() });
+	$("#objet_<?= $objet->id.'_'.$num; ?>").tooltip({
+		"content": $("#objet_<?= $objet->id.'_'.$num; ?>_tooltip").html(), 
+    	"hide": { "delay": 1000, "duration": 500 }
+     });
 </script>
 <?php
 }
 
-function printPlayerBox(PDOStatement $stmt) {
+function printPlayerBox(PDOStatement $stmt, array $actions) {
 	?>
 <div class="playerBox">
 
@@ -232,7 +240,7 @@ function printPlayerBox(PDOStatement $stmt) {
 	$num = 0;
 	$stmt->setFetchMode(PDO::FETCH_CLASS, 'Player');
 	while ($stmt && ($player = $stmt->fetch())) {
-		printPlayer($player, $num);
+		printPlayer($player, $num, $actions);
 		$num++;
 	}
 	?>
@@ -240,7 +248,7 @@ function printPlayerBox(PDOStatement $stmt) {
 <?php
 }
 
-function printPlayer(Player $player, $num = 0) {
+function printPlayer(Player $player, $num = 0, array $actions) {
 	?>
 <div class="playerCard" id="player_<?= $player->id.'_'.$num; ?>">
 	<img src="<?= $player->getPhoto() ?>" class="inventoryImage" title="<?= $player->getNom() ?>" />
@@ -272,13 +280,23 @@ function printPlayer(Player $player, $num = 0) {
 		<td><?=$player->getSex_appeal(); ?></td>
 	</tr>
 	-->
-	<tr class="even">
-		<th>Pinser</th>
-		<td><?=(new Pins($_SESSION['user']))->setParams(array(Pins::PARAM_NAME=>$player))->link('bar')?></td>
+	<?php
+	
+$n = 0;
+	foreach ($actions as $actionText => $act) {
+		$odd = ($n++ % 2) ? 'odd' : 'even';
+		?>
+	<tr class="<?= $odd ?>">
+		<th><?= $actionText ?></th>
+		<td><?=$act->setParams(array(Pins::PARAM_NAME=>$player))->link()?></td>
 	</tr>
+	<?php } ?>
 </table>
 <script type="text/javascript">
-	$("#player_<?= $player->getId().'_'.$num; ?>").tooltip({ content: $("#player_<?= $player->getId().'_'.$num; ?>_tooltip").html() });
+	$("#player_<?= $player->getId().'_'.$num; ?>").tooltip({
+		"content": $("#player_<?= $player->getId().'_'.$num; ?>_tooltip").html(), 
+    	"hide": { "delay": 1000, "duration": 500 }
+     });
 </script>
 <?php
 }

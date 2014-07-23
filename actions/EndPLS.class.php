@@ -37,8 +37,8 @@ class EndPLS implements ActionInterface {
 
 	/**
 	 *
-	 * @param array $actionParams
-	 * @param string $page
+	 * @param array $actionParams        	
+	 * @param string $page        	
 	 * @return string
 	 */
 	public function link($page = null) {
@@ -48,20 +48,23 @@ class EndPLS implements ActionInterface {
 			$url .= '&page=' . urldecode($page);
 		}
 		// $url .= '&' . self::PARAM_NAME . '=' . $actionParams[self::PARAM_NAME]->getId();
+		$htmlId = __CLASS__;
 		if (Pls::isPlsFinished($this->player)) {
-			return '<a href="' . $url . '"  class="action">' . $text . '</a>';
+			return '<a href="' . $url . '"  id="' . $htmlId . '" class="action" title="">' . $text . '</a>' . $this->statsDisplay();
 		} else {
-			return '<span class="actionDisabled" title="Trop fatigué pour ça.">' . $text . '</span>';
+			return '<span class="actionDisabled" title="Pls non terminée">' . $text . '</span>';
 		}
 	}
-	
+
 	/**
 	 *
 	 * @return string
 	 */
 	public function statsDisplay() {
+		$htmlId = __CLASS__;
 		ob_start();
 		?>
+<div id="<?= $htmlId ?>_tooltip" style="display: none;">
 	<table class="inventory">
 		<tr class="odd">
 			<td>PLS</td>
@@ -78,7 +81,15 @@ class EndPLS implements ActionInterface {
 			<td><?= plus(-1, 0); ?>/60sec</td>
 		</tr>
 	</table>
-	<?php
-			return ob_get_clean();
-		}
+</div>
+<script type="text/javascript">
+$("#<?= $htmlId ?>").tooltip({ 
+	"content": $("#<?= $htmlId ?>_tooltip").html(), 
+	"hide": { "delay": 1000, "duration": 500 }
+});
+</script>
+
+<?php
+		return ob_get_clean();
+	}
 }

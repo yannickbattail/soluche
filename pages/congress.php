@@ -20,7 +20,7 @@ Les congrès du moment:
 		<td>
 			<?= $congress->getAction_number(); ?>
 		</td>
-		<td><?=(new StartCongress($_SESSION['user']))->setParams(array(StartCongress::PARAM_NAME=>$player))->link('bar')?></td>
+		<td><?=(new StartCongress($_SESSION['user']))->setParams(array(StartCongress::PARAM_NAME=>$congress))->link('bar')?></td>
 	</tr>
         <?php
 	}
@@ -46,12 +46,6 @@ Congrès pas fini ... et ben si :-(
 	
 </table>
 <?php } ?>
-
-
-
-
-
-
 
 <hr />
 <?php printUserStats($_SESSION['user']); ?>

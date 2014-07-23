@@ -30,8 +30,8 @@ while ($sth && ($objet = $sth->fetch())) {
 <?php
 $stmt = $GLOBALS['DB']->query('SELECT * FROM player WHERE id != ' . $_SESSION['user']->getId() . ' AND id_congress = ' . $_SESSION['congress']->getId() . ' AND lieu = "cuisine" AND pnj < 2;');
 $stmt->setFetchMode(PDO::FETCH_CLASS, 'Player');
-printPlayerBox($stmt);
-//(new Pins($_SESSION['user']))->setParams(array(Pins::PARAM_NAME=>$player))->link('bar')
+printPlayerBox($stmt, array('Pinser' => new Pins($_SESSION['user'])
+));
 ?>
 
 <a href="main.php?page=camping">retour au camping</a>

@@ -175,6 +175,6 @@ class Objet extends AbstractDbObject {
 	}
 
 	public static function desassociate($idPlayer, $idObjet) {
-		$GLOBALS['DB']->query('DELETE FROM inventory WHERE idplayer=' . $idPlayer . ' AND idobject=' . $idObjet . ';');
+		$GLOBALS['DB']->query('DELETE FROM inventory WHERE idplayer=' . $idPlayer . ' AND idobject=' . $idObjet . ' LIMIT 1;');
 	}
 }

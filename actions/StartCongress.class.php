@@ -30,7 +30,14 @@ class StartCongress implements ActionInterface {
 	 * @param array $params        	
 	 */
 	public function setParams(array $params) {
-		$this->congress = Congress::load($params[self::PARAM_NAME]);
+		if ($params[self::PARAM_NAME] instanceof Congress) {
+			$this->congress = $params[self::PARAM_NAME];
+		} else {
+			$this->congress = Congress::load($params[self::PARAM_NAME]);
+			if (!$this->congress) {
+				throw new Exception('no such Congress: ' . $params[self::PARAM_NAME]);
+			}
+		}
 		return $this;
 	}
 
@@ -56,12 +63,12 @@ class StartCongress implements ActionInterface {
 		if ($page) {
 			$url .= '&page=' . urldecode($page);
 		}
-		$url .= '&' . self::PARAM_NAME . '=' . $actionParams[self::PARAM_NAME]->getId();
+		$url .= '&' . self::PARAM_NAME . '=' . $this->congress->getId();
 		
 		//if (!$this->player->isFatigued()) {
-		//	return '<a href="' . $url . '"  class="action">' . $text . '</a>';
+			return '<a href="' . $url . '"  class="action">' . $text . '</a>';
 		//} else {
-			return '<span  class="actionDisabled" title="Trop fatigué pour ça.">' . $text . '</span>';
+		//	return '<span  class="actionDisabled" title="Trop fatigué pour ça.">' . $text . '</span>';
 		//}
 	}
 }

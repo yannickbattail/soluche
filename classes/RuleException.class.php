@@ -1,2 +1,2 @@
 <?php
-class RulesException extends Exception {}
+class RuleException extends Exception {}
