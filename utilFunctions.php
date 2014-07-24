@@ -1,7 +1,7 @@
 <?php
 
 function logoutBar() {
-	return '<div class="login">' . $_SESSION['user']->nom . ' <a href="login.php?logout=1"> quitter</a></div>';
+	return '<div class="login">' . $_SESSION['user']->nom . ' <a href="userCutomisation.php">edit</a> <a href="login.php?logout=1">quitter</a></div>';
 }
 
 /**

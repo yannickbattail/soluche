@@ -113,10 +113,22 @@ class Objet extends AbstractDbObject {
 		$this->image = $image;
 	}
 
+
+	public $type = 'test';
+	
+	public function getType() {
+		return $this->type;
+	}
+	
+	public function setType($type) {
+		$this->type = $type;
+	}
+	
 	public function defaultValues() {
 		$this->setNom('OBJET');
 		$this->setPermanent(0);
 		$this->setImage('images/objets/unknown.png');
+		return $this;
 	}
 	
 	/**
