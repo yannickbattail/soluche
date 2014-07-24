@@ -43,8 +43,8 @@ if (isset($_POST['uploadPhoto'])) {
 		// You should name it uniquely.
 		// DO NOT USE $_FILES['photo']['name'] WITHOUT ANY VALIDATION !!
 		// On this example, obtain safe unique name from its binary data.
-		$fileName = 'upload/photoPlayers/' . $_SESSION['user']->getId() . '.' . $ext;
-		if (strpos($_SESSION['user']->getPhoto(), 'upload/photoPlayers/') === 0) {
+		$fileName = 'upload/photo_players/' . $_SESSION['user']->getId() . '.' . $ext;
+		if (strpos($_SESSION['user']->getPhoto(), 'upload/photo_players/') === 0) {
 			unlink($_SESSION['user']->getPhoto());
 		}
 		if (!move_uploaded_file($_FILES['photo']['tmp_name'], $fileName)) {
@@ -62,8 +62,16 @@ if (isset($_POST['changePass'])) {
 		if ($_POST['pass'] == $_POST['pass2']) {
 			$_SESSION['user']->setNom($_POST['login']);
 			$_SESSION['user']->setPass($_POST['pass']);
+			$_SESSION['user']->setSex($_POST['sex']);
+			if (($_SESSION['user']->getPhoto() == 'images/tete_faluche_noir_rose.jpg') || ($_SESSION['user']->getPhoto() == 'images/tete_faluche_noir_bleu.jpg')) {
+				if ($_SESSION['user']->getSex()) {
+					$_SESSION['user']->setPhoto('images/tete_faluche_noir_bleu.jpg');
+				} else {
+					$_SESSION['user']->setPhoto('images/tete_faluche_noir_rose.jpg');
+				}
+			}
 			$_SESSION['user']->save();
-			echo 'Cahngement OK!';
+			echo 'Changement OK!';
 		} else {
 			echo 'pass différents';
 		}
@@ -107,13 +115,20 @@ if (isset($_POST['changePass'])) {
 			<tr>
 				<th>pass</th>
 				<td>
-					<input type="password" name="pass" value="" />
+					<input type="password" name="pass" value="<?= $_SESSION['user']->getPass() ?>" />
 				</td>
 			</tr>
 			<tr>
 				<th>confirmer</th>
 				<td>
-					<input type="password" name="pass2" value="" />
+					<input type="password" name="pass2" value="<?= $_SESSION['user']->getPass() ?>" />
+				</td>
+			</tr>
+			<tr>
+				<th>Sex</th>
+				<td>
+					<label title="vagin"><input type="radio" name="sex" value="0" <?=$_SESSION['user']->getSex()==0?'checked="checked"':''?> /><span style="color: pink">&#9792;</span></label><br /> <label
+						title="bite"><input type="radio" name="sex" value="1" <?=$_SESSION['user']->getSex()==1?'checked="checked"':''?> /><span style="color: cyan">&#9794;</span></label>
 				</td>
 			</tr>
 			<tr>

@@ -1,9 +1,5 @@
 <?php
 
-function logoutBar() {
-	return '<div class="login">' . $_SESSION['user']->nom . ' <a href="userCutomisation.php">edit</a> <a href="login.php?logout=1">quitter</a></div>';
-}
-
 /**
  *
  * @deprecated use ActionInterface::link()
@@ -47,7 +43,7 @@ function printUserStats(Player $player) {
 		<td>
 			<img src="<?= $player->photo; ?>" class="playerImage" title="<?= $player->nom; ?>" />
 		</td>
-		<td><?=$player->nom; ?> <?php echo $player->sex?'<span style="color:blue">&#9794;</span>':'<span style="color:pink">&#9792;</span>'; ?>
+		<td><?=$player->nom; ?> <?php echo $player->sex?'<span style="color:cyan">&#9794;</span>':'<span style="color:pink">&#9792;</span>'; ?>
 		<br />Points: <?=$player->points; ?></td>
 	</tr>
 	<tr class="odd">
@@ -134,21 +130,21 @@ function printInventory(Player $player) {
 	</tr>
 <?php
 	$n = 0;
-	foreach ($player->inventory as $objet) {
+	foreach ($player->inventory as $item) {
 		$odd = ($n++ % 2) ? 'odd' : 'even';
 		?>
 	<tr class="<?= $odd ?>">
 		<td>
-			<img src="<?= $objet->image; ?>" class="inventoryImage" title="<?= $objet->nom; ?>" />
+			<img src="<?= $item->image; ?>" class="inventoryImage" title="<?= $item->nom; ?>" />
 		</td>
-		<td><?= $objet->permanent?'oui':(new UseObjet($_SESSION['user']))->setParams(array(UseObjet::PARAM_NAME=>$objet))->link() ?></td>
-		<td><?= plus($objet->notoriete, 1); ?></td>
-		<td><?= plus($objet->alcoolemie, 0); ?></td>
-		<td><?= plus($objet->alcoolemie_optimum, 1); ?></td>
-		<td><?= plus($objet->alcoolemie_max, 1); ?></td>
-		<td><?= plus($objet->fatigue, 0); ?></td>
-		<td><?= plus($objet->fatigue_max, 1); ?></td>
-		<td><?= plus($objet->sex_appeal, 1); ?></td>
+		<td><?= $item->permanent?'oui':(new UseItem($_SESSION['user']))->setParams(array(UseItem::PARAM_NAME=>$item))->link() ?></td>
+		<td><?= plus($item->notoriete, 1); ?></td>
+		<td><?= plus($item->alcoolemie, 0); ?></td>
+		<td><?= plus($item->alcoolemie_optimum, 1); ?></td>
+		<td><?= plus($item->alcoolemie_max, 1); ?></td>
+		<td><?= plus($item->fatigue, 0); ?></td>
+		<td><?= plus($item->fatigue_max, 1); ?></td>
+		<td><?= plus($item->sex_appeal, 1); ?></td>
 	</tr>
         <?php
 	}
@@ -164,8 +160,8 @@ function printInventory2(Player $player) {
 
 <?php
 	$num = 0;
-	foreach ($player->inventory as $objet) {
-		printObjet($objet, $num);
+	foreach ($player->inventory as $item) {
+		printItem($item, $num);
 		$num++;
 	}
 	?>
@@ -173,59 +169,59 @@ function printInventory2(Player $player) {
 <?php
 }
 
-function printObjet(Objet $objet, $num = 0) {
+function printItem(Item $item, $num = 0) {
 	?>
-<div class="objetCard" id="objet_<?= $objet->id.'_'.$num; ?>">
-	<img src="<?= $objet->image; ?>" class="inventoryImage" title="<?= $objet->nom; ?>" />
+<div class="itemCard" id="item_<?= $item->id.'_'.$num; ?>">
+	<img src="<?= $item->image; ?>" class="inventoryImage" title="<?= $item->nom; ?>" />
 
 </div>
-<div id="objet_<?= $objet->id.'_'.$num ?>_tooltip" style="display: none;">
+<div id="item_<?= $item->id.'_'.$num ?>_tooltip" style="display: none;">
 	<table class="inventory">
 		<tr class="odd">
 			<th>Nom</th>
-			<td><?= $objet->nom; ?></td>
+			<td><?= $item->nom; ?></td>
 		</tr>
 		<tr class="even">
 			<th>Permanant</th>
-			<td><?= $objet->permanent?'oui':'non' ?></td>
+			<td><?= $item->permanent?'oui':'non' ?></td>
 		</tr>
 		<tr class="odd">
 			<th>Notoriété</th>
-			<td><?= plus($objet->notoriete, 1); ?></td>
+			<td><?= plus($item->notoriete, 1); ?></td>
 		</tr>
 		<tr class="even">
 			<th>Verre</th>
-			<td><?= plus($objet->alcoolemie, 0); ?></td>
+			<td><?= plus($item->alcoolemie, 0); ?></td>
 		</tr>
 		<tr class="odd">
 			<th>Verre optimum</th>
-			<td><?= plus($objet->alcoolemie_optimum, 1); ?></td>
+			<td><?= plus($item->alcoolemie_optimum, 1); ?></td>
 		</tr>
 		<tr class="even">
 			<th>Verre max</th>
-			<td><?= plus($objet->alcoolemie_max, 1); ?></td>
+			<td><?= plus($item->alcoolemie_max, 1); ?></td>
 		</tr>
 		<tr class="odd">
 			<th>Fatigue</th>
-			<td><?= plus($objet->fatigue, 0); ?></td>
+			<td><?= plus($item->fatigue, 0); ?></td>
 		</tr>
 		<tr class="even">
 			<th>Fatigue max</th>
-			<td><?= plus($objet->fatigue_max, 1); ?></td>
+			<td><?= plus($item->fatigue_max, 1); ?></td>
 		</tr>
 		<tr class="odd">
 			<th>Sexe appeal</th>
-			<td><?= plus($objet->sex_appeal, 1); ?></td>
+			<td><?= plus($item->sex_appeal, 1); ?></td>
 		</tr>
 		<tr class="odd">
 			<th>Utiliser</th>
-			<td><?= $objet->permanent?'oui':(new UseObjet($_SESSION['user']))->setParams(array(UseObjet::PARAM_NAME=>$objet))->link()?></td>
+			<td><?= $item->permanent?'oui':(new UseItem($_SESSION['user']))->setParams(array(UseItem::PARAM_NAME=>$item))->link()?></td>
 		</tr>
 	</table>
 </div>
 <script type="text/javascript">
-	$("#objet_<?= $objet->id.'_'.$num; ?>").tooltip({
-		"content": $("#objet_<?= $objet->id.'_'.$num; ?>_tooltip").html(), 
+	$("#item_<?= $item->id.'_'.$num; ?>").tooltip({
+		"content": $("#item_<?= $item->id.'_'.$num; ?>_tooltip").html(), 
     	"hide": { "delay": 1000, "duration": 500 }
      });
 </script>
@@ -256,7 +252,7 @@ function printPlayer(Player $player, $num = 0, array $actions) {
 <table class="playerTooltip" id="player_<?= $player->getId().'_'.$num ?>_tooltip" style="display: none;">
 	<tr class="odd">
 		<th>Nom</th>
-		<td><?= $player->getNom(); ?> <?php echo $player->getSex()?'<span style="color:blue">&#9794;</span>':'<span style="color:pink">&#9792;</span>'; ?></td>
+		<td><?= $player->getNom(); ?> <?php echo $player->getSex()?'<span style="color:cyan">&#9794;</span>':'<span style="color:pink">&#9792;</span>'; ?></td>
 	</tr>
 	<tr class="even">
 		<th>Points</th>

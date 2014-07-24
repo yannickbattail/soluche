@@ -69,7 +69,7 @@ class StartPLS implements ActionInterface {
 		<tr class="odd">
 			<td>PLS</td>
 			<td>
-				<img src="images/objets/unknown.png" class="inventoryImage" title="PLS" />
+				<img src="images/items/unknown.png" class="inventoryImage" title="PLS" />
 			</td>
 		</tr>
 		<tr class="even">

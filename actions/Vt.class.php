@@ -79,7 +79,7 @@ class Vt implements ActionInterface {
 		<tr class="odd">
 			<td>VT</td>
 			<td>
-				<img src="images/objets/vomi.png" class="inventoryImage" title="VT" />
+				<img src="images/items/vomi.png" class="inventoryImage" title="VT" />
 			</td>
 		</tr>
 		<tr class="even">

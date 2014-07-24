@@ -12,12 +12,15 @@
 </head>
 <body>
 	<h1><?php echo Dispatcher::$pageTitle; ?></h1>
-	<?php echo logoutBar(); ?>
-	<?php
-	if (isset($_SESSION['congress'])) {
-		echo '<div class="congress" title="Congrès en cours">Au congrès ' . $_SESSION['congress']->getNom() . '. Heures restantes: ' . $_SESSION['congress']->getFatigue() . '</div>';
-	}
-	?>
+	<div class="login">
+		<a href="userCutomisation.php" title="Editer"><?=$_SESSION['user']->getNom() ?></a> <a href="login.php?logout=1"><img alt="Quitter" title="Quitter" src="images/util/system-shutdown.png"
+				style="width: 16px; height: 16px;"></a>
+		<?php if (isset($_SESSION['congress'])) { ?>
+		<div class="congress" title="Congrès en cours">Au congrès <?=$_SESSION['congress']->getNom()?>. Heures restantes: <?=$_SESSION['congress']->getFatigue()?></div>
+		<?php } ?>
+	</div>
+
+
 	<?php
 	foreach (Dispatcher::getMessages() as $em) {
 		echo '<div class="' . $em['level'] . '">' . htmlentities($em['message']) . '</div>';

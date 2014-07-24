@@ -401,6 +401,7 @@ class Player extends AbstractDbObject {
 		if ($sth->execute() === false) {
 			throw new Exception(print_r($sth->errorInfo(), true));
 		}
+		$this->setId($GLOBALS['DB']->lastInsertId());
 	}
 
 	public function defaultValues() {
@@ -416,7 +417,7 @@ class Player extends AbstractDbObject {
 		$this->en_pls = 0;
 		$this->debut_de_pls = 0;
 		$this->sex = 0;
-		$this->photo = 'images/tete_faluche_grise.jpg';
+		$this->photo = 'images/tete_faluche_noir_rose.jpg';
 		$this->pnj = 0;
 		$this->id_congress = null;
 	}
@@ -494,26 +495,30 @@ class Player extends AbstractDbObject {
 		$this->calculated['sex_appeal'] = $this->sex_appeal;
 		$this->inventory = array();
 		
-		$sth = $GLOBALS['DB']->query('SELECT O.* FROM objet O INNER JOIN inventory I ON I.idobject = O.id WHERE I.idplayer = ' . $this->id . ';');
-		$sth->setFetchMode(PDO::FETCH_CLASS, 'Objet');
-		while ($sth && ($objet = $sth->fetch())) {
-			$this->inventory[] = $objet;
-			if ($objet->permanent) {
-				$this->calculated['notoriete'] += $objet->notoriete;
-				$this->calculated['alcoolemie'] += $objet->alcoolemie;
-				$this->calculated['alcoolemie_optimum'] += $objet->alcoolemie_optimum;
-				$this->calculated['alcoolemie_max'] += $objet->alcoolemie_max;
-				$this->calculated['fatigue'] += $objet->fatigue;
-				$this->calculated['fatigue_max'] += $objet->fatigue_max;
-				$this->calculated['sex_appeal'] += $objet->sex_appeal;
+		$sth = $GLOBALS['DB']->query('SELECT O.* FROM item O INNER JOIN inventory I ON I.id_item = O.id WHERE I.id_player = ' . $this->id . ' ORDER BY O.id;');
+		$sth->setFetchMode(PDO::FETCH_CLASS, 'Item');
+		while ($sth && ($item = $sth->fetch())) {
+			$this->inventory[] = $item;
+			if ($item->permanent) {
+				$this->calculated['notoriete'] += $item->notoriete;
+				$this->calculated['alcoolemie'] += $item->alcoolemie;
+				$this->calculated['alcoolemie_optimum'] += $item->alcoolemie_optimum;
+				$this->calculated['alcoolemie_max'] += $item->alcoolemie_max;
+				$this->calculated['fatigue'] += $item->fatigue;
+				$this->calculated['fatigue_max'] += $item->fatigue_max;
+				$this->calculated['sex_appeal'] += $item->sex_appeal;
 			}
 		}
 		return $this;
 	}
 
 	function addRandomItem() {
-		Objet::associate($this->getId(), 4);
-		Objet::associate($this->getId(), 8);
-		Objet::associate($this->getId(), 11);
+		// @TODO add entropy
+		Item::associate($this->getId(), 4);
+		Item::associate($this->getId(), 8);
+		Item::associate($this->getId(), 11);
+		Item::associate($this->getId(), 13);
+		Item::associate($this->getId(), 13);
+		Item::associate($this->getId(), 13);
 	}
 }

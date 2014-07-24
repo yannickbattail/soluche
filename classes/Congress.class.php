@@ -125,6 +125,7 @@ class Congress extends AbstractDbObject {
 		if ($sth->execute() === false) {
 			throw new Exception(print_r($sth->errorInfo(), true));
 		}
+		$this->setId($GLOBALS['DB']->lastInsertId());
 	}
 
 	public function defaultValues() {

@@ -97,7 +97,7 @@ class Pins implements ActionInterface {
 		<tr class="even">
 			<th>Pinser</th>
 			<th>
-				<img src="images/objets/pins.png" class="inventoryImage" title="pin's" />
+				<img src="images/items/pins.png" class="inventoryImage" title="pin's" />
 			</th>
 		</tr>
 		<tr class="odd">

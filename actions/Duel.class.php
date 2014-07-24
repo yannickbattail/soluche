@@ -121,35 +121,35 @@ class Duel implements ActionInterface {
 		</tr>
 		<tr class="even">
 			<td>Permanant</td>
-			<td><?= $objet->permanent?'oui':'non' ?></td>
+			<td><?= $item->permanent?'oui':'non' ?></td>
 		</tr>
 		<tr class="odd">
 			<td>Notoriété</td>
-			<td><?= plus($objet->notoriete, 1); ?></td>
+			<td><?= plus($item->notoriete, 1); ?></td>
 		</tr>
 		<tr class="even">
 			<td>Verre</td>
-			<td><?= plus($objet->alcoolemie, 0); ?></td>
+			<td><?= plus($item->alcoolemie, 0); ?></td>
 		</tr>
 		<tr class="odd">
 			<td>Verre optimum</td>
-			<td><?= plus($objet->alcoolemie_optimum, 1); ?></td>
+			<td><?= plus($item->alcoolemie_optimum, 1); ?></td>
 		</tr>
 		<tr class="even">
 			<td>Verre max</td>
-			<td><?= plus($objet->alcoolemie_max, 1); ?></td>
+			<td><?= plus($item->alcoolemie_max, 1); ?></td>
 		</tr>
 		<tr class="odd">
 			<td>Fatigue</td>
-			<td><?= plus($objet->fatigue, 0); ?></td>
+			<td><?= plus($item->fatigue, 0); ?></td>
 		</tr>
 		<tr class="even">
 			<td>Fatigue max</td>
-			<td><?= plus($objet->fatigue_max, 1); ?></td>
+			<td><?= plus($item->fatigue_max, 1); ?></td>
 		</tr>
 		<tr class="odd">
 			<td>Sexe appeal</td>
-			<td><?= plus($objet->sex_appeal, 1); ?></td>
+			<td><?= plus($item->sex_appeal, 1); ?></td>
 		</tr>
 	</table>
 </div>

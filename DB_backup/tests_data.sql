@@ -28,7 +28,7 @@ USE `soluche`;
 -- Dumping data for table `inventory`
 --
 
-INSERT INTO `inventory` (`id`, `idplayer`, `idobject`) VALUES
+INSERT INTO `inventory` (`id`, `id_player`, `id_item`) VALUES
 (1, 1, 1),
 (2, 1, 2),
 (3, 2, 3),

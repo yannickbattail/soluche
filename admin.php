@@ -32,7 +32,6 @@ if (isset($_POST['savePlayer'])) {
 }
 
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>

@@ -1,7 +1,7 @@
 <?php
 class Bot extends Player {
 
-	private static $filieres = array('rose', 'ingé', 'droit', 'sciences', 'sage-pouf', 'jaune', 'épicier', 'cracrabin');
+	private static $filieres = array('rose', 'ingé', 'droit', 'sciences', 'sage-pouf', 'jaune', 'Pharma', 'Médecine');
 
 	private static $villes = array('Annecy', 'Grenoble', 'Lyon', 'Monpeul', 'Valence', 'Aix', 'Marseille', 'Dijon');
 
