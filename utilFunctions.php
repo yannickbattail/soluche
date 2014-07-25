@@ -115,6 +115,7 @@ function lifeBar($max, $value) {
 }
 
 function printInventory(Player $player) {
+	trigger_error("printInventory() is deprecated use ActionInterface::link()", E_USER_DEPRECATED);
 	?>
 <table class="inventory">
 	<tr>
@@ -246,53 +247,61 @@ function printPlayerBox(PDOStatement $stmt, array $actions) {
 
 function printPlayer(Player $player, $num = 0, array $actions) {
 	?>
+<!-- 
 <div class="playerCard" id="player_<?= $player->id.'_'.$num; ?>">
 	<img src="<?= $player->getPhoto() ?>" class="inventoryImage" title="<?= $player->getNom() ?>" />
 </div>
-<table class="playerTooltip" id="player_<?= $player->getId().'_'.$num ?>_tooltip" style="display: none;">
-	<tr class="odd">
-		<th>Nom</th>
-		<td><?= $player->getNom(); ?> <?php echo $player->getSex()?'<span style="color:cyan">&#9794;</span>':'<span style="color:pink">&#9792;</span>'; ?></td>
-	</tr>
-	<tr class="even">
-		<th>Points</th>
-		<td><?=$player->getPoints(); ?></td>
-	</tr>
-	<tr class="odd">
-		<th>Notoriété</th>
-		<td><?=$player->getNotoriete(); ?></td>
-	</tr>
-	<tr class="even">
-		<th>Verre</th>
-		<td><?= lifeBarMiddle($player->getAlcoolemie_max(), $player->getAlcoolemie_optimum(), $player->getAlcoolemie()); ?> <?=$player->getAlcoolemie().'/'.$player->getAlcoolemie_max().' optimum à '.$player->getAlcoolemie_optimum(); ?></td>
-	</tr>
-	<tr class="odd">
-		<th>Fatigue</th>
-		<td><?=lifeBar($player->getFatigue_max(), $player->getFatigue()).$player->getFatigue().'/'.$player->getFatigue_max(); ?></td>
-	</tr>
-	<!--
-	<tr class="odd">
-		<th>sex_appeal</th>
-		<td><?=$player->getSex_appeal(); ?></td>
-	</tr>
-	-->
-	<?php
+ -->
+<div id="player_<?= $player->getId().'_'.$num ?>_tooltip" style="display: inline-block;">
+	<table class="playerCard">
+		<tr class="odd">
+			<th>
+				<img src="<?= $player->getPhoto() ?>" class="inventoryImage" title="<?= $player->getNom() ?>" />
+			</th>
+			<td><?= $player->getNom(); ?> <?php echo $player->getSex()?'<span style="color:cyan">&#9794;</span>':'<span style="color:pink">&#9792;</span>'; ?></td>
+		</tr>
+		<tr class="even">
+			<th>Points</th>
+			<td><?=$player->getPoints(); ?></td>
+		</tr>
+		<tr class="odd">
+			<th>Notoriété</th>
+			<td><?=$player->getNotoriete(); ?></td>
+		</tr>
+		<tr class="even">
+			<th>Verre</th>
+			<td><?= lifeBarMiddle($player->getAlcoolemie_max(), $player->getAlcoolemie_optimum(), $player->getAlcoolemie()); ?> <?=$player->getAlcoolemie().'/'.$player->getAlcoolemie_max().' optimum à '.$player->getAlcoolemie_optimum(); ?></td>
+		</tr>
+		<tr class="odd">
+			<th>Fatigue</th>
+			<td><?=lifeBar($player->getFatigue_max(), $player->getFatigue()).$player->getFatigue().'/'.$player->getFatigue_max(); ?></td>
+		</tr>
+		<!--
+		<tr class="odd">
+			<th>sex_appeal</th>
+			<td><?=$player->getSex_appeal(); ?></td>
+		</tr>
+		-->
+		<?php
 	
-$n = 0;
+	$n = 0;
 	foreach ($actions as $actionText => $act) {
 		$odd = ($n++ % 2) ? 'odd' : 'even';
 		?>
-	<tr class="<?= $odd ?>">
-		<th><?= $actionText ?></th>
-		<td><?=$act->setParams(array(Pins::PARAM_NAME=>$player))->link()?></td>
-	</tr>
-	<?php } ?>
-</table>
+		<tr class="<?= $odd ?>">
+			<th><?= $actionText ?></th>
+			<td><?=$act->setParams(array(Pins::PARAM_NAME=>$player))->link()?></td>
+		</tr>
+		<?php } ?>
+	</table>
+</div>
 <script type="text/javascript">
-	$("#player_<?= $player->getId().'_'.$num; ?>").tooltip({
-		"content": $("#player_<?= $player->getId().'_'.$num; ?>_tooltip").html(), 
-    	"hide": { "delay": 1000, "duration": 500 }
-     });
+	/*
+    $("#player_<?= $player->getId().'_'.$num; ?>").tooltip({
+        "content": $("#player_<?= $player->getId().'_'.$num; ?>_tooltip").html(), 
+        "hide": { "delay": 1000, "duration": 500 }
+    });
+    */
 </script>
 <?php
 }

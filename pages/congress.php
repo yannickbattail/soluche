@@ -49,4 +49,4 @@ Congrès pas fini ... et ben si :-(
 
 <hr />
 <?php printUserStats($_SESSION['user']); ?>
-<?php printInventory($_SESSION['user']); ?>
+<?php //printInventory2($_SESSION['user']); ?>

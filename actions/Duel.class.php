@@ -114,42 +114,42 @@ class Duel implements ActionInterface {
 <div id="<?= $htmlId ?>_tooltip" style="display: none;">
 	<table class="inventory">
 		<tr class="odd">
-			<td><?= $this->opponent->nom; ?></td>
+			<td><?= $this->opponent->getNom(); ?></td>
 			<td>
-				<img src="<?= $this->opponent->photo; ?>" class="inventoryImage" title="<?= $this->opponent->nom; ?>" />
+				<img src="<?= $this->opponent->getPhoto(); ?>" class="inventoryImage" title="<?= $this->opponent->getNom(); ?>" />
 			</td>
 		</tr>
 		<tr class="even">
-			<td>Permanant</td>
-			<td><?= $item->permanent?'oui':'non' ?></td>
+			<td>Points</td>
+			<td><?= $this->opponent->getPoints() ?></td>
 		</tr>
 		<tr class="odd">
 			<td>Notoriété</td>
-			<td><?= plus($item->notoriete, 1); ?></td>
+			<td><?= plus($this->opponent->getNotoriete(), 1); ?></td>
 		</tr>
 		<tr class="even">
 			<td>Verre</td>
-			<td><?= plus($item->alcoolemie, 0); ?></td>
+			<td><?= plus($this->opponent->getAlcoolemie(), 0); ?></td>
 		</tr>
 		<tr class="odd">
 			<td>Verre optimum</td>
-			<td><?= plus($item->alcoolemie_optimum, 1); ?></td>
+			<td><?= plus($this->opponent->getAlcoolemie_optimum(), 1); ?></td>
 		</tr>
 		<tr class="even">
 			<td>Verre max</td>
-			<td><?= plus($item->alcoolemie_max, 1); ?></td>
+			<td><?= plus($this->opponent->getAlcoolemie_max(), 1); ?></td>
 		</tr>
 		<tr class="odd">
 			<td>Fatigue</td>
-			<td><?= plus($item->fatigue, 0); ?></td>
+			<td><?= plus($this->opponent->getFatigue(), 0); ?></td>
 		</tr>
 		<tr class="even">
 			<td>Fatigue max</td>
-			<td><?= plus($item->fatigue_max, 1); ?></td>
+			<td><?= plus($this->opponent->getFatigue_max(), 1); ?></td>
 		</tr>
 		<tr class="odd">
 			<td>Sexe appeal</td>
-			<td><?= plus($item->sex_appeal, 1); ?></td>
+			<td><?= plus($this->opponent->getSex_appeal(), 1); ?></td>
 		</tr>
 	</table>
 </div>

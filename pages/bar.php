@@ -1,4 +1,6 @@
 
+<a href="main.php?page=camping">retour au camping</a>
+
 <h3>Boisson au bar:</h3>
 <table class="inventory">
 	<tr>
@@ -24,13 +26,13 @@ while ($sth && ($item = $sth->fetch())) {
 }
 ?>
 </table>
-Personnes au bar:
+
+<?php echo (new Sing($_SESSION['user']))->setParams(array())->link() ;?>
+
+<h3>Personnes au bar:</h3>
 <?php
 $sql = 'SELECT * FROM player WHERE id != ' . $_SESSION['user']->getId() . ' AND id_congress = ' . $_SESSION['congress']->getId() . ' AND lieu = "bar" AND pnj < 2;';
 $stmt = $GLOBALS['DB']->query($sql);
 $stmt->setFetchMode(PDO::FETCH_CLASS, 'Player');
 printPlayerBox($stmt, array('Défier' => new Duel($_SESSION['user']), 'Pinser' => new Pins($_SESSION['user'])));
 ?>
-<?php echo (new Sing($_SESSION['user']))->setParams(array())->link() ;?>
-<br />
-<a href="main.php?page=camping">retour au camping</a>
