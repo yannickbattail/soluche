@@ -89,7 +89,7 @@ class Congress extends AbstractDbObject {
 	public function start(Player $player) {
 		$res = new ActionResult();
 		$_SESSION['congress'] = $this;
-		$_SESSION['congress']->setFatigue($this->getAction_number());
+		$_SESSION['congress']->setFatigue($this->getAction_number() + 1);
 		$player->setCongress($this);
 		$player->addRandomItem();
 		

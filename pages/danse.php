@@ -5,7 +5,7 @@
 <?php
 $stmt = $GLOBALS['DB']->query('SELECT * FROM player WHERE id != ' . $_SESSION['user']->getId() . ' AND id_congress = ' . $_SESSION['congress']->getId() . ' AND lieu = "danse" AND pnj < 2;');
 $stmt->setFetchMode(PDO::FETCH_CLASS, 'Player');
-printPlayerBox($stmt, array('Pinser' => new Pins($_SESSION['user']),'Essayer de chopper' => new Choper($_SESSION['user'])
+printPlayerBox($stmt, array('Pinser' => new Pins($_SESSION['user']),'Essayer de chopper' => new Chopper($_SESSION['user'])
 ));
 ?>
 

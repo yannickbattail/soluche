@@ -1,5 +1,5 @@
 <?php
-class Choper implements ActionInterface {
+class Chopper implements ActionInterface {
 
 	const PARAM_NAME = 'idPlayer';
 
@@ -88,7 +88,7 @@ class Choper implements ActionInterface {
 	 * @return string
 	 */
 	public function link($page = null) {
-		$text = 'Essayer de choper';
+		$text = 'Essayer de chopper';
 		$url = 'main.php?action=' . urldecode(__CLASS__);
 		if ($page) {
 			$url .= '&page=' . urldecode($page);

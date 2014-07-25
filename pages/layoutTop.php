@@ -13,7 +13,7 @@
 <body>
 	<h1><?php echo Dispatcher::$pageTitle; ?></h1>
 	<div class="login">
-		<img src="<?=$_SESSION['user']->getPhoto() ?> ?>" class="inventoryImage" title="<?= $_SESSION['user']->getNom() ?>" />
+		<img src="<?=$_SESSION['user']->getPhoto() ?>" class="inventoryImage" title="<?= $_SESSION['user']->getNom() ?>" />
 		<a href="userCutomisation.php" title="Editer"><?=$_SESSION['user']->getNom() ?></a> <a href="login.php?logout=1"><img alt="Quitter" title="Quitter"
 				src="images/util/system-shutdown.png" style="width: 16px; height: 16px;"></a>
 		<?php if (isset($_SESSION['congress'])) { ?>

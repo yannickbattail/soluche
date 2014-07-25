@@ -35,9 +35,9 @@ if (isset($_POST['new']) && isset($_POST['login']) && isset($_POST['pass']) && i
 				$player->nom = $_POST['login'];
 				$player->pass = $_POST['pass'];
 				$player->create();
-				Item::associate($this->getId(), 12);
-				Item::associate($this->getId(), 13);
-				Item::associate($this->getId(), 13);
+				Item::associate($player->getId(), 12);
+				Item::associate($player->getId(), 13);
+				Item::associate($player->getId(), 13);
 				echo 'Inscription ok';
 			} else {
 				$errorMessage = 'Ce surnom existe déja.';
@@ -79,7 +79,7 @@ td {
 <body>
 	<h1>Soluche</h1>
 	<div class="intro">Un RPG sans elf ni orc, sans point de vie ou de mana. Où ton inventaire n'est pas une épée runique et une armure enchantée.</div>
-	<div class="intro">Combat tes rivaux à coup de secs, chante, partage des valeurs, essaye de choper et prends garde à ne pas finir en PLS.</div>
+	<div class="intro">Combat tes rivaux à coup de secs, chante, partage des valeurs, essaye de chopper et prends garde à ne pas finir en PLS.</div>
 	<br />
 	<?php if ($errorMessage) {?>
 	<div class="errorMessage"><?php echo $errorMessage; ?></div>

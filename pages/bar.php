@@ -27,6 +27,8 @@ while ($sth && ($item = $sth->fetch())) {
 ?>
 </table>
 
+<?php printUserStats($_SESSION['user']); ?>
+
 <?php echo (new Sing($_SESSION['user']))->setParams(array())->link() ;?>
 
 <h3>Personnes au bar:</h3>
