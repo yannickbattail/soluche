@@ -1,13 +1,7 @@
 <?php
-class StartCongress implements ActionInterface {
+class StartCongress extends AbstractAction {
 
-	const PARAM_NAME = 'idCongress';
-
-	/**
-	 *
-	 * @var Player
-	 */
-	private $player;
+	const PARAM_NAME = 'id_congress';
 
 	/**
 	 *
@@ -20,24 +14,28 @@ class StartCongress implements ActionInterface {
 	 * @param Player $player        	
 	 */
 	public function __construct(Player $player) {
-		$this->player = $player;
+		parent::__construct($player);
+		// configuration
+		$this->paramName = self::PARAM_NAME;
+		$this->actionRight = AbstractAction::EXCEPT_OUT_CONGRESS;
+		$this->linkText = 'Aller à ce congrès';
 	}
 
 	/**
-	 * (non-PHPdoc)
 	 *
 	 * @see ActionInterface::setParams()
 	 * @param array $params        	
 	 */
 	public function setParams(array $params) {
 		if ($params[self::PARAM_NAME] instanceof Congress) {
-			$this->congress = $params[self::PARAM_NAME];
+			$this->congress = $params[$this->paramName];
 		} else {
-			$this->congress = Congress::load($params[self::PARAM_NAME]);
+			$this->congress = Congress::load($params[$this->paramName]);
 			if (!$this->congress) {
-				throw new Exception('no such Congress: ' . $params[self::PARAM_NAME]);
+				throw new Exception('no such Congress: ' . $params[$this->paramName]);
 			}
 		}
+		$this->paramPrimaryKey = $this->congress->getId();
 		return $this;
 	}
 
@@ -48,27 +46,19 @@ class StartCongress implements ActionInterface {
 	 * @return ActionResult
 	 */
 	public function execute() {
-		return $this->congress->start($this->player);
+		$res = new ActionResult();
+		$this->player->setFatigue(0);
+		$this->player->setCongress($this->congress);
+		$this->player->setRemaining_time($this->congress->getAction_number());
+		$this->player->addRandomItem();
+		$_SESSION['history'] = array();
+		Dispatcher::setPage('camping');
+		$res->message .= 'Début du congrès en ' . $this->congress->getAction_number() . ' heures.';
+		$res->succes = true;
+		return $res;
 	}
 
-	/**
-	 *
-	 * @param array $actionParams        	
-	 * @param string $page        	
-	 * @return string
-	 */
-	public function link($page = null) {
-		$text = 'Aller à ce congrès';
-		$url = 'main.php?action=' . urldecode(__CLASS__);
-		if ($page) {
-			$url .= '&page=' . urldecode($page);
-		}
-		$url .= '&' . self::PARAM_NAME . '=' . $this->congress->getId();
-		
-		//if (!$this->player->isFatigued()) {
-			return '<a href="' . $url . '"  class="action">' . $text . '</a>';
-		//} else {
-		//	return '<span  class="actionDisabled" title="Trop fatigué pour ça.">' . $text . '</span>';
-		//}
+	public function statsDisplay($page = null) {
+		return '';
 	}
 }

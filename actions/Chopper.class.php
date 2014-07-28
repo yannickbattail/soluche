@@ -1,13 +1,7 @@
 <?php
-class Chopper implements ActionInterface {
+class Chopper extends AbstractAction {
 
 	const PARAM_NAME = 'idPlayer';
-
-	/**
-	 *
-	 * @var Player
-	 */
-	private $player;
 
 	/**
 	 *
@@ -20,11 +14,13 @@ class Chopper implements ActionInterface {
 	 * @param Player $player        	
 	 */
 	public function __construct(Player $player) {
-		$this->player = $player;
+		parent::__construct($player);
+		// configuration
+		$this->paramName = self::PARAM_NAME;
+		$this->linkText = 'Essayer de chopper';
 	}
 
 	/**
-	 * (non-PHPdoc)
 	 *
 	 * @see ActionInterface::setParams()
 	 * @param array $params        	
@@ -39,6 +35,7 @@ class Chopper implements ActionInterface {
 			}
 		}
 		$this->opponent->loadInventory();
+		$this->paramPrimaryKey = $this->opponent->getId();
 		return $this;
 	}
 
@@ -66,6 +63,7 @@ class Chopper implements ActionInterface {
 			$this->player->addNotoriete(2);
 			$this->player->addPoints(5);
 			$this->player->addFatigue(2);
+			$this->player->addRemaining_time(-2);
 			$this->opponent->addNotoriete(2);
 			$this->opponent->addPoints(5);
 			$this->opponent->addFatigue(2);
@@ -73,6 +71,7 @@ class Chopper implements ActionInterface {
 			$res->succes = true;
 		} else {
 			$this->player->addFatigue(1);
+			$this->player->addRemaining_time(-1);
 			$res->message .= 'T\'as pas réussi à chopper ' . $this->opponent->getNom();
 			$res->succes = false;
 		}
@@ -83,35 +82,15 @@ class Chopper implements ActionInterface {
 
 	/**
 	 *
-	 * @param array $actionParams        	
-	 * @param string $page        	
 	 * @return string
 	 */
-	public function link($page = null) {
-		$text = 'Essayer de chopper';
-		$url = 'main.php?action=' . urldecode(__CLASS__);
-		if ($page) {
-			$url .= '&page=' . urldecode($page);
-		}
-		$url .= '&' . self::PARAM_NAME . '=' . $this->opponent->getId();
-		$htmlId = __CLASS__ . '_' . $this->opponent->getId();
-		if (!$this->player->isFatigued()) {
-			return '<a href="' . $url . '" id="' . $htmlId . '" class="action" title="">' . $text . '</a>' . $this->statsDisplay();
-		} else {
-			return '<span  class="actionDisabled" title="Trop fatigué pour ça.">' . $text . '</span>';
-		}
-	}
-
-	/**
-	 *
-	 * @return string
-	 */
-	public function statsDisplay() {
-		$htmlId = __CLASS__ . '_' . $this->opponent->getId();
+	public function statsDisplay($page = null) {
+		$htmlId = get_class($this) . '_' . $this->opponent->getId();
 		ob_start();
+		$num = 0;
 		?>
 <div id="<?= $htmlId ?>_tooltip" style="display: none;">
-	<table class="playerTooltip" id="player_<?= $this->opponent->getId().'_'.$num ?>_tooltip" style="display: none;">
+	<table class="playerTooltip" id="player_<?= $this->opponent->getId().'_'.$num ?>_tooltip">
 		<tr class="odd">
 			<th>Nom</th>
 			<td><?= $this->opponent->getNom(); ?> <?php echo $this->opponent->getSex()?'<span style="color:blue">&#9794;</span>':'<span style="color:pink">&#9792;</span>'; ?></td>

@@ -1,18 +1,17 @@
 <?php
-class StartPLS implements ActionInterface {
+class StartPLS extends AbstractAction {
 
-	/**
-	 *
-	 * @var Player
-	 */
-	private $player;
+	const PARAM_NAME = '';
 
 	/**
 	 *
 	 * @param Player $player        	
 	 */
 	public function __construct(Player $player) {
-		$this->player = $player;
+		parent::__construct($player);
+		// configuration
+		$this->paramName = self::PARAM_NAME;
+		$this->linkText = 'Se mettre en PLS';
 	}
 
 	/**
@@ -37,31 +36,10 @@ class StartPLS implements ActionInterface {
 
 	/**
 	 *
-	 * @param array $actionParams        	
-	 * @param string $page        	
 	 * @return string
 	 */
-	public function link($page = null) {
-		$text = 'Se mettre en PLS';
-		$url = 'main.php?action=' . urldecode(__CLASS__);
-		if ($page) {
-			$url .= '&page=' . urldecode($page);
-		}
-		// $url .= '&' . self::PARAM_NAME . '=' . $actionParams[self::PARAM_NAME]->getId();
-		$htmlId = __CLASS__;
-		if (!$this->player->isFatigued()) {
-			return '<a href="' . $url . '"  id="' . $htmlId . '" class="action" title="">' . $text . '</a>' . $this->statsDisplay();
-		} else {
-			return '<span class="actionDisabled" title="Trop fatigué pour ça.">' . $text . '</span>';
-		}
-	}
-
-	/**
-	 *
-	 * @return string
-	 */
-	public function statsDisplay() {
-		$htmlId = __CLASS__;
+	public function statsDisplay($page = null) {
+		$htmlId = get_class($this);
 		ob_start();
 		?>
 <div id="<?= $htmlId ?>_tooltip" style="display: none;">
@@ -83,7 +61,7 @@ class StartPLS implements ActionInterface {
 	</table>
 </div>
 <script type="text/javascript">
-	$("#<?= $htmlId ?>").tooltip({ 
+	$("#<?= $htmlId ?>_0").tooltip({ 
 		"content": $("#<?= $htmlId ?>_tooltip").html(), 
 		"hide": { "delay": 1000, "duration": 500 }
 	});

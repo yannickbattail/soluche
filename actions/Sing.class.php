@@ -1,18 +1,15 @@
 <?php
-class Sing implements ActionInterface {
-
-	/**
-	 *
-	 * @var Player
-	 */
-	private $player;
+class Sing extends AbstractAction {
 
 	/**
 	 *
 	 * @param Player $player        	
 	 */
 	public function __construct(Player $player) {
-		$this->player = $player;
+		parent::__construct($player);
+		// configuration
+		$this->paramName = null;
+		$this->linkText = 'Chanter';
 	}
 
 	/**
@@ -32,7 +29,7 @@ class Sing implements ActionInterface {
 	 */
 	public function execute() {
 		$res = new ActionResult();
-		$sql = 'SELECT count(*) AS counter FROM player WHERE id != ' . $this->player->getId() . ' AND id_congress = ' . $_SESSION['congress']->getId() . ' AND lieu = "' . $this->player->getLieu() . '" ;';
+		$sql = 'SELECT count(*) AS counter FROM player WHERE id != ' . $this->player->getId() . ' AND id_congress = ' . $this->player->getId_congress() . ' AND lieu = "' . $this->player->getLieu() . '" ;';
 		$stmt = $GLOBALS['DB']->query($sql);
 		$stmt->setFetchMode(PDO::FETCH_ASSOC);
 		$count = $stmt->fetch();
@@ -40,12 +37,14 @@ class Sing implements ActionInterface {
 			if ($this->player->getCalculatedAlcoolemie() > $this->player->getCalculatedAlcoolemie_optimum()) {
 				$this->player->addNotoriete(-1);
 				$this->player->addFatigue(1);
+				$this->player->addRemaining_time(-1);
 				$res->message = 'Trop bourré! tu chantes comme une casserole!';
 				$res->succes = false;
 			} else {
 				$this->player->addPoints(1);
 				$this->player->addNotoriete(1);
 				$this->player->addFatigue(1);
+				$this->player->addRemaining_time(-1);
 				$res->message = 'A chaque chanson faut y mettre son cannon! ♬';
 				$res->succes = true;
 			}
@@ -58,31 +57,10 @@ class Sing implements ActionInterface {
 
 	/**
 	 *
-	 * @param array $actionParams        	
-	 * @param string $page        	
 	 * @return string
 	 */
-	public function link($page = null) {
-		$text = 'Chanter';
-		$url = 'main.php?action=' . urldecode(__CLASS__);
-		if ($page) {
-			$url .= '&page=' . urldecode($page);
-		}
-		// $url .= '&' . self::PARAM_NAME . '=' . $actionParams[self::PARAM_NAME]->getId();
-		$htmlId = __CLASS__;
-		if (!$this->player->isFatigued()) {
-			return '<a href="' . $url . '"id="' . $htmlId . '" class="action" title="">' . $text . '</a>' . $this->statsDisplay();
-		} else {
-			return '<span class="actionDisabled" title="Trop fatigué pour ça.">' . $text . '</span>';
-		}
-	}
-
-	/**
-	 *
-	 * @return string
-	 */
-	public function statsDisplay() {
-		$htmlId = __CLASS__;
+	public function statsDisplay($page = null) {
+		$htmlId = get_class($this);
 		ob_start();
 		?>
 <div id="<?= $htmlId ?>_tooltip" style="display: none;">
@@ -104,7 +82,7 @@ class Sing implements ActionInterface {
 	</table>
 </div>
 <script type="text/javascript">
-	$("#<?= $htmlId ?>").tooltip({ 
+	$("#<?= $htmlId ?>_0").tooltip({ 
 		"content": $("#<?= $htmlId ?>_tooltip").html(), 
 		"hide": { "delay": 1000, "duration": 500 }
 	});

@@ -58,11 +58,12 @@
 
 .playerCard {
 	display: inline-block;
-	width: 200px;
+	width: 210px;
 	border-width: 2px;
 	border-style: outset;
 	border-radius: 2px;
 	text-align: center;
+	margin: 5px;
 }
 
 .playerTooltip {

@@ -1,13 +1,7 @@
 <?php
-class Duel implements ActionInterface {
+class Duel extends AbstractAction {
 
 	const PARAM_NAME = 'idPlayer';
-
-	/**
-	 *
-	 * @var Player
-	 */
-	private $player;
 
 	/**
 	 *
@@ -20,11 +14,13 @@ class Duel implements ActionInterface {
 	 * @param Player $player        	
 	 */
 	public function __construct(Player $player) {
-		$this->player = $player;
+		parent::__construct($player);
+		// configuration
+		$this->paramName = self::PARAM_NAME;
+		$this->linkText = 'Défier';
 	}
 
 	/**
-	 * (non-PHPdoc)
 	 *
 	 * @see ActionInterface::setParams()
 	 * @param array $params        	
@@ -39,6 +35,7 @@ class Duel implements ActionInterface {
 			}
 		}
 		$this->opponent->loadInventory();
+		$this->paramPrimaryKey = $this->opponent->getId();
 		return $this;
 	}
 
@@ -84,31 +81,10 @@ class Duel implements ActionInterface {
 
 	/**
 	 *
-	 * @param array $actionParams        	
-	 * @param string $page        	
 	 * @return string
 	 */
-	public function link($page = null) {
-		$text = 'Défier';
-		$url = 'main.php?action=' . urldecode(__CLASS__);
-		if ($page) {
-			$url .= '&page=' . urldecode($page);
-		}
-		$url .= '&' . self::PARAM_NAME . '=' . $this->opponent->getId();
-		$htmlId = __CLASS__ . '_' . $this->opponent->getId();
-		if (!$this->player->isFatigued()) {
-			return '<a href="' . $url . '" id="' . $htmlId . '" class="action" title="">' . $text . '</a>' . $this->statsDisplay();
-		} else {
-			return '<span  class="actionDisabled" title="Trop fatigué pour ça.">' . $text . '</span>';
-		}
-	}
-
-	/**
-	 *
-	 * @return string
-	 */
-	public function statsDisplay() {
-		$htmlId = __CLASS__ . '_' . $this->opponent->getId();
+	public function statsDisplay($page = null) {
+		$htmlId = get_class($this) . '_' . $this->opponent->getId();
 		ob_start();
 		?>
 <div id="<?= $htmlId ?>_tooltip" style="display: none;">

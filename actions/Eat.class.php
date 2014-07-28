@@ -1,13 +1,7 @@
 <?php
-class Eat implements ActionInterface {
+class Eat extends AbstractAction {
 
 	const PARAM_NAME = 'idItem';
-
-	/**
-	 *
-	 * @var Player
-	 */
-	private $player;
 
 	/**
 	 *
@@ -20,7 +14,11 @@ class Eat implements ActionInterface {
 	 * @param Player $player        	
 	 */
 	public function __construct(Player $player) {
-		$this->player = $player;
+		parent::__construct($player);
+		// configuration
+		$this->paramName = self::PARAM_NAME;
+		$this->actionRight = AbstractAction::EXCEPT_TIRED;
+		$this->linkText = 'Manger';
 	}
 
 	/**
@@ -38,6 +36,7 @@ class Eat implements ActionInterface {
 				throw new Exception('no such item: ' . $params[self::PARAM_NAME]);
 			}
 		}
+		$this->paramPrimaryKey = $this->item->getId();
 		return $this;
 	}
 
@@ -61,6 +60,7 @@ class Eat implements ActionInterface {
 		$this->player->addFatigue($this->item->fatigue);
 		$this->player->addFatigue_max($this->item->fatigue_max);
 		$this->player->addSex_appeal($this->item->sex_appeal);
+		$this->player->addRemaining_time(-1);
 		$res->succes = true;
 		$res->message = 'j\'ai bien mangé, j\'ai bien bu un(e) ' . $this->item->nom . '.';
 		return $res;
@@ -68,31 +68,10 @@ class Eat implements ActionInterface {
 
 	/**
 	 *
-	 * @param array $actionParams        	
-	 * @param string $page        	
 	 * @return string
 	 */
-	public function link($page = null) {
-		$text = 'Manger/boire';
-		$url = 'main.php?action=' . urldecode(__CLASS__);
-		if ($page) {
-			$url .= '&page=' . urldecode($page);
-		}
-		$url .= '&' . self::PARAM_NAME . '=' . $this->item->getId();
-		$htmlId = __CLASS__ . '_' . $this->item->getId();
-		// if (!$this->player->isFatigued()) {
-		return '<a href="' . $url . '" id="' . $htmlId . '" class="action" title="">' . $text . '</a>' . $this->statsDisplay();
-		// } else {
-		// return '<span class="actionDisabled" title="Trop fatigué pour ça.">' . $text . '</span>';
-		// }
-	}
-
-	/**
-	 *
-	 * @return string
-	 */
-	public function statsDisplay() {
-		$htmlId = __CLASS__ . '_' . $this->item->getId();
+	public function statsDisplay($page = null) {
+		$htmlId = get_class($this) . '_' . $this->item->getId();
 		ob_start();
 		?>
 <div id="<?= $htmlId ?>_tooltip" style="display: none;">

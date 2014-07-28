@@ -1,13 +1,7 @@
 <?php
-class Pins implements ActionInterface {
+class Pins extends AbstractAction {
 
 	const PARAM_NAME = 'idPlayer';
-
-	/**
-	 *
-	 * @var Player
-	 */
-	private $player;
 
 	/**
 	 *
@@ -20,7 +14,10 @@ class Pins implements ActionInterface {
 	 * @param Player $player        	
 	 */
 	public function __construct(Player $player) {
-		$this->player = $player;
+		parent::__construct($player);
+		// configuration
+		$this->paramName = self::PARAM_NAME;
+		$this->linkText = 'Pinser';
 	}
 
 	/**
@@ -39,6 +36,7 @@ class Pins implements ActionInterface {
 			}
 		}
 		$this->opponent->loadInventory();
+		$this->paramPrimaryKey = $this->opponent->getId();
 		return $this;
 	}
 
@@ -56,6 +54,7 @@ class Pins implements ActionInterface {
 		$this->player->addPoints(1);
 		$this->player->addNotoriete(1);
 		$this->player->addFatigue(1);
+		$this->player->addRemaining_time(-1);
 		// $this->player->save(); // this is done at the end of the action execution.
 		$res->message = 'Pin\'s';
 		$res->succes = true;
@@ -64,32 +63,11 @@ class Pins implements ActionInterface {
 
 	/**
 	 *
-	 * @param array $actionParams        	
-	 * @param string $page        	
 	 * @return string
 	 */
-	public function link($page = null) {
-		$text = 'Pinser';
-		$url = 'main.php?action=' . urldecode(__CLASS__);
-		if ($page) {
-			$url .= '&page=' . urldecode($page);
-		}
-		$url .= '&' . self::PARAM_NAME . '=' . $this->opponent->getId();
-		$htmlId = __CLASS__ . '_' . $this->opponent->getId();
-		if (!$this->player->isFatigued()) {
-			return '<a href="' . $url . '"  class="action" id="' . $htmlId . '" title="">' . $text . '</a>' . $this->statsDisplay();
-		} else {
-			return '<span  class="actionDisabled" title="Trop fatigué pour ça.">' . $text . '</span>';
-		}
-	}
-
-	/**
-	 *
-	 * @return string
-	 */
-	public function statsDisplay() {
+	public function statsDisplay($page = null) {
 		// @TODO faire tous les champs
-		$htmlId = __CLASS__ . '_' . $this->opponent->getId();
+		$htmlId = get_class($this) . '_' . $this->opponent->getId();
 		ob_start();
 		?>
 <div id="<?= $htmlId ?>_tooltip" style="display: none;">

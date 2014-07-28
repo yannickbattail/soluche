@@ -1,18 +1,16 @@
 <?php
-class Sleep implements ActionInterface {
-
-	/**
-	 *
-	 * @var Player
-	 */
-	private $player;
+class Sleep extends AbstractAction {
 
 	/**
 	 *
 	 * @param Player $player        	
 	 */
 	public function __construct(Player $player) {
-		$this->player = $player;
+		parent::__construct($player);
+		// configuration
+		$this->paramName = null;
+		$this->actionRight = AbstractAction::EXCEPT_TIRED;
+		$this->linkText = 'Dodo';
 	}
 
 	/**
@@ -33,7 +31,7 @@ class Sleep implements ActionInterface {
 	public function execute() {
 		$res = new ActionResult();
 		if ($this->player->getFatigue() >= 1) {
-			$_SESSION['congress']->addFatigue(-2);
+			$this->player->addRemaining_time(-3);
 			$this->player->addFatigue(-10);
 			$res->message = 'Haa un bon dodo!';
 			$res->succes = true;
@@ -46,31 +44,10 @@ class Sleep implements ActionInterface {
 
 	/**
 	 *
-	 * @param array $actionParams        	
-	 * @param string $page        	
 	 * @return string
 	 */
-	public function link($page = null) {
-		$text = 'Dodo';
-		$url = 'main.php?action=' . urldecode(__CLASS__);
-		if ($page) {
-			$url .= '&page=' . urldecode($page);
-		}
-		// $url .= '&' . self::PARAM_NAME . '=' . $actionParams[self::PARAM_NAME]->getId();
-		$htmlId = __CLASS__;
-		if (!$this->player->isFatigued()) {
-			return '<a href="' . $url . '"id="' . $htmlId . '" class="action" title="">' . $text . '</a>' . $this->statsDisplay();
-		} else {
-			return '<span class="actionDisabled" title="Trop fatigué pour ça.">' . $text . '</span>';
-		}
-	}
-
-	/**
-	 *
-	 * @return string
-	 */
-	public function statsDisplay() {
-		$htmlId = __CLASS__;
+	public function statsDisplay($page = null) {
+		$htmlId = get_class($this);
 		ob_start();
 		?>
 <div id="<?= $htmlId ?>_tooltip" style="display: none;">

@@ -18,7 +18,7 @@ interface ActionInterface {
 	 *
 	 * @return ActionResult
 	 */
-	public function execute();
+	public function start();
 
 	/**
 	 *
@@ -27,4 +27,6 @@ interface ActionInterface {
 	 * @return string
 	 */
 	public function link($page = null);
+
+	public function statsDisplay($page = null);
 }

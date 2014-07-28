@@ -8,7 +8,7 @@ require_once ('classes/Item.class.php');
 $errorMessage = '';
 if (isset($_REQUEST['logout'])) {
 	unset($_SESSION['user']);
-	unset($_SESSION['congress']);
+	unset($_SESSION['history']);
 }
 
 if (isset($_POST['ok']) && isset($_POST['login']) && isset($_POST['pass'])) {
@@ -27,13 +27,15 @@ if (isset($_POST['ok']) && isset($_POST['login']) && isset($_POST['pass'])) {
 }
 
 if (isset($_POST['new']) && isset($_POST['login']) && isset($_POST['pass']) && isset($_POST['robot'])) {
-	if (($_POST['robot'] == 'lourd') || ($_POST['robot'] == 'personne lourde')) {
+	if ((strcasecmp($_POST['robot'], 'lourd') == 0) || (strcasecmp($_POST['robot'], 'personne lourde') == 0) || (strcasecmp($_POST['robot'], 'gros lourd') == 0)) {
 		try {
 			if (!Player::loginExists($_POST['login'])) {
 				$player = new Player();
 				$player->defaultValues();
-				$player->nom = $_POST['login'];
-				$player->pass = $_POST['pass'];
+				$player->setNom($_POST['login']);
+				$player->setPass($_POST['pass']);
+				$player->setSex($_POST['sex']);
+				$player->setPhoto($_POST['sex']?'images/tete_faluche_noir_bleu.jpg':'images/tete_faluche_noir_rose.jpg');
 				$player->create();
 				Item::associate($player->getId(), 12);
 				Item::associate($player->getId(), 13);
@@ -125,10 +127,17 @@ td {
 				</td>
 			</tr>
 			<tr>
+				<th>Sex</th>
+				<td>
+					<label title="vagin"><input type="radio" name="sex" value="0" checked="checked" /><span style="color: pink">&#9792;</span></label><br /> <label title="bite"><input
+							type="radio" name="sex" value="1" /><span style="color: cyan">&#9794;</span></label>
+				</td>
+			</tr>
+			<tr>
 				<th>je ne suis pas un robot:</th>
 				<td>
 					Que signifie cet insigne?
-					<img src="images/badges/pachyderme.jpg" width="50" height="50">
+					<img src="images/badges/pachyderme.jpg" width="50" height="50" title="pachy">
 					<br />
 					<input type="text" id="robot" name="robot" value="">
 				</td>

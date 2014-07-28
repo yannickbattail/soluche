@@ -47,53 +47,12 @@ class Congress extends AbstractDbObject {
 		$this->bots = $bots;
 	}
 
-	public $fatigue = 48;
-
-	public function getCalculatedFatigue() {
-		return $this->calculated['fatigue'];
-	}
-
-	public function getFatigue() {
-		return $this->fatigue;
-	}
-
-	public function setFatigue($fatigue) {
-		if ($fatigue < 0) {
-			$this->fatigue = 0;
-		} else {
-			$this->fatigue = $fatigue;
-		}
-		if ($this->fatigue == 0) {
-			Dispatcher::setPage('congress');
-		}
-	}
-
-	public function addFatigue($fatigue) {
-		$this->setFatigue($this->getFatigue() + $fatigue);
-	}
-
-	public $history = array();
-
-	public function getHistory() {
-		return $this->history;
-	}
-
-	public function setHistory(array $history) {
-		$this->history = $history;
-	}
-
-	public function addHistory(ActionResult $actionReturn) {
-		$this->history[] = $actionReturn;
-	}
-
-	public function start(Player $player) {
+	public function stopCongress(Player $player) {
 		$res = new ActionResult();
-		$_SESSION['congress'] = $this;
-		$_SESSION['congress']->setFatigue($this->getAction_number() + 1);
-		$player->setCongress($this);
-		$player->addRandomItem();
+		$player->setId_congress(0);
+		$player->setRemaining_time(0);
 		
-		Dispatcher::setPage('camping');
+		Dispatcher::setPage('congress');
 		$res->message .= 'Début du congrès en ' . $this->getAction_number() . ' heures.';
 		$res->succes = true;
 		return $res;

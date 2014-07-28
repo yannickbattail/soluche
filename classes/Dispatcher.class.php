@@ -14,8 +14,7 @@ class Dispatcher {
 	private static $messages = array();
 
 	public static function addMessage($message, $level) {
-		self::$messages[] = array('message' => $message,'level' => $level
-		);
+		self::$messages[] = array('message' => $message, 'level' => $level);
 	}
 
 	public static function getMessages() {
@@ -86,18 +85,21 @@ class Dispatcher {
 	}
 
 	/**
-	 * 
-	 * @return ActionResult|NULL
+	 *
+	 * @return ActionResult NULL
 	 */
 	public static function executeAction() {
 		if (self::$action) {
-			$actionResult = self::$action->execute();
+			$actionResult = self::$action->start();
 			if ($actionResult->succes) {
 				self::addMessage($actionResult->message, Dispatcher::MESSAGE_LEVEL_SUCCES);
 			} else {
 				self::addMessage($actionResult->message, Dispatcher::MESSAGE_LEVEL_FAIL);
 			}
-			$_SESSION['congress']->addHistory($actionResult);
+			if (!isset($_SESSION['history'])) {
+				$_SESSION['history'] = array();
+			}
+			$_SESSION['history'][] = $actionResult;
 			return $actionResult;
 		}
 		return null;

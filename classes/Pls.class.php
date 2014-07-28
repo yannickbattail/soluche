@@ -24,6 +24,7 @@ class Pls {
 				$recup = $player->alcoolemie;
 			}
 			$player->addAlcoolemie(-1 * $recup);
+			$player->addRemaining_time(-1 * $recup);
 			$player->setEn_pls(0);
 			$player->setDebut_de_pls(0);
 			$player->addFatigue(1);

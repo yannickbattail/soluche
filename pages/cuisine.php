@@ -32,7 +32,7 @@ while ($sth && ($item = $sth->fetch())) {
 
 <h3>personnes dans la cuisine</h3>
 <?php
-$stmt = $GLOBALS['DB']->query('SELECT * FROM player WHERE id != ' . $_SESSION['user']->getId() . ' AND id_congress = ' . $_SESSION['congress']->getId() . ' AND lieu = "cuisine" AND pnj < 2;');
+$stmt = $GLOBALS['DB']->query('SELECT * FROM player WHERE id != ' . $_SESSION['user']->getId() . ' AND id_congress = ' . $_SESSION['user']->getId_congress() . ' AND lieu = "cuisine" AND pnj < 2;');
 $stmt->setFetchMode(PDO::FETCH_CLASS, 'Player');
 printPlayerBox($stmt, array('Pinser' => new Pins($_SESSION['user'])));
 ?>

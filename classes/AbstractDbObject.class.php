@@ -2,7 +2,7 @@
 abstract class AbstractDbObject {
 
 	const TABLE_NAME = 'table';
-	
+
 	/**
 	 *
 	 * @param int $id        	
@@ -10,7 +10,7 @@ abstract class AbstractDbObject {
 	 */
 	public static function load($id) {
 		$sth = $GLOBALS['DB']->query('SELECT * FROM ' . self::TABLE_NAME . ' WHERE id=' . intval($id));
-		$sth->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
+		$sth->setFetchMode(PDO::FETCH_CLASS, get_class($this));
 		return $sth->fetch();
 	}
 
@@ -21,16 +21,14 @@ abstract class AbstractDbObject {
 			$this->update();
 		}
 	}
-	
 
-	public abstract  function create();
+	public abstract function create();
 
 	public abstract function defaultValues();
 
-	public abstract  function update();
+	public abstract function update();
 
 	public function delete() {
-	$GLOBALS['DB']->query('DELETE FROM ' . self::TABLE_NAME . ' WHERE id=' . $this->id . ';')->fetch(PDO::FETCH_ASSOC);
-}
-	
+		$GLOBALS['DB']->query('DELETE FROM ' . self::TABLE_NAME . ' WHERE id=' . $this->id . ';')->fetch(PDO::FETCH_ASSOC);
+	}
 }

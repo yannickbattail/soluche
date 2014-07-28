@@ -19,7 +19,7 @@ while ($sth && ($item = $sth->fetch())) {
 		<td>
 			<img src="<?= $item->image; ?>" class="inventoryImage" title="<?= $item->nom; ?>" />
 		</td>
-		<td><?= (new Eat($_SESSION['user']))->setParams(array(Eat::PARAM_NAME=>$item))->link() ?></td>
+		<td><?= (new Drink($_SESSION['user']))->setParams(array(Drink::PARAM_NAME=>$item))->link() ?></td>
 		<td><?= plus($item->alcoolemie, 0); ?></td>
 	</tr>
         <?php
@@ -33,7 +33,7 @@ while ($sth && ($item = $sth->fetch())) {
 
 <h3>Personnes au bar:</h3>
 <?php
-$sql = 'SELECT * FROM player WHERE id != ' . $_SESSION['user']->getId() . ' AND id_congress = ' . $_SESSION['congress']->getId() . ' AND lieu = "bar" AND pnj < 2;';
+$sql = 'SELECT * FROM player WHERE id != ' . $_SESSION['user']->getId() . ' AND id_congress = ' . $_SESSION['user']->getId_congress() . ' AND lieu = "bar" AND pnj < 2;';
 $stmt = $GLOBALS['DB']->query($sql);
 $stmt->setFetchMode(PDO::FETCH_CLASS, 'Player');
 printPlayerBox($stmt, array('Défier' => new Duel($_SESSION['user']), 'Pinser' => new Pins($_SESSION['user'])));

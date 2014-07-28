@@ -1,20 +1,20 @@
 <?php
-class EndPLS implements ActionInterface {
+class EndPLS extends AbstractAction {
 
+	const PARAM_NAME = '';
+	
 	/**
 	 *
-	 * @var Player
-	 */
-	private $player;
-
-	/**
-	 *
-	 * @param Player $player        	
+	 * @param Player $player
 	 */
 	public function __construct(Player $player) {
-		$this->player = $player;
+		parent::__construct($player);
+		// configuration
+		$this->paramName = self::PARAM_NAME;
+		$this->actionRight = AbstractAction::EXCEPT_PLS;
+		$this->linkText = 'Finir la PLS';
 	}
-
+	
 	/**
 	 * (non-PHPdoc)
 	 *
@@ -37,31 +37,10 @@ class EndPLS implements ActionInterface {
 
 	/**
 	 *
-	 * @param array $actionParams        	
-	 * @param string $page        	
 	 * @return string
 	 */
-	public function link($page = null) {
-		$text = 'Finir la PLS';
-		$url = 'main.php?action=' . urldecode(__CLASS__);
-		if ($page) {
-			$url .= '&page=' . urldecode($page);
-		}
-		// $url .= '&' . self::PARAM_NAME . '=' . $actionParams[self::PARAM_NAME]->getId();
-		$htmlId = __CLASS__;
-		if (Pls::isPlsFinished($this->player)) {
-			return '<a href="' . $url . '"  id="' . $htmlId . '" class="action" title="">' . $text . '</a>' . $this->statsDisplay();
-		} else {
-			return '<span class="actionDisabled" title="Pls non terminée">' . $text . '</span>';
-		}
-	}
-
-	/**
-	 *
-	 * @return string
-	 */
-	public function statsDisplay() {
-		$htmlId = __CLASS__;
+	public function statsDisplay($page = null) {
+		$htmlId = get_class($this);
 		ob_start();
 		?>
 <div id="<?= $htmlId ?>_tooltip" style="display: none;">

@@ -20,7 +20,7 @@ Les congrès du moment:
 		<td>
 			<?= $congress->getAction_number(); ?>
 		</td>
-		<td><?=(new StartCongress($_SESSION['user']))->setParams(array(StartCongress::PARAM_NAME=>$congress))->link('bar')?></td>
+		<td><?= ((new StartCongress($_SESSION['user']))->setParams(array(StartCongress::PARAM_NAME => $congress))->link('bar')) ?></td>
 	</tr>
         <?php
 	}
@@ -28,7 +28,7 @@ Les congrès du moment:
 </table>
 
 <?php
-if (isset($_SESSION['congress']) && ($_SESSION['congress']->getFatigue() == 0)) {
+if (!$_SESSION['user']->getId_congress()) {
 	?>
 Congrès pas fini ... et ben si :-(
 
@@ -37,12 +37,13 @@ Congrès pas fini ... et ben si :-(
 		<th>Résumé</th>
 	</tr>
 <?php
-	foreach ($_SESSION['congress']->getHistory() as $actionResult) {
-		?>
+	if (isset($_SESSION['history'])) {
+		foreach ($_SESSION['history'] as $actionResult) {
+			?>
 	<tr class="<?php echo $actionResult->succes?'successMessage':'errorMessage'; ?>">
 		<td><?= $actionResult->message ?></td>
 	</tr>
-<?php } ?>
+<?php }} ?>
 	
 </table>
 <?php } ?>

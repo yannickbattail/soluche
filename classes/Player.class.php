@@ -311,6 +311,15 @@ class Player extends AbstractDbObject {
 
 	public function setId_congress($id_congress) {
 		$this->id_congress = $id_congress;
+		if (!$id_congress) {
+			$this->congress = null;
+		} else {
+			if ($this->congress && ($this->congress->getId() == $id_congress)) {
+				// no need to load congress
+			} else {
+				$this->congress = Congress::load($id_congress);
+			}
+		}
 	}
 
 	/**
@@ -325,7 +334,7 @@ class Player extends AbstractDbObject {
 	 */
 	public function getCongress() {
 		if ($this->congress === null) {
-			if (($this->id_congress != null) && ($this->id_congress > 0)) {
+			if ($this->id_congress) {
 				$this->congress = Congress::load($this->id_congress);
 			}
 		}
@@ -335,6 +344,24 @@ class Player extends AbstractDbObject {
 	public function setCongress(Congress $congress) {
 		$this->congress = $congress;
 		$this->id_congress = $congress->getId();
+	}
+
+	public $remaining_time = 0;
+
+	public function getRemaining_time() {
+		return $this->remaining_time;
+	}
+
+	public function setRemaining_time($remaining_time) {
+		if ($remaining_time < 0) {
+			$this->fatigue = 0;
+		} else {
+			$this->remaining_time = $remaining_time;
+		}
+	}
+
+	public function addRemaining_time($remaining_time) {
+		$this->setRemaining_time($this->getRemaining_time() + $remaining_time);
 	}
 
 	public $inventory = array();
@@ -380,7 +407,7 @@ class Player extends AbstractDbObject {
 	}
 
 	public function create() {
-		$sth = $GLOBALS['DB']->prepare('INSERT INTO ' . self::TABLE_NAME . ' ' . '(nom, pass, lieu, points, notoriete, alcoolemie, alcoolemie_optimum, alcoolemie_max, fatigue, fatigue_max, sex_appeal, en_pls, debut_de_pls, sex, photo, pnj, id_congress)' . ' VALUES ( :nom, :pass, :lieu, :points, :notoriete, :alcoolemie, :alcoolemie_optimum, :alcoolemie_max, :fatigue, :fatigue_max, :sex_appeal, :en_pls, :debut_de_pls, :sex, :photo, :pnj, :id_congress);');
+		$sth = $GLOBALS['DB']->prepare('INSERT INTO ' . self::TABLE_NAME . ' ' . '(nom, pass, lieu, points, notoriete, alcoolemie, alcoolemie_optimum, alcoolemie_max, fatigue, fatigue_max, sex_appeal, en_pls, debut_de_pls, sex, photo, pnj, id_congress, remaining_time)' . ' VALUES ( :nom, :pass, :lieu, :points, :notoriete, :alcoolemie, :alcoolemie_optimum, :alcoolemie_max, :fatigue, :fatigue_max, :sex_appeal, :en_pls, :debut_de_pls, :sex, :photo, :pnj, :id_congress, :remaining_time);');
 		$sth->bindValue(':nom', $this->nom, PDO::PARAM_STR);
 		$sth->bindValue(':pass', $this->pass, PDO::PARAM_STR);
 		$sth->bindValue(':lieu', $this->lieu, PDO::PARAM_STR);
@@ -398,6 +425,7 @@ class Player extends AbstractDbObject {
 		$sth->bindValue(':photo', $this->photo, PDO::PARAM_STR);
 		$sth->bindValue(':pnj', $this->pnj, PDO::PARAM_INT);
 		$sth->bindValue(':id_congress', $this->id_congress, PDO::PARAM_INT);
+		$sth->bindValue(':remaining_time', $this->remaining_time, PDO::PARAM_INT);
 		if ($sth->execute() === false) {
 			throw new Exception(print_r($sth->errorInfo(), true));
 		}
@@ -420,10 +448,11 @@ class Player extends AbstractDbObject {
 		$this->photo = 'images/tete_faluche_noir_rose.jpg';
 		$this->pnj = 0;
 		$this->id_congress = null;
+		$this->remaining_time = 0;
 	}
 
 	public function update() {
-		$sth = $GLOBALS['DB']->prepare('UPDATE ' . self::TABLE_NAME . ' SET nom=:nom, pass=:pass, lieu=:lieu, points=:points, notoriete=:notoriete, alcoolemie=:alcoolemie, alcoolemie_optimum=:alcoolemie_optimum, alcoolemie_max=:alcoolemie_max, fatigue=:fatigue, fatigue_max=:fatigue_max, sex_appeal=:sex_appeal, en_pls=:en_pls, debut_de_pls=:debut_de_pls, sex=:sex, photo=:photo, pnj=:pnj, id_congress=:id_congress WHERE id=:id;');
+		$sth = $GLOBALS['DB']->prepare('UPDATE ' . self::TABLE_NAME . ' SET nom=:nom, pass=:pass, lieu=:lieu, points=:points, notoriete=:notoriete, alcoolemie=:alcoolemie, alcoolemie_optimum=:alcoolemie_optimum, alcoolemie_max=:alcoolemie_max, fatigue=:fatigue, fatigue_max=:fatigue_max, sex_appeal=:sex_appeal, en_pls=:en_pls, debut_de_pls=:debut_de_pls, sex=:sex, photo=:photo, pnj=:pnj, id_congress=:id_congress, remaining_time=:remaining_time WHERE id=:id;');
 		$sth->bindValue(':id', $this->id, PDO::PARAM_INT);
 		$sth->bindValue(':nom', $this->nom, PDO::PARAM_STR);
 		$sth->bindValue(':pass', $this->pass, PDO::PARAM_STR);
@@ -442,6 +471,7 @@ class Player extends AbstractDbObject {
 		$sth->bindValue(':photo', $this->photo, PDO::PARAM_STR);
 		$sth->bindValue(':pnj', $this->pnj, PDO::PARAM_INT);
 		$sth->bindValue(':id_congress', $this->id_congress, PDO::PARAM_INT);
+		$sth->bindValue(':remaining_time', $this->remaining_time, PDO::PARAM_INT);
 		if ($sth->execute() === false) {
 			throw new Exception(print_r($sth->errorInfo(), true));
 		}
