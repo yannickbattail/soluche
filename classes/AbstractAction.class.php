@@ -16,6 +16,22 @@ class AbstractAction implements ActionInterface {
 	protected $player;
 
 	/**
+	 * 
+	 * @return Player
+	 */
+	public function getPlayer() {
+		return $this->player;
+	}
+	
+	/**
+	 * 
+	 * @param Player $player
+	 */
+	public function setPlayer(Player $player) {
+		$this->player = $player;
+	}
+	
+	/**
 	 *
 	 * @param Player $player        	
 	 */
@@ -44,14 +60,14 @@ class AbstractAction implements ActionInterface {
 				return $this->execute();
 			} else {
 				$actionResult = new ActionResult();
-				$actionResult->message = 'action déjà exécutée.';
-				$actionResult->succes = false;
+				$actionResult->setMessage('action déjà exécutée.');
+				$actionResult->setSuccess(ActionResult::NOTHING);
 				return $actionResult;
 			}
 		} else {
 			$actionResult = new ActionResult();
-			$actionResult->message = Dispatcher::addMessage($rights, Dispatcher::MESSAGE_LEVEL_FAIL);
-			$actionResult->succes = false;
+			$actionResult->setMessage($rights);
+			$actionResult->setSuccess(ActionResult::IMPOSSIBLE);
 			return $actionResult;
 		}
 	}

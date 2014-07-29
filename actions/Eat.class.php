@@ -37,6 +37,7 @@ class Eat extends AbstractAction {
 			}
 		}
 		$this->paramPrimaryKey = $this->item->getId();
+		$this->player->getHistory()->setId_item($this->item->getId());
 		return $this;
 	}
 
@@ -49,8 +50,8 @@ class Eat extends AbstractAction {
 	public function execute() {
 		$res = new ActionResult();
 		if ($this->item->permanent) { // useless
-			$res->succes = false;
-			$res->message = 'Cet item est permanent et ne peut etre utilisé.';
+			$res->setSuccess(ActionResult::IMPOSSIBLE);
+			$res->setMessage('Cet item est permanent et ne peut etre utilisé.');
 			return $res;
 		}
 		$this->player->addNotoriete($this->item->notoriete);
@@ -61,8 +62,8 @@ class Eat extends AbstractAction {
 		$this->player->addFatigue_max($this->item->fatigue_max);
 		$this->player->addSex_appeal($this->item->sex_appeal);
 		$this->player->addRemaining_time(-1);
-		$res->succes = true;
-		$res->message = 'j\'ai bien mangé, j\'ai bien bu un(e) ' . $this->item->nom . '.';
+		$res->setSuccess(ActionResult::SUCCESS);
+		$res->setMessage('j\'ai bien mangé, j\'ai bien bu un(e) ' . $this->item->nom . '.');
 		return $res;
 	}
 

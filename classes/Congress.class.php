@@ -53,8 +53,8 @@ class Congress extends AbstractDbObject {
 		$player->setRemaining_time(0);
 		
 		Dispatcher::setPage('congress');
-		$res->message .= 'Début du congrès en ' . $this->getAction_number() . ' heures.';
-		$res->succes = true;
+		$res->setMessage('Début du congrès en ' . $this->getAction_number() . ' heures.');
+		$res->setSuccess(ActionResult::SUCCESS);
 		return $res;
 	}
 

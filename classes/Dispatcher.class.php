@@ -72,14 +72,14 @@ class Dispatcher {
 	 * @param Player $user        	
 	 * @param array $params        	
 	 */
-	public static function defineAction($action, Player $user, array $params) {
+	public static function defineAction($action, Player $player, array $params) {
 		if ($action) {
 			$filename = "./actions/" . $action . ".class.php";
 			if (file_exists($filename)) {
 				include_once ($filename);
 			}
 			$className = $action;
-			self::setAction(new $className($user));
+			self::setAction(new $className($player));
 			self::$action->setParams($params);
 		}
 	}
@@ -91,10 +91,21 @@ class Dispatcher {
 	public static function executeAction() {
 		if (self::$action) {
 			$actionResult = self::$action->start();
-			if ($actionResult->succes) {
-				self::addMessage($actionResult->message, Dispatcher::MESSAGE_LEVEL_SUCCES);
+			$pl = self::$action->getPlayer();
+			$hstry = $pl->getHistory();
+			$hstry->setId_player($pl->getId());
+			$hstry->setLieu($pl->getLieu());
+			$hstry->setId_congress($pl->getId_congress());
+			$hstry->setAction_name(get_class(self::$action));
+			$hstry->setDate_action(time());
+			$hstry->setSuccess($actionResult->getSuccess());
+			$hstry->setMessage($actionResult->getMessage());
+			if ($actionResult->getSuccess() === ActionResult::SUCCESS) {
+				self::addMessage($actionResult->getMessage(), Dispatcher::MESSAGE_LEVEL_SUCCES);
+			} else if (($actionResult->getSuccess() === ActionResult::FAIL)) {
+				self::addMessage($actionResult->getMessage(), Dispatcher::MESSAGE_LEVEL_FAIL);
 			} else {
-				self::addMessage($actionResult->message, Dispatcher::MESSAGE_LEVEL_FAIL);
+				self::addMessage($actionResult->getMessage(), Dispatcher::MESSAGE_LEVEL_INFO);
 			}
 			if (!isset($_SESSION['history'])) {
 				$_SESSION['history'] = array();

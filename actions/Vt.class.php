@@ -32,11 +32,11 @@ class Vt extends AbstractAction {
 			$this->player->addNotoriete(-1);
 			$this->player->addFatigue(1);
 			$this->player->addRemaining_time(-1);
-			$res->message = 'Dégueux!';
-			$res->succes = true;
+			$res->setMessage('Dégueux!');
+			$res->setSuccess(ActionResult::SUCCESS);
 		} else {
-			$res->message = 'alcoolemie déjà à 0.';
-			$res->succes = false;
+			$res->setMessage('alcoolemie déjà à 0.');
+			$res->setSuccess(ActionResult::IMPOSSIBLE);
 		}
 		return $res;
 	}

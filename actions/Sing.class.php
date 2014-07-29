@@ -38,19 +38,19 @@ class Sing extends AbstractAction {
 				$this->player->addNotoriete(-1);
 				$this->player->addFatigue(1);
 				$this->player->addRemaining_time(-1);
-				$res->message = 'Trop bourré! tu chantes comme une casserole!';
-				$res->succes = false;
+				$res->setMessage('Trop bourré! tu chantes comme une casserole!');
+				$res->setSuccess(ActionResult::FAIL);
 			} else {
 				$this->player->addPoints(1);
 				$this->player->addNotoriete(1);
 				$this->player->addFatigue(1);
 				$this->player->addRemaining_time(-1);
-				$res->message = 'A chaque chanson faut y mettre son cannon! ♬';
-				$res->succes = true;
+				$res->setMessage('A chaque chanson faut y mettre son cannon! ♬');
+				$res->setSuccess(ActionResult::SUCCESS);
 			}
 		} else {
-			$res->message = 'Seulement ' . $count['counter'] . ' personnes ici. On chante pas tout seul.';
-			$res->succes = false;
+			$res->setMessage('Seulement ' . $count['counter'] . ' personnes ici. On chante pas tout seul.');
+			$res->setSuccess(ActionResult::IMPOSSIBLE);
 		}
 		return $res;
 	}

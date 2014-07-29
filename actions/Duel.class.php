@@ -36,6 +36,7 @@ class Duel extends AbstractAction {
 		}
 		$this->opponent->loadInventory();
 		$this->paramPrimaryKey = $this->opponent->getId();
+		$this->player->getHistory()->setId_opponent($this->opponent->getId());
 		return $this;
 	}
 
@@ -50,32 +51,34 @@ class Duel extends AbstractAction {
 		$secUser = $this->player->getCalculatedAlcoolemie_max() - $this->player->getCalculatedAlcoolemie();
 		$secOpponent = $this->opponent->getCalculatedAlcoolemie_max() - $this->opponent->getCalculatedAlcoolemie();
 		$sec = 0;
-		$res->message = ' Duel: ';
 		// $res->message .= ' $secUser: ' . $secUser . ' $secOpponent: ' . $secOpponent; // debug
 		if ($secUser > $secOpponent) {
 			$sec = $secOpponent + 1;
 			// $this->opponent->notoriete -= 1;
 			$this->player->addNotoriete(2);
 			$this->player->addPoints(5);
-			$res->message .= ' ' . $this->player->nom . ' a gagné après s\'être affligé ' . $sec . ' secs.';
+			$res->setMessage('Duel: ' . $this->player->nom . ' a gagné après s\'être affligé ' . $sec . ' secs.');
+			$res->setSuccess(ActionResult::SUCCESS);
 		} else if ($secUser < $secOpponent) {
 			$sec = $secUser + 1;
 			$this->opponent->addNotoriete(1);
 			$this->opponent->addPoints(5);
 			$this->player->addNotoriete(1);
-			$res->message .= ' ' . $this->opponent->nom . ' a gagné après s\'être affligé ' . $sec . ' secs.';
+			$res->setMessage('Duel: ' . $this->opponent->nom . ' a gagné après s\'être affligé ' . $sec . ' secs.');
+			$res->setSuccess(ActionResult::FAIL);
 		} else { // $secUser == $secOpponent
 			$this->player->addNotoriete(-1);
 			// $this->opponent->notoriete -= 1;
 			$sec = $secOpponent + 1;
-			$res->message .= ' Personne n\'a gagné après s\'être affligé ' . $sec . ' secs.';
+			$res->setMessage('Duel: Personne n\'a gagné après s\'être affligé ' . $sec . ' secs.');
+			$res->setSuccess(ActionResult::FAIL);
 		}
 		$this->opponent->addAlcoolemie($sec);
 		$this->player->addAlcoolemie($sec);
 		$this->player->addFatigue(1);
+		$this->player->addRemaining_time(-2);
 		$this->opponent->save();
 		// $this->player->save(); // this is done at the end of the action execution.
-		$res->succes = true;
 		return $res;
 	}
 

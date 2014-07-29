@@ -52,8 +52,8 @@ class StartCongress extends AbstractAction {
 		$this->player->addRandomItem();
 		$_SESSION['history'] = array();
 		Dispatcher::setPage('camping');
-		$res->message .= 'Début du congrès en ' . $this->congress->getAction_number() . ' heures.';
-		$res->succes = true;
+		$res->setMessage('Début du congrès "'.$this->congress->getNom().'" en ' . $this->congress->getAction_number() . ' heures.');
+		$res->setSuccess(ActionResult::SUCCESS);
 		return $res;
 	}
 

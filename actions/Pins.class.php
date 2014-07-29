@@ -37,6 +37,7 @@ class Pins extends AbstractAction {
 		}
 		$this->opponent->loadInventory();
 		$this->paramPrimaryKey = $this->opponent->getId();
+		$this->player->getHistory()->setId_opponent($this->opponent->getId());
 		return $this;
 	}
 
@@ -56,8 +57,8 @@ class Pins extends AbstractAction {
 		$this->player->addFatigue(1);
 		$this->player->addRemaining_time(-1);
 		// $this->player->save(); // this is done at the end of the action execution.
-		$res->message = 'Pin\'s';
-		$res->succes = true;
+		$res->setMessage('Pin\'s');
+		$res->setSuccess(ActionResult::SUCCESS);
 		return $res;
 	}
 

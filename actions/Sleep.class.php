@@ -33,11 +33,11 @@ class Sleep extends AbstractAction {
 		if ($this->player->getFatigue() >= 1) {
 			$this->player->addRemaining_time(-3);
 			$this->player->addFatigue(-10);
-			$res->message = 'Haa un bon dodo!';
-			$res->succes = true;
+			$res->setMessage('Haa un bon dodo!');
+			$res->setSuccess(ActionResult::SUCCESS);
 		} else {
-			$res->message = 'ON EST PAS FATIGUE! On est pas fatigué!';
-			$res->succes = false;
+			$res->setMessage('ON EST PAS FATIGUE! On est pas fatigué!');
+			$res->setSuccess(ActionResult::NOTHING);
 		}
 		return $res;
 	}

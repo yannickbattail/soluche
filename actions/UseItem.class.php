@@ -37,6 +37,7 @@ class UseItem extends AbstractAction {
 			}
 		}
 		$this->paramPrimaryKey = $this->item->getId();
+		$this->player->getHistory()->setId_item($this->item->getId());
 		return $this;
 	}
 
@@ -49,8 +50,8 @@ class UseItem extends AbstractAction {
 	public function execute() {
 		$res = new ActionResult();
 		if ($this->item->permanent) {
-			$res->succes = false;
-			$res->message = 'Cet item est permanent et ne peut etre utilisé.';
+			$res->setSuccess(ActionResult::IMPOSSIBLE);
+			$res->setMessage('Cet item est permanent et ne peut etre utilisé.');
 			return $res;
 		}
 		// @TODO verifier si l item est bien present dans inventaire du player
@@ -63,8 +64,8 @@ class UseItem extends AbstractAction {
 		$this->player->addSex_appeal($this->item->sex_appeal);
 		$this->player->addRemaining_time(-1);
 		Item::desassociate($this->player->getId(), $this->item->id);
-		$res->succes = true;
-		$res->message = 'Item ' . $this->item->nom . ' utilisé.';
+		$res->setSuccess(ActionResult::SUCCESS);
+		$res->setMessage('Item ' . $this->item->nom . ' utilisé.');
 		return $res;
 	}
 

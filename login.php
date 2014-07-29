@@ -3,6 +3,7 @@ session_start();
 require_once ('db.php');
 require_once ('classes/AbstractDbObject.class.php');
 require_once ('classes/Player.class.php');
+require_once ('classes/History.class.php');
 require_once ('classes/Item.class.php');
 
 $errorMessage = '';
@@ -35,7 +36,7 @@ if (isset($_POST['new']) && isset($_POST['login']) && isset($_POST['pass']) && i
 				$player->setNom($_POST['login']);
 				$player->setPass($_POST['pass']);
 				$player->setSex($_POST['sex']);
-				$player->setPhoto($_POST['sex']?'images/tete_faluche_noir_bleu.jpg':'images/tete_faluche_noir_rose.jpg');
+				$player->setPhoto($_POST['sex'] ? 'images/tete_faluche_noir_bleu.jpg' : 'images/tete_faluche_noir_rose.jpg');
 				$player->create();
 				Item::associate($player->getId(), 12);
 				Item::associate($player->getId(), 13);
@@ -150,6 +151,7 @@ td {
 			</tr>
 		</table>
 	</form>
+	<div style="font-size: 10px; color: silver;">v 1.3</div>
 	<a href="https://github.com/yannickbattail/soluche"><img style="position: absolute; top: 0; right: 0; border: 0;" src="images/Fork me on GitHub.png" alt="Fork me on GitHub"></a>
 </body>
 </html>

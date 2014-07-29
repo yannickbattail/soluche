@@ -46,6 +46,7 @@ class Player extends AbstractDbObject {
 	}
 
 	public function setLieu($lieu) {
+		$this->getHistory()->setLieu($lieu);
 		$this->lieu = $lieu;
 	}
 
@@ -56,6 +57,7 @@ class Player extends AbstractDbObject {
 	}
 
 	public function setPoints($points) {
+		$this->getHistory()->setPoints($points - $this->points);
 		$this->points = $points;
 	}
 
@@ -63,7 +65,7 @@ class Player extends AbstractDbObject {
 		if ($points <= 0) {
 			throw RuleException("on ne peut pas enlever des points.");
 		}
-		$this->points += $points;
+		$this->setPoints($this->getPoints() + $points);
 	}
 
 	public $notoriete = 0;
@@ -78,10 +80,10 @@ class Player extends AbstractDbObject {
 
 	public function setNotoriete($notoriete) {
 		if ($notoriete < 0) {
-			$this->notoriete = 0;
-		} else {
-			$this->notoriete = $notoriete;
+			$notoriete = 0;
 		}
+		$this->getHistory()->setNotoriete($notoriete - $this->notoriete);
+		$this->notoriete = $notoriete;
 	}
 
 	public function addNotoriete($notoriete) {
@@ -100,10 +102,10 @@ class Player extends AbstractDbObject {
 
 	public function setAlcoolemie($alcoolemie) {
 		if ($alcoolemie < 0) {
-			$this->alcoolemie = 0;
-		} else {
-			$this->alcoolemie = $alcoolemie;
+			$alcoolemie = 0;
 		}
+		$this->getHistory()->setAlcoolemie($alcoolemie - $this->alcoolemie);
+		$this->alcoolemie = $alcoolemie;
 		if (Pls::haveToGoToPls($this)) {
 			Pls::startToPls($this);
 		}
@@ -125,12 +127,12 @@ class Player extends AbstractDbObject {
 
 	public function setAlcoolemie_optimum($alcoolemie_optimum) {
 		if ($alcoolemie_optimum < 1) {
-			$this->alcoolemie_optimum = 1;
+			$alcoolemie_optimum = 1;
 		} else if ($alcoolemie_optimum >= $this->alcoolemie_max) {
-			$this->alcoolemie_optimum = $this->alcoolemie_max - 1;
-		} else {
-			$this->alcoolemie_optimum = $alcoolemie_optimum;
+			$alcoolemie_optimum = $this->alcoolemie_max - 1;
 		}
+		$this->getHistory()->setAlcoolemie_optimum($alcoolemie_optimum - $this->alcoolemie_optimum);
+		$this->alcoolemie_optimum = $alcoolemie_optimum;
 	}
 
 	public function addAlcoolemie_optimum($alcoolemie_optimum) {
@@ -149,10 +151,11 @@ class Player extends AbstractDbObject {
 
 	public function setAlcoolemie_max($alcoolemie_max) {
 		if ($alcoolemie_max <= $this->alcoolemie_optimum + 1) {
-			$this->$alcoolemie_max = $this->alcoolemie_optimum - 1;
-		} else {
-			$this->alcoolemie_max = $alcoolemie_max;
+			$alcoolemie_max = $this->alcoolemie_optimum - 1;
 		}
+		
+		$this->getHistory()->setAlcoolemie_max($alcoolemie_max - $this->alcoolemie_max);
+		$this->alcoolemie_max = $alcoolemie_max;
 	}
 
 	public function addAlcoolemie_max($alcoolemie_max) {
@@ -171,12 +174,12 @@ class Player extends AbstractDbObject {
 
 	public function setFatigue($fatigue) {
 		if ($fatigue < 0) {
-			$this->fatigue = 0;
+			$fatigue = 0;
 		} else if ($fatigue >= $this->calculated['fatigue_max']) {
-			$this->fatigue = $this->calculated['fatigue_max'];
-		} else {
-			$this->fatigue = $fatigue;
+			$fatigue = $this->calculated['fatigue_max'];
 		}
+		$this->getHistory()->setFatigue($fatigue - $this->fatigue);
+		$this->fatigue = $fatigue;
 	}
 
 	public function addFatigue($fatigue) {
@@ -195,10 +198,10 @@ class Player extends AbstractDbObject {
 
 	public function setFatigue_max($fatigue_max) {
 		if ($fatigue_max <= 2) {
-			$this->fatigue_max = 2;
-		} else {
-			$this->fatigue_max = $fatigue_max;
+			$fatigue_max = 2;
 		}
+		$this->getHistory()->setFatigue_max($fatigue_max - $this->fatigue_max);
+		$this->fatigue_max = $fatigue_max;
 	}
 
 	public function addFatigue_max($fatigue_max) {
@@ -217,10 +220,10 @@ class Player extends AbstractDbObject {
 
 	public function setSex_appeal($sex_appeal) {
 		if ($sex_appeal <= 1) {
-			$this->sex_appeal = 2;
-		} else {
-			$this->sex_appeal = $sex_appeal;
+			$sex_appeal = 2;
 		}
+		$this->getHistory()->setSex_appeal($sex_appeal - $this->sex_appeal);
+		$this->sex_appeal = $sex_appeal;
 	}
 
 	public function addSex_appeal($sex_appeal) {
@@ -239,6 +242,7 @@ class Player extends AbstractDbObject {
 		} else {
 			$this->en_pls = 0;
 		}
+		$this->getHistory()->setEn_pls($this->en_pls);
 	}
 
 	public $debut_de_pls = 0;
@@ -249,6 +253,7 @@ class Player extends AbstractDbObject {
 
 	public function setDebut_de_pls($debut_de_pls) {
 		$this->debut_de_pls = $debut_de_pls;
+		$this->getHistory()->setDebut_de_pls($debut_de_pls);
 	}
 
 	/**
@@ -307,6 +312,7 @@ class Player extends AbstractDbObject {
 
 	public function setId_congress($id_congress) {
 		$this->id_congress = $id_congress;
+		$this->getHistory()->setId_congress($this->id_congress);
 		if (!$id_congress) {
 			$this->congress = null;
 		} else {
@@ -350,10 +356,10 @@ class Player extends AbstractDbObject {
 
 	public function setRemaining_time($remaining_time) {
 		if ($remaining_time < 0) {
-			$this->fatigue = 0;
-		} else {
-			$this->remaining_time = $remaining_time;
+			$remaining_time = 0;
 		}
+		$this->getHistory()->setRemaining_time($remaining_time - $this->remaining_time);
+		$this->remaining_time = $remaining_time;
 	}
 
 	public function addRemaining_time($remaining_time) {
@@ -372,6 +378,28 @@ class Player extends AbstractDbObject {
 
 	/**
 	 *
+	 * @var History
+	 */
+	protected $history = null;
+
+	/**
+	 *
+	 * @return History
+	 */
+	public function getHistory() {
+		return $this->history;
+	}
+
+	/**
+	 *
+	 * @param History $history        	
+	 */
+	public function setHistory(History $history) {
+		$this->history = $history;
+	}
+
+	/**
+	 *
 	 * @return boolean
 	 */
 	public function isFatigued() {
@@ -382,8 +410,10 @@ class Player extends AbstractDbObject {
 	}
 
 	protected $calculated = array();
-	
-	protected $calculated = array();
+
+	public function __construct() {
+		$this->history = new History();
+	}
 
 	/**
 	 *

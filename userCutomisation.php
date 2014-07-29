@@ -85,7 +85,7 @@ if (isset($_POST['changePass'])) {
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Soluche: cutomisation</title>
+<title>Soluche: Cutomisation</title>
 <link rel="stylesheet" href="theme/theme.css" type="text/css">
 <link rel="stylesheet" href="theme/other.css" type="text/css">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.9.1/themes/smoothness/jquery-ui.css">
@@ -96,7 +96,7 @@ if (isset($_POST['changePass'])) {
 </style>
 </head>
 <body>
-	<h1>admin</h1>
+	<h1>Cutomisation</h1>
 	Changer la Photo:
 	<form action="" method="post" enctype="multipart/form-data">
 		<input type="file" name="photo" value="" />

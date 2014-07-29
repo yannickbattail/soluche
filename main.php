@@ -29,7 +29,7 @@ if (isset($_REQUEST['page']) && $_REQUEST['page']) {
 if (isset($_REQUEST['action']) && $_REQUEST['action']) {
 	Dispatcher::defineAction($_REQUEST['action'], $_SESSION['user'], $_REQUEST);
 	$actionResult = Dispatcher::executeAction();
-	$_SESSION['user']->loadInventory(); // relaod inventory if changes has appeared
+	$_SESSION['user']->loadInventory(); // reload inventory if changes has appeared
 }
 
 if (!$_SESSION['user']->getId_congress()) {
@@ -45,5 +45,9 @@ Pls::redirectPLS($_SESSION['user']);
 $_SESSION['user']->lieu = Dispatcher::getPage();
 
 $_SESSION['user']->save();
-
+if ($_SESSION['user']->getHistory()->getAction_name()) {
+	if (($_SESSION['user']->getHistory()->getSuccess() === ActionResult::SUCCESS) || ($_SESSION['user']->getHistory()->getSuccess() === ActionResult::FAIL)) {
+		$_SESSION['user']->getHistory()->save();
+	}
+}
 Dispatcher::displayPage();

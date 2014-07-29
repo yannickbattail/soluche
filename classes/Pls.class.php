@@ -14,8 +14,8 @@ class Pls {
 	public static function endPLS(Player $player) {
 		$res = new ActionResult();
 		if (!$player->en_pls) {
-			$res->message = 'vous êtes déjà plus en PLS.';
-			$res->succes = true;
+			$res->setMessage('vous êtes déjà plus en PLS.');
+			$res->setSuccess(ActionResult::IMPOSSIBLE);
 			return $res;
 		}
 		if (self::isPlsFinished($player) === true) {
@@ -28,13 +28,13 @@ class Pls {
 			$player->setEn_pls(0);
 			$player->setDebut_de_pls(0);
 			$player->addFatigue(1);
-			$res->message = 'vous avez recupéré ' . $recup . ' verres.';
-			$res->succes = false;
+			$res->setMessage('vous avez recupéré ' . $recup . ' verres.');
+			$res->setSuccess(ActionResult::SUCCESS);
 			Dispatcher::setPage('camping');
 			return $res;
 		}
-		$res->message = 'Pls non terminée';
-		$res->succes = false;
+		$res->setMessage('Pls non terminée');
+		$res->setSuccess(ActionResult::IMPOSSIBLE);
 		return $res;
 	}
 
@@ -75,8 +75,8 @@ class Pls {
 		$res = new ActionResult();
 		$player->en_pls = true;
 		$player->debut_de_pls = time();
-		$res->message = 'En PLS!';
-		$res->succes = true;
+		$res->setMessage('En PLS!');
+		$res->setSuccess(ActionResult::SUCCESS);
 		return $res;
 	}
 

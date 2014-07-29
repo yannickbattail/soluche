@@ -3,6 +3,18 @@ interface ActionInterface {
 
 	/**
 	 *
+	 * @return Player
+	 */
+	public function getPlayer();
+
+	/**
+	 *
+	 * @param Player $player        	
+	 */
+	public function setPlayer(Player $player);
+
+	/**
+	 *
 	 * @param Player $player        	
 	 */
 	public function __construct(Player $player);

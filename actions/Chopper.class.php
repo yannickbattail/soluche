@@ -36,6 +36,7 @@ class Chopper extends AbstractAction {
 		}
 		$this->opponent->loadInventory();
 		$this->paramPrimaryKey = $this->opponent->getId();
+		$this->player->getHistory()->setId_opponent($this->opponent->getId());
 		return $this;
 	}
 
@@ -48,8 +49,8 @@ class Chopper extends AbstractAction {
 	public function execute() {
 		$res = new ActionResult();
 		if ($this->opponent->getSex() == $this->player->getSex()) {
-			$res->message .= 'Pas de sex homo pour le momment. Ca viendra plus tard pour ajouter du piment au jeu ;-)';
-			$res->succes = false;
+			$res->setMessage('Pas de sex homo pour le momment. Ca viendra plus tard pour ajouter du piment au jeu ;-)');
+			$res->setSuccess(ActionResult::IMPOSSIBLE);
 			return $res;
 		}
 		/*
@@ -67,13 +68,13 @@ class Chopper extends AbstractAction {
 			$this->opponent->addNotoriete(2);
 			$this->opponent->addPoints(5);
 			$this->opponent->addFatigue(2);
-			$res->message .= 'T\'as choppé ' . $this->opponent->getNom();
-			$res->succes = true;
+			$res->setMessage('T\'as choppé ' . $this->opponent->getNom());
+			$res->setSuccess(ActionResult::SUCCESS);
 		} else {
 			$this->player->addFatigue(1);
 			$this->player->addRemaining_time(-1);
-			$res->message .= 'T\'as pas réussi à chopper ' . $this->opponent->getNom();
-			$res->succes = false;
+			$res->setMessage('T\'as pas réussi à chopper ' . $this->opponent->getNom());
+			$res->setSuccess(ActionResult::FAIL);
 		}
 		$this->opponent->save();
 		// $this->player->save(); // this is done at the end of the action execution.
