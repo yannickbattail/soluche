@@ -11,12 +11,11 @@ class EndPLS extends AbstractAction {
 		parent::__construct($player);
 		// configuration
 		$this->paramName = self::PARAM_NAME;
-		$this->actionRight = AbstractAction::EXCEPT_PLS;
+		$this->actionRight = AbstractAction::EXCEPT_PLS | AbstractAction::EXCEPT_TIRED;
 		$this->linkText = 'Finir la PLS';
 	}
 	
 	/**
-	 * (non-PHPdoc)
 	 *
 	 * @see ActionInterface::setParams()
 	 * @param array $params        	
@@ -26,7 +25,6 @@ class EndPLS extends AbstractAction {
 	}
 
 	/**
-	 * (non-PHPdoc)
 	 *
 	 * @see ActionInterface::execute()
 	 * @return ActionResult
@@ -52,7 +50,7 @@ class EndPLS extends AbstractAction {
 			</td>
 		</tr>
 		<tr class="even">
-			<td>Notoriété</td>
+			<td>Crédibidulité</td>
 			<td><?= plus(-1, 1); ?></td>
 		</tr>
 		<tr class="odd">

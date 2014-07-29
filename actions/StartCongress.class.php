@@ -17,7 +17,7 @@ class StartCongress extends AbstractAction {
 		parent::__construct($player);
 		// configuration
 		$this->paramName = self::PARAM_NAME;
-		$this->actionRight = AbstractAction::EXCEPT_OUT_CONGRESS;
+		$this->actionRight = AbstractAction::EXCEPT_OUT_CONGRESS | AbstractAction::EXCEPT_TIRED | AbstractAction::EXCEPT_PLS;
 		$this->linkText = 'Aller à ce congrès';
 	}
 
@@ -40,7 +40,6 @@ class StartCongress extends AbstractAction {
 	}
 
 	/**
-	 * (non-PHPdoc)
 	 *
 	 * @see ActionInterface::execute()
 	 * @return ActionResult

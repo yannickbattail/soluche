@@ -49,7 +49,7 @@ class Congress extends AbstractDbObject {
 
 	public function stopCongress(Player $player) {
 		$res = new ActionResult();
-		$player->setId_congress(0);
+		$player->setId_congress(null);
 		$player->setRemaining_time(0);
 		
 		Dispatcher::setPage('congress');

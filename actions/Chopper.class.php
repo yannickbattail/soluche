@@ -100,7 +100,7 @@ class Chopper extends AbstractAction {
 			<td><?=$this->opponent->getPoints(); ?></td>
 		</tr>
 		<tr class="odd">
-			<th>Notoriété</th>
+			<th>Crédibidulité</th>
 			<td><?=$this->opponent->getNotoriete(); ?></td>
 		</tr>
 		<tr class="even">

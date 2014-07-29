@@ -83,7 +83,7 @@ class Pins extends AbstractAction {
 			<td><?= plus(1, 1); ?></td>
 		</tr>
 		<tr class="even">
-			<td>Notoriété</td>
+			<td>Crédibidulité</td>
 			<td><?= plus(1, 1); ?></td>
 		</tr>
 		<tr class="odd">

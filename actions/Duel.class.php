@@ -100,7 +100,7 @@ class Duel extends AbstractAction {
 			<td><?= $this->opponent->getPoints() ?></td>
 		</tr>
 		<tr class="odd">
-			<td>Notoriété</td>
+			<td>Crédibidulité</td>
 			<td><?= plus($this->opponent->getNotoriete(), 1); ?></td>
 		</tr>
 		<tr class="even">

@@ -95,13 +95,13 @@ class AbstractAction implements ActionInterface {
 	const EXCEPT_OUT_CONGRESS = '4';
 
 	protected function checkRights() {
-		if ($this->player->isFatigued() && ($this->actionRight != AbstractAction::EXCEPT_TIRED)) {
+		if ($this->player->isFatigued() && !($this->actionRight & AbstractAction::EXCEPT_TIRED)) {
 			return "Trop fatigué pour ça.";
 		}
-		if ($this->player->getEn_pls() && ($this->actionRight != AbstractAction::EXCEPT_PLS)) {
+		if ($this->player->getEn_pls() && !($this->actionRight & AbstractAction::EXCEPT_PLS)) {
 			return "En PLS.";
 		}
-		if (!$this->player->getId_congress() && ($this->actionRight != AbstractAction::EXCEPT_OUT_CONGRESS)) {
+		if (!$this->player->getId_congress() && !($this->actionRight & AbstractAction::EXCEPT_OUT_CONGRESS)) {
 			return "On ne peut rien faire hors congrès";
 		}
 		return true;

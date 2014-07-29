@@ -89,7 +89,7 @@ class UseItem extends AbstractAction {
 			<td><?= $this->item->getPermanent()?'oui':'non' ?></td>
 		</tr>
 		<tr class="odd">
-			<td>Notoriété</td>
+			<td>Crédibidulité</td>
 			<td><?= plus($this->item->getNotoriete(), 1); ?></td>
 		</tr>
 		<tr class="even">

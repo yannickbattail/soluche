@@ -292,18 +292,14 @@ class Player extends AbstractDbObject {
 	}
 
 	public function setPnj($pnj) {
-		if ($pnj) {
-			$this->pnj = 1;
-		} else {
-			$this->pnj = 0;
-		}
+		$this->pnj = $pnj;
 	}
 
 	/**
 	 *
 	 * @var int
 	 */
-	public $id_congress = 0;
+	public $id_congress = NULL;
 
 	public function getId_congress() {
 		return $this->id_congress;
@@ -385,6 +381,8 @@ class Player extends AbstractDbObject {
 		return false;
 	}
 
+	protected $calculated = array();
+	
 	protected $calculated = array();
 
 	/**

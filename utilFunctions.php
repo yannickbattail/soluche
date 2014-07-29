@@ -52,7 +52,7 @@ function printUserStats(Player $player) {
 		<th>Avec inventaire</th>
 	</tr>
 	<tr class="even">
-		<th>Notoriété</th>
+		<th>Crédibidulité</th>
 		<td><?=$player->notoriete; ?></td>
 		<td><?=$player->getCalculatedNotoriete(); ?></td>
 	</tr>
@@ -121,7 +121,7 @@ function printInventory(Player $player) {
 	<tr>
 		<th>Nom</th>
 		<th>Permanant</th>
-		<th>Notoriété</th>
+		<th>Crédibidulité</th>
 		<th>Verre</th>
 		<th>Verre optimum</th>
 		<th>Verre max</th>
@@ -187,7 +187,7 @@ function printItem(Item $item, $num = 0) {
 			<td><?= $item->permanent?'oui':'non' ?></td>
 		</tr>
 		<tr class="odd">
-			<th>Notoriété</th>
+			<th>Crédibidulité</th>
 			<td><?= plus($item->notoriete, 1); ?></td>
 		</tr>
 		<tr class="even">
@@ -265,7 +265,7 @@ function printPlayer(Player $player, $num = 0, array $actions) {
 			<td><?=$player->getPoints(); ?></td>
 		</tr>
 		<tr class="odd">
-			<th>Notoriété</th>
+			<th>Crédibidulité</th>
 			<td><?=$player->getNotoriete(); ?></td>
 		</tr>
 		<tr class="even">
