@@ -32,6 +32,9 @@ if (isset($_REQUEST['action']) && $_REQUEST['action']) {
 	$_SESSION['user']->loadInventory(); // reload inventory if changes has appeared
 }
 
+Pls::haveToGoToPls($_SESSION['user']);
+Pls::redirectPLS($_SESSION['user']);
+
 if (!$_SESSION['user']->getId_congress()) {
 	Dispatcher::setPage('congress');
 } else {
@@ -39,8 +42,6 @@ if (!$_SESSION['user']->getId_congress()) {
 		$_SESSION['user']->getCongress()->stopCongress($_SESSION['user']);
 	}
 }
-Pls::haveToGoToPls($_SESSION['user']);
-Pls::redirectPLS($_SESSION['user']);
 
 $_SESSION['user']->lieu = Dispatcher::getPage();
 
