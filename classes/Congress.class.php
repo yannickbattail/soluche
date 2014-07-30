@@ -51,14 +51,15 @@ class Congress extends AbstractDbObject {
 		$res = new ActionResult();
 		$player->setId_congress(null);
 		$player->setRemaining_time(0);
-		
+		$this->sumUpCongress($player);
 		Dispatcher::setPage('congress');
-		$res->setMessage('Début du congrès en ' . $this->getAction_number() . ' heures.');
+		$res->setMessage('Congrès ' . $this->getNom() . ' terminé.');
 		$res->setSuccess(ActionResult::SUCCESS);
 		return $res;
 	}
 
-	public function sumUpCongress(Player $player) {
+	protected function sumUpCongress(Player $player) {
+		$sumUp = array();
 		$uid = $player->getId();
 		$sql = 'SELECT count(id) AS nb, `action_name`, `success` FROM `history`';
 		$sql .= ' WHERE `id_player`=' . $uid . ' AND ';
@@ -70,14 +71,31 @@ class Congress extends AbstractDbObject {
 		$sql .= ' )';
 		$sql .= ' GROUP BY `action_name`,`success`';
 		$sql .= ' ORDER BY `action_name`,`success`';
-		
 		$stmt = $GLOBALS['DB']->query($sql);
 		$stmt->setFetchMode(PDO::FETCH_ASSOC);
 		while ($stmt && ($stat = $stmt->fetch())) {
-			
+			$sumUp[$stat['action_name'] . "_" . $stat['success']] = $stat['nb'];
+		}
+		if ($sumUp['Chopper_' . ActionResult::SUCCESS] >= 4) {
+			$item = Item::loadByName('poule');
+			if (!Item::isAassociated($player->getId(), $item->getId())) {
+				Item::associateItem($player, $item);
+				Dispatcher::addMessage('T\'as choppé plus de 4 fois en 1 congrès, ca mérite une poule ca!', Dispatcher::MESSAGE_LEVEL_SUCCES);
+			} else {
+				Dispatcher::addMessage('T\'as choppé plus de 4 fois en 1 congrès, ca mériterait une poule, mais t\'en as déjà une.', Dispatcher::MESSAGE_LEVEL_INFO);
+			}
+		}
+		if ($sumUp['Sing_' . ActionResult::SUCCESS] >= 4) {
+			$item = Item::loadByName('cle de sol');
+			if (!Item::isAassociated($player->getId(), $item->getId())) {
+				Item::associateItem($player, $item);
+				Dispatcher::addMessage('Ca va tu chantes plutôt bien, ca mérite une clé de sol ca!', Dispatcher::MESSAGE_LEVEL_SUCCES);
+			} else {
+				Dispatcher::addMessage('Ca va tu chantes plutôt bien, ca mériterait une clé de sol, mais t\'en as déjà une.', Dispatcher::MESSAGE_LEVEL_INFO);
+			}
 		}
 	}
-	
+
 	/**
 	 *
 	 * @param int $id        	

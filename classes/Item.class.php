@@ -146,6 +146,22 @@ class Item extends AbstractDbObject {
 		return $sth->fetch();
 	}
 
+	/**
+	 *
+	 * @param String $itemName        	
+	 * @return Item
+	 */
+	public static function loadByName($itemName) {
+		$sth = $GLOBALS['DB']->prepare('SELECT * FROM item WHERE item.nom = :nom;');
+		$sth->bindValue(':nom', $itemName, PDO::PARAM_STR);
+		$sth->setFetchMode(PDO::FETCH_CLASS, 'Item');
+		if ($sth->execute() === false) {
+			// var_dump($sth->errorInfo());
+			return false;
+		}
+		return $sth->fetch();
+	}
+
 	public function save() {
 		if (!$this->id) {
 			$this->create();
@@ -212,5 +228,23 @@ class Item extends AbstractDbObject {
 
 	public static function desassociate($idPlayer, $idItem) {
 		$GLOBALS['DB']->query('DELETE FROM inventory WHERE id_player=' . $idPlayer . ' AND id_item=' . $idItem . ' LIMIT 1;');
+	}
+
+	/**
+	 *
+	 * @param int $idPlayer        	
+	 * @param int $idItem        	
+	 * @return Item
+	 */
+	public static function isAassociated($idPlayer, $idItem) {
+		$sth = $GLOBALS['DB']->prepare('SELECT item.* FROM inventory INNER JOIN item ON item.id = inventory.id_item WHERE inventory.id_player = :id_player AND inventory.id_item = :id_item;');
+		$sth->bindValue(':id_player', $idPlayer, PDO::PARAM_INT);
+		$sth->bindValue(':id_item', $idItem, PDO::PARAM_INT);
+		$sth->setFetchMode(PDO::FETCH_CLASS, 'Item');
+		if ($sth->execute() === false) {
+			// var_dump($sth->errorInfo());
+			return false;
+		}
+		return $sth->fetch();
 	}
 }

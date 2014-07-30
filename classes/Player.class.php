@@ -543,7 +543,7 @@ class Player extends AbstractDbObject {
 		return $sth->fetch();
 	}
 
-	function loadInventory() {
+	public function loadInventory() {
 		$this->calculated['notoriete'] = $this->notoriete;
 		$this->calculated['alcoolemie'] = $this->alcoolemie;
 		$this->calculated['alcoolemie_optimum'] = $this->alcoolemie_optimum;
@@ -570,7 +570,7 @@ class Player extends AbstractDbObject {
 		return $this;
 	}
 
-	function addRandomItem() {
+	public function addRandomItem() {
 		// @TODO add entropy
 		Item::associate($this->getId(), 4);
 		Item::associate($this->getId(), 8);
@@ -579,4 +579,5 @@ class Player extends AbstractDbObject {
 		Item::associate($this->getId(), 13);
 		Item::associate($this->getId(), 13);
 	}
+
 }
