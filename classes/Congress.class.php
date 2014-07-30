@@ -58,6 +58,26 @@ class Congress extends AbstractDbObject {
 		return $res;
 	}
 
+	public function sumUpCongress(Player $player) {
+		$uid = $player->getId();
+		$sql = 'SELECT count(id) AS nb, `action_name`, `success` FROM `history`';
+		$sql .= ' WHERE `id_player`=' . $uid . ' AND ';
+		$sql .= ' `date_action` >=';
+		$sql .= ' (';
+		$sql .= '    SELECT `date_action` FROM `history`';
+		$sql .= '    WHERE `id_player`=' . $uid . ' AND `action_name`="StartCongress"';
+		$sql .= '    ORDER BY `date_action` DESC LIMIT 1';
+		$sql .= ' )';
+		$sql .= ' GROUP BY `action_name`,`success`';
+		$sql .= ' ORDER BY `action_name`,`success`';
+		
+		$stmt = $GLOBALS['DB']->query($sql);
+		$stmt->setFetchMode(PDO::FETCH_ASSOC);
+		while ($stmt && ($stat = $stmt->fetch())) {
+			
+		}
+	}
+	
 	/**
 	 *
 	 * @param int $id        	

@@ -51,7 +51,7 @@ Congrès pas fini ... et ben si :-(
 	$sql .= '    ORDER BY `date_action` DESC LIMIT 1';
 	$sql .= ' )';
 	$sql .= ' GROUP BY `action_name`,`success`';
-	$sql .= ' ORDER BY `date_action`';
+	$sql .= ' ORDER BY `action_name`,`success`';
 	
 	$stmt = $GLOBALS['DB']->query($sql);
 	$stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -92,7 +92,9 @@ Congrès pas fini ... et ben si :-(
 	$uid = $_SESSION['user']->getId();
 	$sql = 'SELECT * FROM `history` ';
 	$sql .= ' WHERE `id_player`=' . $uid . ' AND `date_action` >= ( ';
-	$sql .= '    SELECT `date_action` FROM `history` WHERE `id_player`=' . $uid . ' AND `action_name`="StartCongress" ORDER BY `date_action` DESC LIMIT 1 ';
+	$sql .= '    SELECT `date_action` FROM `history` ';
+	$sql .= '    WHERE `id_player`=' . $uid . ' AND `action_name`="StartCongress" ';
+	$sql .= '    ORDER BY `date_action` DESC LIMIT 1 ';
 	$sql .= ' ) ORDER BY `date_action`';
 	$stmt = $GLOBALS['DB']->query($sql);
 	$stmt->setFetchMode(PDO::FETCH_CLASS, 'History');
