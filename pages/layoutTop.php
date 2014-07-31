@@ -17,7 +17,7 @@
 		<a href="userCutomisation.php" title="Editer"><?=$_SESSION['user']->getNom() ?></a> <a href="login.php?logout=1"><img alt="Quitter" title="Quitter"
 				src="images/util/system-shutdown.png" style="width: 16px; height: 16px;"></a>
 		<?php if ($_SESSION['user']->getId_congress() != 0) { ?>
-		<div class="congress" title="Congrès en cours">Au congrès <?=$_SESSION['user']->getCongress()->getNom()?>. Temps restant: <?=$_SESSION['user']->getRemaining_time()?> <img src="images/util/time-used.png" alt="temps restant" width="16" height="16"></div>
+		<div class="congress" title="Congrès en cours">Au congrès <?=$_SESSION['user']->getCongress()->getNom()?>. Temps restant: <?=$_SESSION['user']->getRemaining_time()?> ¼ d'heure <img src="images/util/time-used.png" alt="¼ d'heure" width="16" height="16"></div>
 		<?php } ?>
 	</div>
 

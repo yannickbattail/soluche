@@ -19,6 +19,15 @@ if (isset($_POST['addBots'])) {
 	echo 'add ' . Bot::createMultiples($_POST['bot_num'], 1, $_POST['id_congress']) . ' Bots for congress ' . $_POST['id_congress'];
 }
 
+if (isset($_POST['resetBots'])) {
+	try {
+		Bot::resetBots(1, $_POST['id_congress']);
+		echo 'Bots reseted.';
+	} catch (Exception $e) {
+		echo 'oups: ' . $e;
+	}
+}
+
 if (isset($_POST['savePlayer'])) {
 	$player = Player::load($_POST['id'])->loadInventory();
 	foreach ($_POST as $key => $value) {
@@ -78,15 +87,14 @@ if (isset($_POST['savePlayer'])) {
 					<input type="text" name="bot_num" value="" class="int" />
 					<input type="hidden" name="id_congress" value="<?= $congress->getId(); ?>" class="int" />
 					<input type="submit" name="addBots" value="create bots" />
+					<input type="submit" name="resetBots" value="reset bots" />
 				</form>
 			</td>
 		</tr>
         <?php
 	}
 	?>
-</table>
-
-
+	</table>
 
 	<table class="inventory">
 		<tr>

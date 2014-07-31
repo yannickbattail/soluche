@@ -23,11 +23,12 @@ class Pls {
 			if (($player->alcoolemie - $recup) < 0) {
 				$recup = $player->alcoolemie;
 			}
+			$player->addNotoriete(-1);
 			$player->addAlcoolemie(-1 * $recup);
+			$player->addFatigue(-1);
 			$player->addRemaining_time(-1 * $recup);
 			$player->setEn_pls(0);
 			$player->setDebut_de_pls(0);
-			$player->addFatigue(1);
 			$res->setMessage('vous avez recupéré ' . $recup . ' verres.');
 			$res->setSuccess(ActionResult::SUCCESS);
 			Dispatcher::setPage('camping');

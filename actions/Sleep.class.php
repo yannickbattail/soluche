@@ -30,10 +30,10 @@ class Sleep extends AbstractAction {
 	 */
 	public function execute() {
 		$res = new ActionResult();
-		if ($this->player->getFatigue() >= 1) {
-			$this->player->addRemaining_time(-3);
-			$this->player->addFatigue(-10);
-			$res->setMessage('Haa un bon dodo!');
+		if ($this->player->getFatigue() >= 2) {
+			$this->player->addRemaining_time(-2);
+			$this->player->addFatigue(-5);
+			$res->setMessage('Haa un bon dodo! Je fais pas une PLS je médite allongé.');
 			$res->setSuccess(ActionResult::SUCCESS);
 		} else {
 			$res->setMessage('ON EST PAS FATIGUE! On est pas fatigué!');
@@ -47,24 +47,34 @@ class Sleep extends AbstractAction {
 	 * @return string
 	 */
 	public function statsDisplay($page = null) {
-		$htmlId = get_class($this);
+		$htmlId = get_class($this).'_0';
 		ob_start();
 		?>
 <div id="<?= $htmlId ?>_tooltip" style="display: none;">
 	<table class="inventory">
 		<tr class="odd">
-			<td>Dodo</td>
-			<td>
+			<th>
 				<img src="images/sleep.png" class="inventoryImage" title="Dodo" />
+				<br />Dodo
+			</th>
+			<td>
+				<img src="images/emotes/face-smile.png" title="Succès" width="32" height="32">
+				<br />Succès
 			</td>
 		</tr>
-		<tr class="even">
-			<td>fatigue</td>
-			<td><?= plus(-10, 1); ?></td>
-		</tr>
 		<tr class="odd">
-			<td>Heures</td>
-			<td><?= plus(-3, 0); ?></td>
+			<th>
+				<img src="images/emotes/face-uncertain.png" title="Fatigue" width="32" height="32">
+				<br />Fatigue
+			</th>
+			<td><?= plus(-5, 0); ?></td>
+		</tr>
+		<tr class="even">
+			<th>
+				<img src="images/util/time.png" alt="¼ d'heure" width="32" height="32">
+				<br />¼ H
+			</th>
+			<td><?= plus(-2, 1)?></td>
 		</tr>
 	</table>
 </div>

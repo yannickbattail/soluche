@@ -47,17 +47,28 @@ class Congress extends AbstractDbObject {
 		$this->bots = $bots;
 	}
 
+	/**
+	 *
+	 * @param Player $player        	
+	 * @return ActionResult
+	 */
 	public function stopCongress(Player $player) {
 		$res = new ActionResult();
 		$player->setId_congress(null);
 		$player->setRemaining_time(0);
-		$this->sumUpCongress($player);
+		$sumUp = $this->sumUpCongress($player);
+		$this->achievment($player, $sumUp);
 		Dispatcher::setPage('congress');
 		$res->setMessage('Congrès ' . $this->getNom() . ' terminé.');
 		$res->setSuccess(ActionResult::SUCCESS);
 		return $res;
 	}
 
+	/**
+	 *
+	 * @param Player $player        	
+	 * @return multitype:unknown
+	 */
 	protected function sumUpCongress(Player $player) {
 		$sumUp = array();
 		$uid = $player->getId();
@@ -76,7 +87,16 @@ class Congress extends AbstractDbObject {
 		while ($stmt && ($stat = $stmt->fetch())) {
 			$sumUp[$stat['action_name'] . "_" . $stat['success']] = $stat['nb'];
 		}
-		if ($sumUp['Chopper_' . ActionResult::SUCCESS] >= 4) {
+		return $sumUp;
+	}
+
+	/**
+	 *
+	 * @param Player $player        	
+	 * @param array $sumUp        	
+	 */
+	protected function achievment(Player $player, array $sumUp) {
+		if (isset($sumUp['Chopper_' . ActionResult::SUCCESS]) && ($sumUp['Chopper_' . ActionResult::SUCCESS] >= 4)) {
 			$item = Item::loadByName('poule');
 			if (!Item::isAassociated($player->getId(), $item->getId())) {
 				Item::associateItem($player, $item);
@@ -85,7 +105,7 @@ class Congress extends AbstractDbObject {
 				Dispatcher::addMessage('T\'as choppé plus de 4 fois en 1 congrès, ca mériterait une poule, mais t\'en as déjà une.', Dispatcher::MESSAGE_LEVEL_INFO);
 			}
 		}
-		if ($sumUp['Sing_' . ActionResult::SUCCESS] >= 4) {
+		if (isset($sumUp['Sing_' . ActionResult::SUCCESS]) && ($sumUp['Sing_' . ActionResult::SUCCESS] >= 4)) {
 			$item = Item::loadByName('cle de sol');
 			if (!Item::isAassociated($player->getId(), $item->getId())) {
 				Item::associateItem($player, $item);

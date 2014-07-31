@@ -75,7 +75,7 @@ class Duel extends AbstractAction {
 		}
 		$this->opponent->addAlcoolemie($sec);
 		$this->player->addAlcoolemie($sec);
-		$this->player->addFatigue(1);
+		$this->player->addFatigue(2);
 		$this->player->addRemaining_time(-2);
 		$this->opponent->save();
 		// $this->player->save(); // this is done at the end of the action execution.
@@ -88,47 +88,75 @@ class Duel extends AbstractAction {
 	 */
 	public function statsDisplay($page = null) {
 		$htmlId = get_class($this) . '_' . $this->opponent->getId();
+		$secUser = $this->player->getCalculatedAlcoolemie_max() - $this->player->getCalculatedAlcoolemie();
+		$secOpponent = $this->opponent->getCalculatedAlcoolemie_max() - $this->opponent->getCalculatedAlcoolemie();
+		$sec = min($secUser, $secOpponent);
 		ob_start();
 		?>
 <div id="<?= $htmlId ?>_tooltip" style="display: none;">
-	<table class="inventory">
+	<table id="player_<?= $this->opponent->getId().'_'.$num ?>_tooltip">
 		<tr class="odd">
-			<td><?= $this->opponent->getNom(); ?></td>
+			<th>
+				Défier
+				<h5>le nombre mini de verres pour que 1 des 2 finisse en PLS</h5>
+			</th>
 			<td>
-				<img src="<?= $this->opponent->getPhoto(); ?>" class="inventoryImage" title="<?= $this->opponent->getNom(); ?>" />
+				<img src="images/emotes/face-smile.png" title="Succès" width="32" height="32">
+				<br />Succès
+			</td>
+			<td>
+				<img src="images/emotes/face-plain.png" title="bof" width="32" height="32">
+				<br />ex aequo
+			</td>
+			<td>
+				<img src="images/emotes/face-sad.png" title="Echec" width="32" height="32">
+				<br />Echec
 			</td>
 		</tr>
 		<tr class="even">
-			<td>Points</td>
-			<td><?= $this->opponent->getPoints() ?></td>
+			<th>
+				<img src="images/badges/etoile doree belge.jpg" title="Points" width="32" height="32">
+				<br />Points
+			</th>
+			<td><?= plus(5, 1)?></td>
+			<td><?= plus(5, 1)?></td>
+			<td><?= plus(0, 1)?></td>
 		</tr>
 		<tr class="odd">
-			<td>Crédibidulité</td>
-			<td><?= plus($this->opponent->getNotoriete(), 1); ?></td>
+			<th>
+				<img src="images/emotes/face-raspberry.png" title="Crédibidulité" width="32" height="32">
+				<br />Crédibidulité
+			</th>
+			<td><?= plus(2, 1)?></td>
+			<td><?= plus(1, 1)?></td>
+			<td><?= plus(-1, 1)?></td>
 		</tr>
 		<tr class="even">
-			<td>Verre</td>
-			<td><?= plus($this->opponent->getAlcoolemie(), 0); ?></td>
+			<th>
+				<img src="images/badges/chope.jpg" title="Verres" width="32" height="32">
+				<br />Verres
+			</th>
+			<td><?= plus($sec, 0)?></td>
+			<td><?= plus($sec, 0)?></td>
+			<td><?= plus($sec, 0)?></td>
 		</tr>
 		<tr class="odd">
-			<td>Verre optimum</td>
-			<td><?= plus($this->opponent->getAlcoolemie_optimum(), 1); ?></td>
+			<th>
+				<img src="images/emotes/face-uncertain.png" title="Fatigue" width="32" height="32">
+				<br />Fatigue
+			</th>
+			<td><?= plus(2, 0)?></td>
+			<td><?= plus(2, 0)?></td>
+			<td><?= plus(2, 0)?></td>
 		</tr>
 		<tr class="even">
-			<td>Verre max</td>
-			<td><?= plus($this->opponent->getAlcoolemie_max(), 1); ?></td>
-		</tr>
-		<tr class="odd">
-			<td>Fatigue</td>
-			<td><?= plus($this->opponent->getFatigue(), 0); ?></td>
-		</tr>
-		<tr class="even">
-			<td>Fatigue max</td>
-			<td><?= plus($this->opponent->getFatigue_max(), 1); ?></td>
-		</tr>
-		<tr class="odd">
-			<td>Sexe appeal</td>
-			<td><?= plus($this->opponent->getSex_appeal(), 1); ?></td>
+			<th>
+				<img src="images/util/time.png" alt="¼ d'heure" width="32" height="32">
+				<br />¼ H
+			</th>
+			<td><?= plus(-2, 1)?></td>
+			<td><?= plus(-2, 1)?></td>
+			<td><?= plus(-2, 1)?></td>
 		</tr>
 	</table>
 </div>

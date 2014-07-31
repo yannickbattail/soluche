@@ -45,18 +45,39 @@ class StartPLS extends AbstractAction {
 <div id="<?= $htmlId ?>_tooltip" style="display: none;">
 	<table class="inventory">
 		<tr class="odd">
-			<td>PLS</td>
-			<td>
+			<th>
 				<img src="images/items/unknown.png" class="inventoryImage" title="PLS" />
-			</td>
+				<br />PLS
+			</th>
+			<td></td>
 		</tr>
 		<tr class="even">
-			<td>Crédibidulité</td>
+			<th>
+				<img src="images/emotes/face-raspberry.png" title="Crédibidulité" width="32" height="32">
+				<br />Crédibidulité
+			</th>
 			<td><?= plus(-1, 1); ?></td>
 		</tr>
+		<tr class="even">
+			<th>
+				<img src="images/badges/chope.jpg" title="Verres" width="32" height="32">
+				<br />Verres
+			</th>
+			<td><?= plus(-5, 1)?>/60sec</td>
+		</tr>
+		<tr class="even">
+			<th>
+				<img src="images/emotes/face-uncertain.png" title="Fatigue" width="32" height="32">
+				<br />Fatigue
+			</th>
+			<td><?= plus(2, 0)?></td>
+		</tr>
 		<tr class="odd">
-			<td>Verre</td>
-			<td><?= plus(-1, 0); ?>/60sec</td>
+			<th>
+				<img src="images/util/time.png" alt="¼ d'heure" width="32" height="32">
+				<br />¼ H
+			</th>
+			<td><?= plus(-1, 1)?>/60sec</td>
 		</tr>
 	</table>
 </div>

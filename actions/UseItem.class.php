@@ -78,44 +78,27 @@ class UseItem extends AbstractAction {
 		ob_start();
 		?>
 <div id="<?= $htmlId ?>_tooltip" style="display: none;">
-	<table class="inventory">
+	<table id="player_<?= $this->item->getId().'_'.$num ?>_tooltip">
 		<tr class="odd">
-			<td><?= $this->item->getNom(); ?></td>
+			<th>Utiliser</th>
 			<td>
-				<img src="<?= $this->item->getImage(); ?>" class="inventoryImage" title="<?= $this->item->getNom(); ?>" />
+				<img src="images/emotes/face-smile.png" title="Succès" width="32" height="32">
+				<br />Succès
 			</td>
 		</tr>
 		<tr class="even">
-			<td>Permanant</td>
-			<td><?= $this->item->getPermanent()?'oui':'non' ?></td>
+			<th>
+				<img src="images/badges/etoile doree belge.jpg" title="Points" width="32" height="32">
+				<br />Points
+			</th>
+			<td><?= plus(5, 1)?></td>
 		</tr>
 		<tr class="odd">
-			<td>Crédibidulité</td>
-			<td><?= plus($this->item->getNotoriete(), 1); ?></td>
-		</tr>
-		<tr class="even">
-			<td>Verre</td>
-			<td><?= plus($this->item->getAlcoolemie(), 0); ?></td>
-		</tr>
-		<tr class="odd">
-			<td>Verre optimum</td>
-			<td><?= plus($this->item->getAlcoolemie_optimum(), 1); ?></td>
-		</tr>
-		<tr class="even">
-			<td>Verre max</td>
-			<td><?= plus($this->item->getAlcoolemie_max(), 1); ?></td>
-		</tr>
-		<tr class="odd">
-			<td>Fatigue</td>
-			<td><?= plus($this->item->getFatigue(), 0); ?></td>
-		</tr>
-		<tr class="even">
-			<td>Fatigue max</td>
-			<td><?= plus($this->item->getFatigue_max(), 1); ?></td>
-		</tr>
-		<tr class="odd">
-			<td>Sexe appeal</td>
-			<td><?= plus($this->item->getSex_appeal(), 1); ?></td>
+			<th>
+				<img src="images/util/time.png" alt="¼ d'heure" width="32" height="32">
+				<br />¼ H
+			</th>
+			<td><?= plus(-1, 1)?></td>
 		</tr>
 	</table>
 </div>

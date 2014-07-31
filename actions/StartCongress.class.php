@@ -47,10 +47,11 @@ class StartCongress extends AbstractAction {
 	public function execute() {
 		$res = new ActionResult();
 		$this->player->setFatigue(0);
+		$this->player->setAlcoolemie(0);
 		$this->player->setCongress($this->congress);
 		$this->player->setRemaining_time($this->congress->getAction_number());
 		$this->player->addRandomItem();
-		$_SESSION['history'] = array();
+		Bot::resetBots(1, $this->congress->getId());
 		Dispatcher::setPage('camping');
 		$res->setMessage('Début du congrès "'.$this->congress->getNom().'" en ' . $this->congress->getAction_number() . ' heures.');
 		$res->setSuccess(ActionResult::SUCCESS);

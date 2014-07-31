@@ -36,6 +36,7 @@ class Sing extends AbstractAction {
 		if ($count['counter'] >= 4) {
 			if ($this->player->getCalculatedAlcoolemie() > $this->player->getCalculatedAlcoolemie_optimum()) {
 				$this->player->addNotoriete(-1);
+				$this->player->addAlcoolemie(1);
 				$this->player->addFatigue(1);
 				$this->player->addRemaining_time(-1);
 				$res->setMessage('Trop bourré! tu chantes comme une casserole!');
@@ -43,6 +44,7 @@ class Sing extends AbstractAction {
 			} else {
 				$this->player->addPoints(1);
 				$this->player->addNotoriete(1);
+				$this->player->addAlcoolemie(1);
 				$this->player->addFatigue(1);
 				$this->player->addRemaining_time(-1);
 				$res->setMessage('A chaque chanson faut y mettre son cannon! ♬');
@@ -65,19 +67,59 @@ class Sing extends AbstractAction {
 		?>
 <div id="<?= $htmlId ?>_tooltip" style="display: none;">
 	<table class="inventory">
-		<tr class="odd">
-			<td>Chanson &#9836;</td>
+		<tr class="even">
+			<th>
+				<img src="images/items/pins.png" class="inventoryImage" title="pin's" />
+				<br />Pinser
+			</th>
 			<td>
-				<img src="images/badges/cle de sol.jpg" class="inventoryImage" title="VT" />
+				<img src="images/emotes/face-smile.png" title="Succès" width="32" height="32">
+				<br />Succès
+			</td>
+			<td>
+				<img src="images/emotes/face-sad.png" title="Echec" width="32" height="32">
+				<br />Echec
 			</td>
 		</tr>
-		<tr class="even">
-			<td>Crédibidulité</td>
+		<tr class="odd">
+			<th>
+				<img src="images/badges/etoile doree belge.jpg" title="Points" width="32" height="32">
+				<br />Points
+			</th>
 			<td><?= plus(1, 1); ?></td>
+			<td><?= plus(0, 1); ?></td>
+		</tr>
+		<tr class="even">
+			<th>
+				<img src="images/emotes/face-raspberry.png" title="Crédibidulité" width="32" height="32">
+				<br />Crédibidulité
+			</th>
+			<td><?= plus(1, 1); ?></td>
+			<td><?= plus(-1, 1); ?></td>
 		</tr>
 		<tr class="odd">
-			<td>Points</td>
-			<td><?= plus(1, 1); ?></td>
+			<th>
+				<img src="images/badges/chope.jpg" title="Verres" width="32" height="32">
+				<br />Verres
+			</th>
+			<td><?= plus(1, 0)?></td>
+			<td><?= plus(1, 0)?></td>
+		</tr>
+		<tr class="even">
+			<th>
+				<img src="images/emotes/face-uncertain.png" title="Fatigue" width="32" height="32">
+				<br />Fatigue
+			</th>
+			<td><?= plus(1, 0); ?></td>
+			<td><?= plus(1, 0); ?></td>
+		</tr>
+		<tr class="odd">
+			<th>
+				<img src="images/util/time.png" alt="¼ d'heure" width="32" height="32">
+				<br />¼ H
+			</th>
+			<td><?= plus(-1, 1)?></td>
+			<td><?= plus(-1, 1)?></td>
 		</tr>
 	</table>
 </div>

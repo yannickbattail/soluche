@@ -61,15 +61,31 @@ class Chopper extends AbstractAction {
 		$coefOpponent = $this->opponent->getCalculatedSex_appeal() + $this->opponent->getCalculatedAlcoolemie() + $this->opponent->getCalculatedNotoriete();
 		Dispatcher::addMessage("OPPOSANT => sex appeal: " . $this->opponent->getCalculatedSex_appeal() . " + Verre: " . $this->opponent->getCalculatedAlcoolemie() . " + Notoriete: " . $this->opponent->getCalculatedNotoriete() . " = " . $coefOpponent, Dispatcher::MESSAGE_LEVEL_INFO);
 		if ($coefPlayer > $coefOpponent) {
-			$this->player->addNotoriete(2);
-			$this->player->addPoints(5);
-			$this->player->addFatigue(2);
-			$this->player->addRemaining_time(-2);
-			$this->opponent->addNotoriete(2);
-			$this->opponent->addPoints(5);
-			$this->opponent->addFatigue(2);
-			$res->setMessage('T\'as choppé ' . $this->opponent->getNom());
-			$res->setSuccess(ActionResult::SUCCESS);
+			if ($this->player->getCalculatedAlcoolemie() > $this->player->getCalculatedAlcoolemie_optimum()) {
+				$this->player->addPoints(2);
+				$this->player->addNotoriete(-1);
+				$this->player->addFatigue(2);
+				$this->player->addRemaining_time(-4);
+				$this->opponent->addNotoriete(1);
+				$this->opponent->addPoints(3);
+				// $this->opponent->addFatigue(2);
+				if ($this->player->getSex()) {
+					$res->setMessage('T\'as choppé ' . $this->opponent->getNom() . ' mais t\'es trop bourré! Tu bande mou mec...');
+				} else {
+					$res->setMessage('T\'as choppé ' . $this->opponent->getNom() . ' mais t\'es trop bourrée! Ho la belle étoile de mer.');
+				}
+				$res->setSuccess(ActionResult::FAIL);
+			} else {
+				$this->player->addPoints(5);
+				$this->player->addNotoriete(2);
+				$this->player->addFatigue(2);
+				$this->player->addRemaining_time(-4);
+				$this->opponent->addNotoriete(2);
+				$this->opponent->addPoints(5);
+				// $this->opponent->addFatigue(2);
+				$res->setMessage('T\'as choppé ' . $this->opponent->getNom());
+				$res->setSuccess(ActionResult::SUCCESS);
+			}
 		} else {
 			$this->player->addFatigue(1);
 			$this->player->addRemaining_time(-1);
@@ -90,34 +106,59 @@ class Chopper extends AbstractAction {
 		ob_start();
 		$num = 0;
 		?>
-<div id="<?= $htmlId ?>_tooltip" style="display: none;">
-	<table class="playerTooltip" id="player_<?= $this->opponent->getId().'_'.$num ?>_tooltip">
+<div id="<?= $htmlId ?>_tooltip" class="playerTooltip">
+	<table id="player_<?= $this->opponent->getId().'_'.$num ?>_tooltip">
 		<tr class="odd">
-			<th>Nom</th>
-			<td><?= $this->opponent->getNom(); ?> <?php echo $this->opponent->getSex()?'<span style="color:blue">&#9794;</span>':'<span style="color:pink">&#9792;</span>'; ?></td>
+			<th>Chopper</th>
+			<td>
+				<img src="images/emotes/face-smile.png" title="Succès" width="32" height="32">
+				<br />Succès
+			</td>
+			<td>
+				<img src="images/emotes/face-plain.png" title="bof" width="32" height="32">
+				<br />bof
+			</td>
+			<td>
+				<img src="images/emotes/face-sad.png" title="Echec" width="32" height="32">
+				<br />Echec
+			</td>
 		</tr>
 		<tr class="even">
-			<th>Points</th>
-			<td><?=$this->opponent->getPoints(); ?></td>
+			<th>
+				<img src="images/badges/etoile doree belge.jpg" title="Points" width="32" height="32">
+				<br />Points
+			</th>
+			<td><?= plus(5, 1)?></td>
+			<td><?= plus(2, 1)?></td>
+			<td><?= plus(0, 1)?></td>
 		</tr>
 		<tr class="odd">
-			<th>Crédibidulité</th>
-			<td><?=$this->opponent->getNotoriete(); ?></td>
+			<th>
+				<img src="images/emotes/face-raspberry.png" title="Crédibidulité" width="32" height="32">
+				<br />Crédibidulité
+			</th>
+			<td><?= plus(2, 1)?></td>
+			<td><?= plus(-1, 1)?></td>
+			<td><?= plus(0, 1)?></td>
 		</tr>
 		<tr class="even">
-			<th>Verre</th>
-			<td><?= lifeBarMiddle($this->opponent->getAlcoolemie_max(), $this->opponent->getAlcoolemie_optimum(), $this->opponent->getAlcoolemie()); ?> <?=$this->opponent->getAlcoolemie().'/'.$this->opponent->getAlcoolemie_max().' optimum à '.$this->opponent->getAlcoolemie_optimum(); ?></td>
+			<th>
+				<img src="images/emotes/face-uncertain.png" title="Fatigue" width="32" height="32">
+				<br />Fatigue
+			</th>
+			<td><?= plus(2, 0)?></td>
+			<td><?= plus(2, 0)?></td>
+			<td><?= plus(1, 0)?></td>
 		</tr>
 		<tr class="odd">
-			<th>Fatigue</th>
-			<td><?=lifeBar($this->opponent->getFatigue_max(), $this->opponent->getFatigue()).$this->opponent->getFatigue().'/'.$this->opponent->getFatigue_max(); ?></td>
+			<th>
+				<img src="images/util/time.png" alt="¼ d'heure" width="32" height="32">
+				<br />¼ H
+			</th>
+			<td><?= plus(-4, 1)?></td>
+			<td><?= plus(-4, 1)?></td>
+			<td><?= plus(-1, 1)?></td>
 		</tr>
-		<!--
-	<tr class="odd">
-		<th>sex_appeal</th>
-		<td><?=$this->opponent->getSex_appeal(); ?></td>
-	</tr>
-	-->
 	</table>
 </div>
 <script type="text/javascript">

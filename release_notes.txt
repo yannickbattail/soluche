@@ -1,0 +1,4 @@
+v1.5
+* surprise pour ceux qui choppent bourrés
+* chanson! cannon! Chanter coute 1 verre
+* pinser enleve bien un pins de l'inventaire

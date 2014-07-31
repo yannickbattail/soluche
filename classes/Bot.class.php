@@ -16,12 +16,12 @@ class Bot extends Player {
 		$this->alcoolemie_max = floor(rand(9, 12) * $factor);
 		$this->alcoolemie = floor(rand(2, 7) * $factor);
 		$this->fatigue_max = floor(rand(7, 10) * $factor);
-		$this->fatigue = floor(rand(1, 10) * $factor);
+		$this->fatigue = floor(rand(1, 7) * $factor);
 		$this->setSex_appeal(floor(rand(5, 10) * $factor));
 		$this->setEn_pls(0);
 		$this->setDebut_de_pls(0);
 		$this->setSex(rand(0, 1));
-		$this->setPhoto($this->getSex() ? 'images/tete_faluche_grise_bleu.jpg' : 'images/tete_faluche_grise_rose.jpg');
+		$this->setPhoto($this->getSex() ? 'images/tete_faluche_bleu.jpg' : 'images/tete_faluche_rose.jpg');
 		$this->setPnj(Player::PNJ_BOT);
 	}
 
@@ -46,6 +46,19 @@ class Bot extends Player {
 			}
 		}
 		return $nb;
+	}
+
+	public static function resetBots($factor = 1, $id_congress = null) {
+		$sql = 'SELECT * FROM player WHERE pnj = 1 ';
+		if ($id_congress) {
+			$sql .= ' AND id_congress = ' . $id_congress;
+		}
+		$stmt = $GLOBALS['DB']->query($sql);
+		$stmt->setFetchMode(PDO::FETCH_CLASS, 'Bot');
+		while ($stmt && ($bot = $stmt->fetch())) {
+			$bot->defaultValues($factor);
+			$bot->save();
+		}
 	}
 
 	/**

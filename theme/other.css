@@ -91,7 +91,7 @@ tr.even {
 
 .errorException {
 	background-color: lightyellow;
-	background-image: url("../images/util/nuke.png");
+	background-image: url("../images/util/nuke.gif");
 	background-position: left;
 	background-repeat: no-repeat;
 	background-size: 32px 32px;
