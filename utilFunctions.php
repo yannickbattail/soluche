@@ -41,10 +41,10 @@ function printUserStats(Player $player) {
 	<tr class="even">
 		<th>Nom</th>
 		<td>
-			<img src="<?= $player->photo; ?>" class="playerImage" title="<?= $player->nom; ?>" />
+			<img src="<?= $player->getPhoto(); ?>" class="playerImage" title="<?= $player->getNom(); ?>" />
 		</td>
-		<td><?=$player->nom; ?> <?php echo $player->sex?'<span style="color:cyan">&#9794;</span>':'<span style="color:pink">&#9792;</span>'; ?>
-		<br />Points: <?=$player->points; ?></td>
+		<td><?=$player->getNom(); ?> <?php echo $player->getSex()?'<span style="color:cyan">&#9794;</span>':'<span style="color:pink">&#9792;</span>'; ?>
+		<br />Rêves vendus: <?=$player->getPoints(); ?></td>
 	</tr>
 	<tr class="odd">
 		<th></th>
@@ -53,28 +53,61 @@ function printUserStats(Player $player) {
 	</tr>
 	<tr class="even">
 		<th>Crédibidulité</th>
-		<td><?=$player->notoriete; ?></td>
+		<td><?=$player->getNotoriete(); ?></td>
 		<td><?=$player->getCalculatedNotoriete(); ?></td>
 	</tr>
 	<tr class="odd">
-		<th>Verre</th>
-		<td><?= lifeBarMiddle($player->alcoolemie_max, $player->alcoolemie_optimum, $player->alcoolemie); ?>
-		<?=$player->alcoolemie.'/'.$player->alcoolemie_max.' optimum à '.$player->alcoolemie_optimum; ?></td>
+		<th>Verres</th>
+		<td><?= lifeBarMiddle($player->getAlcoolemie_max(), $player->getAlcoolemie_optimum(), $player->getAlcoolemie()); ?>
+		<?=$player->getAlcoolemie().'/'.$player->getAlcoolemie_max().' optimum à '.$player->getAlcoolemie_optimum(); ?></td>
 		<td><?= lifeBarMiddle($player->getCalculatedAlcoolemie_max(), $player->getCalculatedAlcoolemie_optimum(), $player->getCalculatedAlcoolemie())?>
 		<?=$player->getCalculatedAlcoolemie().'/'.$player->getCalculatedAlcoolemie_max().' optimum à '.$player->getCalculatedAlcoolemie_optimum(); ?></td>
 	</tr>
 	<tr class="even">
 		<th>Fatigue</th>
-		<td><?=lifeBar($player->fatigue_max, $player->fatigue).$player->fatigue.'/'.$player->fatigue_max; ?></td>
+		<td><?=lifeBar($player->getFatigue_max(), $player->getFatigue()).$player->getFatigue().'/'.$player->getFatigue_max(); ?></td>
 		<td><?=lifeBar($player->getCalculatedFatigue_max(), $player->getCalculatedFatigue()).$player->getCalculatedFatigue().'/'.$player->getCalculatedFatigue_max(); ?></td>
 	</tr>
 	<tr class="odd">
 		<th>Sexe appeal</th>
-		<td><?=$player->sex_appeal; ?></td>
+		<td><?=$player->getSex_appeal(); ?></td>
 		<td><?=$player->getCalculatedSex_appeal(); ?></td>
+	</tr>
+	<tr class="even">
+		<th>Dignichose</th>
+		<td colspan="2"><?= moneyDisplay($player->getMoney()) ?><div style="font-size: 10px;">(<?= $player->getMoney() ?>)</div>
+		</td>
 	</tr>
 </table>
 <?php
+}
+
+function moneyDisplay($money) {
+	$ret = '';
+	for ($i = 0; $i < $money % 5; $i++) {
+		$ret = '<img src="images/util/etoile argent petite.png" width="32" height="32" title="1" alt="1"> ' . $ret;
+	}
+	$money = floor($money / 5);
+	for ($i = 0; $i < $money % 2; $i++) {
+		$ret = '<img src="images/util/etoile or petite.png" width="32" height="32" title="5" alt="5"> ' . $ret;
+	}
+	$money = floor($money / 2);
+	for ($i = 0; $i < $money % 5; $i++) {
+		$ret = '<img src="images/util/etoile argent grande.png" width="32" height="32" title="10" alt="10"> ' . $ret;
+	}
+	$money = floor($money / 5);
+	for ($i = 0; $i < $money % 2; $i++) {
+		$ret = '<img src="images/util/etoile or grande.png" width="32" height="32" title="50" alt="50"> ' . $ret;
+	}
+	$money = floor($money / 2);
+	for ($i = 0; $i < $money % 5; $i++) {
+		$ret = '<img src="images/util/etoile argentee belge.png" width="32" height="32" title="100" alt="100"> ' . $ret;
+	}
+	$money = floor($money / 5);
+	for ($i = 0; $i < $money % 2; $i++) {
+		$ret = '<img src="images/util/etoile doree belge.png" width="32" height="32" title="500" alt="500"> ' . $ret;
+	}
+	return $ret;
 }
 
 function lifeBarMiddle($max, $middle, $value) {
@@ -180,43 +213,82 @@ function printItem(Item $item, $num = 0) {
 	<table class="inventory">
 		<tr class="odd">
 			<th>Nom</th>
-			<td><?= $item->nom; ?></td>
+			<td><?= $item->getNom(); ?></td>
 		</tr>
 		<tr class="even">
 			<th>Permanant</th>
-			<td><?= $item->permanent?'oui':'non' ?></td>
+			<td><?= $item->getPermanent()?'oui':'non' ?></td>
 		</tr>
 		<tr class="odd">
-			<th>Crédibidulité</th>
-			<td><?= plus($item->notoriete, 1); ?></td>
+			<th>
+				<img src="images/emotes/face-raspberry.png" title="Crédibidulité" width="32" height="32">
+				<br />Crédibidulité
+			</th>
+			<td><?= plus($item->getNotoriete(), 1); ?></td>
 		</tr>
 		<tr class="even">
-			<th>Verre</th>
-			<td><?= plus($item->alcoolemie, 0); ?></td>
+			<th>
+				<img src="images/util/chope argent.png" title="Verres" width="32" height="32">
+				<br />Verres
+			</th>
+			<td><?= plus($item->getAlcoolemie(), 0); ?></td>
 		</tr>
 		<tr class="odd">
-			<th>Verre optimum</th>
-			<td><?= plus($item->alcoolemie_optimum, 1); ?></td>
+			<th>
+				<img src="images/util/chope or.png" title="Verres" width="32" height="32">
+				<br />Verres optimum
+			</th>
+			<td><?= plus($item->getAlcoolemie_optimum(), 1); ?></td>
 		</tr>
 		<tr class="even">
-			<th>Verre max</th>
-			<td><?= plus($item->alcoolemie_max, 1); ?></td>
+			<th>
+				<img src="images/util/chope rouge.png" title="Verres" width="32" height="32">
+				<br />Verres max
+			</th>
+			<td><?= plus($item->getAlcoolemie_max(), 1); ?></td>
 		</tr>
 		<tr class="odd">
-			<th>Fatigue</th>
-			<td><?= plus($item->fatigue, 0); ?></td>
+			<th>
+				<img src="images/emotes/face-uncertain.png" title="Fatigue" width="32" height="32">
+				<br />Fatigue
+			</th>
+			<td><?= plus($item->getFatigue(), 0); ?></td>
 		</tr>
 		<tr class="even">
-			<th>Fatigue max</th>
-			<td><?= plus($item->fatigue_max, 1); ?></td>
+			<th>
+				<img src="images/emotes/face-uncertain.png" title="Fatigue" width="32" height="32">
+				<br />Fatigue max
+			</th>
+			<td><?= plus($item->getFatigue_max(), 1); ?></td>
 		</tr>
 		<tr class="odd">
-			<th>Sexe appeal</th>
-			<td><?= plus($item->sex_appeal, 1); ?></td>
+			<th>
+				<img src="images/util/sex appeal.png" title="Sexe appeal" width="32" height="32">
+				<br />Sexe appeal
+			</th>
+			<td><?= plus($item->getSex_appeal(), 1); ?></td>
+		</tr>
+		<tr class="even">
+			<th>
+				<img src="images/util/time.png" alt="¼ d'heure" width="32" height="32">
+				<br />¼ H
+			</th>
+			<td><?= plus($item->getRemaining_time(), 1); ?></td>
 		</tr>
 		<tr class="odd">
+			<th>
+				<img src="images/items/pin-s-exigeons-la-dignité.png" alt="Coût en dignichose" width="32" height="32">
+				<br /> Coût en dignichose
+			</th>
+			<td><?= plus($item->getPrice(), 1); ?> refiler pour <?= plus(floor(-$item->getPrice()*80/100), 1)?> -20% </td>
+		</tr>
+		<tr class="even">
 			<th>Utiliser</th>
-			<td><?= $item->permanent?'oui':(new UseItem($_SESSION['user']))->setParams(array(UseItem::PARAM_NAME=>$item))->link()?></td>
+			<td><?= $item->getPermanent()?'oui':(new UseItem($_SESSION['user']))->setParams(array(UseItem::PARAM_NAME=>$item))->link()?></td>
+		</tr>
+		<tr class="odd">
+			<th>Refilé</th>
+			<td><?= (new Sell($_SESSION['user']))->setParams(array(Sell::PARAM_NAME=>$item))->link()?></td>
 		</tr>
 	</table>
 </div>
@@ -261,7 +333,7 @@ function printPlayer(Player $player, $num = 0, array $actions) {
 			<td><?= $player->getNom(); ?> <?php echo $player->getSex()?'<span style="color:cyan">&#9794;</span>':'<span style="color:pink">&#9792;</span>'; ?></td>
 		</tr>
 		<tr class="even">
-			<th>Points</th>
+			<th>Rêves vendus</th>
 			<td><?=$player->getPoints(); ?></td>
 		</tr>
 		<tr class="odd">

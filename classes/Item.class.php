@@ -3,7 +3,7 @@ class Item extends AbstractDbObject {
 
 	const TABLE_NAME = 'item';
 
-	public static $ITEM_TYPES = array('badge', 'drink', 'test', 'food', 'alcohol', 'pins');
+	public static $ITEM_TYPES = array('badge', 'drink', 'test', 'food', 'alcohol', 'pins', 'cros');
 
 	public $id = 0;
 
@@ -128,6 +128,32 @@ class Item extends AbstractDbObject {
 		$this->item_type = $item_type;
 	}
 
+	public $remaining_time = 0;
+
+	public function getRemaining_time() {
+		return $this->remaining_time;
+	}
+
+	public function setRemaining_time($remaining_time) {
+		if ($remaining_time < 0) {
+			$remaining_time = 0;
+		}
+		$this->remaining_time = $remaining_time;
+	}
+
+	public $price = 0;
+
+	public function getPrice() {
+		return $this->price;
+	}
+
+	public function setPrice($price) {
+		if ($price < 0) {
+			$price = 0;
+		}
+		$this->price = $price;
+	}
+
 	public function defaultValues() {
 		$this->setNom('ITEM');
 		$this->setPermanent(0);
@@ -171,7 +197,7 @@ class Item extends AbstractDbObject {
 	}
 
 	public function create() {
-		$sth = $GLOBALS['DB']->prepare('INSERT INTO ' . self::TABLE_NAME . ' ' . '(nom, permanent, notoriete, alcoolemie, alcoolemie_optimum, alcoolemie_max, fatigue, fatigue_max, sex_appeal, image, item_type)' . ' VALUES ( :nom, :permanent, :notoriete, :alcoolemie, :alcoolemie_optimum, :alcoolemie_max, :fatigue, :fatigue_max, :sex_appeal, :image, :item_type);');
+		$sth = $GLOBALS['DB']->prepare('INSERT INTO ' . self::TABLE_NAME . ' ' . '(nom, permanent, notoriete, alcoolemie, alcoolemie_optimum, alcoolemie_max, fatigue, fatigue_max, sex_appeal, image, item_type, remaining_time, price)' . ' VALUES ( :nom, :permanent, :notoriete, :alcoolemie, :alcoolemie_optimum, :alcoolemie_max, :fatigue, :fatigue_max, :sex_appeal, :image, :item_type, :remaining_time, :price);');
 		// $sth->bindValue(':id', $this->id, PDO::PARAM_INT);
 		$sth->bindValue(':nom', $this->nom, PDO::PARAM_STR);
 		$sth->bindValue(':permanent', $this->permanent, PDO::PARAM_INT);
@@ -184,6 +210,8 @@ class Item extends AbstractDbObject {
 		$sth->bindValue(':sex_appeal', $this->sex_appeal, PDO::PARAM_INT);
 		$sth->bindValue(':image', $this->image, PDO::PARAM_STR);
 		$sth->bindValue(':item_type', $this->item_type, PDO::PARAM_STR);
+		$sth->bindValue(':remaining_time', $this->remaining_time, PDO::PARAM_INT);
+		$sth->bindValue(':price', $this->price, PDO::PARAM_INT);
 		if ($sth->execute() === false) {
 			throw new Exception(print_r($sth->errorInfo(), true));
 		}
@@ -191,7 +219,7 @@ class Item extends AbstractDbObject {
 	}
 
 	public function update() {
-		$sth = $GLOBALS['DB']->prepare('UPDATE FROM ' . self::TABLE_NAME . ' SET ' . ' nom=:nom' . ' permanent=:permanent' . ' notoriete=:notoriete' . ' alcoolemie=:alcoolemie' . ' alcoolemie_optimum=:alcoolemie_optimum' . ' alcoolemie_max=:alcoolemie_max' . ' fatigue=:fatigue' . ' fatigue_max=:fatigue_max' . ' sex_appeal=:sex_appeal' . ' image=:image' . ' item_type=:item_type' . ' WHERE id=:id;');
+		$sth = $GLOBALS['DB']->prepare('UPDATE FROM ' . self::TABLE_NAME . ' SET nom=:nom, permanent=:permanent, notoriete=:notoriete, alcoolemie=:alcoolemie, alcoolemie_optimum=:alcoolemie_optimum, alcoolemie_max=:alcoolemie_max, fatigue=:fatigue, fatigue_max=:fatigue_max, sex_appeal=:sex_appeal, image=:image, item_type=:item_type, remaining_time=:remaining_time, price=:price WHERE id=:id;');
 		$sth->bindValue(':id', $this->id, PDO::PARAM_INT);
 		$sth->bindValue(':nom', $this->nom, PDO::PARAM_STR);
 		$sth->bindValue(':permanent', $this->permanent, PDO::PARAM_INT);
@@ -204,6 +232,8 @@ class Item extends AbstractDbObject {
 		$sth->bindValue(':sex_appeal', $this->sex_appeal, PDO::PARAM_INT);
 		$sth->bindValue(':image', $this->image, PDO::PARAM_STR);
 		$sth->bindValue(':item_type', $this->item_type, PDO::PARAM_STR);
+		$sth->bindValue(':remaining_time', $this->remaining_time, PDO::PARAM_STR);
+		$sth->bindValue(':price', $this->price, PDO::PARAM_STR);
 		if ($sth->execute() === false) {
 			// var_dump($sth->errorInfo());
 			return false;

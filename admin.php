@@ -136,7 +136,7 @@ while ($stmt && ($player = $stmt->fetch())) {
 					<input type="text" name="lieu" value="<?=$player->getLieu()?>" style="width: 50px;" />
 				</td>
 				<td>
-					<input type="text" name="points" value="<?=$player->getPoints()?>" class="int" />
+					<input type="text" name="Rêves vendus" value="<?=$player->getRêves vendus()?>" class="int" />
 				</td>
 				<td>
 					<input type="text" name="notoriete" value="<?=$player->getNotoriete()?>" class="int" />

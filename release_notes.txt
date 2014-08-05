@@ -1,3 +1,8 @@
+v1.6
+* les points sont devenus: rèves vendus, Notoriété est devenue cédibidulité
+* meilleures règles, entre autre du temps (¼ H)
+* introduction de la dignichose: dans le coin orga on peut vendre sa dignichose pour avoir des items ou refiler ceux de son inventaire.
+* debut de congrès on gagne 20 pts de dignichose mais plus des items
 v1.5
 * surprise pour ceux qui choppent bourrés
 * chanson! cannon! Chanter coute 1 verre

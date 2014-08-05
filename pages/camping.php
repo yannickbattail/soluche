@@ -1,6 +1,7 @@
 <div style="font-size: 18px">
 	Se deplacer:
 	<ul>
+		<li><a href="main.php?page=orga">coin des orgas</a></li>
 		<li><a href="main.php?page=bar">au bar</a></li>
 		<li><a href="main.php?page=tente">à ta tente</a></li>
 		<li><a href="main.php?page=cuisine">à la cuisine</a></li>

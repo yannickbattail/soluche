@@ -54,14 +54,14 @@ class Eat extends AbstractAction {
 			$res->setMessage('Cet item est permanent et ne peut etre utilisé.');
 			return $res;
 		}
-		$this->player->addNotoriete($this->item->notoriete);
-		$this->player->addAlcoolemie($this->item->alcoolemie);
-		$this->player->addAlcoolemie_optimum($this->item->alcoolemie_optimum);
-		$this->player->addAlcoolemie_max($this->item->alcoolemie_max);
-		$this->player->addFatigue($this->item->fatigue);
-		$this->player->addFatigue_max($this->item->fatigue_max);
-		$this->player->addSex_appeal($this->item->sex_appeal);
-		$this->player->addRemaining_time(-1);
+		$this->player->addNotoriete($this->item->getNotoriete());
+		$this->player->addAlcoolemie($this->item->getAlcoolemie());
+		$this->player->addAlcoolemie_optimum($this->item->getAlcoolemie_optimum());
+		$this->player->addAlcoolemie_max($this->item->getAlcoolemie_max());
+		$this->player->addFatigue($this->item->getFatigue());
+		$this->player->addFatigue_max($this->item->getFatigue_max());
+		$this->player->addSex_appeal($this->item->getSex_appeal());
+		$this->player->addRemaining_time($this->item->getRemaining_time());
 		$res->setSuccess(ActionResult::SUCCESS);
 		$res->setMessage('j\'ai bien mangé, j\'ai bien bu un(e) ' . $this->item->nom . '.');
 		return $res;
@@ -86,8 +86,8 @@ class Eat extends AbstractAction {
 		</tr>
 		<tr class="even">
 			<th>
-				<img src="images/badges/etoile doree belge.jpg" title="Points" width="32" height="32">
-				<br />Points
+				<img src="images/badges/etoile doree belge.jpg" title="Rêves vendus" width="32" height="32">
+				<br />Rêves vendus
 			</th>
 			<td><?= plus(5, 1)?></td>
 		</tr>
@@ -96,7 +96,7 @@ class Eat extends AbstractAction {
 				<img src="images/util/time.png" alt="¼ d'heure" width="32" height="32">
 				<br />¼ H
 			</th>
-			<td><?= plus(-1, 1)?></td>
+			<td><?= plus($this->item->getRemaining_time(), 1)?></td>
 		</tr>
 	</table>
 </div>

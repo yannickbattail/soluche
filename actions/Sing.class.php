@@ -83,8 +83,8 @@ class Sing extends AbstractAction {
 		</tr>
 		<tr class="odd">
 			<th>
-				<img src="images/badges/etoile doree belge.jpg" title="Points" width="32" height="32">
-				<br />Points
+				<img src="images/badges/etoile doree belge.jpg" title="Rêves vendus" width="32" height="32">
+				<br />Rêves vendus
 			</th>
 			<td><?= plus(1, 1); ?></td>
 			<td><?= plus(0, 1); ?></td>

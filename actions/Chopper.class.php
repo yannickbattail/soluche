@@ -48,11 +48,11 @@ class Chopper extends AbstractAction {
 	 */
 	public function execute() {
 		$res = new ActionResult();
-		if ($this->opponent->getSex() == $this->player->getSex()) {
-			$res->setMessage('Pas de sex homo pour le momment. Ca viendra plus tard pour ajouter du piment au jeu ;-)');
-			$res->setSuccess(ActionResult::IMPOSSIBLE);
-			return $res;
-		}
+		//if ($this->opponent->getSex() == $this->player->getSex()) {
+		//	$res->setMessage('Pas de sex homo pour le momment. Ca viendra plus tard pour ajouter du piment au jeu ;-)');
+		//	$res->setSuccess(ActionResult::IMPOSSIBLE);
+		//	return $res;
+		//}
 		/*
 		 * $sex_appealDiff = 1 / abs($this->player->getCalculatedSex_appeal() - $this->opponent->getCalculatedSex_appeal()); $alcoolUser = 0.5 * $this->player->getCalculatedAlcoolemie() / $this->player->getCalculatedAlcoolemie_max(); $alcoolOpponent = 0.5 * $this->opponent->getCalculatedAlcoolemie() / $this->opponent->getCalculatedAlcoolemie_max(); $alcool = $alcoolUser + $alcoolOpponent; $notorieteDiff = $this->player->getCalculatedNotoriete() - $this->opponent->getCalculatedNotoriete();
 		 */
@@ -125,8 +125,8 @@ class Chopper extends AbstractAction {
 		</tr>
 		<tr class="even">
 			<th>
-				<img src="images/badges/etoile doree belge.jpg" title="Points" width="32" height="32">
-				<br />Points
+				<img src="images/badges/etoile doree belge.jpg" title="Rêves vendus" width="32" height="32">
+				<br />Rêves vendus
 			</th>
 			<td><?= plus(5, 1)?></td>
 			<td><?= plus(2, 1)?></td>

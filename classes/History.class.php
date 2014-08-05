@@ -195,6 +195,16 @@ class History extends AbstractDbObject {
 		$this->remaining_time = $remaining_time;
 	}
 
+	public $money = 0;
+
+	public function getMoney() {
+		return $this->money;
+	}
+
+	public function setMoney($money) {
+		$this->money = $money;
+	}
+
 	/**
 	 *
 	 * @var int
@@ -285,7 +295,7 @@ class History extends AbstractDbObject {
 	}
 
 	public function create() {
-		$sth = $GLOBALS['DB']->prepare('INSERT INTO ' . self::TABLE_NAME . ' ' . '(id_player, id_congress, action_name, lieu, points, notoriete, alcoolemie, alcoolemie_optimum, alcoolemie_max, fatigue, fatigue_max, sex_appeal, en_pls, debut_de_pls, sex, remaining_time, date_action, success, message, id_opponent, id_item)' . ' VALUES (:id_player, :id_congress, :action_name, :lieu, :points, :notoriete, :alcoolemie, :alcoolemie_optimum, :alcoolemie_max, :fatigue, :fatigue_max, :sex_appeal, :en_pls, :debut_de_pls, :sex, :remaining_time, :date_action, :success, :message, :id_opponent, :id_item);');
+		$sth = $GLOBALS['DB']->prepare('INSERT INTO ' . self::TABLE_NAME . ' ' . '(id_player, id_congress, action_name, lieu, points, notoriete, alcoolemie, alcoolemie_optimum, alcoolemie_max, fatigue, fatigue_max, sex_appeal, en_pls, debut_de_pls, sex, remaining_time, money, date_action, success, message, id_opponent, id_item)' . ' VALUES (:id_player, :id_congress, :action_name, :lieu, :points, :notoriete, :alcoolemie, :alcoolemie_optimum, :alcoolemie_max, :fatigue, :fatigue_max, :sex_appeal, :en_pls, :debut_de_pls, :sex, :remaining_time, :money, :date_action, :success, :message, :id_opponent, :id_item);');
 		// $sth->bindValue(':id', $this->id, PDO::PARAM_INT);
 		$sth->bindValue(':id_player', $this->id_player, PDO::PARAM_INT);
 		$sth->bindValue(':id_congress', $this->id_congress, PDO::PARAM_INT);
@@ -303,6 +313,7 @@ class History extends AbstractDbObject {
 		$sth->bindValue(':debut_de_pls', $this->debut_de_pls, PDO::PARAM_INT);
 		$sth->bindValue(':sex', $this->sex, PDO::PARAM_INT);
 		$sth->bindValue(':remaining_time', $this->remaining_time, PDO::PARAM_INT);
+		$sth->bindValue(':money', $this->money, PDO::PARAM_INT);
 		$sth->bindValue(':date_action', $this->date_action, PDO::PARAM_INT);
 		$sth->bindValue(':success', $this->success, PDO::PARAM_INT);
 		$sth->bindValue(':message', $this->message, PDO::PARAM_STR);
@@ -331,6 +342,7 @@ class History extends AbstractDbObject {
 		$this->debut_de_pls = 0;
 		$this->sex = 0;
 		$this->remaining_time = 0;
+		$this->remaining_time = 0;
 		$this->date_action = 0;
 		$this->success = 0;
 		$this->message = '';
@@ -339,7 +351,7 @@ class History extends AbstractDbObject {
 	}
 
 	public function update() {
-		$sth = $GLOBALS['DB']->prepare('UPDATE ' . self::TABLE_NAME . ' SET id_player=:id_player, id_congress=:id_congress, action_name=:action_name, lieu=:lieu, points=:points, notoriete=:notoriete, alcoolemie=:alcoolemie, alcoolemie_optimum=:alcoolemie_optimum, alcoolemie_max=:alcoolemie_max, fatigue=:fatigue, fatigue_max=:fatigue_max, sex_appeal=:sex_appeal, en_pls=:en_pls, debut_de_pls=:debut_de_pls, sex=:sex, remaining_time=:remaining_time, date_action=:date_action, success=:success, message=:message, id_opponent=:id_opponent, id_item=:id_item WHERE id=:id;');
+		$sth = $GLOBALS['DB']->prepare('UPDATE ' . self::TABLE_NAME . ' SET id_player=:id_player, id_congress=:id_congress, action_name=:action_name, lieu=:lieu, points=:points, notoriete=:notoriete, alcoolemie=:alcoolemie, alcoolemie_optimum=:alcoolemie_optimum, alcoolemie_max=:alcoolemie_max, fatigue=:fatigue, fatigue_max=:fatigue_max, sex_appeal=:sex_appeal, en_pls=:en_pls, debut_de_pls=:debut_de_pls, sex=:sex, remaining_time=:remaining_time, money=:money, date_action=:date_action, success=:success, message=:message, id_opponent=:id_opponent, id_item=:id_item WHERE id=:id;');
 		$sth->bindValue(':id', $this->id, PDO::PARAM_INT);
 		$sth->bindValue(':id_player', $this->id_player, PDO::PARAM_INT);
 		$sth->bindValue(':id_congress', $this->id_congress, PDO::PARAM_INT);
@@ -357,6 +369,7 @@ class History extends AbstractDbObject {
 		$sth->bindValue(':debut_de_pls', $this->debut_de_pls, PDO::PARAM_INT);
 		$sth->bindValue(':sex', $this->sex, PDO::PARAM_INT);
 		$sth->bindValue(':remaining_time', $this->remaining_time, PDO::PARAM_INT);
+		$sth->bindValue(':money', $this->money, PDO::PARAM_INT);
 		$sth->bindValue(':date_action', $this->date_action, PDO::PARAM_INT);
 		$sth->bindValue(':success', $this->success, PDO::PARAM_INT);
 		$sth->bindValue(':message', $this->message, PDO::PARAM_STR);

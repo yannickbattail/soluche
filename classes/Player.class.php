@@ -366,6 +366,24 @@ class Player extends AbstractDbObject {
 		$this->setRemaining_time($this->getRemaining_time() + $remaining_time);
 	}
 
+	public $money = 0;
+
+	public function getMoney() {
+		return $this->money;
+	}
+
+	public function setMoney($money) {
+		if ($money < 0) {
+			$money = 0;
+		}
+		$this->getHistory()->setMoney($money - $this->money);
+		$this->money = $money;
+	}
+
+	public function addMoney($money) {
+		$this->setMoney($this->getMoney() + $money);
+	}
+
 	public $inventory = array();
 
 	public function getInventory() {
@@ -435,7 +453,7 @@ class Player extends AbstractDbObject {
 	}
 
 	public function create() {
-		$sth = $GLOBALS['DB']->prepare('INSERT INTO ' . self::TABLE_NAME . ' ' . '(nom, pass, lieu, points, notoriete, alcoolemie, alcoolemie_optimum, alcoolemie_max, fatigue, fatigue_max, sex_appeal, en_pls, debut_de_pls, sex, photo, pnj, id_congress, remaining_time)' . ' VALUES ( :nom, :pass, :lieu, :points, :notoriete, :alcoolemie, :alcoolemie_optimum, :alcoolemie_max, :fatigue, :fatigue_max, :sex_appeal, :en_pls, :debut_de_pls, :sex, :photo, :pnj, :id_congress, :remaining_time);');
+		$sth = $GLOBALS['DB']->prepare('INSERT INTO ' . self::TABLE_NAME . ' ' . '(nom, pass, lieu, points, notoriete, alcoolemie, alcoolemie_optimum, alcoolemie_max, fatigue, fatigue_max, sex_appeal, en_pls, debut_de_pls, sex, photo, pnj, id_congress, remaining_time, money)' . ' VALUES ( :nom, :pass, :lieu, :points, :notoriete, :alcoolemie, :alcoolemie_optimum, :alcoolemie_max, :fatigue, :fatigue_max, :sex_appeal, :en_pls, :debut_de_pls, :sex, :photo, :pnj, :id_congress, :remaining_time, :money);');
 		$sth->bindValue(':nom', $this->nom, PDO::PARAM_STR);
 		$sth->bindValue(':pass', $this->pass, PDO::PARAM_STR);
 		$sth->bindValue(':lieu', $this->lieu, PDO::PARAM_STR);
@@ -454,6 +472,7 @@ class Player extends AbstractDbObject {
 		$sth->bindValue(':pnj', $this->pnj, PDO::PARAM_INT);
 		$sth->bindValue(':id_congress', $this->id_congress, PDO::PARAM_INT);
 		$sth->bindValue(':remaining_time', $this->remaining_time, PDO::PARAM_INT);
+		$sth->bindValue(':money', $this->money, PDO::PARAM_INT);
 		if ($sth->execute() === false) {
 			throw new Exception(print_r($sth->errorInfo(), true));
 		}
@@ -477,10 +496,11 @@ class Player extends AbstractDbObject {
 		$this->pnj = 0;
 		$this->id_congress = null;
 		$this->remaining_time = 0;
+		$this->money = 0;
 	}
 
 	public function update() {
-		$sth = $GLOBALS['DB']->prepare('UPDATE ' . self::TABLE_NAME . ' SET nom=:nom, pass=:pass, lieu=:lieu, points=:points, notoriete=:notoriete, alcoolemie=:alcoolemie, alcoolemie_optimum=:alcoolemie_optimum, alcoolemie_max=:alcoolemie_max, fatigue=:fatigue, fatigue_max=:fatigue_max, sex_appeal=:sex_appeal, en_pls=:en_pls, debut_de_pls=:debut_de_pls, sex=:sex, photo=:photo, pnj=:pnj, id_congress=:id_congress, remaining_time=:remaining_time WHERE id=:id;');
+		$sth = $GLOBALS['DB']->prepare('UPDATE ' . self::TABLE_NAME . ' SET nom=:nom, pass=:pass, lieu=:lieu, points=:points, notoriete=:notoriete, alcoolemie=:alcoolemie, alcoolemie_optimum=:alcoolemie_optimum, alcoolemie_max=:alcoolemie_max, fatigue=:fatigue, fatigue_max=:fatigue_max, sex_appeal=:sex_appeal, en_pls=:en_pls, debut_de_pls=:debut_de_pls, sex=:sex, photo=:photo, pnj=:pnj, id_congress=:id_congress, remaining_time=:remaining_time, money=:money WHERE id=:id;');
 		$sth->bindValue(':id', $this->id, PDO::PARAM_INT);
 		$sth->bindValue(':nom', $this->nom, PDO::PARAM_STR);
 		$sth->bindValue(':pass', $this->pass, PDO::PARAM_STR);
@@ -500,6 +520,7 @@ class Player extends AbstractDbObject {
 		$sth->bindValue(':pnj', $this->pnj, PDO::PARAM_INT);
 		$sth->bindValue(':id_congress', $this->id_congress, PDO::PARAM_INT);
 		$sth->bindValue(':remaining_time', $this->remaining_time, PDO::PARAM_INT);
+		$sth->bindValue(':money', $this->money, PDO::PARAM_INT);
 		if ($sth->execute() === false) {
 			throw new Exception(print_r($sth->errorInfo(), true));
 		}
@@ -572,12 +593,11 @@ class Player extends AbstractDbObject {
 
 	public function addRandomItem() {
 		// @TODO add entropy
-		Item::associate($this->getId(), 4);
-		Item::associate($this->getId(), 8);
-		Item::associate($this->getId(), 11);
-		Item::associate($this->getId(), 13);
-		Item::associate($this->getId(), 13);
-		Item::associate($this->getId(), 13);
+		// Item::associate($this->getId(), 4);
+		// Item::associate($this->getId(), 8);
+		// Item::associate($this->getId(), 11);
+		// Item::associate($this->getId(), 13);
+		// Item::associate($this->getId(), 13);
+		// Item::associate($this->getId(), 13);
 	}
-
 }

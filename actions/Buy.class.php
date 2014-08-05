@@ -1,5 +1,5 @@
 <?php
-class UseItem extends AbstractAction {
+class Buy extends AbstractAction {
 
 	const PARAM_NAME = 'idItem';
 
@@ -18,11 +18,10 @@ class UseItem extends AbstractAction {
 		// configuration
 		$this->paramName = self::PARAM_NAME;
 		$this->actionRight = null;
-		$this->linkText = 'Utiliser';
+		$this->linkText = 'Obtenir';
 	}
 
 	/**
-	 * (non-PHPdoc)
 	 *
 	 * @see ActionInterface::setParams()
 	 * @param array $params        	
@@ -42,30 +41,21 @@ class UseItem extends AbstractAction {
 	}
 
 	/**
-	 * (non-PHPdoc)
 	 *
 	 * @see ActionInterface::execute()
 	 * @return ActionResult
 	 */
 	public function execute() {
 		$res = new ActionResult();
-		if ($this->item->permanent) {
-			$res->setSuccess(ActionResult::IMPOSSIBLE);
-			$res->setMessage('Cet item est permanent et ne peut etre utilisé.');
+		if ($this->player->getMoney() < -$this->item->getPrice()) {
+			$res->setSuccess(ActionResult::NOTHING);
+			$res->setMessage('Pas assez de dignichose pour ça.');
 			return $res;
 		}
-		// @TODO verifier si l item est bien present dans inventaire du player
-		$this->player->addNotoriete($this->item->getNotoriete());
-		$this->player->addAlcoolemie($this->item->getAlcoolemie());
-		$this->player->addAlcoolemie_optimum($this->item->getAlcoolemie_optimum());
-		$this->player->addAlcoolemie_max($this->item->getAlcoolemie_max());
-		$this->player->addFatigue($this->item->getFatigue());
-		$this->player->addFatigue_max($this->item->getFatigue_max());
-		$this->player->addSex_appeal($this->item->getSex_appeal());
-		$this->player->addRemaining_time($this->item->getRemaining_time());
-		Item::desassociate($this->player->getId(), $this->item->id);
-		$res->setSuccess(ActionResult::SUCCESS);
-		$res->setMessage('Item ' . $this->item->nom . ' utilisé.');
+		$this->player->addMoney($this->item->getPrice());
+		Item::associateItem($this->player, $this->item);
+		$res->setSuccess(ActionResult::NOTHING);
+		$res->setMessage('Item ' . $this->item->nom . ' ajouté.');
 		return $res;
 	}
 
@@ -88,17 +78,17 @@ class UseItem extends AbstractAction {
 		</tr>
 		<tr class="even">
 			<th>
-				<img src="images/badges/etoile doree belge.jpg" title="Rêves vendus" width="32" height="32">
-				<br />Rêves vendus
+				<img src="images/items/pin-s-exigeons-la-dignité.png" alt="Dignichose" width="32" height="32">
+				<br />Dignichose
 			</th>
-			<td><?= plus(5, 1)?></td>
+			<td><?= plus($this->item->getPrice(), 1)?></td>
 		</tr>
 		<tr class="odd">
 			<th>
 				<img src="images/util/time.png" alt="¼ d'heure" width="32" height="32">
 				<br />¼ H
 			</th>
-			<td><?= plus(-1, 1)?></td>
+			<td><?= plus(0, 1)?></td>
 		</tr>
 	</table>
 </div>
