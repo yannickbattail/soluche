@@ -77,6 +77,9 @@ class Duel extends AbstractAction {
 		$this->player->addAlcoolemie($sec);
 		$this->player->addFatigue(2);
 		$this->player->addRemaining_time(-2);
+		if ($this->opponent->getPnj() == 0) { // si player
+			$this->opponent->save();
+		}
 		$this->opponent->save();
 		// $this->player->save(); // this is done at the end of the action execution.
 		return $res;

@@ -63,6 +63,9 @@ class Pins extends AbstractAction {
 			$res->setMessage('a plu d\'Pin\'s');
 			$res->setSuccess(ActionResult::FAIL);
 		}
+		if ($this->opponent->getPnj() == 0) { // si player
+			$this->opponent->save();
+		}
 		// $this->player->save(); // this is done at the end of the action execution.
 		return $res;
 	}

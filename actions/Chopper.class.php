@@ -48,11 +48,11 @@ class Chopper extends AbstractAction {
 	 */
 	public function execute() {
 		$res = new ActionResult();
-		//if ($this->opponent->getSex() == $this->player->getSex()) {
-		//	$res->setMessage('Pas de sex homo pour le momment. Ca viendra plus tard pour ajouter du piment au jeu ;-)');
-		//	$res->setSuccess(ActionResult::IMPOSSIBLE);
-		//	return $res;
-		//}
+		// if ($this->opponent->getSex() == $this->player->getSex()) {
+		// $res->setMessage('Pas de sex homo pour le momment. Ca viendra plus tard pour ajouter du piment au jeu ;-)');
+		// $res->setSuccess(ActionResult::IMPOSSIBLE);
+		// return $res;
+		// }
 		/*
 		 * $sex_appealDiff = 1 / abs($this->player->getCalculatedSex_appeal() - $this->opponent->getCalculatedSex_appeal()); $alcoolUser = 0.5 * $this->player->getCalculatedAlcoolemie() / $this->player->getCalculatedAlcoolemie_max(); $alcoolOpponent = 0.5 * $this->opponent->getCalculatedAlcoolemie() / $this->opponent->getCalculatedAlcoolemie_max(); $alcool = $alcoolUser + $alcoolOpponent; $notorieteDiff = $this->player->getCalculatedNotoriete() - $this->opponent->getCalculatedNotoriete();
 		 */
@@ -92,7 +92,9 @@ class Chopper extends AbstractAction {
 			$res->setMessage('T\'as pas réussi à chopper ' . $this->opponent->getNom());
 			$res->setSuccess(ActionResult::FAIL);
 		}
-		$this->opponent->save();
+		if ($this->opponent->getPnj() == 0) { // si player
+			$this->opponent->save();
+		}
 		// $this->player->save(); // this is done at the end of the action execution.
 		return $res;
 	}
