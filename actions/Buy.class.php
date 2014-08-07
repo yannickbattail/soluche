@@ -55,7 +55,7 @@ class Buy extends AbstractAction {
 		$this->player->addMoney($this->item->getPrice());
 		Item::associateItem($this->player, $this->item);
 		$res->setSuccess(ActionResult::NOTHING);
-		$res->setMessage('Item ' . $this->item->nom . ' ajouté.');
+		$res->setMessage('Item ' . $this->item->getNom() . ' ajouté pour '.-$this->item->getPrice().' Dignichose.');
 		return $res;
 	}
 
@@ -67,26 +67,24 @@ class Buy extends AbstractAction {
 		$htmlId = get_class($this) . '_' . $this->item->getId();
 		ob_start();
 		?>
-<div id="<?= $htmlId ?>_tooltip" style="display: none;">
-	<table id="player_<?= $this->item->getId().'_'.$num ?>_tooltip">
+<div id="<?= $htmlId ?>_tooltip" class="hiddenTooltip">
+	<table class="inventory playerTooltip">
 		<tr class="odd">
-			<th>Utiliser</th>
+			<th>Obtenir</th>
 			<td>
-				<img src="images/emotes/face-smile.png" title="Succès" width="32" height="32">
+				<img src="images/emotes/face-smile.png" title="Succès" alt="Succès">
 				<br />Succès
 			</td>
 		</tr>
 		<tr class="even">
 			<th>
-				<img src="images/items/pin-s-exigeons-la-dignité.png" alt="Dignichose" width="32" height="32">
-				<br />Dignichose
+				<img src="images/util/Dignichose.png" title="Dignichose (la monnaie)" alt="Dignichose">
 			</th>
 			<td><?= plus($this->item->getPrice(), 1)?></td>
 		</tr>
 		<tr class="odd">
 			<th>
-				<img src="images/util/time.png" alt="¼ d'heure" width="32" height="32">
-				<br />¼ H
+				<img src="images/util/time.png" title="¼ d'heure" alt="¼ d'heure">
 			</th>
 			<td><?= plus(0, 1)?></td>
 		</tr>

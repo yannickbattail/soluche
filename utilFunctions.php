@@ -37,44 +37,60 @@ function linkAction($action, array $actionParams, $text, $page = null, $forceEna
 
 function printUserStats(Player $player) {
 	?>
-<table class="stats">
-	<tr class="even">
+<table class="playerStats">
+	<tr class="odd">
 		<th>Nom</th>
 		<td>
 			<img src="<?= $player->getPhoto(); ?>" class="playerImage" title="<?= $player->getNom(); ?>" />
 		</td>
-		<td><?=$player->getNom(); ?> <?php echo $player->getSex()?'<span style="color:cyan">&#9794;</span>':'<span style="color:pink">&#9792;</span>'; ?>
-		<br />Rêves vendus: <?=$player->getPoints(); ?></td>
+		<td><?=$player->getNom(); ?> <?php echo $player->getSex()?'<span style="color:cyan" title="bite">&#9794;</span>':'<span style="color:pink" title="vagin">&#9792;</span>'; ?></td>
 	</tr>
-	<tr class="odd">
+	<tr class="even">
 		<th></th>
 		<th>Sans inventaire</th>
 		<th>Avec inventaire</th>
 	</tr>
+	<tr class="odd">
+		<th>
+			<img src="images/util/reves.png" title="Rêves vendus" alt="Rêves vendus">
+		</th>
+		<td><?=$player->getPoints(); ?></td>
+		<td></td>
+	</tr>
 	<tr class="even">
-		<th>Crédibidulité</th>
+		<th>
+			<img src="images/util/notoriété.png" title="Crédibidulité" alt="Crédibidulité">
+		</th>
 		<td><?=$player->getNotoriete(); ?></td>
 		<td><?=$player->getCalculatedNotoriete(); ?></td>
 	</tr>
 	<tr class="odd">
-		<th>Verres</th>
+		<th>
+			<img src="images/util/chope or.png" title="Verres" alt="Verres">
+		</th>
 		<td><?= lifeBarMiddle($player->getAlcoolemie_max(), $player->getAlcoolemie_optimum(), $player->getAlcoolemie()); ?>
 		<?=$player->getAlcoolemie().'/'.$player->getAlcoolemie_max().' optimum à '.$player->getAlcoolemie_optimum(); ?></td>
 		<td><?= lifeBarMiddle($player->getCalculatedAlcoolemie_max(), $player->getCalculatedAlcoolemie_optimum(), $player->getCalculatedAlcoolemie())?>
 		<?=$player->getCalculatedAlcoolemie().'/'.$player->getCalculatedAlcoolemie_max().' optimum à '.$player->getCalculatedAlcoolemie_optimum(); ?></td>
 	</tr>
 	<tr class="even">
-		<th>Fatigue</th>
+		<th>
+			<img src="images/util/sleep.png" title="Fatigue" alt="Fatigue">
+		</th>
 		<td><?=lifeBar($player->getFatigue_max(), $player->getFatigue()).$player->getFatigue().'/'.$player->getFatigue_max(); ?></td>
 		<td><?=lifeBar($player->getCalculatedFatigue_max(), $player->getCalculatedFatigue()).$player->getCalculatedFatigue().'/'.$player->getCalculatedFatigue_max(); ?></td>
 	</tr>
 	<tr class="odd">
-		<th>Sexe appeal</th>
+		<th>
+			<img src="images/util/sex appeal.png" title="Sexe appeal" alt="Sexe appeal">
+		</th>
 		<td><?=$player->getSex_appeal(); ?></td>
 		<td><?=$player->getCalculatedSex_appeal(); ?></td>
 	</tr>
 	<tr class="even">
-		<th>Dignichose</th>
+		<th>
+			<img src="images/util/Dignichose.png" title="Dignichose (la monnaie)" alt="Dignichose">
+		</th>
 		<td colspan="2"><?= moneyDisplay($player->getMoney()) ?><div style="font-size: 10px;">(<?= $player->getMoney() ?>)</div>
 		</td>
 	</tr>
@@ -106,6 +122,25 @@ function moneyDisplay($money) {
 	$money = floor($money / 5);
 	for ($i = 0; $i < $money % 2; $i++) {
 		$ret = '<img src="images/util/etoile doree belge.png" width="32" height="32" title="500" alt="500"> ' . $ret;
+	}
+	return $ret;
+}
+
+function lifeBarMiddle2($max, $middle, $value) {
+	$ret = '';
+	$css = 'lifeBarMiddle_middle';
+	for ($i = 1; $i <= $max; $i++) {
+		if ($i < $middle) {
+			$ret .= '<td class="' . $css . '"></td>';
+		} else if ($i > $middle) {
+			$ret .= '<td class="' . $css . '"></td>';
+		} else if ($i == $middle) {
+			$ret .= '<td class="' . $css . '"></td>';
+		}
+		if ($i == $value) {
+			$ret .= '<td class="' . $css . '"></td>';
+		}
+		$ret .= '<td class="' . $css . '"></td>';
 	}
 	return $ret;
 }
@@ -164,21 +199,21 @@ function printInventory(Player $player) {
 	</tr>
 <?php
 	$n = 0;
-	foreach ($player->inventory as $item) {
+	foreach ($player->getInventory() as $item) {
 		$odd = ($n++ % 2) ? 'odd' : 'even';
 		?>
 	<tr class="<?= $odd ?>">
 		<td>
-			<img src="<?= $item->image; ?>" class="inventoryImage" title="<?= $item->nom; ?>" />
+			<img src="<?= $item->getImage(); ?>" class="inventoryImage" title="<?= $item->getNom(); ?>" />
 		</td>
-		<td><?= $item->permanent?'oui':(new UseItem($_SESSION['user']))->setParams(array(UseItem::PARAM_NAME=>$item))->link() ?></td>
-		<td><?= plus($item->notoriete, 1); ?></td>
-		<td><?= plus($item->alcoolemie, 0); ?></td>
-		<td><?= plus($item->alcoolemie_optimum, 1); ?></td>
-		<td><?= plus($item->alcoolemie_max, 1); ?></td>
-		<td><?= plus($item->fatigue, 0); ?></td>
-		<td><?= plus($item->fatigue_max, 1); ?></td>
-		<td><?= plus($item->sex_appeal, 1); ?></td>
+		<td><?= $item->getPermanent()?'oui':(new UseItem($_SESSION['user']))->setParams(array(UseItem::PARAM_NAME=>$item))->link() ?></td>
+		<td><?= plus($item->getNotoriete(), 1); ?></td>
+		<td><?= plus($item->getAlcoolemie(), 0); ?></td>
+		<td><?= plus($item->getAlcoolemie_optimum(), 1); ?></td>
+		<td><?= plus($item->getAlcoolemie_max(), 1); ?></td>
+		<td><?= plus($item->getFatigue(), 0); ?></td>
+		<td><?= plus($item->getFatigue_max(), 1); ?></td>
+		<td><?= plus($item->getSex_appeal(), 1); ?></td>
 	</tr>
         <?php
 	}
@@ -194,7 +229,7 @@ function printInventory2(Player $player) {
 
 <?php
 	$num = 0;
-	foreach ($player->inventory as $item) {
+	foreach ($player->getInventory() as $item) {
 		printItem($item, $num);
 		$num++;
 	}
@@ -205,110 +240,100 @@ function printInventory2(Player $player) {
 
 function printItem(Item $item, $num = 0) {
 	?>
-<div class="itemCard" id="item_<?= $item->id.'_'.$num; ?>">
-	<img src="<?= $item->image; ?>" class="inventoryImage" title="<?= $item->nom; ?>" />
+<div class="itemCard" id="item_<?= $item->getId().'_'.$num; ?>">
+	<img src="<?= $item->getImage(); ?>" class="inventoryImage" title="<?= $item->getNom(); ?>" />
 
 </div>
-<div id="item_<?= $item->id.'_'.$num ?>_tooltip" style="display: none;">
-	<table class="inventory">
+<div id="item_<?= $item->getId().'_'.$num ?>_tooltip" style="display: none;">
+	<table class="inventory playerTooltip">
 		<tr class="odd">
-			<th>Nom</th>
+			<th>Item</th>
 			<td><?= $item->getNom(); ?></td>
 		</tr>
 		<tr class="even">
-			<th>Permanant</th>
-			<td><?= $item->getPermanent()?'oui':'non' ?></td>
+			<th>
+				<img src="images/util/lock closed.png" title="Permanant" alt="Permanant">
+			</th>
+			<td><?= $item->getPermanent()?'oui':(new UseItem($_SESSION['user']))->setParams(array(UseItem::PARAM_NAME=>$item))->link()?></td>
 		</tr>
 		<tr class="odd">
 			<th>
-				<img src="images/emotes/face-raspberry.png" title="Crédibidulité" width="32" height="32">
-				<br />Crédibidulité
+				<img src="images/util/notoriété.png" title="Crédibidulité" alt="Crédibidulité">
 			</th>
 			<td><?= plus($item->getNotoriete(), 1); ?></td>
 		</tr>
 		<tr class="even">
 			<th>
-				<img src="images/util/chope argent.png" title="Verres" width="32" height="32">
-				<br />Verres
+				<img src="images/util/chope argent.png" title="Verres" alt="Verres">
 			</th>
 			<td><?= plus($item->getAlcoolemie(), 0); ?></td>
 		</tr>
 		<tr class="odd">
 			<th>
-				<img src="images/util/chope or.png" title="Verres" width="32" height="32">
-				<br />Verres optimum
+				<img src="images/util/chope or.png" title="Verres optimum" alt="Verres optimum">
 			</th>
 			<td><?= plus($item->getAlcoolemie_optimum(), 1); ?></td>
 		</tr>
 		<tr class="even">
 			<th>
-				<img src="images/util/chope rouge.png" title="Verres" width="32" height="32">
-				<br />Verres max
+				<img src="images/util/chope rouge.png" title="Verres max" alt="Verres max">
 			</th>
 			<td><?= plus($item->getAlcoolemie_max(), 1); ?></td>
 		</tr>
 		<tr class="odd">
 			<th>
-				<img src="images/emotes/face-uncertain.png" title="Fatigue" width="32" height="32">
-				<br />Fatigue
+				<img src="images/util/sleep.png" title="Fatigue" alt="Fatigue">
 			</th>
 			<td><?= plus($item->getFatigue(), 0); ?></td>
 		</tr>
 		<tr class="even">
 			<th>
-				<img src="images/emotes/face-uncertain.png" title="Fatigue" width="32" height="32">
-				<br />Fatigue max
+				<img src="images/util/fatigue max.png" title="Fatigue max" alt="Fatigue max">
 			</th>
 			<td><?= plus($item->getFatigue_max(), 1); ?></td>
 		</tr>
 		<tr class="odd">
 			<th>
-				<img src="images/util/sex appeal.png" title="Sexe appeal" width="32" height="32">
-				<br />Sexe appeal
+				<img src="images/util/sex appeal.png" title="Sexe appeal" alt="Sexe appeal">
 			</th>
 			<td><?= plus($item->getSex_appeal(), 1); ?></td>
 		</tr>
 		<tr class="even">
 			<th>
-				<img src="images/util/time.png" alt="¼ d'heure" width="32" height="32">
-				<br />¼ H
+				<img src="images/util/time.png" title="¼ d'heure" alt="¼ d'heure">
 			</th>
 			<td><?= plus($item->getRemaining_time(), 1); ?></td>
 		</tr>
 		<tr class="odd">
 			<th>
-				<img src="images/items/pin-s-exigeons-la-dignité.png" alt="Coût en dignichose" width="32" height="32">
-				<br /> Coût en dignichose
+				<img src="images/util/Dignichose.png" title="Coût en dignichose" alt="Coût en dignichose">
 			</th>
-			<td><?= plus($item->getPrice(), 1); ?> refiler pour <?= plus(floor(-$item->getPrice()*80/100), 1)?> -20% </td>
+			<td><?= plus($item->getPrice(), 1); ?> refiler à <?= plus(floor(-$item->getPrice()*80/100), 1)?></td>
 		</tr>
 		<tr class="even">
-			<th>Utiliser</th>
-			<td><?= $item->getPermanent()?'oui':(new UseItem($_SESSION['user']))->setParams(array(UseItem::PARAM_NAME=>$item))->link()?></td>
-		</tr>
-		<tr class="odd">
-			<th>Refilé</th>
-			<td><?= (new Sell($_SESSION['user']))->setParams(array(Sell::PARAM_NAME=>$item))->link()?></td>
+			<td colspan="2"><?= (new Sell($_SESSION['user']))->setParams(array(Sell::PARAM_NAME=>$item))->link()?></td>
 		</tr>
 	</table>
 </div>
 <script type="text/javascript">
-	$("#item_<?= $item->id.'_'.$num; ?>").tooltip({
-		"content": $("#item_<?= $item->id.'_'.$num; ?>_tooltip").html(), 
+	$("#item_<?= $item->getId().'_'.$num; ?>").tooltip({
+		"content": $("#item_<?= $item->getId().'_'.$num; ?>_tooltip").html(), 
     	"hide": { "delay": 1000, "duration": 500 }
      });
 </script>
 <?php
 }
 
-function printPlayerBox(PDOStatement $stmt, array $actions) {
+function printPlayerBox(PDOStatement $sth, array $actions) {
 	?>
 <div class="playerBox">
 
 <?php
 	$num = 0;
-	$stmt->setFetchMode(PDO::FETCH_CLASS, 'Player');
-	while ($stmt && ($player = $stmt->fetch())) {
+	$sth->setFetchMode(PDO::FETCH_ASSOC);
+	while ($sth && ($arr = $sth->fetch())) {
+		$player = new Player();
+		$player->populate($arr);
 		printPlayer($player, $num, $actions);
 		$num++;
 	}
@@ -320,37 +345,47 @@ function printPlayerBox(PDOStatement $stmt, array $actions) {
 function printPlayer(Player $player, $num = 0, array $actions) {
 	?>
 <!-- 
-<div class="playerCard" id="player_<?= $player->id.'_'.$num; ?>">
+<div class="playerCard" id="player_<?= $player->getId().'_'.$num; ?>">
 	<img src="<?= $player->getPhoto() ?>" class="inventoryImage" title="<?= $player->getNom() ?>" />
 </div>
  -->
 <div id="player_<?= $player->getId().'_'.$num ?>_tooltip" style="display: inline-block;">
 	<table class="playerCard">
 		<tr class="odd">
-			<th>
-				<img src="<?= $player->getPhoto() ?>" class="inventoryImage" title="<?= $player->getNom() ?>" />
-			</th>
-			<td><?= $player->getNom(); ?> <?php echo $player->getSex()?'<span style="color:cyan">&#9794;</span>':'<span style="color:pink">&#9792;</span>'; ?></td>
+			<th></th>
+			<td>
+				<img src="<?= $player->getPhoto() ?>" class="playerImage" title="<?= $player->getNom() ?>" />
+				<br /><?= $player->getNom(); ?> <?php echo $player->getSex()?'<span style="color:cyan" title="bite">&#9794;</span>':'<span style="color:pink" title="vagin">&#9792;</span>'; ?></td>
 		</tr>
 		<tr class="even">
-			<th>Rêves vendus</th>
+			<th>
+				<img src="images/util/reves.png" title="Rêves vendus" alt="Rêves vendus">
+			</th>
 			<td><?=$player->getPoints(); ?></td>
 		</tr>
 		<tr class="odd">
-			<th>Crédibidulité</th>
+			<th>
+				<img src="images/util/notoriété.png" title="Crédibidulité" alt="Crédibidulité">
+			</th>
 			<td><?=$player->getNotoriete(); ?></td>
 		</tr>
 		<tr class="even">
-			<th>Verre</th>
+			<th>
+				<img src="images/util/chope rouge.png" title="Verres" alt="Verres">
+			</th>
 			<td><?= lifeBarMiddle($player->getAlcoolemie_max(), $player->getAlcoolemie_optimum(), $player->getAlcoolemie()); ?> <?=$player->getAlcoolemie().'/'.$player->getAlcoolemie_max().' optimum à '.$player->getAlcoolemie_optimum(); ?></td>
 		</tr>
 		<tr class="odd">
-			<th>Fatigue</th>
+			<th>
+				<img src="images/util/sleep.png" title="Fatigue" alt="Fatigue">
+			</th>
 			<td><?=lifeBar($player->getFatigue_max(), $player->getFatigue()).$player->getFatigue().'/'.$player->getFatigue_max(); ?></td>
 		</tr>
 		<!--
 		<tr class="odd">
-			<th>sex_appeal</th>
+			<th>
+				<img src="images/util/sex appeal.png" title="Sexe appeal" alt="Sexe appeal">
+			</th>
 			<td><?=$player->getSex_appeal(); ?></td>
 		</tr>
 		-->

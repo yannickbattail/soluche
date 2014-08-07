@@ -36,6 +36,11 @@
 	min-height: 120px
 }
 
+.inventoryPage img {
+	width: 24px;
+	height: 24px;
+}
+
 .itemCard {
 	display: inline-block;
 	width: 40px;
@@ -67,8 +72,58 @@
 	margin: 5px;
 }
 
-.playerTooltip {
+.playerCard img {
+	width: 24px;
+	height: 24px;
+}
+
+.hiddenTooltip {
 	display: none;
+}
+
+.playerTooltip {
+	font-size: 10px;
+	font-weight: normal;
+}
+
+.playerTooltip th {
+	font-size: 8px;
+	font-weight: normal;
+}
+
+.playerTooltip img {
+	width: 24px;
+	height: 24px;
+}
+
+.playerStats {
+	font-weight: normal;
+	color: silver;
+}
+
+.playerStats th {
+	background-color: #000000;
+	color: silver;
+	text-align: left;
+	padding: 2px 6px;
+}
+
+.playerStats td {
+	color: silver;
+	text-align: center;
+	padding: 3px 6px;
+}
+
+.playerStats img {
+	width: 32px;
+	height: 32px;
+}
+
+.playerImage {
+	max-width: 64px;
+	max-height: 64px;
+	height: auto !important;
+	width: auto !important;
 }
 
 tr.odd {
@@ -166,11 +221,6 @@ tr.even {
 	border-radius: 3px;
 	padding: 2px;
 	margin: 2px;
-}
-
-.playerImage {
-	max-width: 64px;
-	max-height: 64px;
 }
 
 .inventoryImage {

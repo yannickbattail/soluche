@@ -83,8 +83,16 @@ class Chopper extends AbstractAction {
 				$this->opponent->addNotoriete(2);
 				$this->opponent->addPoints(5);
 				// $this->opponent->addFatigue(2);
-				$res->setMessage('T\'as choppé ' . $this->opponent->getNom());
+				$res->setMessage('T\'as choppé ' . $this->opponent->getNom().'.');
 				$res->setSuccess(ActionResult::SUCCESS);
+			}
+			$itemCondom = Item::loadByName('condom');
+			if (Item::isAssociated($this->player->getId(), $itemCondom->getId())) {
+				Item::desassociate($this->player->getId(), $itemCondom->getId());
+			} else {
+				$res->setMessage($res->getMessage().' Plus de capotte, tu t\'es récuppéré un MST.');
+				$itemCrabe = Item::loadByName('crabe');
+				Item::associateItem($this->player, $itemCrabe);
 			}
 		} else {
 			$this->player->addFatigue(1);
@@ -108,27 +116,23 @@ class Chopper extends AbstractAction {
 		ob_start();
 		$num = 0;
 		?>
-<div id="<?= $htmlId ?>_tooltip" class="playerTooltip">
-	<table id="player_<?= $this->opponent->getId().'_'.$num ?>_tooltip">
+<div id="<?= $htmlId ?>_tooltip" class="hiddenTooltip">
+	<table class="inventory playerTooltip">
 		<tr class="odd">
 			<th>Chopper</th>
 			<td>
-				<img src="images/emotes/face-smile.png" title="Succès" width="32" height="32">
-				<br />Succès
+				<img src="images/emotes/face-smile.png" title="Succès" alt="Succès">
 			</td>
 			<td>
-				<img src="images/emotes/face-plain.png" title="bof" width="32" height="32">
-				<br />bof
+				<img src="images/emotes/face-plain.png" title="bof" alt="bof">
 			</td>
 			<td>
-				<img src="images/emotes/face-sad.png" title="Echec" width="32" height="32">
-				<br />Echec
+				<img src="images/emotes/face-sad.png" title="Echec" alt="Echec">
 			</td>
 		</tr>
 		<tr class="even">
 			<th>
-				<img src="images/badges/etoile doree belge.jpg" title="Rêves vendus" width="32" height="32">
-				<br />Rêves vendus
+				<img src="images/util/reves.png" title="Rêves vendus" alt="Rêves vendus">
 			</th>
 			<td><?= plus(5, 1)?></td>
 			<td><?= plus(2, 1)?></td>
@@ -136,8 +140,7 @@ class Chopper extends AbstractAction {
 		</tr>
 		<tr class="odd">
 			<th>
-				<img src="images/emotes/face-raspberry.png" title="Crédibidulité" width="32" height="32">
-				<br />Crédibidulité
+				<img src="images/util/notoriété.png" title="Crédibidulité" alt="Crédibidulité">
 			</th>
 			<td><?= plus(2, 1)?></td>
 			<td><?= plus(-1, 1)?></td>
@@ -145,8 +148,7 @@ class Chopper extends AbstractAction {
 		</tr>
 		<tr class="even">
 			<th>
-				<img src="images/emotes/face-uncertain.png" title="Fatigue" width="32" height="32">
-				<br />Fatigue
+				<img src="images/util/sleep.png" title="Fatigue" alt="Fatigue">
 			</th>
 			<td><?= plus(2, 0)?></td>
 			<td><?= plus(2, 0)?></td>
@@ -154,12 +156,14 @@ class Chopper extends AbstractAction {
 		</tr>
 		<tr class="odd">
 			<th>
-				<img src="images/util/time.png" alt="¼ d'heure" width="32" height="32">
-				<br />¼ H
+				<img src="images/util/time.png" title="¼ d'heure" alt="¼ d'heure">
 			</th>
 			<td><?= plus(-4, 1)?></td>
 			<td><?= plus(-4, 1)?></td>
 			<td><?= plus(-1, 1)?></td>
+		</tr>
+		<tr class="even">
+			<td colspan="4">Pense aux capotes ;-)</td>
 		</tr>
 	</table>
 </div>

@@ -9,7 +9,7 @@ class Player extends AbstractDbObject {
 
 	const PNJ_ORGA = 2;
 
-	public $id = 0;
+	protected $id = 0;
 
 	public function getId() {
 		return $this->id;
@@ -19,7 +19,7 @@ class Player extends AbstractDbObject {
 		$this->id = $id;
 	}
 
-	public $nom = '';
+	protected $nom = '';
 
 	public function getNom() {
 		return $this->nom;
@@ -29,7 +29,7 @@ class Player extends AbstractDbObject {
 		$this->nom = $nom;
 	}
 
-	public $pass = '';
+	protected $pass = '';
 
 	public function getPass() {
 		return $this->pass;
@@ -39,7 +39,7 @@ class Player extends AbstractDbObject {
 		$this->pass = $pass;
 	}
 
-	public $lieu = '';
+	protected $lieu = '';
 
 	public function getLieu() {
 		return $this->lieu;
@@ -50,7 +50,7 @@ class Player extends AbstractDbObject {
 		$this->lieu = $lieu;
 	}
 
-	public $points = 0;
+	protected $points = 0;
 
 	public function getPoints() {
 		return $this->points;
@@ -68,7 +68,7 @@ class Player extends AbstractDbObject {
 		$this->setPoints($this->getPoints() + $points);
 	}
 
-	public $notoriete = 0;
+	protected $notoriete = 0;
 
 	public function getCalculatedNotoriete() {
 		return $this->calculated['notoriete'];
@@ -90,7 +90,7 @@ class Player extends AbstractDbObject {
 		$this->setNotoriete($this->getNotoriete() + $notoriete);
 	}
 
-	public $alcoolemie = 0;
+	protected $alcoolemie = 0;
 
 	public function getCalculatedAlcoolemie() {
 		return $this->calculated['alcoolemie'];
@@ -115,7 +115,7 @@ class Player extends AbstractDbObject {
 		$this->setAlcoolemie($this->getAlcoolemie() + $alcoolemie);
 	}
 
-	public $alcoolemie_optimum = 0;
+	protected $alcoolemie_optimum = 0;
 
 	public function getCalculatedAlcoolemie_optimum() {
 		return $this->calculated['alcoolemie_optimum'];
@@ -139,7 +139,7 @@ class Player extends AbstractDbObject {
 		$this->setAlcoolemie_optimum($this->getAlcoolemie_optimum() + $alcoolemie_optimum);
 	}
 
-	public $alcoolemie_max = 0;
+	protected $alcoolemie_max = 0;
 
 	public function getCalculatedAlcoolemie_max() {
 		return $this->calculated['alcoolemie_max'];
@@ -162,7 +162,7 @@ class Player extends AbstractDbObject {
 		$this->setAlcoolemie_max($this->getAlcoolemie_max() + $alcoolemie_max);
 	}
 
-	public $fatigue = 0;
+	protected $fatigue = 0;
 
 	public function getCalculatedFatigue() {
 		return $this->calculated['fatigue'];
@@ -175,7 +175,7 @@ class Player extends AbstractDbObject {
 	public function setFatigue($fatigue) {
 		if ($fatigue < 0) {
 			$fatigue = 0;
-		} else if ($fatigue >= $this->calculated['fatigue_max']) {
+		} else if (isset($this->calculated['fatigue_max']) && ($fatigue >= $this->calculated['fatigue_max'])) {
 			$fatigue = $this->calculated['fatigue_max'];
 		}
 		$this->getHistory()->setFatigue($fatigue - $this->fatigue);
@@ -186,7 +186,7 @@ class Player extends AbstractDbObject {
 		$this->setFatigue($this->getFatigue() + $fatigue);
 	}
 
-	public $fatigue_max = 0;
+	protected $fatigue_max = 0;
 
 	public function getCalculatedFatigue_max() {
 		return $this->calculated['fatigue_max'];
@@ -208,7 +208,7 @@ class Player extends AbstractDbObject {
 		$this->setFatigue_max($this->getFatigue_max() + $fatigue_max);
 	}
 
-	public $sex_appeal = 0;
+	protected $sex_appeal = 0;
 
 	public function getCalculatedSex_appeal() {
 		return $this->calculated['sex_appeal'];
@@ -230,7 +230,7 @@ class Player extends AbstractDbObject {
 		$this->setSex_appeal($this->getSex_appeal() + $sex_appeal);
 	}
 
-	public $en_pls = 0;
+	protected $en_pls = 0;
 
 	public function getEn_pls() {
 		return $this->en_pls;
@@ -245,7 +245,7 @@ class Player extends AbstractDbObject {
 		$this->getHistory()->setEn_pls($this->en_pls);
 	}
 
-	public $debut_de_pls = 0;
+	protected $debut_de_pls = 0;
 
 	public function getDebut_de_pls() {
 		return $this->debut_de_pls;
@@ -261,7 +261,7 @@ class Player extends AbstractDbObject {
 	 *
 	 * @var int
 	 */
-	public $sex = 0;
+	protected $sex = 0;
 
 	public function getSex() {
 		return $this->sex;
@@ -276,7 +276,7 @@ class Player extends AbstractDbObject {
 		}
 	}
 
-	public $photo = '';
+	protected $photo = '';
 
 	public function getPhoto() {
 		return $this->photo;
@@ -290,7 +290,7 @@ class Player extends AbstractDbObject {
 	 *
 	 * @var int
 	 */
-	public $pnj = 0;
+	protected $pnj = 0;
 
 	public function getPnj() {
 		return $this->pnj;
@@ -304,7 +304,7 @@ class Player extends AbstractDbObject {
 	 *
 	 * @var int
 	 */
-	public $id_congress = NULL;
+	protected $id_congress = NULL;
 
 	public function getId_congress() {
 		return $this->id_congress;
@@ -328,7 +328,7 @@ class Player extends AbstractDbObject {
 	 *
 	 * @var Congress
 	 */
-	public $congress = null;
+	protected $congress = null;
 
 	/**
 	 *
@@ -348,7 +348,7 @@ class Player extends AbstractDbObject {
 		$this->id_congress = $congress->getId();
 	}
 
-	public $remaining_time = 0;
+	protected $remaining_time = 0;
 
 	public function getRemaining_time() {
 		return $this->remaining_time;
@@ -366,7 +366,7 @@ class Player extends AbstractDbObject {
 		$this->setRemaining_time($this->getRemaining_time() + $remaining_time);
 	}
 
-	public $money = 0;
+	protected $money = 0;
 
 	public function getMoney() {
 		return $this->money;
@@ -384,8 +384,12 @@ class Player extends AbstractDbObject {
 		$this->setMoney($this->getMoney() + $money);
 	}
 
-	public $inventory = array();
+	protected $inventory = array();
 
+	/**
+	 * 
+	 * @return array<Item>
+	 */
 	public function getInventory() {
 		return $this->inventory;
 	}
@@ -440,8 +444,18 @@ class Player extends AbstractDbObject {
 	 */
 	public static function load($id) {
 		$sth = $GLOBALS['DB']->query('SELECT * FROM ' . self::TABLE_NAME . ' WHERE id=' . intval($id));
-		$sth->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
-		return $sth->fetch();
+		$sth->setFetchMode(PDO::FETCH_ASSOC);
+		$arr = $sth->fetch();
+		if (!$arr) {
+			return $arr;
+		} else {
+			$obj = new self();
+			if ($arr['pnj'] > 0) {
+				$obj = new Bot();
+			}
+			$obj->populate($arr);
+			return $obj;
+		}
 	}
 
 	public function save() {
@@ -540,10 +554,20 @@ class Player extends AbstractDbObject {
 		$sth = $GLOBALS['DB']->prepare('SELECT * FROM ' . self::TABLE_NAME . ' WHERE nom=:nom AND pass=:pass;');
 		$sth->bindValue(':nom', $login, PDO::PARAM_STR);
 		$sth->bindValue(':pass', $pass, PDO::PARAM_STR);
-		$sth->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
 		if ($sth->execute() === false) {
 			// var_dump($sth->errorInfo());
 			return null;
+		}
+		$arr = $sth->fetch();
+		if (!$arr) {
+			return $arr;
+		} else {
+			$obj = new self();
+			if ($arr['pnj'] > 0) {
+				$obj = new Bot();
+			}
+			$obj->populate($arr);
+			return $obj;
 		}
 		return $sth->fetch();
 	}
@@ -556,10 +580,21 @@ class Player extends AbstractDbObject {
 	public static function loginExists($nom) {
 		$sth = $GLOBALS['DB']->prepare('SELECT * FROM ' . self::TABLE_NAME . ' WHERE nom=:nom');
 		$sth->bindValue(':nom', $nom, PDO::PARAM_STR);
-		$sth->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
+		$sth->setFetchMode(PDO::FETCH_ASSOC);
 		if ($sth->execute() === false) {
 			// var_dump($sth->errorInfo());
 			return false;
+		}
+		$arr = $sth->fetch();
+		if (!$arr) {
+			return $arr;
+		} else {
+			$obj = new self();
+			if ($arr['pnj'] > 0) {
+				$obj = new Bot();
+			}
+			$obj->populate($arr);
+			return $obj;
 		}
 		return $sth->fetch();
 	}
@@ -575,17 +610,19 @@ class Player extends AbstractDbObject {
 		$this->inventory = array();
 		
 		$sth = $GLOBALS['DB']->query('SELECT O.* FROM item O INNER JOIN inventory I ON I.id_item = O.id WHERE I.id_player = ' . $this->id . ' ORDER BY O.id;');
-		$sth->setFetchMode(PDO::FETCH_CLASS, 'Item');
-		while ($sth && ($item = $sth->fetch())) {
+		$sth->setFetchMode(PDO::FETCH_ASSOC);
+		while ($sth && ($arr = $sth->fetch())) {
+			$item = new Item();
+			$item->populate($arr);
 			$this->inventory[] = $item;
-			if ($item->permanent) {
-				$this->calculated['notoriete'] += $item->notoriete;
-				$this->calculated['alcoolemie'] += $item->alcoolemie;
-				$this->calculated['alcoolemie_optimum'] += $item->alcoolemie_optimum;
-				$this->calculated['alcoolemie_max'] += $item->alcoolemie_max;
-				$this->calculated['fatigue'] += $item->fatigue;
-				$this->calculated['fatigue_max'] += $item->fatigue_max;
-				$this->calculated['sex_appeal'] += $item->sex_appeal;
+			if ($item->getPermanent()) {
+				$this->calculated['notoriete'] += $item->getNotoriete();
+				$this->calculated['alcoolemie'] += $item->getAlcoolemie();
+				$this->calculated['alcoolemie_optimum'] += $item->getAlcoolemie_optimum();
+				$this->calculated['alcoolemie_max'] += $item->getAlcoolemie_max();
+				$this->calculated['fatigue'] += $item->getFatigue();
+				$this->calculated['fatigue_max'] += $item->getFatigue_max();
+				$this->calculated['sex_appeal'] += $item->getSex_appeal();
 			}
 		}
 		return $this;

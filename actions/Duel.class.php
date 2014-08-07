@@ -57,14 +57,14 @@ class Duel extends AbstractAction {
 			// $this->opponent->notoriete -= 1;
 			$this->player->addNotoriete(2);
 			$this->player->addPoints(5);
-			$res->setMessage('Duel: ' . $this->player->nom . ' a gagné après s\'être affligé ' . $sec . ' secs.');
+			$res->setMessage('Duel: ' . $this->player->getNom() . ' a gagné après s\'être affligé ' . $sec . ' secs.');
 			$res->setSuccess(ActionResult::SUCCESS);
 		} else if ($secUser < $secOpponent) {
 			$sec = $secUser + 1;
 			$this->opponent->addNotoriete(1);
 			$this->opponent->addPoints(5);
 			$this->player->addNotoriete(1);
-			$res->setMessage('Duel: ' . $this->opponent->nom . ' a gagné après s\'être affligé ' . $sec . ' secs.');
+			$res->setMessage('Duel: ' . $this->opponent->getNom() . ' a gagné après s\'être affligé ' . $sec . ' secs.');
 			$res->setSuccess(ActionResult::FAIL);
 		} else { // $secUser == $secOpponent
 			$this->player->addNotoriete(-1);
@@ -96,30 +96,25 @@ class Duel extends AbstractAction {
 		$sec = min($secUser, $secOpponent);
 		ob_start();
 		?>
-<div id="<?= $htmlId ?>_tooltip" style="display: none;">
-	<table id="player_<?= $this->opponent->getId().'_'.$num ?>_tooltip">
+<div id="<?= $htmlId ?>_tooltip" class="hiddenTooltip">
+	<table class="inventory playerTooltip">
 		<tr class="odd">
 			<th>
 				Défier
-				<h5>le nombre mini de verres pour que 1 des 2 finisse en PLS</h5>
 			</th>
 			<td>
-				<img src="images/emotes/face-smile.png" title="Succès" width="32" height="32">
-				<br />Succès
+				<img src="images/emotes/face-smile.png" title="Succès" title="Succès">
 			</td>
 			<td>
-				<img src="images/emotes/face-plain.png" title="bof" width="32" height="32">
-				<br />ex aequo
+				<img src="images/emotes/face-plain.png" title="bof" title="bof">
 			</td>
 			<td>
-				<img src="images/emotes/face-sad.png" title="Echec" width="32" height="32">
-				<br />Echec
+				<img src="images/emotes/face-sad.png" title="Echec" title="Echec">
 			</td>
 		</tr>
 		<tr class="even">
 			<th>
-				<img src="images/badges/etoile doree belge.jpg" title="Rêves vendus" width="32" height="32">
-				<br />Rêves vendus
+				<img src="images/util/reves.png" title="Rêves vendus" alt="Rêves vendus">
 			</th>
 			<td><?= plus(5, 1)?></td>
 			<td><?= plus(5, 1)?></td>
@@ -127,8 +122,7 @@ class Duel extends AbstractAction {
 		</tr>
 		<tr class="odd">
 			<th>
-				<img src="images/emotes/face-raspberry.png" title="Crédibidulité" width="32" height="32">
-				<br />Crédibidulité
+				<img src="images/util/notoriété.png" title="Crédibidulité" alt="Crédibidulité">
 			</th>
 			<td><?= plus(2, 1)?></td>
 			<td><?= plus(1, 1)?></td>
@@ -136,8 +130,7 @@ class Duel extends AbstractAction {
 		</tr>
 		<tr class="even">
 			<th>
-				<img src="images/badges/chope.jpg" title="Verres" width="32" height="32">
-				<br />Verres
+				<img src="images/util/chope rouge.png" title="Verres" alt="Verres">
 			</th>
 			<td><?= plus($sec, 0)?></td>
 			<td><?= plus($sec, 0)?></td>
@@ -145,8 +138,7 @@ class Duel extends AbstractAction {
 		</tr>
 		<tr class="odd">
 			<th>
-				<img src="images/emotes/face-uncertain.png" title="Fatigue" width="32" height="32">
-				<br />Fatigue
+				<img src="images/util/sleep.png" title="Fatigue" alt="Fatigue">
 			</th>
 			<td><?= plus(2, 0)?></td>
 			<td><?= plus(2, 0)?></td>
@@ -154,12 +146,16 @@ class Duel extends AbstractAction {
 		</tr>
 		<tr class="even">
 			<th>
-				<img src="images/util/time.png" alt="¼ d'heure" width="32" height="32">
-				<br />¼ H
+				<img src="images/util/time.png" title="¼ d'heure" alt="¼ d'heure">
 			</th>
 			<td><?= plus(-2, 1)?></td>
 			<td><?= plus(-2, 1)?></td>
 			<td><?= plus(-2, 1)?></td>
+		</tr>
+		<tr class="even">
+			<th colspan="4">
+				Le nombre mini de verres pour que 1 des 2 finisse en PLS
+			</th>
 		</tr>
 	</table>
 </div>

@@ -1,10 +1,15 @@
 <?php
+
+function __autoload($classname) {
+	$filename = "./classes/" . $classname . ".class.php";
+	if (!file_exists($filename)) {
+		$filename = "./actions/" . $classname . ".class.php";
+	}
+	include_once ($filename);
+}
+
 session_start();
 require_once ('db.php');
-require_once ('classes/AbstractDbObject.class.php');
-require_once ('classes/Player.class.php');
-require_once ('classes/History.class.php');
-require_once ('classes/Item.class.php');
 
 $errorMessage = '';
 if (isset($_REQUEST['logout'])) {
@@ -151,7 +156,7 @@ td {
 			</tr>
 		</table>
 	</form>
-	<div style="font-size: 10px; color: silver;" title="tu as perdu au jeu! ;-)">v 1.6</div>
+	<div style="font-size: 10px; color: silver;" title="tu as perdu au jeu! ;-)">v 1.7</div>
 	<a href="https://github.com/yannickbattail/soluche"><img style="position: absolute; top: 0; right: 0; border: 0;" src="images/Fork me on GitHub.png" alt="Fork me on GitHub"></a>
 </body>
 </html>

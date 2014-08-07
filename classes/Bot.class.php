@@ -53,9 +53,11 @@ class Bot extends Player {
 		if ($id_congress) {
 			$sql .= ' AND id_congress = ' . $id_congress;
 		}
-		$stmt = $GLOBALS['DB']->query($sql);
-		$stmt->setFetchMode(PDO::FETCH_CLASS, 'Bot');
-		while ($stmt && ($bot = $stmt->fetch())) {
+		$sth = $GLOBALS['DB']->query($sql);
+		$sth->setFetchMode(PDO::FETCH_ASSOC);
+		while ($sth && ($arr = $sth->fetch())) {
+			$bot = new self();
+			$bot->populate($arr);
 			$bot->defaultValues($factor);
 			$bot->save();
 		}

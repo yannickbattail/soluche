@@ -17,12 +17,11 @@ class UseItem extends AbstractAction {
 		parent::__construct($player);
 		// configuration
 		$this->paramName = self::PARAM_NAME;
-		$this->actionRight = null;
+		$this->actionRight = AbstractAction::EXCEPT_TIRED;
 		$this->linkText = 'Utiliser';
 	}
 
 	/**
-	 * (non-PHPdoc)
 	 *
 	 * @see ActionInterface::setParams()
 	 * @param array $params        	
@@ -49,7 +48,7 @@ class UseItem extends AbstractAction {
 	 */
 	public function execute() {
 		$res = new ActionResult();
-		if ($this->item->permanent) {
+		if ($this->item->getPermanent()) {
 			$res->setSuccess(ActionResult::IMPOSSIBLE);
 			$res->setMessage('Cet item est permanent et ne peut etre utilisé.');
 			return $res;
@@ -63,9 +62,9 @@ class UseItem extends AbstractAction {
 		$this->player->addFatigue_max($this->item->getFatigue_max());
 		$this->player->addSex_appeal($this->item->getSex_appeal());
 		$this->player->addRemaining_time($this->item->getRemaining_time());
-		Item::desassociate($this->player->getId(), $this->item->id);
+		Item::desassociate($this->player->getId(), $this->item->getId());
 		$res->setSuccess(ActionResult::SUCCESS);
-		$res->setMessage('Item ' . $this->item->nom . ' utilisé.');
+		$res->setMessage('Item ' . $this->item->getNom() . ' utilisé.');
 		return $res;
 	}
 
@@ -77,26 +76,23 @@ class UseItem extends AbstractAction {
 		$htmlId = get_class($this) . '_' . $this->item->getId();
 		ob_start();
 		?>
-<div id="<?= $htmlId ?>_tooltip" style="display: none;">
-	<table id="player_<?= $this->item->getId().'_'.$num ?>_tooltip">
+<div id="<?= $htmlId ?>_tooltip" class="hiddenTooltip">
+	<table class="inventory playerTooltip">
 		<tr class="odd">
 			<th>Utiliser</th>
 			<td>
-				<img src="images/emotes/face-smile.png" title="Succès" width="32" height="32">
-				<br />Succès
+				<img src="images/emotes/face-smile.png" title="Succès" alt="Succès">
 			</td>
 		</tr>
 		<tr class="even">
 			<th>
-				<img src="images/badges/etoile doree belge.jpg" title="Rêves vendus" width="32" height="32">
-				<br />Rêves vendus
+				<img src="images/util/reves.png" title="Rêves vendus" alt="Rêves vendus">
 			</th>
 			<td><?= plus(5, 1)?></td>
 		</tr>
 		<tr class="odd">
 			<th>
-				<img src="images/util/time.png" alt="¼ d'heure" width="32" height="32">
-				<br />¼ H
+				<img src="images/util/time.png" title="¼ d'heure" alt="¼ d'heure">
 			</th>
 			<td><?= plus(-1, 1)?></td>
 		</tr>

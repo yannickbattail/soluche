@@ -33,7 +33,7 @@ class Sleep extends AbstractAction {
 		if ($this->player->getFatigue() >= 2) {
 			$this->player->addRemaining_time(-2);
 			$this->player->addFatigue(-5);
-			$res->setMessage('Haa un bon dodo! Je fais pas une PLS je médite allongé.');
+			$res->setMessage('Haa un bon dodo! Je fais pas une PLS d\'abord! Je médite allongé.');
 			$res->setSuccess(ActionResult::SUCCESS);
 		} else {
 			$res->setMessage('ON EST PAS FATIGUE! On est pas fatigué!');
@@ -50,29 +50,26 @@ class Sleep extends AbstractAction {
 		$htmlId = get_class($this).'_0';
 		ob_start();
 		?>
-<div id="<?= $htmlId ?>_tooltip" style="display: none;">
-	<table class="inventory">
+<div id="<?= $htmlId ?>_tooltip" class="hiddenTooltip">
+	<table class="inventory playerTooltip">
 		<tr class="odd">
 			<th>
-				<img src="images/sleep.png" class="inventoryImage" title="Dodo" />
+				<img src="images/util/tent-sleep-icon.png" title="Dodo" alt="Dodo" />
 				<br />Dodo
 			</th>
 			<td>
-				<img src="images/emotes/face-smile.png" title="Succès" width="32" height="32">
-				<br />Succès
+				<img src="images/emotes/face-smile.png" title="Succès" alt="Succès">
 			</td>
 		</tr>
 		<tr class="odd">
 			<th>
-				<img src="images/emotes/face-uncertain.png" title="Fatigue" width="32" height="32">
-				<br />Fatigue
+				<img src="images/util/sleep.png" title="Fatigue" alt="Fatigue">
 			</th>
 			<td><?= plus(-5, 0); ?></td>
 		</tr>
 		<tr class="even">
 			<th>
-				<img src="images/util/time.png" alt="¼ d'heure" width="32" height="32">
-				<br />¼ H
+				<img src="images/util/time.png" title="¼ d'heure" alt="¼ d'heure">
 			</th>
 			<td><?= plus(-2, 1)?></td>
 		</tr>

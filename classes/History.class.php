@@ -3,7 +3,7 @@ class History extends AbstractDbObject {
 
 	const TABLE_NAME = 'history';
 
-	public $id = 0;
+	protected $id = 0;
 
 	public function getId() {
 		return $this->id;
@@ -17,7 +17,7 @@ class History extends AbstractDbObject {
 	 *
 	 * @var int
 	 */
-	public $id_player = NULL;
+	protected $id_player = NULL;
 
 	public function getId_player() {
 		return $this->id_player;
@@ -31,7 +31,7 @@ class History extends AbstractDbObject {
 	 *
 	 * @var int
 	 */
-	public $id_congress = NULL;
+	protected $id_congress = NULL;
 
 	public function getId_congress() {
 		return $this->id_congress;
@@ -41,7 +41,7 @@ class History extends AbstractDbObject {
 		$this->id_congress = $id_congress;
 	}
 
-	public $action_name = '';
+	protected $action_name = '';
 
 	public function getAction_name() {
 		return $this->action_name;
@@ -51,7 +51,7 @@ class History extends AbstractDbObject {
 		$this->action_name = $action_name;
 	}
 
-	public $lieu = '';
+	protected $lieu = '';
 
 	public function getLieu() {
 		return $this->lieu;
@@ -61,7 +61,7 @@ class History extends AbstractDbObject {
 		$this->lieu = $lieu;
 	}
 
-	public $points = 0;
+	protected $points = 0;
 
 	public function getPoints() {
 		return $this->points;
@@ -71,7 +71,7 @@ class History extends AbstractDbObject {
 		$this->points = $points;
 	}
 
-	public $notoriete = 0;
+	protected $notoriete = 0;
 
 	public function getNotoriete() {
 		return $this->notoriete;
@@ -81,7 +81,7 @@ class History extends AbstractDbObject {
 		$this->notoriete = $notoriete;
 	}
 
-	public $alcoolemie = 0;
+	protected $alcoolemie = 0;
 
 	public function getAlcoolemie() {
 		return $this->alcoolemie;
@@ -91,7 +91,7 @@ class History extends AbstractDbObject {
 		$this->alcoolemie = $alcoolemie;
 	}
 
-	public $alcoolemie_optimum = 0;
+	protected $alcoolemie_optimum = 0;
 
 	public function getAlcoolemie_optimum() {
 		return $this->alcoolemie_optimum;
@@ -101,7 +101,7 @@ class History extends AbstractDbObject {
 		$this->alcoolemie_optimum = $alcoolemie_optimum;
 	}
 
-	public $alcoolemie_max = 0;
+	protected $alcoolemie_max = 0;
 
 	public function getAlcoolemie_max() {
 		return $this->alcoolemie_max;
@@ -111,7 +111,7 @@ class History extends AbstractDbObject {
 		$this->alcoolemie_max = $alcoolemie_max;
 	}
 
-	public $fatigue = 0;
+	protected $fatigue = 0;
 
 	public function getFatigue() {
 		return $this->fatigue;
@@ -121,7 +121,7 @@ class History extends AbstractDbObject {
 		$this->fatigue = $fatigue;
 	}
 
-	public $fatigue_max = 0;
+	protected $fatigue_max = 0;
 
 	public function getFatigue_max() {
 		return $this->fatigue_max;
@@ -131,7 +131,7 @@ class History extends AbstractDbObject {
 		$this->fatigue_max = $fatigue_max;
 	}
 
-	public $sex_appeal = 0;
+	protected $sex_appeal = 0;
 
 	public function getSex_appeal() {
 		return $this->sex_appeal;
@@ -141,7 +141,7 @@ class History extends AbstractDbObject {
 		$this->sex_appeal = $sex_appeal;
 	}
 
-	public $en_pls = 0;
+	protected $en_pls = 0;
 
 	public function getEn_pls() {
 		return $this->en_pls;
@@ -155,7 +155,7 @@ class History extends AbstractDbObject {
 		}
 	}
 
-	public $debut_de_pls = 0;
+	protected $debut_de_pls = 0;
 
 	public function getDebut_de_pls() {
 		return $this->debut_de_pls;
@@ -170,7 +170,7 @@ class History extends AbstractDbObject {
 	 *
 	 * @var int
 	 */
-	public $sex = 0;
+	protected $sex = 0;
 
 	public function getSex() {
 		return $this->sex;
@@ -185,7 +185,7 @@ class History extends AbstractDbObject {
 		}
 	}
 
-	public $remaining_time = 0;
+	protected $remaining_time = 0;
 
 	public function getRemaining_time() {
 		return $this->remaining_time;
@@ -195,7 +195,7 @@ class History extends AbstractDbObject {
 		$this->remaining_time = $remaining_time;
 	}
 
-	public $money = 0;
+	protected $money = 0;
 
 	public function getMoney() {
 		return $this->money;
@@ -209,7 +209,7 @@ class History extends AbstractDbObject {
 	 *
 	 * @var int
 	 */
-	public $date_action = 0;
+	protected $date_action = 0;
 
 	public function getDate_action() {
 		return $this->date_action;
@@ -223,7 +223,7 @@ class History extends AbstractDbObject {
 	 *
 	 * @var int
 	 */
-	public $success = 0;
+	protected $success = 0;
 
 	public function getSuccess() {
 		return $this->success;
@@ -237,7 +237,7 @@ class History extends AbstractDbObject {
 	 *
 	 * @var int
 	 */
-	public $message = 0;
+	protected $message = 0;
 
 	public function getMessage() {
 		return $this->message;
@@ -251,7 +251,7 @@ class History extends AbstractDbObject {
 	 *
 	 * @var int
 	 */
-	public $id_opponent = NULL;
+	protected $id_opponent = NULL;
 
 	public function getId_opponent() {
 		return $this->id_opponent;
@@ -265,7 +265,7 @@ class History extends AbstractDbObject {
 	 *
 	 * @var int
 	 */
-	public $id_item = NULL;
+	protected $id_item = NULL;
 
 	public function getId_item() {
 		return $this->id_item;
@@ -277,13 +277,25 @@ class History extends AbstractDbObject {
 
 	/**
 	 *
-	 * @param int $id        	
-	 * @return Player
+	 * @param String $id        	
+	 * @return History
 	 */
 	public static function load($id) {
-		$sth = $GLOBALS['DB']->query('SELECT * FROM ' . self::TABLE_NAME . ' WHERE id=' . intval($id));
-		$sth->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
-		return $sth->fetch();
+		$sth = $GLOBALS['DB']->prepare('SELECT * FROM ' . self::TABLE_NAME . ' WHERE id = :id;');
+		$sth->bindValue(':id', $id, PDO::PARAM_STR);
+		$sth->setFetchMode(PDO::FETCH_ASSOC);
+		if ($sth->execute() === false) {
+			// var_dump($sth->errorInfo());
+			return false;
+		}
+		$arr = $sth->fetch();
+		if (!$arr) {
+			return $arr;
+		} else {
+			$obj = new self();
+			$obj->populate($arr);
+			return $obj;
+		}
 	}
 
 	public function save() {

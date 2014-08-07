@@ -69,10 +69,12 @@ if (isset($_POST['savePlayer'])) {
 			<th>Participer</th>
 		</tr>
 	<?php
-	$stmt = $GLOBALS['DB']->query('SELECT * FROM congress ;');
-	$stmt->setFetchMode(PDO::FETCH_CLASS, 'Congress');
 	$n = 0;
-	while ($stmt && ($congress = $stmt->fetch())) {
+	$sth = $GLOBALS['DB']->query('SELECT * FROM congress ;');
+	$sth->setFetchMode(PDO::FETCH_ASSOC);
+	while ($sth && ($arr = $sth->fetch())) {
+		$congress = new Congress();
+		$congress->populate($arr);
 		$odd = ($n++ % 2) ? 'odd' : 'even';
 		?>
         <tr class="<?= $odd ?>">
@@ -118,10 +120,12 @@ if (isset($_POST['savePlayer'])) {
 			<th>save</th>
 		</tr>
 <?php
-$stmt = $GLOBALS['DB']->query('SELECT * FROM player ;');
-$stmt->setFetchMode(PDO::FETCH_CLASS, 'Player');
 $num = 0;
-while ($stmt && ($player = $stmt->fetch())) {
+$sth = $GLOBALS['DB']->query('SELECT * FROM player ;');
+$sth->setFetchMode(PDO::FETCH_ASSOC);
+while ($sth && ($arr = $sth->fetch())) {
+	$player = new Player();
+	$player->populate($arr);
 	$odd = ($n++ % 2) ? 'odd' : 'even';
 	?>
 		<form action="" method="post">

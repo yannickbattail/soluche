@@ -42,8 +42,13 @@ class Sing extends AbstractAction {
 				$res->setMessage('Trop bourré! tu chantes comme une casserole!');
 				$res->setSuccess(ActionResult::FAIL);
 			} else {
+				$notoriete = 1;
+				$itemCondom = Item::loadByName('cle de sol');
+				if (Item::isAssociated($this->player->getId(), $itemCondom->getId())) {
+					$notoriete = 2;
+				}
 				$this->player->addPoints(1);
-				$this->player->addNotoriete(1);
+				$this->player->addNotoriete($notoriete);
 				$this->player->addAlcoolemie(1);
 				$this->player->addFatigue(1);
 				$this->player->addRemaining_time(-1);
@@ -65,58 +70,51 @@ class Sing extends AbstractAction {
 		$htmlId = get_class($this);
 		ob_start();
 		?>
-<div id="<?= $htmlId ?>_tooltip" style="display: none;">
-	<table class="inventory">
+
+<div id="<?= $htmlId ?>_tooltip" class="hiddenTooltip">
+	<table class="inventory playerTooltip">
 		<tr class="even">
 			<th>
-				<img src="images/items/pins.png" class="inventoryImage" title="pin's" />
-				<br />Pinser
+				<img src="images/items/pins.png" class="inventoryImage" title="Pinser" alt="Pinser" />
 			</th>
 			<td>
-				<img src="images/emotes/face-smile.png" title="Succès" width="32" height="32">
-				<br />Succès
+				<img src="images/emotes/face-smile.png" title="Succès" title="Succès">
 			</td>
 			<td>
-				<img src="images/emotes/face-sad.png" title="Echec" width="32" height="32">
-				<br />Echec
+				<img src="images/emotes/face-sad.png" title="Echec" title="Echec">
 			</td>
 		</tr>
 		<tr class="odd">
 			<th>
-				<img src="images/badges/etoile doree belge.jpg" title="Rêves vendus" width="32" height="32">
-				<br />Rêves vendus
+				<img src="images/util/reves.png" title="Rêves vendus" alt="Rêves vendus">
 			</th>
 			<td><?= plus(1, 1); ?></td>
 			<td><?= plus(0, 1); ?></td>
 		</tr>
 		<tr class="even">
 			<th>
-				<img src="images/emotes/face-raspberry.png" title="Crédibidulité" width="32" height="32">
-				<br />Crédibidulité
+				<img src="images/util/notoriété.png" title="Crédibidulité" alt="Crédibidulité">
 			</th>
-			<td><?= plus(1, 1); ?></td>
+			<td><?= plus(1, 1); ?> si cle de sol<?= plus(2, 1); ?></td>
 			<td><?= plus(-1, 1); ?></td>
 		</tr>
 		<tr class="odd">
 			<th>
-				<img src="images/badges/chope.jpg" title="Verres" width="32" height="32">
-				<br />Verres
+				<img src="images/util/chope rouge.png" title="Verres" alt="Verres">
 			</th>
 			<td><?= plus(1, 0)?></td>
 			<td><?= plus(1, 0)?></td>
 		</tr>
 		<tr class="even">
 			<th>
-				<img src="images/emotes/face-uncertain.png" title="Fatigue" width="32" height="32">
-				<br />Fatigue
+				<img src="images/util/sleep.png" title="Fatigue" alt="Fatigue">
 			</th>
 			<td><?= plus(1, 0); ?></td>
 			<td><?= plus(1, 0); ?></td>
 		</tr>
 		<tr class="odd">
 			<th>
-				<img src="images/util/time.png" alt="¼ d'heure" width="32" height="32">
-				<br />¼ H
+				<img src="images/util/time.png" title="¼ d'heure" alt="¼ d'heure">
 			</th>
 			<td><?= plus(-1, 1)?></td>
 			<td><?= plus(-1, 1)?></td>

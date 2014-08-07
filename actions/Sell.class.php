@@ -18,7 +18,7 @@ class Sell extends AbstractAction {
 		// configuration
 		$this->paramName = self::PARAM_NAME;
 		$this->actionRight = null;
-		$this->linkText = 's\'en débarrasser';
+		$this->linkText = 'Refiler';
 	}
 
 	/**
@@ -48,10 +48,15 @@ class Sell extends AbstractAction {
 	public function execute() {
 		$res = new ActionResult();
 		$price = floor(-$this->item->getPrice() * 80 / 100);
+		if ($this->player->getMoney() < -$price) {
+			$res->setSuccess(ActionResult::NOTHING);
+			$res->setMessage('Pas assez de dignichose pour ça.');
+			return $res;
+		}
 		$this->player->addMoney($price);
 		Item::desassociate($this->player->getId(), $this->item->getId());
 		$res->setSuccess(ActionResult::NOTHING);
-		$res->setMessage('Item ' . $this->item->nom . ' refilé pour ' . $price . '.');
+		$res->setMessage('Item ' . $this->item->getNom() . ' refilé pour ' . $price . ' Dignichose.');
 		return $res;
 	}
 
@@ -63,26 +68,23 @@ class Sell extends AbstractAction {
 		$htmlId = get_class($this) . '_' . $this->item->getId();
 		ob_start();
 		?>
-<div id="<?= $htmlId ?>_tooltip" style="display: none;">
-	<table id="player_<?= $this->item->getId().'_'.$num ?>_tooltip">
+<div id="<?= $htmlId ?>_tooltip" class="hiddenTooltip">
+	<table class="inventory playerTooltip">
 		<tr class="odd">
-			<th>Utiliser</th>
+			<th>Refiler</th>
 			<td>
-				<img src="images/emotes/face-smile.png" title="Succès" width="32" height="32">
-				<br />Succès
+				<img src="images/emotes/face-smile.png" title="Succès" alt="Succès" />
 			</td>
 		</tr>
 		<tr class="even">
 			<th>
-				<img src="images/items/pin-s-exigeons-la-dignité.png" alt="Dignichose" width="32" height="32">
-				<br />Dignichose
+				<img src="images/util/Dignichose.png" title="Dignichose (la monnaie)" alt="Dignichose">
 			</th>
 			<td><?= plus(floor(-$this->item->getPrice()*80/100), 1)?> -20% (<?= plus(-$this->item->getPrice(), 1)?>)</td>
 		</tr>
 		<tr class="odd">
 			<th>
-				<img src="images/util/time.png" alt="¼ d'heure" width="32" height="32">
-				<br />¼ H
+				<img src="images/util/time.png" title="¼ d'heure" alt="¼ d'heure">
 			</th>
 			<td><?= plus(0, 1)?></td>
 		</tr>

@@ -13,15 +13,15 @@ class Pls {
 	 */
 	public static function endPLS(Player $player) {
 		$res = new ActionResult();
-		if (!$player->en_pls) {
+		if (!$player->getEn_pls()) {
 			$res->setMessage('vous êtes déjà plus en PLS.');
 			$res->setSuccess(ActionResult::IMPOSSIBLE);
 			return $res;
 		}
 		if (self::isPlsFinished($player) === true) {
-			$recup = floor((time() - $player->debut_de_pls) / 60);
-			if (($player->alcoolemie - $recup) < 0) {
-				$recup = $player->alcoolemie;
+			$recup = floor((time() - $player->getDebut_de_pls()) / 60);
+			if (($player->getAlcoolemie() - $recup) < 0) {
+				$recup = $player->getAlcoolemie();
 			}
 			$player->addNotoriete(-1);
 			$player->addAlcoolemie(-1 * $recup);
@@ -45,7 +45,7 @@ class Pls {
 	 * @return boolean
 	 */
 	public static function haveToGoToPls(Player $player) {
-		if ($player->en_pls == 1) {
+		if ($player->getEn_pls() == 1) {
 			return false;
 		}
 		if ($player->getCalculatedAlcoolemie() > $player->getCalculatedAlcoolemie_max()) {
@@ -61,7 +61,7 @@ class Pls {
 	 * @return boolean
 	 */
 	public static function redirectPLS(Player $player) {
-		if ($player->en_pls == 1) {
+		if ($player->getEn_pls() == 1) {
 			Dispatcher::setPage('pls');
 			return true;
 		}
@@ -74,8 +74,8 @@ class Pls {
 	 */
 	public static function startToPls(Player $player) {
 		$res = new ActionResult();
-		$player->en_pls = true;
-		$player->debut_de_pls = time();
+		$player->setEn_pls(true);
+		$player->setDebut_de_pls(time());
 		$res->setMessage('En PLS!');
 		$res->setSuccess(ActionResult::SUCCESS);
 		return $res;
@@ -87,9 +87,9 @@ class Pls {
 	 * @return boolean number
 	 */
 	public static function isPlsFinished(Player $player) {
-		if (time() - $player->debut_de_pls > 60) {
+		if (time() - $player->getDebut_de_pls() > 60) {
 			return true;
 		}
-		return 60 - (time() - $player->debut_de_pls);
+		return 60 - (time() - $player->getDebut_de_pls());
 	}
 }

@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL | E_STRICT | E_NOTICE);
+ini_set('error_reporting', E_ALL | E_STRICT | E_NOTICE);
+ini_set('display_errors', 1);
 
 function __autoload($classname) {
 	$filename = "./classes/" . $classname . ".class.php";
@@ -18,9 +21,9 @@ if (!isset($_SESSION['prevent_reexecute'])) {
 	$_SESSION['prevent_reexecute'] = md5('' . time());
 }
 
-$_SESSION['user'] = Player::load($_SESSION['user']->id);
+$_SESSION['user'] = Player::load($_SESSION['user']->getId());
 $_SESSION['user']->loadInventory();
-Dispatcher::setPage($_SESSION['user']->lieu);
+Dispatcher::setPage($_SESSION['user']->getLieu());
 
 if (isset($_REQUEST['page']) && $_REQUEST['page']) {
 	Dispatcher::setPage($_REQUEST['page']);
@@ -43,7 +46,7 @@ if (!$_SESSION['user']->getId_congress()) {
 	}
 }
 
-$_SESSION['user']->lieu = Dispatcher::getPage();
+$_SESSION['user']->setLieu(Dispatcher::getPage());
 
 $_SESSION['user']->save();
 if ($_SESSION['user']->getHistory()->getAction_name()) {

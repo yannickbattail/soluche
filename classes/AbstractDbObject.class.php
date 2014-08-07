@@ -5,13 +5,39 @@ abstract class AbstractDbObject {
 
 	/**
 	 *
-	 * @param int $id        	
+	 * @param array $assocArray        	
+	 */
+	public function populate(array $assocArray) {
+		foreach ($assocArray as $field => $value) {
+			if (!is_numeric($field)) {
+				//$setter = 'set' . ucfirst($field);
+				//$this->$setter($value);
+				$this->$field = $value;
+			}
+		}
+	}
+
+	/**
+	 *
+	 * @param String $id        	
 	 * @return AbstractDbObject
 	 */
 	public static function load($id) {
-		$sth = $GLOBALS['DB']->query('SELECT * FROM ' . self::TABLE_NAME . ' WHERE id=' . intval($id));
-		$sth->setFetchMode(PDO::FETCH_CLASS, get_class($this));
-		return $sth->fetch();
+		$sth = $GLOBALS['DB']->prepare('SELECT * FROM ' . self::TABLE_NAME . ' WHERE id = :id;');
+		$sth->bindValue(':id', $id, PDO::PARAM_STR);
+		$sth->setFetchMode(PDO::FETCH_ASSOC);
+		if ($sth->execute() === false) {
+			// var_dump($sth->errorInfo());
+			return false;
+		}
+		$arr = $sth->fetch();
+		if (!$arr) {
+			return $arr;
+		} else {
+			$obj = new self();
+			$obj->populate($arr);
+			return $obj;
+		}
 	}
 
 	public function save() {

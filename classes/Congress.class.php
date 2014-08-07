@@ -3,7 +3,7 @@ class Congress extends AbstractDbObject {
 
 	const TABLE_NAME = 'congress';
 
-	public $id = 0;
+	protected $id = 0;
 
 	public function getId() {
 		return $this->id;
@@ -13,7 +13,7 @@ class Congress extends AbstractDbObject {
 		$this->id = $id;
 	}
 
-	public $nom = '';
+	protected $nom = '';
 
 	public function getNom() {
 		return $this->nom;
@@ -98,7 +98,7 @@ class Congress extends AbstractDbObject {
 	protected function achievment(Player $player, array $sumUp) {
 		if (isset($sumUp['Chopper_' . ActionResult::SUCCESS]) && ($sumUp['Chopper_' . ActionResult::SUCCESS] >= 4)) {
 			$item = Item::loadByName('poule');
-			if (!Item::isAassociated($player->getId(), $item->getId())) {
+			if (!Item::isAssociated($player->getId(), $item->getId())) {
 				Item::associateItem($player, $item);
 				Dispatcher::addMessage('T\'as choppé plus de 4 fois en 1 congrès, ca mérite une poule ca!', Dispatcher::MESSAGE_LEVEL_SUCCES);
 			} else {
@@ -107,7 +107,7 @@ class Congress extends AbstractDbObject {
 		}
 		if (isset($sumUp['Sing_' . ActionResult::SUCCESS]) && ($sumUp['Sing_' . ActionResult::SUCCESS] >= 4)) {
 			$item = Item::loadByName('cle de sol');
-			if (!Item::isAassociated($player->getId(), $item->getId())) {
+			if (!Item::isAssociated($player->getId(), $item->getId())) {
 				Item::associateItem($player, $item);
 				Dispatcher::addMessage('Ca va tu chantes plutôt bien, ca mérite une clé de sol ca!', Dispatcher::MESSAGE_LEVEL_SUCCES);
 			} else {
@@ -118,13 +118,25 @@ class Congress extends AbstractDbObject {
 
 	/**
 	 *
-	 * @param int $id        	
+	 * @param String $id        	
 	 * @return Congress
 	 */
 	public static function load($id) {
-		$sth = $GLOBALS['DB']->query('SELECT * FROM ' . self::TABLE_NAME . ' WHERE id=' . intval($id));
-		$sth->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
-		return $sth->fetch();
+		$sth = $GLOBALS['DB']->prepare('SELECT * FROM ' . self::TABLE_NAME . ' WHERE id = :id;');
+		$sth->bindValue(':id', $id, PDO::PARAM_STR);
+		$sth->setFetchMode(PDO::FETCH_ASSOC);
+		if ($sth->execute() === false) {
+			// var_dump($sth->errorInfo());
+			return false;
+		}
+		$arr = $sth->fetch();
+		if (!$arr) {
+			return $arr;
+		} else {
+			$obj = new self();
+			$obj->populate($arr);
+			return $obj;
+		}
 	}
 
 	public function save() {

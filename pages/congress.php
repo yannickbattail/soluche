@@ -7,10 +7,12 @@
 		<th>Participer</th>
 	</tr>
 	<?php
-	$stmt = $GLOBALS['DB']->query('SELECT * FROM congress ;');
-	$stmt->setFetchMode(PDO::FETCH_CLASS, 'Congress');
 	$n = 0;
-	while ($stmt && ($congress = $stmt->fetch())) {
+	$sth = $GLOBALS['DB']->query('SELECT * FROM congress ;');
+	$sth->setFetchMode(PDO::FETCH_ASSOC);
+	while ($sth && ($arr = $sth->fetch())) {
+		$congress = new Congress();
+		$congress->populate($arr);
 		$odd = ($n++ % 2) ? 'odd' : 'even';
 		?>
         <tr class="<?= $odd ?>">
@@ -96,10 +98,12 @@ Congrès pas fini ... et ben si :-(
 	$sql .= '    WHERE `id_player`=' . $uid . ' AND `action_name`="StartCongress" ';
 	$sql .= '    ORDER BY `date_action` DESC LIMIT 1 ';
 	$sql .= ' ) ORDER BY `date_action`';
-	$stmt = $GLOBALS['DB']->query($sql);
-	$stmt->setFetchMode(PDO::FETCH_CLASS, 'History');
 	$n = 0;
-	while ($stmt && ($history = $stmt->fetch())) {
+	$sth = $GLOBALS['DB']->query($sql);
+	$sth->setFetchMode(PDO::FETCH_ASSOC);
+	while ($sth && ($arr = $sth->fetch())) {
+		$history = new History();
+		$history->populate($arr);
 		$odd = ($n++ % 2) ? 'odd' : 'even';
 		$css = 'infoMessage';
 		if ($history->getSuccess() == ActionResult::SUCCESS) {

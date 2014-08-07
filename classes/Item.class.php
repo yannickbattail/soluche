@@ -5,7 +5,7 @@ class Item extends AbstractDbObject {
 
 	public static $ITEM_TYPES = array('badge', 'drink', 'test', 'food', 'alcohol', 'pins', 'cros');
 
-	public $id = 0;
+	protected $id = 0;
 
 	public function getId() {
 		return $this->id;
@@ -15,7 +15,7 @@ class Item extends AbstractDbObject {
 		$this->id = $id;
 	}
 
-	public $nom = '';
+	protected $nom = '';
 
 	public function getNom() {
 		return $this->nom;
@@ -25,7 +25,7 @@ class Item extends AbstractDbObject {
 		$this->nom = $nom;
 	}
 
-	public $permanent = 0;
+	protected $permanent = 0;
 
 	public function getPermanent() {
 		return $this->permanent;
@@ -35,7 +35,7 @@ class Item extends AbstractDbObject {
 		$this->permanent = $permanent;
 	}
 
-	public $notoriete = 0;
+	protected $notoriete = 0;
 
 	public function getNotoriete() {
 		return $this->notoriete;
@@ -45,7 +45,7 @@ class Item extends AbstractDbObject {
 		$this->notoriete = $notoriete;
 	}
 
-	public $alcoolemie = 0;
+	protected $alcoolemie = 0;
 
 	public function getAlcoolemie() {
 		return $this->alcoolemie;
@@ -55,7 +55,7 @@ class Item extends AbstractDbObject {
 		$this->alcoolemie = $alcoolemie;
 	}
 
-	public $alcoolemie_optimum = 0;
+	protected $alcoolemie_optimum = 0;
 
 	public function getAlcoolemie_optimum() {
 		return $this->alcoolemie_optimum;
@@ -65,7 +65,7 @@ class Item extends AbstractDbObject {
 		$this->alcoolemie_optimum = $alcoolemie_optimum;
 	}
 
-	public $alcoolemie_max = 0;
+	protected $alcoolemie_max = 0;
 
 	public function getAlcoolemie_max() {
 		return $this->alcoolemie_max;
@@ -75,7 +75,7 @@ class Item extends AbstractDbObject {
 		$this->alcoolemie_max = $alcoolemie_max;
 	}
 
-	public $fatigue = 0;
+	protected $fatigue = 0;
 
 	public function getFatigue() {
 		return $this->fatigue;
@@ -85,7 +85,7 @@ class Item extends AbstractDbObject {
 		$this->fatigue = $fatigue;
 	}
 
-	public $fatigue_max = 0;
+	protected $fatigue_max = 0;
 
 	public function getFatigue_max() {
 		return $this->fatigue_max;
@@ -95,7 +95,7 @@ class Item extends AbstractDbObject {
 		$this->fatigue_max = $fatigue_max;
 	}
 
-	public $sex_appeal = 0;
+	protected $sex_appeal = 0;
 
 	public function getSex_appeal() {
 		return $this->sex_appeal;
@@ -105,7 +105,7 @@ class Item extends AbstractDbObject {
 		$this->sex_appeal = $sex_appeal;
 	}
 
-	public $image = "";
+	protected $image = "";
 
 	public function getImage() {
 		return $this->image;
@@ -115,7 +115,7 @@ class Item extends AbstractDbObject {
 		$this->image = $image;
 	}
 
-	public $item_type = 'test';
+	protected $item_type = 'test';
 
 	public function getItem_type() {
 		return $this->item_type;
@@ -128,7 +128,7 @@ class Item extends AbstractDbObject {
 		$this->item_type = $item_type;
 	}
 
-	public $remaining_time = 0;
+	protected $remaining_time = 0;
 
 	public function getRemaining_time() {
 		return $this->remaining_time;
@@ -141,7 +141,7 @@ class Item extends AbstractDbObject {
 		$this->remaining_time = $remaining_time;
 	}
 
-	public $price = 0;
+	protected $price = 0;
 
 	public function getPrice() {
 		return $this->price;
@@ -167,9 +167,24 @@ class Item extends AbstractDbObject {
 	 * @return Item
 	 */
 	public static function load($id) {
-		$sth = $GLOBALS['DB']->query('SELECT * FROM ' . self::TABLE_NAME . ' WHERE id=' . $id . ';');
-		$sth->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
-		return $sth->fetch();
+			$sth = $GLOBALS['DB']->prepare('SELECT * FROM ' . self::TABLE_NAME . ' WHERE id = :id;');
+		$sth->bindValue(':id', $id, PDO::PARAM_STR);
+		$sth->setFetchMode(PDO::FETCH_ASSOC);
+		if ($sth->execute() === false) {
+			// var_dump($sth->errorInfo());
+			return false;
+		}
+		$arr = $sth->fetch();
+		if (!$arr) {
+			return $arr;
+		} else {
+			$obj = new self();
+			//if ($arr['pnj'] > 0) {
+			//	$obj = new Bot();
+			//}
+			$obj->populate($arr);
+			return $obj;
+		}
 	}
 
 	/**
@@ -177,15 +192,25 @@ class Item extends AbstractDbObject {
 	 * @param String $itemName        	
 	 * @return Item
 	 */
-	public static function loadByName($itemName) {
-		$sth = $GLOBALS['DB']->prepare('SELECT * FROM item WHERE item.nom = :nom;');
-		$sth->bindValue(':nom', $itemName, PDO::PARAM_STR);
-		$sth->setFetchMode(PDO::FETCH_CLASS, 'Item');
+	public static function loadByName($name) {
+		$sth = $GLOBALS['DB']->prepare('SELECT * FROM ' . self::TABLE_NAME . ' WHERE nom = :nom;');
+		$sth->bindValue(':nom', $name, PDO::PARAM_STR);
+		$sth->setFetchMode(PDO::FETCH_ASSOC);
 		if ($sth->execute() === false) {
 			// var_dump($sth->errorInfo());
 			return false;
 		}
-		return $sth->fetch();
+		$arr = $sth->fetch();
+		if (!$arr) {
+			return false;
+		} else {
+			$obj = new self();
+			//if ($arr['pnj'] > 0) {
+			//	$obj = new Bot();
+			//}
+			$obj->populate($arr);
+			return $obj;
+		}
 	}
 
 	public function save() {
@@ -241,11 +266,11 @@ class Item extends AbstractDbObject {
 	}
 
 	public function delete() {
-		$GLOBALS['DB']->query('DELETE FROM ' . self::TABLE_NAME . ' WHERE id=' . $id . ';')->fetch(PDO::FETCH_ASSOC);
+		$GLOBALS['DB']->query('DELETE FROM ' . self::TABLE_NAME . ' WHERE id=' . $this->id . ';')->fetch(PDO::FETCH_ASSOC);
 	}
 
 	public function associatePlayer(Player $player) {
-		self::associate($player->id, $this->id);
+		self::associate($player->getId(), $this->getId());
 	}
 
 	public static function associate($idPlayer, $idItem) {
@@ -253,7 +278,7 @@ class Item extends AbstractDbObject {
 	}
 
 	public static function associateItem(Player $player, Item $item) {
-		self::associate($player->id, $item->id);
+		self::associate($player->getId(), $item->getId());
 	}
 
 	public static function desassociate($idPlayer, $idItem) {
@@ -266,15 +291,25 @@ class Item extends AbstractDbObject {
 	 * @param int $idItem        	
 	 * @return Item
 	 */
-	public static function isAassociated($idPlayer, $idItem) {
+	public static function isAssociated($idPlayer, $idItem) {
 		$sth = $GLOBALS['DB']->prepare('SELECT item.* FROM inventory INNER JOIN item ON item.id = inventory.id_item WHERE inventory.id_player = :id_player AND inventory.id_item = :id_item;');
 		$sth->bindValue(':id_player', $idPlayer, PDO::PARAM_INT);
 		$sth->bindValue(':id_item', $idItem, PDO::PARAM_INT);
-		$sth->setFetchMode(PDO::FETCH_CLASS, 'Item');
+		$sth->setFetchMode(PDO::FETCH_ASSOC);
 		if ($sth->execute() === false) {
 			// var_dump($sth->errorInfo());
 			return false;
 		}
-		return $sth->fetch();
+		$arr = $sth->fetch();
+		if (!$arr) {
+			return $arr;
+		} else {
+			$obj = new self();
+			//if ($arr['pnj'] > 0) {
+			//	$obj = new Bot();
+			//}
+			$obj->populate($arr);
+			return $obj;
+		}
 	}
 }

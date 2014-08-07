@@ -49,43 +49,38 @@ class Vt extends AbstractAction {
 		$htmlId = get_class($this);
 		ob_start();
 		?>
-<div id="<?= $htmlId ?>_tooltip" style="display: none;">
-	<table class="inventory">
+<div id="<?= $htmlId ?>_tooltip" class="hiddenTooltip">
+	<table class="inventory playerTooltip">
 		<tr class="even">
 			<th>
-				<img src="images/items/vomi.png" class="inventoryImage" title="pin's" />
-				<br />VI
+				<img src="images/items/vomi.png" title="Vomi technique" alt="Vomi technique" />
+				<br />VT
 			</th>
 			<td>
-				<img src="images/emotes/face-smile.png" title="Succès" width="32" height="32">
-				<br />Succès
+				<img src="images/emotes/face-smile.png" title="Succès" alt="Succès">
 			</td>
 		</tr>
 		<tr class="odd">
 			<th>
-				<img src="images/emotes/face-raspberry.png" title="Crédibidulité" width="32" height="32">
-				<br />Crédibidulité
+				<img src="images/util/notoriété.png" title="Crédibidulité" alt="Crédibidulité">
 			</th>
 			<td><?= plus(-1, 1); ?></td>
 		</tr>
 		<tr class="even">
 			<th>
-				<img src="images/badges/chope.jpg" title="Verres" width="32" height="32">
-				<br />Verres
+				<img src="images/util/chope rouge.png" title="Verres" alt="Verres">
 			</th>
 			<td><?= plus(-1, 0)?></td>
 		</tr>
 		<tr class="odd">
 			<th>
-				<img src="images/emotes/face-uncertain.png" title="Fatigue" width="32" height="32">
-				<br />Fatigue
+				<img src="images/util/sleep.png" title="Fatigue" alt="Fatigue">
 			</th>
 			<td><?= plus(1, 0); ?></td>
 		</tr>
 		<tr class="even">
 			<th>
-				<img src="images/util/time.png" alt="¼ d'heure" width="32" height="32">
-				<br />¼ H
+				<img src="images/util/time.png" title="¼ d'heure" alt="¼ d'heure">
 			</th>
 			<td><?= plus(-1, 1)?></td>
 		</tr>

@@ -14,7 +14,7 @@ require_once ('utilFunctions.php');
 if (!isset($_SESSION['user']) || !$_SESSION['user']) {
 	header('Location: login.php');
 }
-$_SESSION['user'] = Player::load($_SESSION['user']->id);
+$_SESSION['user'] = Player::load($_SESSION['user']->getId());
 $_SESSION['user']->loadInventory();
 
 if (isset($_POST['uploadPhoto'])) {
@@ -52,6 +52,7 @@ if (isset($_POST['uploadPhoto'])) {
 		}
 		$_SESSION['user']->setPhoto($fileName);
 		$_SESSION['user']->save();
+		echo 'Photo changée';
 	} catch (RuntimeException $e) {
 		echo $e->getMessage();
 	}
@@ -97,11 +98,11 @@ if (isset($_POST['changePass'])) {
 </head>
 <body>
 	<h1>Cutomisation</h1>
-	Changer la Photo:
+	Changer la photo:
 	<form action="" method="post" enctype="multipart/form-data">
+		<img src="<?= $_SESSION['user']->getPhoto() ?>" class="inventoryImage" title="<?= $_SESSION['user']->getNom() ?>" />
 		<input type="file" name="photo" value="" />
 		<input type="submit" name="uploadPhoto" value="upload photo" />
-		<img src="<?= $_SESSION['user']->getPhoto() ?>" class="inventoryImage" title="<?= $_SESSION['user']->getNom() ?>" />
 	</form>
 	<br /> Changer de pass:
 	<form action="" method="post" enctype="multipart/form-data">
@@ -134,7 +135,7 @@ if (isset($_POST['changePass'])) {
 			<tr>
 				<th>&nbsp;</th>
 				<td>
-					<input type="submit" name="changePass" " value="modifier" />
+					<input type="submit" name="changePass" value="modifier" />
 				</td>
 			</tr>
 		</table>
