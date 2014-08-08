@@ -8,6 +8,7 @@ INSERT INTO `soluche`.`item` (`id`, `nom`, `permanent`, `notoriete`, `alcoolemie
 INSERT INTO `soluche`.`inventory` (`id`, `id_player`, `id_item`) VALUES
 (NULL, '-2', '526'),
 (NULL, '-2', '527'),
+(NULL, '-3', '525'),
 (NULL, '-3', '528'),
 (NULL, '-3', '529');
 

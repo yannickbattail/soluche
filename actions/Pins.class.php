@@ -48,7 +48,7 @@ class Pins extends AbstractAction {
 	public function execute() {
 		$res = new ActionResult();
 		$item = Item::loadByName('pin\'s');
-		if ($item) {
+		if (Item::isAssociated($this->player->getId(), $item->getId())) {
 			$this->opponent->addAlcoolemie(1);
 			$this->opponent->addPoints(2);
 			$this->opponent->save();
@@ -57,7 +57,7 @@ class Pins extends AbstractAction {
 			$this->player->addFatigue(1);
 			$this->player->addRemaining_time(-1);
 			Item::desassociate($this->player->getId(), $item->getId());
-			$res->setMessage('Pin\'s');
+			$res->setMessage('T\'as pinsé '.$this->opponent->getNom());
 			$res->setSuccess(ActionResult::SUCCESS);
 		} else {
 			$res->setMessage('...a plu d\'Pin\'s :-(');
