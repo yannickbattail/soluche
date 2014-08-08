@@ -42,7 +42,6 @@ class Eat extends AbstractAction {
 	}
 
 	/**
-	 * (non-PHPdoc)
 	 *
 	 * @see ActionInterface::execute()
 	 * @return ActionResult

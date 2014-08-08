@@ -126,26 +126,26 @@ function moneyDisplay($money) {
 	return $ret;
 }
 
-function lifeBarMiddle2($max, $middle, $value) {
-	$ret = '';
-	$css = 'lifeBarMiddle_middle';
+function lifeBarMiddle($max, $middle, $value) {
+	$ret = '<table class="lifeBarMiddle2"><tr>';
 	for ($i = 1; $i <= $max; $i++) {
-		if ($i < $middle) {
-			$ret .= '<td class="' . $css . '"></td>';
-		} else if ($i > $middle) {
-			$ret .= '<td class="' . $css . '"></td>';
-		} else if ($i == $middle) {
-			$ret .= '<td class="' . $css . '"></td>';
+		if ($i <= $value) {
+			if ($i < $middle) {
+				$ret .= '<td><img src="images/util/bier_green.png" title="ok" alt="ok" /></td>';
+			} else if ($i > $middle) {
+				$ret .= '<td><img src="images/util/bier_red.png" title="Bourré" alt="Bourré" /></td>';
+			} else if ($i == $middle) {
+				$ret .= '<td><img src="images/util/bier_orange.png" title="verre optimum" alt="verre optimum" /></td>';
+			}
+		} else {
+			$ret .= '<td><img src="images/util/bier_grey.png" title="verre vide" alt="verre vide" /></td>';
 		}
-		if ($i == $value) {
-			$ret .= '<td class="' . $css . '"></td>';
-		}
-		$ret .= '<td class="' . $css . '"></td>';
 	}
+	$ret .= '</tr></table>';
 	return $ret;
 }
 
-function lifeBarMiddle($max, $middle, $value) {
+function lifeBarMiddle_old($max, $middle, $value) {
 	$ret = '<table class="lifeBarMiddle"><tr>';
 	$css = 'lifeBarMiddle_middle';
 	for ($i = 1; $i <= $max; $i++) {

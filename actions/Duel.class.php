@@ -80,7 +80,6 @@ class Duel extends AbstractAction {
 		if ($this->opponent->getPnj() == 0) { // si player
 			$this->opponent->save();
 		}
-		$this->opponent->save();
 		// $this->player->save(); // this is done at the end of the action execution.
 		return $res;
 	}

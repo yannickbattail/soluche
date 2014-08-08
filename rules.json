@@ -1,0 +1,195 @@
+{
+	"actions":{
+		"Buy":{
+			"config":{
+				
+			},
+			"success":{
+				"money":"item",
+				"addItem":"item"
+			}
+			
+		},
+		"Chopper":{
+			"config":{
+				
+			},
+			"success":{
+				"points":5,
+				"notoriete":2,
+				"alcoolemie":1,
+				"fatigue":2,
+				"remaining_time":-4,
+				"opponent_points":5,
+				"opponent_notoriete":2,
+				"delItem":"condom"
+			},
+			"success_drunk":{
+				"points":2,
+				"notoriete":-1,
+				"fatigue":2,
+				"remaining_time":-4,
+				"opponent_points":3,
+				"opponent_notoriete":1,
+				"delItem":"condom"
+			},
+			"fail":{
+				"fatigue":1,
+				"remaining_time":-1
+			}
+			
+		},
+		"Duel":{
+			"config":{
+				
+			},
+			"success":{
+				"points":5,
+				"notoriete":2,
+				"alcoolemie":"calcul",
+				"fatigue":2,
+				"remaining_time":-2,
+				"opponent_alcoolemie":"calcul"
+			},
+			"equal":{
+				"points":0,
+				"notoriete":1,
+				"alcoolemie":"calcul",
+				"fatigue":2,
+				"remaining_time":-2,
+				"opponent_points":5,
+				"opponent_notoriete":1,
+				"opponent_alcoolemie":"calcul"
+			},
+			"fail":{
+				"points":0,
+				"notoriete":-1,
+				"alcoolemie":"calcul",
+				"fatigue":2,
+				"remaining_time":-2,
+				"opponent_alcoolemie":"calcul"
+			}
+			
+		},
+		"Eat":{
+			"config":{
+				
+			},
+			"success":{
+				"notoriete":"item",
+				"alcoolemie":"item",
+				"alcoolemie_optimum":"item",
+				"alcoolemie_max":"item",
+				"fatigue":"item",
+				"fatigue_max":"item",
+				"sex_appeal":"item",
+				"remaining_time":"item",
+				"delItem":"item"
+			}
+			
+		},
+		"EndPLS":{
+			"config":{
+				"secPerAlcoolemie":60
+			},
+			"success":{
+				"notoriete":-1,
+				"alcoolemie":"calcul",
+				"fatigue":-1,
+				"remaining_time":"calcul",
+				"en_pls":false,
+				"Debut_de_pls":false
+			}
+			
+		},
+		"Sell":{
+			"config":{
+				"resalePercent":80
+			},
+			"success":{
+				"money":"item",
+				"delItem":"item"
+			}
+			
+		},
+		"Sing":{
+			"config":{
+				"numberPlayer":4
+			},
+			"success":{
+				"points":1,
+				"notoriete":1,
+				"alcoolemie":1,
+				"fatigue":1,
+				"remaining_time":-1
+			},
+			"success_cle de sol":{
+				"points":1,
+				"notoriete":2,
+				"alcoolemie":1,
+				"fatigue":1,
+				"remaining_time":-1
+			},
+			"fail":{
+				"points":0,
+				"notoriete":-1,
+				"alcoolemie":1,
+				"fatigue":1,
+				"remaining_time":-1
+			}
+			
+		},
+		"StartCongress":{
+			"config":{
+				
+			},
+			"success":{
+				"fatigue":-100,
+				"alcoolemie":-100,
+				"remaining_time":"calcul",
+				"money":"50"
+			}
+			
+		},
+		"StartPLS":{
+			"config":{
+				
+			},
+			"success":{
+				"en_pls":true,
+				"Debut_de_pls":"calcul"
+			}
+			
+		},
+		"UseItem":{
+			"config":{
+				
+			},
+			"success":{
+				"notoriete":"item",
+				"alcoolemie":"item",
+				"alcoolemie_optimum":"item",
+				"alcoolemie_max":"item",
+				"fatigue":"item",
+				"fatigue_max":"item",
+				"sex_appeal":"item",
+				"remaining_time":"item",
+				"delItem":"item"
+			}
+			
+		},
+		"Vt":{
+			"config":{
+				
+			},
+			"success":{
+				"notoriete":-1,
+				"alcoolemie":-1,
+				"fatigue":1,
+				"remaining_time":-1
+			}
+			
+		}
+		
+	}
+}

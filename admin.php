@@ -14,6 +14,12 @@ require_once ('utilFunctions.php');
 if (!isset($_SESSION['user']) || !$_SESSION['user']) {
 	header('Location: login.php');
 }
+$_SESSION['user'] = Player::load($_SESSION['user']->getId());
+$_SESSION['user']->loadInventory();
+
+if ($_SESSION['user']->getId() != 1) {
+	die('must be admin');
+}
 
 if (isset($_POST['addBots'])) {
 	echo 'add ' . Bot::createMultiples($_POST['bot_num'], 1, $_POST['id_congress']) . ' Bots for congress ' . $_POST['id_congress'];

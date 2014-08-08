@@ -13,6 +13,7 @@ function __autoload($classname) {
 session_start();
 require_once ('db.php');
 require_once ('utilFunctions.php');
+Soluche::init();
 
 if (!isset($_SESSION['user']) || !($_SESSION['user'] instanceof Player)) {
 	header('Location: login.php');

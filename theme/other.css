@@ -228,6 +228,20 @@ tr.even {
 	height: 32px;
 }
 
+.lifeBarMiddle2 {
+	
+}
+
+.lifeBarMiddle2 td {
+	padding: 0px;
+	margin: 0px;
+}
+
+.lifeBarMiddle2 img {
+	width: 16px;
+	height: 16px;
+}
+
 .lifeBarMiddle {
 	
 }
