@@ -1,6 +1,6 @@
 
-<a href="main.php?page=camping">retour au camping</a>
+<h3>Tente</h3>
 
-<?php printUserStats($_SESSION['user']); ?>
+<img src="images/util/tent-sleep-icon.png" title="Tente" alt="Tente" />
 
 <?php echo (new Sleep($_SESSION['user']))->setParams(array())->link() ;?>

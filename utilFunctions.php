@@ -38,13 +38,6 @@ function linkAction($action, array $actionParams, $text, $page = null, $forceEna
 function printUserStats(Player $player) {
 	?>
 <table class="playerStats">
-	<tr class="odd">
-		<th>Nom</th>
-		<td>
-			<img src="<?= $player->getPhoto(); ?>" class="playerImage" title="<?= $player->getNom(); ?>" />
-		</td>
-		<td><?=$player->getNom(); ?> <?php echo $player->getSex()?'<span style="color:cyan" title="bite">&#9794;</span>':'<span style="color:pink" title="vagin">&#9792;</span>'; ?></td>
-	</tr>
 	<tr class="even">
 		<th></th>
 		<th>Sans inventaire</th>
@@ -127,21 +120,21 @@ function moneyDisplay($money) {
 }
 
 function lifeBarMiddle($max, $middle, $value) {
-	$ret = '<table class="lifeBarMiddle2"><tr>';
+	$ret = '<div class="lifeBarMiddle2">';
 	for ($i = 1; $i <= $max; $i++) {
 		if ($i <= $value) {
 			if ($i < $middle) {
-				$ret .= '<td><img src="images/util/bier_green.png" title="ok" alt="ok" /></td>';
+				$ret .= '<img src="images/util/bier_green.png" title="ok" alt="ok" />';
 			} else if ($i > $middle) {
-				$ret .= '<td><img src="images/util/bier_red.png" title="Bourré" alt="Bourré" /></td>';
+				$ret .= '<img src="images/util/bier_red.png" title="Bourré" alt="Bourré" />';
 			} else if ($i == $middle) {
-				$ret .= '<td><img src="images/util/bier_orange.png" title="verre optimum" alt="verre optimum" /></td>';
+				$ret .= '<img src="images/util/bier_orange.png" title="verre optimum" alt="verre optimum" />';
 			}
 		} else {
-			$ret .= '<td><img src="images/util/bier_grey.png" title="verre vide" alt="verre vide" /></td>';
+			$ret .= '<img src="images/util/bier_grey.png" title="verre vide" alt="verre vide" />';
 		}
 	}
-	$ret .= '</tr></table>';
+	$ret .= '</div>';
 	return $ret;
 }
 
@@ -182,7 +175,7 @@ function lifeBar($max, $value) {
 	return $ret;
 }
 
-function printInventory(Player $player) {
+function printInventory_old(Player $player) {
 	trigger_error("printInventory() is deprecated use ActionInterface::link()", E_USER_DEPRECATED);
 	?>
 <table class="inventory">

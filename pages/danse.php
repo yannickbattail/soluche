@@ -1,5 +1,6 @@
 
-<a href="main.php?page=camping">retour au camping</a>
+<h3>Piste de danse</h3>
+
 
 <h3>Personnes sur le piste de danse:</h3>
 <?php
@@ -7,4 +8,3 @@ $stmt = $GLOBALS['DB']->query('SELECT * FROM player WHERE id != ' . $_SESSION['u
 printPlayerBox($stmt, array('Pinser' => new Pins($_SESSION['user']),'Essayer de chopper' => new Chopper($_SESSION['user'])
 ));
 ?>
-

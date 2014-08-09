@@ -129,13 +129,3 @@ Congrès pas fini ... et ben si :-(
 	
 </table>
 <?php } ?>
-
-
-
-
-
-
-
-<hr />
-<?php printUserStats($_SESSION['user']); ?>
-<?php //printInventory2($_SESSION['user']); ?>

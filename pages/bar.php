@@ -1,5 +1,5 @@
 
-<a href="main.php?page=camping">retour au camping</a>
+<h3>Bar</h3>
 
 <h3>Boisson au bar:</h3>
 <table class="inventory inventoryPage">
@@ -28,8 +28,6 @@ while ($sth && ($arr = $sth->fetch())) {
 }
 ?>
 </table>
-
-<?php printUserStats($_SESSION['user']); ?>
 
 <?php echo (new Sing($_SESSION['user']))->setParams(array())->link() ;?>
 

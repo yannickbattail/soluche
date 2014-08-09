@@ -1,5 +1,5 @@
 
-<a href="main.php?page=camping">retour au camping</a>
+<h3>Coin des orgas</h3>
 
 <h3>Vends ta dignichose pour avoir des items:</h3><img src="images/items/pin-s-exigeons-la-dignité.png" alt="Dignichose" />
 <table class="inventory inventoryPage">
@@ -67,9 +67,3 @@ while ($sth && ($arr = $sth->fetch())) {
 }
 ?>
 </table>
-
-<h3>Stats</h3>
-<?php printUserStats($_SESSION['user']); ?>
-<br />
-<h3>Inventaire</h3>
-<?php printInventory2($_SESSION['user']); ?>

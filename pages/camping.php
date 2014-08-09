@@ -1,22 +1,10 @@
-<div style="font-size: 18px">
-	Se deplacer:
-	<ul>
-		<li><a href="main.php?page=orga">coin des orgas</a></li>
-		<li><a href="main.php?page=bar">au bar</a></li>
-		<li><a href="main.php?page=tente">à ta tente</a></li>
-		<li><a href="main.php?page=cuisine">à la cuisine</a></li>
-		<li><a href="main.php?page=danse">à la piste de danse</a></li>
-	</ul>
-</div>
 
-<hr />
-<?php printUserStats($_SESSION['user']); ?>
+<h3>Camping</h3>
 
 <?php echo (new StartPLS($_SESSION['user']))->setParams(array())->link() ;?>
 <?php echo (new Vt($_SESSION['user']))->setParams(array())->link() ;?>
 <?php echo (new Sing($_SESSION['user']))->setParams(array())->link() ;?>
 <br />
-<?php printInventory2($_SESSION['user']); ?>
 
 
 <h3>Personnes au camping:</h3>

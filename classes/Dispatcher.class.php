@@ -9,8 +9,6 @@ class Dispatcher {
 
 	const MESSAGE_LEVEL_FAIL = 'errorMessage';
 
-	private static $pageTitle = 'Camping';
-
 	private static $messages = array();
 
 	public static function addMessage($message, $level) {
@@ -27,7 +25,6 @@ class Dispatcher {
 		$filename = "./pages/" . $page . ".php";
 		if (file_exists($filename)) {
 			self::$page = $page;
-			self::$pageTitle = ucfirst(str_replace('_', ' ', self::$page));
 		} else {
 			self::addMessage(' La page ' . $page . ' n\'exite pas.', Dispatcher::MESSAGE_LEVEL_ERROR);
 		}

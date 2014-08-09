@@ -34,8 +34,8 @@ hr {
 
 div#page,div#header,div.footer {
 	margin: auto;
-	width: 950px;
-	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+	/*width: 950px;*/
+	/*box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);*/
 }
 
 div#page {
@@ -44,9 +44,14 @@ div#page {
 }
 
 div#header {
-	background: black url('theme/header.png') no-repeat;
-	height: 80px;
-	margin-bottom: 24px;
+	padding-left: 50px;
+	height: 200px;
+	font-family: Times;
+	font-size: 100px;
+	color: #ffcc11;
+	background-image: url("../images/banner_short.png");
+	background-repeat: no-repeat;
+	height: 200px;
 }
 
 div.footer {
@@ -67,9 +72,19 @@ div.footer {
 	margin: 8px 8px;
 }
 
-div.content {
-	padding: 8px;
+div#menu {
+	display: inline-block;
+	width: 300px;
+	border-right-style: solid;
+	border-right-width: 2px;
+	border-right-color: silver;
+	margin-right: 10px;
+}
+
+div#content {
+	display: inline-block;
 	vertical-align: top;
+	padding: 8px;
 }
 
 div.top {
@@ -77,7 +92,22 @@ div.top {
 }
 
 div.right {
-	display: inline-block;
 	right: 0px;
 	width: 445px;
+}
+
+.tabBar {
+	
+}
+
+.tabBar td {
+	border-style: outset;
+	border-width: 2px;
+	border-color: silver;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	border-bottom-style: none;
+	margin: 10px;
+	padding: 5px;
+	font-size: 16px;
 }
