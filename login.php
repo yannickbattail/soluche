@@ -64,7 +64,7 @@ if (isset($_POST['new']) && isset($_POST['login']) && isset($_POST['pass']) && i
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Soluche: login</title>
+<title>Soluche</title>
 <link rel="stylesheet" href="theme/theme.css" type="text/css">
 <link rel="stylesheet" href="theme/other.css" type="text/css">
 <style type="text/css">
@@ -85,7 +85,7 @@ td {
 </style>
 </head>
 <body>
-	<h1>Soluche</h1>
+	<div id="header">Soluche</div>
 	<div class="intro">Un RPG sans elf ni orc, sans point de vie ou de mana. Où ton inventaire n'est pas une épée runique et une armure enchantée.</div>
 	<div class="intro">Combat tes rivaux à coup de secs, chante, partage des valeurs, essaye de chopper et prends garde à ne pas finir en PLS.</div>
 	<br />

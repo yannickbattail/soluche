@@ -1,11 +1,11 @@
 <?php
 class Bot extends Player {
 
-	private static $filieres = array('rose', 'ingé', 'droit', 'sciences', 'sage-pouf', 'jaune', 'Pharma', 'Médecine');
+	private static $filieres = array('Ingé', 'rose', 'droit', 'sciences', 'sage-pouf', 'jaune', 'Pharma', 'Médecine', 'Dentaire', 'ostéo', 'Véto', 'prépa', 'Archi', 'Commerce', 'IUT', 'STAPS', 'Musico', 'Oenologie', 'Sc éco', 'Sc po');
 
-	private static $villes = array('Annecy', 'Grenoble', 'Lyon', 'Monpeul', 'Valence', 'Aix', 'Marseille', 'Dijon');
+	private static $villes = array('Annecy', 'Grenoble', 'Lyon', 'Monpeul', 'Valence', 'Aix', 'Marseille', 'Dijon', 'Toulouse', 'Nancy', 'Strasbourg', 'Paris');
 
-	private static $location = array('camping', 'bar', 'cuisine', 'danse');
+	private static $location = array('camping', 'bar', 'cuisine', 'danse', 'orga', /*'tente'*/);
 
 	public function defaultValues($factor = 1) {
 		$this->setPass('');
@@ -26,7 +26,6 @@ class Bot extends Player {
 	}
 
 	public static function createMultiples($number, $factor = 1, $id_congress = null) {
-		$i = 0;
 		$nb = 0;
 		foreach (self::$villes as $ville) {
 			foreach (self::$filieres as $filiere) {
@@ -39,8 +38,7 @@ class Bot extends Player {
 					$bot->save();
 					$nb++;
 				}
-				$i++;
-				if ($number == $i) {
+				if ($number == $nb) {
 					return $nb;
 				}
 			}

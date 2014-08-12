@@ -49,7 +49,7 @@ div#header {
 	font-family: Times;
 	font-size: 100px;
 	color: #ffcc11;
-	background-image: url("../images/banner_short.png");
+	background-image: url("../images/banner_short.jpg");
 	background-repeat: no-repeat;
 	height: 200px;
 }
@@ -71,7 +71,9 @@ div.footer {
 .footer hr {
 	margin: 8px 8px;
 }
-
+#skeleton td {
+	vertical-align: top;
+}
 div#menu {
 	display: inline-block;
 	width: 300px;
@@ -110,4 +112,18 @@ div.right {
 	margin: 10px;
 	padding: 5px;
 	font-size: 16px;
+}
+
+.tabBarSelected {
+	font-weight: bold;
+	border-color: white;
+	background-color: #404040;
+}
+
+div#globalMessages {
+	border-style: inset;
+	border-width: 2px;
+	overflow: scroll;
+	height: 200px;
+	margin: 10px;
 }

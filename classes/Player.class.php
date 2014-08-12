@@ -387,7 +387,7 @@ class Player extends AbstractDbObject {
 	protected $inventory = array();
 
 	/**
-	 * 
+	 *
 	 * @return array<Item>
 	 */
 	public function getInventory() {
@@ -584,6 +584,34 @@ class Player extends AbstractDbObject {
 		if ($sth->execute() === false) {
 			// var_dump($sth->errorInfo());
 			return false;
+		}
+		$arr = $sth->fetch();
+		if (!$arr) {
+			return $arr;
+		} else {
+			$obj = new self();
+			if ($arr['pnj'] > 0) {
+				$obj = new Bot();
+			}
+			$obj->populate($arr);
+			return $obj;
+		}
+		return $sth->fetch();
+	}
+
+	/**
+	 *
+	 * @param String $login        	
+	 * @param String $pass        	
+	 * @return Player
+	 */
+	public static function loadOrga($lieu, $id_congress) {
+		$sth = $GLOBALS['DB']->prepare('SELECT * FROM ' . self::TABLE_NAME . ' WHERE id_congress=:id_congress AND lieu=:lieu AND pnj=2;');
+		$sth->bindValue(':id_congress', $id_congress, PDO::PARAM_INT);
+		$sth->bindValue(':lieu', $lieu, PDO::PARAM_STR);
+		if ($sth->execute() === false) {
+			// var_dump($sth->errorInfo());
+			return null;
 		}
 		$arr = $sth->fetch();
 		if (!$arr) {

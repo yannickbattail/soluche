@@ -306,6 +306,9 @@ function printItem(Item $item, $num = 0) {
 		<tr class="even">
 			<td colspan="2"><?= (new Sell($_SESSION['user']))->setParams(array(Sell::PARAM_NAME=>$item))->link()?></td>
 		</tr>
+		<tr class="odd">
+			<td colspan="2" style="max-width: 200px"><?= $item->getDescription(); ?></td>
+		</tr>
 	</table>
 </div>
 <script type="text/javascript">

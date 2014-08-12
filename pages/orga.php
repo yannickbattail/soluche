@@ -36,10 +36,14 @@
 		<th>
 			<img src="images/util/time.png" title="¼ d'heure" alt="¼ d'heure">
 		</th>
+		<th>
+			Description
+		</th>
 	</tr>
 <?php
+$orga = Player::loadOrga('orga', $_SESSION['user']->getId_congress());
 $n = 0;
-$sth = $GLOBALS['DB']->query('SELECT O.* FROM item O INNER JOIN inventory I ON I.id_item = O.id WHERE I.id_player = -3;');
+$sth = $GLOBALS['DB']->query('SELECT O.* FROM item O INNER JOIN inventory I ON I.id_item = O.id WHERE I.id_player = '.$orga->getId().';');
 $sth->setFetchMode(PDO::FETCH_ASSOC);
 while ($sth && ($arr = $sth->fetch())) {
 	$item = new Item();
@@ -61,6 +65,7 @@ while ($sth && ($arr = $sth->fetch())) {
 		<td><?= plus($item->getFatigue_max(), 1); ?></td>
 		<td><?= plus($item->getSex_appeal(), 1); ?></td>
 		<td><?= plus($item->getRemaining_time(), 1); ?></td>
+		<td><?= $item->getDescription() ?></td>
 
 	</tr>
 	<?php

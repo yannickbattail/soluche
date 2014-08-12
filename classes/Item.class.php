@@ -25,6 +25,16 @@ class Item extends AbstractDbObject {
 		$this->nom = $nom;
 	}
 
+	protected $description = '';
+
+	public function getDescription() {
+		return $this->description;
+	}
+
+	public function setDescription($description) {
+		$this->description = $description;
+	}
+
 	protected $permanent = 0;
 
 	public function getPermanent() {
@@ -167,7 +177,7 @@ class Item extends AbstractDbObject {
 	 * @return Item
 	 */
 	public static function load($id) {
-			$sth = $GLOBALS['DB']->prepare('SELECT * FROM ' . self::TABLE_NAME . ' WHERE id = :id;');
+		$sth = $GLOBALS['DB']->prepare('SELECT * FROM ' . self::TABLE_NAME . ' WHERE id = :id;');
 		$sth->bindValue(':id', $id, PDO::PARAM_STR);
 		$sth->setFetchMode(PDO::FETCH_ASSOC);
 		if ($sth->execute() === false) {
@@ -179,9 +189,9 @@ class Item extends AbstractDbObject {
 			return $arr;
 		} else {
 			$obj = new self();
-			//if ($arr['pnj'] > 0) {
-			//	$obj = new Bot();
-			//}
+			// if ($arr['pnj'] > 0) {
+			// $obj = new Bot();
+			// }
 			$obj->populate($arr);
 			return $obj;
 		}
@@ -205,9 +215,9 @@ class Item extends AbstractDbObject {
 			return false;
 		} else {
 			$obj = new self();
-			//if ($arr['pnj'] > 0) {
-			//	$obj = new Bot();
-			//}
+			// if ($arr['pnj'] > 0) {
+			// $obj = new Bot();
+			// }
 			$obj->populate($arr);
 			return $obj;
 		}
@@ -222,9 +232,10 @@ class Item extends AbstractDbObject {
 	}
 
 	public function create() {
-		$sth = $GLOBALS['DB']->prepare('INSERT INTO ' . self::TABLE_NAME . ' ' . '(nom, permanent, notoriete, alcoolemie, alcoolemie_optimum, alcoolemie_max, fatigue, fatigue_max, sex_appeal, image, item_type, remaining_time, price)' . ' VALUES ( :nom, :permanent, :notoriete, :alcoolemie, :alcoolemie_optimum, :alcoolemie_max, :fatigue, :fatigue_max, :sex_appeal, :image, :item_type, :remaining_time, :price);');
+		$sth = $GLOBALS['DB']->prepare('INSERT INTO ' . self::TABLE_NAME . ' ' . '(nom, description, permanent, notoriete, alcoolemie, alcoolemie_optimum, alcoolemie_max, fatigue, fatigue_max, sex_appeal, image, item_type, remaining_time, price)' . ' VALUES ( :nom, :description, :permanent, :notoriete, :alcoolemie, :alcoolemie_optimum, :alcoolemie_max, :fatigue, :fatigue_max, :sex_appeal, :image, :item_type, :remaining_time, :price);');
 		// $sth->bindValue(':id', $this->id, PDO::PARAM_INT);
 		$sth->bindValue(':nom', $this->nom, PDO::PARAM_STR);
+		$sth->bindValue(':description', $this->description, PDO::PARAM_STR);
 		$sth->bindValue(':permanent', $this->permanent, PDO::PARAM_INT);
 		$sth->bindValue(':notoriete', $this->notoriete, PDO::PARAM_INT);
 		$sth->bindValue(':alcoolemie', $this->alcoolemie, PDO::PARAM_INT);
@@ -244,9 +255,10 @@ class Item extends AbstractDbObject {
 	}
 
 	public function update() {
-		$sth = $GLOBALS['DB']->prepare('UPDATE FROM ' . self::TABLE_NAME . ' SET nom=:nom, permanent=:permanent, notoriete=:notoriete, alcoolemie=:alcoolemie, alcoolemie_optimum=:alcoolemie_optimum, alcoolemie_max=:alcoolemie_max, fatigue=:fatigue, fatigue_max=:fatigue_max, sex_appeal=:sex_appeal, image=:image, item_type=:item_type, remaining_time=:remaining_time, price=:price WHERE id=:id;');
+		$sth = $GLOBALS['DB']->prepare('UPDATE FROM ' . self::TABLE_NAME . ' SET nom=:nom, description=:description, permanent=:permanent, notoriete=:notoriete, alcoolemie=:alcoolemie, alcoolemie_optimum=:alcoolemie_optimum, alcoolemie_max=:alcoolemie_max, fatigue=:fatigue, fatigue_max=:fatigue_max, sex_appeal=:sex_appeal, image=:image, item_type=:item_type, remaining_time=:remaining_time, price=:price WHERE id=:id;');
 		$sth->bindValue(':id', $this->id, PDO::PARAM_INT);
 		$sth->bindValue(':nom', $this->nom, PDO::PARAM_STR);
+		$sth->bindValue(':description', $this->description, PDO::PARAM_STR);
 		$sth->bindValue(':permanent', $this->permanent, PDO::PARAM_INT);
 		$sth->bindValue(':notoriete', $this->notoriete, PDO::PARAM_INT);
 		$sth->bindValue(':alcoolemie', $this->alcoolemie, PDO::PARAM_INT);
@@ -305,9 +317,9 @@ class Item extends AbstractDbObject {
 			return $arr;
 		} else {
 			$obj = new self();
-			//if ($arr['pnj'] > 0) {
-			//	$obj = new Bot();
-			//}
+			// if ($arr['pnj'] > 0) {
+			// $obj = new Bot();
+			// }
 			$obj->populate($arr);
 			return $obj;
 		}

@@ -9,8 +9,9 @@
 		<th><img src="images/util/sleep.png" title="Fatigue" alt="Fatigue"></th>
 	</tr>
 <?php
+$orga = Player::loadOrga('cuisine', $_SESSION['user']->getId_congress());
 $n = 0;
-$sth = $GLOBALS['DB']->query('SELECT O.* FROM item O INNER JOIN inventory I ON I.id_item = O.id WHERE I.id_player = -1 AND permanent = 0;');
+$sth = $GLOBALS['DB']->query('SELECT O.* FROM item O INNER JOIN inventory I ON I.id_item = O.id WHERE I.id_player = '.$orga->getId().';');
 $sth->setFetchMode(PDO::FETCH_ASSOC);
 while ($sth && ($arr = $sth->fetch())) {
 	$item = new Item();

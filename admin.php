@@ -96,6 +96,7 @@ if (isset($_POST['savePlayer'])) {
 					<input type="hidden" name="id_congress" value="<?= $congress->getId(); ?>" class="int" />
 					<input type="submit" name="addBots" value="create bots" />
 					<input type="submit" name="resetBots" value="reset bots" />
+					<a href="adminCongress.php?id_congress=<?= $congress->getId(); ?>"><img src="images/util/edit_user.png" alt="Editer" title="Editer" style="width: 16px; height: 16px;"></a>
 				</form>
 			</td>
 		</tr>
@@ -146,7 +147,7 @@ while ($sth && ($arr = $sth->fetch())) {
 					<input type="text" name="lieu" value="<?=$player->getLieu()?>" style="width: 50px;" />
 				</td>
 				<td>
-					<input type="text" name="Rêves vendus" value="<?=$player->getRêves vendus()?>" class="int" />
+					<input type="text" name="Rêves vendus" value="<?=$player->getPoints()?>" class="int" />
 				</td>
 				<td>
 					<input type="text" name="notoriete" value="<?=$player->getNotoriete()?>" class="int" />

@@ -295,3 +295,16 @@ tr.even {
 .lifeBar_after {
 	background: navy;
 }
+
+.chatDate {
+	font-style: italic;
+	color: silver;
+}
+
+.chatPlayerName {
+	font-weight: bold;
+}
+
+.chatMessage {
+	
+}
