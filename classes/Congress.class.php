@@ -24,29 +24,45 @@ class Congress extends AbstractDbObject {
 	}
 
 	protected $action_number = 48;
-
+	
 	public function getAction_number() {
 		return $this->action_number;
 	}
-
+	
 	public function setAction_number($action_number) {
 		$this->action_number = $action_number;
 	}
 
-	public function addAction_number($action_number) {
-		$this->setAction_number($this->getAction_number() + $action_number);
+	protected $bot_number = 48;
+	
+	public function getBot_number() {
+		return $this->bot_number;
+	}
+	
+	public function setBot_number($bot_number) {
+		$this->bot_number = $bot_number;
 	}
 
-	protected $bots = array();
-
-	public function getBots() {
-		return $this->bots;
+	protected $bot_coef = 48;
+	
+	public function getBot_coef() {
+		return $this->bot_coef;
+	}
+	
+	public function setBot_coef($bot_coef) {
+		$this->bot_coef = $bot_coef;
 	}
 
-	public function setBots($bots) {
-		$this->bots = $bots;
+	protected $level = 48;
+	
+	public function getLevel() {
+		return $this->level;
 	}
-
+	
+	public function setLevel($level) {
+		$this->level = $level;
+	}
+	
 	/**
 	 *
 	 * @param Player $player        	
@@ -148,9 +164,12 @@ class Congress extends AbstractDbObject {
 	}
 
 	public function create() {
-		$sth = $GLOBALS['DB']->prepare('INSERT INTO ' . self::TABLE_NAME . ' ' . '(nom, action_number)' . ' VALUES (:nom, :action_number);');
+		$sth = $GLOBALS['DB']->prepare('INSERT INTO ' . self::TABLE_NAME . ' ' . '(nom, action_number, bot_number, bot_coef, level)' . ' VALUES (:nom, :action_number, :bot_number, :bot_coef, :level);');
 		$sth->bindValue(':nom', $this->nom, PDO::PARAM_STR);
 		$sth->bindValue(':action_number', $this->action_number, PDO::PARAM_INT);
+		$sth->bindValue(':bot_number', $this->bot_number, PDO::PARAM_INT);
+		$sth->bindValue(':bot_coef', $this->bot_coef, PDO::PARAM_INT);
+		$sth->bindValue(':level', $this->level, PDO::PARAM_STR);
 		if ($sth->execute() === false) {
 			throw new Exception(print_r($sth->errorInfo(), true));
 		}
@@ -163,10 +182,13 @@ class Congress extends AbstractDbObject {
 	}
 
 	public function update() {
-		$sth = $GLOBALS['DB']->prepare('UPDATE ' . self::TABLE_NAME . ' SET nom=:nom, action_number=:action_number WHERE id=:id;');
+		$sth = $GLOBALS['DB']->prepare('UPDATE ' . self::TABLE_NAME . ' SET nom=:nom, action_number=:action_number, bot_number=:bot_number, bot_coef=:bot_coef, level=:level WHERE id=:id;');
 		$sth->bindValue(':id', $this->id, PDO::PARAM_INT);
 		$sth->bindValue(':nom', $this->nom, PDO::PARAM_STR);
 		$sth->bindValue(':action_number', $this->action_number, PDO::PARAM_INT);
+		$sth->bindValue(':bot_number', $this->bot_number, PDO::PARAM_INT);
+		$sth->bindValue(':bot_coef', $this->bot_coef, PDO::PARAM_INT);
+		$sth->bindValue(':level', $this->level, PDO::PARAM_STR);
 		if ($sth->execute() === false) {
 			throw new Exception(print_r($sth->errorInfo(), true));
 		}

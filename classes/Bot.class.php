@@ -22,6 +22,8 @@ class Bot extends Player {
 		$this->setDebut_de_pls(0);
 		$this->setSex(rand(0, 1));
 		$this->setPhoto($this->getSex() ? 'images/tete_faluche_bleu.jpg' : 'images/tete_faluche_rose.jpg');
+		$this->setRemaining_time(10);
+		$this->setMoney(50);
 		$this->setPnj(Player::PNJ_BOT);
 	}
 
@@ -59,6 +61,29 @@ class Bot extends Player {
 			$bot->defaultValues($factor);
 			$bot->save();
 		}
+	}
+
+	public static function reorganiseBots() {
+		$nb = 0;
+		$GLOBALS['DB']->query('UPDATE player SET id_congress = NULL WHERE pnj = 1 ;');
+		$sth = $GLOBALS['DB']->query('SELECT * FROM congress ;');
+		$sth->setFetchMode(PDO::FETCH_ASSOC);
+		while ($sth && ($arr = $sth->fetch())) {
+			$congress = new Congress();
+			$congress->populate($arr);
+			$sql = 'SELECT * FROM player WHERE pnj = 1 AND id_congress IS NULL LIMIT ' . $congress->getBot_number() . ';';
+			$sth2 = $GLOBALS['DB']->query($sql);
+			$sth2->setFetchMode(PDO::FETCH_ASSOC);
+			while ($sth2 && ($arr = $sth2->fetch())) {
+				$bot = new self();
+				$bot->populate($arr);
+				$bot->defaultValues($congress->getBot_coef());
+				$bot->setId_congress($congress->getId());
+				$bot->save();
+				$nb++;
+			}
+		}
+		return $nb;
 	}
 
 	/**

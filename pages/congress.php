@@ -4,6 +4,7 @@
 	<tr>
 		<th>Nom</th>
 		<th>Heures</th>
+		<th>Difficulté</th>
 		<th>Participer</th>
 	</tr>
 	<?php
@@ -21,6 +22,9 @@
 		</td>
 		<td>
 			<?= $congress->getAction_number(); ?>
+		</td>
+		<td>
+			<?= $congress->getLevel(); ?>
 		</td>
 		<td><?= ((new StartCongress($_SESSION['user']))->setParams(array(StartCongress::PARAM_NAME => $congress))->link('bar')) ?></td>
 	</tr>

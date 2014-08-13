@@ -31,7 +31,7 @@ if (isset($_REQUEST['message'])) {
 	Chat::sendMessage($opponent, $_REQUEST['message']);
 }
 
-
+$GLOBALS['DB']->query('UPDATE chat SET is_new = 0 WHERE recipient='.$_SESSION['user']->getId().' AND chat.sender='.$opponent->getId().' ;');
 $n = 0;
 //$sth = $GLOBALS['DB']->query('SELECT * FROM ( SELECT * FROM chat '
 $sth = $GLOBALS['DB']->query('SELECT time_sent, sender.nom AS sender_nom, sender.id AS sender_id, message FROM chat '

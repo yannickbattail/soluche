@@ -40,17 +40,23 @@
 					<?php printUserStats($_SESSION['user']); ?>
 					<?php printInventory2($_SESSION['user']); ?>
 					Chat:
-					<div class="playerBox">
+					<div class="playerBox" style="overflow-y: scroll; width: 290px; height: 500px;">
 					<?php
-					$sth = $GLOBALS['DB']->query('SELECT * FROM player WHERE pnj=0 AND id != '.$_SESSION['user']->getId().';');
+					$sql = 'SELECT player.*, ( ';
+					$sql .= '    SELECT count(*) AS count_1';
+					$sql .= '    FROM chat WHERE recipient=' . $_SESSION['user']->getId() . ' AND sender=player.id AND is_new=1 ';
+					$sql .= ') AS new_messages ';
+					$sql .= 'FROM player WHERE pnj=0 AND id != ' . $_SESSION['user']->getId() . ' ORDER BY new_messages DESC;';
+					$sth = $GLOBALS['DB']->query($sql);
 					$sth->setFetchMode(PDO::FETCH_ASSOC);
 					while ($sth && ($arr = $sth->fetch())) {
 						$player = new Player();
 						$player->populate($arr);
 						?>
-						<div style="border-style: outset; border-width: 2px; border-radius: 3px; display: inline-block; width: 64px; height: 64px;"
+						<div style="border-style: outset; margin: 5px; border-radius: 3px; display: block; width: 250px; height: 64px; vertical-align: middle;"
 							onclick="showChat(<?= $player->getId()?>, '<?= str_replace("'", "\'", htmlentities($player->getNom())) ?>')">
-							<img src="<?= $player->getPhoto()?>" class="playerImage" alt="<?= $player->getNom()?>" title="<?= $player->getNom()?>">
+							<img src="<?= $player->getPhoto()?>" class="playerImage" style="vertical-align: middle;" alt="<?= $player->getNom()?>" title="<?= $player->getNom()?>">
+							<?= $player->getNom()?> <span style="color: red;vertical-align: middle;">(<?= $arr['new_messages'] ?>)</span>
 						</div>
 					<?php } ?>
 					</div>

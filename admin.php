@@ -22,22 +22,20 @@ if ($_SESSION['user']->getId() != 1) {
 }
 
 if (isset($_POST['addBots'])) {
-	echo 'add ' . Bot::createMultiples($_POST['bot_num'], 1, $_POST['id_congress']) . ' Bots for congress ' . $_POST['id_congress'];
+	echo 'add ' . Bot::createMultiples(10000) . ' Bots';
 }
 
-if (isset($_POST['resetBots'])) {
-	try {
-		Bot::resetBots(1, $_POST['id_congress']);
-		echo 'Bots reseted.';
-	} catch (Exception $e) {
-		echo 'oups: ' . $e;
-	}
+if (isset($_POST['reorganiseBots'])) {
+	echo 'reorganise ' . Bot::reorganiseBots() . ' bots.';
 }
 
 if (isset($_POST['savePlayer'])) {
 	$player = Player::load($_POST['id'])->loadInventory();
 	foreach ($_POST as $key => $value) {
 		if (($key != 'id') && ($key != 'savePlayer')) {
+			if ($value == 'NULL') {
+				$value = null;
+			}
 			$method = 'set' . ucfirst($key);
 			echo $key . '=' . $value . ' ';
 			$player->$method($value);
@@ -68,42 +66,43 @@ if (isset($_POST['savePlayer'])) {
 	<h1>admin</h1>
 
 	congres:
+
 	<table class="inventory">
 		<tr>
 			<th>Nom</th>
-			<th>Heures</th>
-			<th>Participer</th>
+			<th>1/4 Heures</th>
+			<th>Bot number</th>
+			<th>Bot coef</th>
+			<th>level</th>
+			<th>edit</th>
 		</tr>
-	<?php
-	$n = 0;
-	$sth = $GLOBALS['DB']->query('SELECT * FROM congress ;');
-	$sth->setFetchMode(PDO::FETCH_ASSOC);
-	while ($sth && ($arr = $sth->fetch())) {
-		$congress = new Congress();
-		$congress->populate($arr);
-		$odd = ($n++ % 2) ? 'odd' : 'even';
-		?>
-        <tr class="<?= $odd ?>">
+			<?php
+			$congressList = array('NULL' => 'NULL');
+			$n = 0;
+			$sth = $GLOBALS['DB']->query('SELECT * FROM congress ;');
+			$sth->setFetchMode(PDO::FETCH_ASSOC);
+			while ($sth && ($arr = $sth->fetch())) {
+				$congress = new Congress();
+				$congress->populate($arr);
+				$congressList[$congress->getId()] = $congress->getNom();
+				$odd = ($n++ % 2) ? 'odd' : 'even';
+				?>
+	        <tr class="<?= $odd ?>">
+			<td><?= $congress->getNom(); ?></td>
+			<td><?= $congress->getAction_number(); ?></td>
+			<td><?= $congress->getBot_number(); ?></td>
+			<td><?= $congress->getBot_coef(); ?></td>
+			<td><?= $congress->getLevel(); ?></td>
 			<td>
-			<?= $congress->getNom(); ?>
-		</td>
-			<td>
-			<?= $congress->getAction_number(); ?>
-		</td>
-			<td>
-				<form action="" method="post">
-					<input type="text" name="bot_num" value="" class="int" />
-					<input type="hidden" name="id_congress" value="<?= $congress->getId(); ?>" class="int" />
-					<input type="submit" name="addBots" value="create bots" />
-					<input type="submit" name="resetBots" value="reset bots" />
-					<a href="adminCongress.php?id_congress=<?= $congress->getId(); ?>"><img src="images/util/edit_user.png" alt="Editer" title="Editer" style="width: 16px; height: 16px;"></a>
-				</form>
+				<a href="adminCongress.php?id_congress=<?= $congress->getId(); ?>"><img src="images/util/edit_user.png" alt="Editer" title="Editer" style="width: 16px; height: 16px;"></a>
 			</td>
 		</tr>
-        <?php
-	}
-	?>
+        <?php } ?>
 	</table>
+	<form action="" method="post">
+		<input type="submit" name="addBots" value="create bots" />
+		<input type="submit" name="reorganiseBots" value="reorganise bots" />
+	</form>
 
 	<table class="inventory">
 		<tr>
@@ -138,51 +137,51 @@ while ($sth && ($arr = $sth->fetch())) {
 		<form action="" method="post">
 			<tr class="<?= $odd ?>">
 				<td>
-					<input type="text" name="nom" value="<?=$player->getNom()?>" />
+					<input type="text" name="nom" title="nom" value="<?=$player->getNom()?>" />
 				</td>
 				<td>
-					<input type="text" name="pass" value="<?=$player->getPass()?>" />
+					<input type="text" name="pass" title="pass" value="<?=$player->getPass()?>" />
 				</td>
 				<td>
-					<input type="text" name="lieu" value="<?=$player->getLieu()?>" style="width: 50px;" />
+					<input type="text" name="lieu" title="lieu" value="<?=$player->getLieu()?>" style="width: 50px;" />
 				</td>
 				<td>
-					<input type="text" name="Rêves vendus" value="<?=$player->getPoints()?>" class="int" />
+					<input type="text" name="points" title="points" value="<?=$player->getPoints()?>" class="int" />
 				</td>
 				<td>
-					<input type="text" name="notoriete" value="<?=$player->getNotoriete()?>" class="int" />
+					<input type="text" name="notoriete" title="notoriete" value="<?=$player->getNotoriete()?>" class="int" />
 				</td>
 				<td>
-					<input type="text" name="alcoolemie" value="<?=$player->getAlcoolemie()?>" class="int" />
+					<input type="text" name="alcoolemie" title="alcoolemie" value="<?=$player->getAlcoolemie()?>" class="int" />
 				</td>
 				<td>
-					<input type="text" name="alcoolemie_optimum" value="<?=$player->getAlcoolemie_optimum()?>" class="int" />
+					<input type="text" name="alcoolemie_optimum" title="alcoolemie_optimum" value="<?=$player->getAlcoolemie_optimum()?>" class="int" />
 				</td>
 				<td>
-					<input type="text" name="alcoolemie_max" value="<?=$player->getAlcoolemie_max()?>" class="int" />
+					<input type="text" name="alcoolemie_max" title="alcoolemie_max" value="<?=$player->getAlcoolemie_max()?>" class="int" />
 				</td>
 				<td>
-					<input type="text" name="fatigue" value="<?=$player->getFatigue()?>" class="int" />
+					<input type="text" name="fatigue" title="fatigue" value="<?=$player->getFatigue()?>" class="int" />
 				</td>
 				<td>
-					<input type="text" name="fatigue_max" value="<?=$player->getFatigue_max()?>" class="int" />
+					<input type="text" name="fatigue_max" title="fatigue_max" value="<?=$player->getFatigue_max()?>" class="int" />
 				</td>
 				<td>
-					<input type="text" name="sex_appeal" value="<?=$player->getSex_appeal()?>" class="int" />
+					<input type="text" name="sex_appeal" title="sex_appeal" value="<?=$player->getSex_appeal()?>" class="int" />
 				</td>
 				<td style="width: 40px; text-align: left;">
 					<label><input type="radio" name="en_pls" value="0" <?=$player->getEn_pls()==0?'checked="checked"':''?> />non</label><br /> <label><input type="radio" name="en_pls" value="1"
 							<?=$player->getEn_pls()==1?'checked="checked"':''?> />oui</label>
 				</td>
 				<td>
-					<input type="text" name="debut_de_pls" value="<?=$player->getDebut_de_pls()?>" />
+					<input type="text" name="debut_de_pls" title="debut_de_pls" value="<?=$player->getDebut_de_pls()?>" />
 				</td>
 				<td style="width: 40px;">
 					<label><input type="radio" name="sex" value="0" <?=$player->getSex()==0?'checked="checked"':''?> /><span style="color: pink">&#9792;</span></label><br /> <label><input
 							type="radio" name="sex" value="1" <?=$player->getSex()==1?'checked="checked"':''?> /><span style="color: blue">&#9794;</span></label>
 				</td>
 				<td>
-					<input type="text" name="photo" value="<?=$player->getPhoto()?>" />
+					<input type="text" name="photo" title="photo" value="<?=$player->getPhoto()?>" />
 					<br />
 					<img src="<?= $player->getPhoto() ?>" class="inventoryImage" title="<?= $player->getNom() ?>" />
 				</td>
@@ -192,9 +191,16 @@ while ($sth && ($arr = $sth->fetch())) {
 				</td>
 				<td>
 					<select name="id_congress">
-						<option value="1" <?=$player->getId_congress()==1?'selected="selected"':''?>>Week-end luche</option>
-						<option value="2" <?=$player->getId_congress()==2?'selected="selected"':''?>>Anniversaire</option>
+					<?php foreach ($congressList as $id_congress => $nom_congress) { ?>
+						<option value="<?= $id_congress ?>" <?=$player->getId_congress()==$id_congress?'selected="selected"':''?>><?= $nom_congress ?></option>
+					<?php } ?>
 					</select>
+				</td>
+				<td>
+					<input type="text" name="remaining_time" title="remaining_time" value="<?=$player->getRemaining_time()?>" class="int" />
+				</td>
+				<td>
+					<input type="text" name="money" title="money" value="<?=$player->getMoney()?>" class="int" />
 				</td>
 				<td>
 					<input type="hidden" name="id" value="<?=$player->getId()?>" />
