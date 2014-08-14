@@ -9,7 +9,7 @@ abstract class AbstractDbObject {
 	 */
 	public function populate(array $assocArray) {
 		foreach ($assocArray as $field => $value) {
-			if (!is_numeric($field)) {
+			if (!is_numeric($field) && property_exists($this, $field)) {
 				//$setter = 'set' . ucfirst($field);
 				//$this->$setter($value);
 				$this->$field = $value;

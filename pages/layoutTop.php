@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Soluche</title>
+<link rel="icon" type="image/png" href="images/items/cle de fa.png">
 <link rel="stylesheet" href="theme/theme.css" type="text/css">
 <link rel="stylesheet" href="theme/other.css" type="text/css">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.9.1/themes/smoothness/jquery-ui.css">
@@ -40,51 +41,7 @@
 					<?php printUserStats($_SESSION['user']); ?>
 					<?php printInventory2($_SESSION['user']); ?>
 					Chat:
-					<div class="playerBox" style="overflow-y: scroll; width: 290px; height: 500px;">
-					<?php
-					$sql = 'SELECT player.*, ( ';
-					$sql .= '    SELECT count(*) AS count_1';
-					$sql .= '    FROM chat WHERE recipient=' . $_SESSION['user']->getId() . ' AND sender=player.id AND is_new=1 ';
-					$sql .= ') AS new_messages ';
-					$sql .= 'FROM player WHERE pnj=0 AND id != ' . $_SESSION['user']->getId() . ' ORDER BY new_messages DESC;';
-					$sth = $GLOBALS['DB']->query($sql);
-					$sth->setFetchMode(PDO::FETCH_ASSOC);
-					while ($sth && ($arr = $sth->fetch())) {
-						$player = new Player();
-						$player->populate($arr);
-						?>
-						<div style="border-style: outset; margin: 5px; border-radius: 3px; display: block; width: 250px; height: 64px; vertical-align: middle;"
-							onclick="showChat(<?= $player->getId()?>, '<?= str_replace("'", "\'", htmlentities($player->getNom())) ?>')">
-							<img src="<?= $player->getPhoto()?>" class="playerImage" style="vertical-align: middle;" alt="<?= $player->getNom()?>" title="<?= $player->getNom()?>">
-							<?= $player->getNom()?> <span style="color: red;vertical-align: middle;">(<?= $arr['new_messages'] ?>)</span>
-						</div>
-					<?php } ?>
-					</div>
-					<div id="dialog" title="Chat box" style="display: none;">
-						<div id="chatContent" style="overflow: scroll; height: 200px; width: 500px;"></div>
-						<form action="main.php?action=SendMessage&prevent_reexecute=<?= $_SESSION['prevent_reexecute'] ?>" method="post"
-							onsubmit="if (document.getElementById('message').value == ''){ return false;}">
-							<input type="text" name="chatMessage" id="chatMessage" value="" />
-							<input type="hidden" name="id_player" id="id_player" value="" size="2" />
-							<input type="submit" name="SendMessage" value="message global" onclick="return sendMessage();" />
-						</form>
-					</div>
-					<script type="text/javascript">
-					function showChat(id_player, player_name) {
-					    $("#dialog").dialog({
-						    title: "Chat avec " + player_name,
-					        height:280,
-					        width:540
-					        });
-					    $("#id_player").val(id_player);
-					    $("#chatContent").load("chat.php?id_player="+id_player);
-					}
-					function sendMessage() {
-					    $("#chatContent").load("chat.php?id_player="+$("#id_player").val()+'&message='+encodeURIComponent($("#chatMessage").val()));
-					    $("#chatMessage").val('');
-					    return false;
-					}
-					</script>
+					<?php printChat($_SESSION['user']); ?>
 				</div>
 			</td>
 			<td>

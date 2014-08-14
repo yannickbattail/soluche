@@ -423,3 +423,55 @@ function plus($nb, $better) {
 	}
 	return $nb;
 }
+
+function printChat(Player $player) {
+	?>
+<div class="playerBox" style="overflow-y: scroll; width: 290px; height: 500px;">
+	<?php
+	$sql = 'SELECT player.*, ( ';
+	$sql .= '    SELECT count(*) AS count_1';
+	$sql .= '    FROM chat WHERE recipient=' . $player->getId() . ' AND sender=player.id AND is_new=1 ';
+	$sql .= ') AS new_messages ';
+	$sql .= 'FROM player WHERE pnj=0 AND id != ' . $player->getId() . ' ORDER BY new_messages DESC;';
+	$sth = $GLOBALS['DB']->prepare($sql);
+	$sth->bindValue(':id', $player->getId(), PDO::PARAM_INT);
+	$sth->execute();
+	$sth->setFetchMode(PDO::FETCH_ASSOC);
+	while ($sth && ($arr = $sth->fetch())) {
+		$contact = new Player();
+		$contact->populate($arr);
+		?>
+		<div style="border-style: outset; margin: 5px; border-radius: 3px; display: block; width: 250px; height: 64px; vertical-align: middle;"
+		onclick="showChat(<?= $contact->getId()?>, '<?= str_replace("'", "\'", htmlentities($contact->getNom())) ?>');">
+		<img src="<?= $contact->getPhoto()?>" class="playerImage" style="vertical-align: middle;" alt="<?= $contact->getNom()?>" title="<?= $contact->getNom()?>">
+			<?= $contact->getNom()?> <span style="color: red; vertical-align: middle;">(<?= $arr['new_messages'] ?>)</span>
+	</div>
+	<?php } ?>
+	</div>
+<div id="dialog" title="Chat box" style="display: none;">
+	<div id="chatContent" style="overflow: scroll; height: 200px; width: 500px;"></div>
+	<form action="main.php?action=SendMessage&prevent_reexecute=<?= $_SESSION['prevent_reexecute'] ?>" method="post"
+		onsubmit="if (document.getElementById('message').value == ''){ return false;}">
+		<input type="text" name="chatMessage" id="chatMessage" value="" />
+		<input type="hidden" name="id_player" id="id_player" value="" size="2" />
+		<input type="submit" name="SendMessage" value="envoyer" onclick="return sendMessage();" />
+	</form>
+</div>
+<script type="text/javascript">
+	function showChat(id_player, player_name) {
+	    $("#dialog").dialog({
+		    title: "Chat avec " + player_name,
+	        height:280,
+	        width:540
+	        });
+	    $("#id_player").val(id_player);
+	    $("#chatContent").load("chat.php?id_player="+id_player);
+	}
+	function sendMessage() {
+	    $("#chatContent").load("chat.php?id_player="+$("#id_player").val()+'&message='+encodeURIComponent($("#chatMessage").val()));
+	    $("#chatMessage").val('');
+	    return false;
+	}
+	</script>
+<?php
+}

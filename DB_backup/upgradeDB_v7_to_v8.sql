@@ -5,6 +5,7 @@
 
 CREATE TABLE IF NOT EXISTS `chat` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `is_new` int(11) NOT NULL DEFAULT '1',
   `time_sent` int(11) NOT NULL,
   `sender` int(11) NOT NULL,
   `recipient` int(11) DEFAULT NULL,
@@ -13,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `chat` (
   KEY `sender` (`sender`),
   KEY `recipient` (`recipient`),
   KEY `time_sent` (`time_sent`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=48 ;
 
 --
 -- Constraints for dumped tables
@@ -23,8 +24,8 @@ CREATE TABLE IF NOT EXISTS `chat` (
 -- Constraints for table `chat`
 --
 ALTER TABLE `chat`
-  ADD CONSTRAINT `chat_ibfk_2` FOREIGN KEY (`recipient`) REFERENCES `player` (`id`),
-  ADD CONSTRAINT `chat_ibfk_1` FOREIGN KEY (`sender`) REFERENCES `player` (`id`);
+  ADD CONSTRAINT `chat_ibfk_1` FOREIGN KEY (`sender`) REFERENCES `player` (`id`),
+  ADD CONSTRAINT `chat_ibfk_2` FOREIGN KEY (`recipient`) REFERENCES `player` (`id`);
 
 ALTER TABLE `item` ADD `description` VARCHAR(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL AFTER `nom`;
 

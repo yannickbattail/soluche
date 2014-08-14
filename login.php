@@ -67,6 +67,7 @@ if (isset($_POST['new']) && isset($_POST['login']) && isset($_POST['pass']) && i
 <title>Soluche</title>
 <link rel="stylesheet" href="theme/theme.css" type="text/css">
 <link rel="stylesheet" href="theme/other.css" type="text/css">
+<link rel="icon" type="image/png" href="images/items/cle de fa.png">
 <style type="text/css">
 th {
 	text-align: right;
