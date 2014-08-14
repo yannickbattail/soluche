@@ -127,6 +127,17 @@
 	width: auto !important;
 }
 
+#contactsBox {
+	border-style: inset;
+	border-width: 2px;
+	border-radius: 5px;
+	overflow: scroll;
+	overflow-x : hidden;
+	overflow-y: scroll;
+	width: 290px;
+	height: 500px;
+}
+
 tr.odd {
 	background: #404040;
 }

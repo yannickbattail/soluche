@@ -18,18 +18,24 @@ if (!isset($_SESSION['user']) || !($_SESSION['user'] instanceof Player)) {
 	die('pas loggé');
 }
 
-if (!isset($_REQUEST['id_player'])) {
-	die('pas de joueur specifié (param: id_player)');
-}
 
 $_SESSION['user'] = Player::load($_SESSION['user']->getId());
 //$_SESSION['user']->loadInventory();
 
 $opponent = Player::load($_REQUEST['id_player']);
 
+
+/* ------ treatment ------- */
+
+if (!isset($_REQUEST['id_player'])) {
+	die('pas de joueur specifié (param: id_player)');
+}
+
 if (isset($_REQUEST['message'])) {
 	Chat::sendMessage($opponent, $_REQUEST['message']);
 }
+
+/* ------ html ------- */
 
 $GLOBALS['DB']->query('UPDATE chat SET is_new = 0 WHERE recipient='.$_SESSION['user']->getId().' AND chat.sender='.$opponent->getId().' ;');
 $n = 0;
