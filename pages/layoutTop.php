@@ -46,6 +46,7 @@
 			</td>
 			<td>
 				<div id="content">
+					<?php if ($_SESSION['user']->getId_congress() != 0) { ?>
 					<table class="tabBar">
 						<tr>
 							<td <?= (Dispatcher::getPage() == 'camping')?'class="tabBarSelected"':''  ?>>
@@ -67,4 +68,6 @@
 								<a href="main.php?page=danse">Piste de danse</a>
 							</td>
 						</tr>
-					</table>
+					</table>	
+					<?php } ?>
+				

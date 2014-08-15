@@ -427,11 +427,11 @@ function plus($nb, $better) {
 function printChat(Player $player) {
 	?>
 <div id="contactsBox">
-	<img src="images/loading.gif" alt="laoding" title="laoding" />
+	<img src="images/loading.gif" alt="loading" title="loading" />
 </div>
 <div id="dialog" title="Chat box" style="display: none;">
 	<div id="chatContent" style="overflow: scroll; height: 200px; width: 500px;">
-		<img src="images/loading.gif" alt="laoding" title="laoding" />
+		<img src="images/loading.gif" alt="loading" title="loading" />
 	</div>
 	<input type="text" name="chatMessage" id="chatMessage" value="" />
 	<input type="hidden" name="id_player" id="id_player" value="" size="2" />
@@ -446,7 +446,7 @@ function printChat(Player $player) {
 	        'close': function( event, ui ) {$('#id_player').val('');}
 	        });
 	    $('#id_player').val(id_player);
-	    $('#chatContent').html('<img src="images/loading.gif" alt="laoding" title="loading" />');
+	    $('#chatContent').html('<img src="images/loading.gif" alt="loading" title="loading" />');
 	    $('#chatContent').load('chat.php?id_player='+id_player);
 	}
 	function refreshChat() {
@@ -469,3 +469,24 @@ function printChat(Player $player) {
 </script>
 <?php
 }
+
+function printChatGlobal() {
+	?>
+<div id="globalMessages">
+	<img src="images/loading.gif" alt="loading" title="loading" />
+</div>
+<form action="main.php?action=SendGlobalMessage&prevent_reexecute=<?= $_SESSION['prevent_reexecute'] ?>" method="post"
+	onsubmit="if (document.getElementById('message').value == ''){ return false;} else { return confirm('Envoyer un message global coute 1 en dignichose. Etes-vous sûr?');}">
+	<input type="text" name="message" id="message" value="" />
+	<input type="submit" name="SendGlobalMessage" value="message global" />
+</form>
+<script type="text/javascript">
+	function refreshChatGlobal() {
+    	$('#globalMessages').load('chatGlobal.php');
+	}
+	setTimeout(refreshChatGlobal, 2*1000); // the 1st time;
+	setInterval(refreshChatGlobal, 5*1000);
+</script>
+<?php
+}
+

@@ -50,7 +50,7 @@ class StartCongress extends AbstractAction {
 		$this->player->setAlcoolemie(0);
 		$this->player->setCongress($this->congress);
 		$this->player->setRemaining_time($this->congress->getAction_number());
-		$this->player->addMoney(50);
+		$this->player->addMoney($this->congress->getBudget());
 		$this->player->addRandomItem();
 		Bot::resetBots(1, $this->congress->getId());
 		Dispatcher::setPage('camping');

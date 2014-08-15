@@ -62,6 +62,16 @@ class Congress extends AbstractDbObject {
 	public function setLevel($level) {
 		$this->level = $level;
 	}
+
+	protected $budget = 42;
+	
+	public function getBudget() {
+		return $this->budget;
+	}
+	
+	public function setBudget($budget) {
+		$this->budget = $budget;
+	}
 	
 	/**
 	 *
@@ -164,12 +174,13 @@ class Congress extends AbstractDbObject {
 	}
 
 	public function create() {
-		$sth = $GLOBALS['DB']->prepare('INSERT INTO ' . self::TABLE_NAME . ' ' . '(nom, action_number, bot_number, bot_coef, level)' . ' VALUES (:nom, :action_number, :bot_number, :bot_coef, :level);');
+		$sth = $GLOBALS['DB']->prepare('INSERT INTO ' . self::TABLE_NAME . ' ' . '(nom, action_number, bot_number, bot_coef, level, budget)' . ' VALUES (:nom, :action_number, :bot_number, :bot_coef, :level, :budget);');
 		$sth->bindValue(':nom', $this->nom, PDO::PARAM_STR);
 		$sth->bindValue(':action_number', $this->action_number, PDO::PARAM_INT);
 		$sth->bindValue(':bot_number', $this->bot_number, PDO::PARAM_INT);
 		$sth->bindValue(':bot_coef', $this->bot_coef, PDO::PARAM_INT);
 		$sth->bindValue(':level', $this->level, PDO::PARAM_STR);
+		$sth->bindValue(':budget', $this->budget, PDO::PARAM_INT);
 		if ($sth->execute() === false) {
 			throw new Exception(print_r($sth->errorInfo(), true));
 		}
@@ -179,16 +190,21 @@ class Congress extends AbstractDbObject {
 	public function defaultValues() {
 		$this->nom = 'Week-end luche';
 		$this->action_number = 10;
+		$this->bot_number = 20;
+		$this->bot_coef = 1;
+		$this->level = 'impétrent';
+		$this->budget = 50;
 	}
 
 	public function update() {
-		$sth = $GLOBALS['DB']->prepare('UPDATE ' . self::TABLE_NAME . ' SET nom=:nom, action_number=:action_number, bot_number=:bot_number, bot_coef=:bot_coef, level=:level WHERE id=:id;');
+		$sth = $GLOBALS['DB']->prepare('UPDATE ' . self::TABLE_NAME . ' SET nom=:nom, action_number=:action_number, bot_number=:bot_number, bot_coef=:bot_coef, level=:level, budget=:budget WHERE id=:id;');
 		$sth->bindValue(':id', $this->id, PDO::PARAM_INT);
 		$sth->bindValue(':nom', $this->nom, PDO::PARAM_STR);
 		$sth->bindValue(':action_number', $this->action_number, PDO::PARAM_INT);
 		$sth->bindValue(':bot_number', $this->bot_number, PDO::PARAM_INT);
 		$sth->bindValue(':bot_coef', $this->bot_coef, PDO::PARAM_INT);
 		$sth->bindValue(':level', $this->level, PDO::PARAM_STR);
+		$sth->bindValue(':budget', $this->budget, PDO::PARAM_INT);
 		if ($sth->execute() === false) {
 			throw new Exception(print_r($sth->errorInfo(), true));
 		}

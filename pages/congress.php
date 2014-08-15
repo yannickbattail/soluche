@@ -1,9 +1,10 @@
 <h3>Les congrès du moment:</h3>
-
+S'inscire à un congrès pour commencer à jouer.
 <table class="inventory">
 	<tr>
 		<th>Nom</th>
-		<th>Heures</th>
+		<th>Durée</th>
+		<th>Mon budget</th>
 		<th>Difficulté</th>
 		<th>Participer</th>
 	</tr>
@@ -17,28 +18,30 @@
 		$odd = ($n++ % 2) ? 'odd' : 'even';
 		?>
         <tr class="<?= $odd ?>">
-		<td>
-			<?= $congress->getNom(); ?>
-		</td>
-		<td>
-			<?= $congress->getAction_number(); ?>
-		</td>
-		<td>
-			<?= $congress->getLevel(); ?>
-		</td>
-		<td><?= ((new StartCongress($_SESSION['user']))->setParams(array(StartCongress::PARAM_NAME => $congress))->link('bar')) ?></td>
-	</tr>
-        <?php
-	}
-	?>
+			<td>
+				<?= $congress->getNom(); ?>
+			</td>
+			<td>
+				<?= $congress->getAction_number(); ?>
+			</td>
+			<td>
+				<?= $congress->getBudjet() ?>
+			</td>
+			<td>
+				<?= $congress->getLevel(); ?>
+			</td>
+			<td><?= ((new StartCongress($_SESSION['user']))->setParams(array(StartCongress::PARAM_NAME => $congress))->link('orga')) ?></td>
+		</tr>
+    <?php } ?>
 </table>
 
 <?php
 if (!$_SESSION['user']->getId_congress()) {
 	?>
+	<br />
 Congrès pas fini ... et ben si :-(
 
-<h3>Résumé</h3>
+<h3>Résumé du congrès précédent</h3>
 <table class="inventory">
 	<tr>
 		<th>Action</th>
@@ -85,7 +88,7 @@ Congrès pas fini ... et ben si :-(
 </table>
 
 
-<h3>Historique</h3>
+<h3>Historique des actions du congrès</h3>
 <table class="inventory">
 	<tr>
 		<th>Action</th>
