@@ -25,7 +25,7 @@ S'inscire à un congrès pour commencer à jouer.
 				<?= $congress->getAction_number(); ?>
 			</td>
 			<td>
-				<?= $congress->getBudjet() ?>
+				<?= $congress->getBudget() ?>
 			</td>
 			<td>
 				<?= $congress->getLevel(); ?>
