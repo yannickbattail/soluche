@@ -23,7 +23,7 @@
 	</div>
 	<table id="skeleton">
 		<tr>
-			<td>
+			<td style="width: 200px">
 				<div id="menu">
 					<div class="login">
 						<img src="<?=$_SESSION['user']->getPhoto() ?>" title="<?= $_SESSION['user']->getNom() ?>" style="max-width: 200px; max-height: 200px;" />
@@ -44,30 +44,21 @@
 					<?php printChat($_SESSION['user']); ?>
 				</div>
 			</td>
-			<td>
+			<td style="min-width: 500px;">
 				<div id="content">
-					<?php if ($_SESSION['user']->getId_congress() != 0) { ?>
-					<table class="tabBar">
-						<tr>
-							<td <?= (Dispatcher::getPage() == 'camping')?'class="tabBarSelected"':''  ?>>
-								<a href="main.php?page=camping">Camping</a>
-							</td>
-							<td <?= (Dispatcher::getPage() == 'orga')?'class="tabBarSelected"':''  ?>>
-								<a href="main.php?page=orga">Coin des orgas</a>
-							</td>
-							<td <?= (Dispatcher::getPage() == 'bar')?'class="tabBarSelected"':''  ?>>
-								<a href="main.php?page=bar">Bar</a>
-							</td>
-							<td <?= (Dispatcher::getPage() == 'tente')?'class="tabBarSelected"':''  ?>>
-								<a href="main.php?page=tente">Ta tente</a>
-							</td>
-							<td <?= (Dispatcher::getPage() == 'cuisine')?'class="tabBarSelected"':''  ?>>
-								<a href="main.php?page=cuisine">Cuisine</a>
-							</td>
-							<td <?= (Dispatcher::getPage() == 'danse')?'class="tabBarSelected"':''  ?>>
-								<a href="main.php?page=danse">Piste de danse</a>
-							</td>
-						</tr>
-					</table>	
-					<?php } ?>
-				
+					<?php  printTabsLieu(); ?>
+					<?php  Dispatcher::displayPageContent(); ?>
+				</div>
+			</td>
+			<td style="width: 200px">
+				Radio faluche:
+				<?php printRadioFaluche(); ?>
+			</td>
+		</tr>
+	</table>
+	<div id="footer">
+	<?php printChatGlobal(); ?>
+	<div style="font-size: 10px; color: silver;" title="tu as perdu au jeu! ;-)">v 1.10</div>
+	</div>
+</body>
+</html>

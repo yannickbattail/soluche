@@ -490,3 +490,48 @@ function printChatGlobal() {
 <?php
 }
 
+function printRadioFaluche() {
+	?>
+<div id="news">
+	<img src="images/loading.gif" alt="loading" title="loading" />
+</div>
+<script type="text/javascript">
+	function refreshNews() {
+    	$('#news').load('news.php');
+	}
+	setTimeout(refreshNews, 2*1000); // the 1st time;
+	setInterval(refreshNews, 5*1000);
+</script>
+<?php
+}
+
+function printTabsLieu() {
+	if ($_SESSION['user']->getId_congress() != 0) {
+		?>
+<table class="tabBar">
+	<tr>
+		<td <?= (Dispatcher::getPage() == 'camping')?'class="tabBarSelected"':''  ?>>
+			<a href="main.php?page=camping">Camping</a>
+		</td>
+		<td <?= (Dispatcher::getPage() == 'orga')?'class="tabBarSelected"':''  ?>>
+			<a href="main.php?page=orga">Coin des orgas</a>
+		</td>
+		<td <?= (Dispatcher::getPage() == 'bar')?'class="tabBarSelected"':''  ?>>
+			<a href="main.php?page=bar">Bar</a>
+		</td>
+		<td <?= (Dispatcher::getPage() == 'tente')?'class="tabBarSelected"':''  ?>>
+			<a href="main.php?page=tente">Ta tente</a>
+		</td>
+		<td <?= (Dispatcher::getPage() == 'cuisine')?'class="tabBarSelected"':''  ?>>
+			<a href="main.php?page=cuisine">Cuisine</a>
+		</td>
+		<td <?= (Dispatcher::getPage() == 'danse')?'class="tabBarSelected"':''  ?>>
+			<a href="main.php?page=danse">Piste de danse</a>
+		</td>
+	</tr>
+</table>
+<?php
+	}
+}
+
+

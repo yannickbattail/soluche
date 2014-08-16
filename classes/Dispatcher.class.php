@@ -35,12 +35,14 @@ class Dispatcher {
 	}
 
 	public static function displayPage() {
-		include_once ("./pages/layoutTop.php");
+		include_once ("./layout.php");
+	}
+	
+	public static function displayPageContent() {
 		$filename = "./pages/" . self::$page . ".php";
 		include_once ($filename);
-		include_once ("./pages/layoutBottom.php");
 	}
-
+	
 	/**
 	 *
 	 * @var ActionInterface
