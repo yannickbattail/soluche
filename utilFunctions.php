@@ -306,6 +306,11 @@ function printItem(Item $item, $num = 0) {
 		<tr class="even">
 			<td colspan="2"><?= (new Sell($_SESSION['user']))->setParams(array(Sell::PARAM_NAME=>$item))->link()?></td>
 		</tr>
+		<!-- 
+		<tr class="even">
+			<td colspan="2"><?= (new Sell($_SESSION['user']))->setParams(array(Sell::PARAM_NAME=>$item))->link()?></td>
+		</tr>
+		 -->
 		<tr class="odd">
 			<td colspan="2" style="max-width: 200px"><?= $item->getDescription(); ?></td>
 		</tr>
@@ -490,7 +495,7 @@ function printChatGlobal() {
 <?php
 }
 
-function printRadioFaluche() {
+function printNews() {
 	?>
 <div id="news">
 	<img src="images/loading.gif" alt="loading" title="loading" />
@@ -500,7 +505,7 @@ function printRadioFaluche() {
     	$('#news').load('news.php');
 	}
 	setTimeout(refreshNews, 2*1000); // the 1st time;
-	setInterval(refreshNews, 5*1000);
+	setInterval(refreshNews, 20*1000);
 </script>
 <?php
 }

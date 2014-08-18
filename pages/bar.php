@@ -1,6 +1,4 @@
 
-<h3>Bar</h3>
-
 <h3>Boisson au bar:</h3>
 <table class="inventory inventoryPage">
 	<tr>

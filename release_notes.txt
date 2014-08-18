@@ -1,3 +1,4 @@
+
 v1.6
 * les points sont devenus: rèves vendus, Notoriété est devenue cédibidulité
 * meilleures règles, entre autre du temps (¼ H)

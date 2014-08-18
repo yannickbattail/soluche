@@ -1,7 +1,6 @@
 
-<h3>Coin des orgas</h3>
-
 <h3>Vends ta dignichose pour avoir des items:</h3><img src="images/items/pin-s-exigeons-la-dignité.png" alt="Dignichose" />
+
 <table class="inventory inventoryPage">
 	<tr>
 		<th>Item</th>

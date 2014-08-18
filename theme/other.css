@@ -214,9 +214,9 @@ tr.even {
 
 .action {
 	display: inline-block;
-	color: #aaaaaa;
+	color: gold !important;
 	background-color: #404040;
-	border-color: #aaaaaa;
+	border-color: gold !important;
 	border-style: outset;
 	border-width: 1px;
 	border-radius: 3px;
@@ -318,4 +318,8 @@ tr.even {
 
 .chatMessage {
 	
+}
+
+.int {
+	width: 20px;
 }

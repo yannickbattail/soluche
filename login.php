@@ -157,7 +157,7 @@ td {
 			</tr>
 		</table>
 	</form>
-	<div style="font-size: 10px; color: silver;" title="tu as perdu au jeu! ;-)">v 1.10</div>
+	<div style="font-size: 10px; color: silver;" title="tu as perdu au jeu! ;-)">v 1.11</div>
 	<a href="https://github.com/yannickbattail/soluche"><img style="position: absolute; top: 0; right: 0; border: 0;" src="images/Fork me on GitHub.png" alt="Fork me on GitHub"></a>
 </body>
 </html>

@@ -48,7 +48,7 @@ div#header {
 	height: 200px;
 	font-family: Times;
 	font-size: 100px;
-	color: #ffcc11;
+	color: gold;
 	background-image: url("../images/banner_short.jpg");
 	background-repeat: no-repeat;
 	height: 200px;
@@ -126,4 +126,9 @@ div#globalMessages {
 	overflow: scroll;
 	height: 200px;
 	margin: 10px;
+}
+
+form {
+    margin: 0;
+    padding: 0;
 }

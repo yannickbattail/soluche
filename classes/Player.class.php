@@ -3,6 +3,10 @@ class Player extends AbstractDbObject {
 
 	const TABLE_NAME = 'player';
 
+	protected static $fieldList = array('id' => PDO::PARAM_INT, 'nom' => PDO::PARAM_STR, 'pass' => PDO::PARAM_STR, 'lieu' => PDO::PARAM_STR, 'points' => PDO::PARAM_INT, 'notoriete' => PDO::PARAM_INT, 'alcoolemie' => PDO::PARAM_INT, 'alcoolemie_optimum' => PDO::PARAM_INT, 
+			'alcoolemie_max' => PDO::PARAM_INT, 'fatigue' => PDO::PARAM_INT, 'fatigue_max' => PDO::PARAM_INT, 'sex_appeal' => PDO::PARAM_INT, 'en_pls' => PDO::PARAM_INT, 'debut_de_pls' => PDO::PARAM_INT, 'sex' => PDO::PARAM_INT, 'photo' => PDO::PARAM_STR, 'pnj' => PDO::PARAM_INT, 
+			'id_congress' => PDO::PARAM_INT, 'remaining_time' => PDO::PARAM_INT, 'money' => PDO::PARAM_INT);
+
 	const PNJ_PLAYER = 0;
 
 	const PNJ_BOT = 1;
@@ -437,62 +441,6 @@ class Player extends AbstractDbObject {
 		$this->history = new History();
 	}
 
-	/**
-	 *
-	 * @param int $id        	
-	 * @return Player
-	 */
-	public static function load($id) {
-		$sth = $GLOBALS['DB']->query('SELECT * FROM ' . self::TABLE_NAME . ' WHERE id=' . intval($id));
-		$sth->setFetchMode(PDO::FETCH_ASSOC);
-		$arr = $sth->fetch();
-		if (!$arr) {
-			return $arr;
-		} else {
-			$obj = new self();
-			if ($arr['pnj'] > 0) {
-				$obj = new Bot();
-			}
-			$obj->populate($arr);
-			return $obj;
-		}
-	}
-
-	public function save() {
-		if (!$this->id) {
-			$this->create();
-		} else {
-			$this->update();
-		}
-	}
-
-	public function create() {
-		$sth = $GLOBALS['DB']->prepare('INSERT INTO ' . self::TABLE_NAME . ' ' . '(nom, pass, lieu, points, notoriete, alcoolemie, alcoolemie_optimum, alcoolemie_max, fatigue, fatigue_max, sex_appeal, en_pls, debut_de_pls, sex, photo, pnj, id_congress, remaining_time, money)' . ' VALUES ( :nom, :pass, :lieu, :points, :notoriete, :alcoolemie, :alcoolemie_optimum, :alcoolemie_max, :fatigue, :fatigue_max, :sex_appeal, :en_pls, :debut_de_pls, :sex, :photo, :pnj, :id_congress, :remaining_time, :money);');
-		$sth->bindValue(':nom', $this->nom, PDO::PARAM_STR);
-		$sth->bindValue(':pass', $this->pass, PDO::PARAM_STR);
-		$sth->bindValue(':lieu', $this->lieu, PDO::PARAM_STR);
-		$sth->bindValue(':points', $this->points, PDO::PARAM_INT);
-		$sth->bindValue(':notoriete', $this->notoriete, PDO::PARAM_INT);
-		$sth->bindValue(':alcoolemie', $this->alcoolemie, PDO::PARAM_INT);
-		$sth->bindValue(':alcoolemie_optimum', $this->alcoolemie_optimum, PDO::PARAM_INT);
-		$sth->bindValue(':alcoolemie_max', $this->alcoolemie_max, PDO::PARAM_INT);
-		$sth->bindValue(':fatigue', $this->fatigue, PDO::PARAM_INT);
-		$sth->bindValue(':fatigue_max', $this->fatigue_max, PDO::PARAM_INT);
-		$sth->bindValue(':sex_appeal', $this->sex_appeal, PDO::PARAM_INT);
-		$sth->bindValue(':en_pls', $this->en_pls, PDO::PARAM_INT);
-		$sth->bindValue(':debut_de_pls', $this->debut_de_pls, PDO::PARAM_INT);
-		$sth->bindValue(':sex', $this->sex, PDO::PARAM_INT);
-		$sth->bindValue(':photo', $this->photo, PDO::PARAM_STR);
-		$sth->bindValue(':pnj', $this->pnj, PDO::PARAM_INT);
-		$sth->bindValue(':id_congress', $this->id_congress, PDO::PARAM_INT);
-		$sth->bindValue(':remaining_time', $this->remaining_time, PDO::PARAM_INT);
-		$sth->bindValue(':money', $this->money, PDO::PARAM_INT);
-		if ($sth->execute() === false) {
-			throw new Exception(print_r($sth->errorInfo(), true));
-		}
-		$this->setId($GLOBALS['DB']->lastInsertId());
-	}
-
 	public function defaultValues() {
 		$this->lieu = 'camping';
 		$this->points = 0;
@@ -513,35 +461,25 @@ class Player extends AbstractDbObject {
 		$this->money = 0;
 	}
 
-	public function update() {
-		$sth = $GLOBALS['DB']->prepare('UPDATE ' . self::TABLE_NAME . ' SET nom=:nom, pass=:pass, lieu=:lieu, points=:points, notoriete=:notoriete, alcoolemie=:alcoolemie, alcoolemie_optimum=:alcoolemie_optimum, alcoolemie_max=:alcoolemie_max, fatigue=:fatigue, fatigue_max=:fatigue_max, sex_appeal=:sex_appeal, en_pls=:en_pls, debut_de_pls=:debut_de_pls, sex=:sex, photo=:photo, pnj=:pnj, id_congress=:id_congress, remaining_time=:remaining_time, money=:money WHERE id=:id;');
-		$sth->bindValue(':id', $this->id, PDO::PARAM_INT);
-		$sth->bindValue(':nom', $this->nom, PDO::PARAM_STR);
-		$sth->bindValue(':pass', $this->pass, PDO::PARAM_STR);
-		$sth->bindValue(':lieu', $this->lieu, PDO::PARAM_STR);
-		$sth->bindValue(':points', $this->points, PDO::PARAM_INT);
-		$sth->bindValue(':notoriete', $this->notoriete, PDO::PARAM_INT);
-		$sth->bindValue(':alcoolemie', $this->alcoolemie, PDO::PARAM_INT);
-		$sth->bindValue(':alcoolemie_optimum', $this->alcoolemie_optimum, PDO::PARAM_INT);
-		$sth->bindValue(':alcoolemie_max', $this->alcoolemie_max, PDO::PARAM_INT);
-		$sth->bindValue(':fatigue', $this->fatigue, PDO::PARAM_INT);
-		$sth->bindValue(':fatigue_max', $this->fatigue_max, PDO::PARAM_INT);
-		$sth->bindValue(':sex_appeal', $this->sex_appeal, PDO::PARAM_INT);
-		$sth->bindValue(':en_pls', $this->en_pls, PDO::PARAM_INT);
-		$sth->bindValue(':debut_de_pls', $this->debut_de_pls, PDO::PARAM_INT);
-		$sth->bindValue(':sex', $this->sex, PDO::PARAM_INT);
-		$sth->bindValue(':photo', $this->photo, PDO::PARAM_STR);
-		$sth->bindValue(':pnj', $this->pnj, PDO::PARAM_INT);
-		$sth->bindValue(':id_congress', $this->id_congress, PDO::PARAM_INT);
-		$sth->bindValue(':remaining_time', $this->remaining_time, PDO::PARAM_INT);
-		$sth->bindValue(':money', $this->money, PDO::PARAM_INT);
-		if ($sth->execute() === false) {
-			throw new Exception(print_r($sth->errorInfo(), true));
+	/**
+	 *
+	 * @param int $id        	
+	 * @return Player
+	 */
+	public static function load($id) {
+		$sth = $GLOBALS['DB']->query('SELECT * FROM ' . self::TABLE_NAME . ' WHERE id=' . intval($id));
+		$sth->setFetchMode(PDO::FETCH_ASSOC);
+		$arr = $sth->fetch();
+		if (!$arr) {
+			return $arr;
+		} else {
+			$obj = new static();
+			if ($arr['pnj'] > 0) { // special case for player pnj
+				$obj = new Bot();
+			}
+			$obj->populate($arr);
+			return $obj;
 		}
-	}
-
-	public function delete() {
-		$GLOBALS['DB']->query('DELETE FROM ' . self::TABLE_NAME . ' WHERE id=' . $this->id . ';')->fetch(PDO::FETCH_ASSOC);
 	}
 
 	/**
@@ -654,15 +592,5 @@ class Player extends AbstractDbObject {
 			}
 		}
 		return $this;
-	}
-
-	public function addRandomItem() {
-		// @TODO add entropy
-		// Item::associate($this->getId(), 4);
-		// Item::associate($this->getId(), 8);
-		// Item::associate($this->getId(), 11);
-		// Item::associate($this->getId(), 13);
-		// Item::associate($this->getId(), 13);
-		// Item::associate($this->getId(), 13);
 	}
 }

@@ -18,7 +18,7 @@ LEFT JOIN player AS opponent ON history.id_opponent = opponent.id
 LEFT JOIN congress ON history.id_congress = congress.id
 WHERE action_name IN ("Chopper", "Duel", "StartCongress", "StartPLS", "Vt")
 ORDER BY `date_action` DESC
-LIMIT 20';
+LIMIT 30';
 $n = 0;
 $sth = $GLOBALS['DB']->query($sql);
 $sth->setFetchMode(PDO::FETCH_ASSOC);

@@ -1,6 +1,4 @@
 
-<h3>Cuisine</h3>
-
 <h3>Repas, au menu:</h3>
 <table class="inventory inventoryPage">
 	<tr>

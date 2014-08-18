@@ -51,7 +51,8 @@ class StartCongress extends AbstractAction {
 		$this->player->setCongress($this->congress);
 		$this->player->setRemaining_time($this->congress->getAction_number());
 		$this->player->addMoney($this->congress->getBudget());
-		$this->player->addRandomItem();
+		$item = Item::loadByName("pin's");
+		Item::associateItem($this->player, $item);
 		Bot::resetBots(1, $this->congress->getId());
 		Dispatcher::setPage('camping');
 		$res->setMessage('Début du congrès "'.$this->congress->getNom().'" en ' . $this->congress->getAction_number() . ' heures.');
