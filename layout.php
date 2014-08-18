@@ -30,7 +30,8 @@
 						<br />
 						<?=$_SESSION['user']->getNom(); ?> <?php echo $_SESSION['user']->getSex()?'<span style="color:cyan" title="bite">&#9794;</span>':'<span style="color:pink" title="vagin">&#9792;</span>'; ?>
 						<a href="userCutomisation.php"><img src="images/util/edit_user.png" alt="Editer" title="Editer" style="width: 16px; height: 16px;"></a> <a href="login.php?logout=1"><img
-								src="images/util/system-shutdown.png" alt="Quitter" title="Quitter" style="width: 16px; height: 16px;"></a>
+								src="images/util/system-shutdown.png" alt="Quitter" title="Quitter" style="width: 16px; height: 16px;"></a> <a href="help.php"><img src="images/util/help.png" alt="aide"
+								title="aide" style="width: 16px; height: 16px;"></a>
 					</div>
 					<?php if ($_SESSION['user']->getId_congress() != 0) { ?>
 					<div class="congress" title="Congrès en cours">

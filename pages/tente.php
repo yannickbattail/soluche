@@ -9,7 +9,9 @@ Mon inventaire, et la vente de mes items.
 	<tr>
 		<th>Nom</th>
 		<th>Description</th>
-		<th>Permament<br />Prix original</th>
+		<th>
+			Permament<br />Prix original
+		</th>
 		<th>Mettre en vente</th>
 	</tr>
 <?php
@@ -23,10 +25,11 @@ WHERE inventory.id_player = ' . $_SESSION['user']->getId() . '
 ORDER BY item.id;');
 $sth->setFetchMode(PDO::FETCH_ASSOC);
 while ($sth && ($arr = $sth->fetch())) {
-	$item = new Item();
-	$item->populate($arr);
-	$odd = ($n++ % 2) ? 'odd' : 'even';
-	?>
+	if ($arr['id']) {
+		$item = new Item();
+		$item->populate($arr);
+		$odd = ($n++ % 2) ? 'odd' : 'even';
+		?>
 	<tr class="<?= $odd ?>">
 		<td>
 			<img src="<?= $item->getImage(); ?>" class="inventoryImage" title="<?= $item->getNom(); ?>" />
@@ -47,6 +50,7 @@ while ($sth && ($arr = $sth->fetch())) {
 			<?= $arr['id_transaction']?(new AbortSale($_SESSION['user']))->setParams(array(AbortSale::PARAM_NAME=>$arr['id_transaction']))->link():'' ?></td>
 	</tr>
 	<?php
+	}
 }
 ?>
 </table>

@@ -31,7 +31,7 @@ while ($sth && ($arr = $sth->fetch())) {
 	?>
 	<tr class="<?= $odd ?>">
 		<td>
-			<img src="<?= $item->getImage(); ?>" class="inventoryImage" title="<?= $item->getNom(); ?>" /><?= $item->getNom(); ?>
+			<img src="<?= $item->getImage(); ?>" class="inventoryImage" title="<?= $item->getNom(); ?>" /><br /><?= $item->getDescription(); ?>
 		</td>
 		<td><?= plus(-1 * $arr['transaction_price'], 1) ?></td>
 		<td>
