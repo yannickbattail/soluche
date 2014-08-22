@@ -16,13 +16,13 @@ Pensez au chat pour la negociation des prix
 <?php
 $n = 0;
 $sth = $GLOBALS['DB']->query('
-SELECT item.*, inventory.id AS id_inventory, transaction.id AS id_transaction, transaction.price AS transaction_price, player.nom AS player_nom, player.photo AS player_photo
+SELECT item.*, inventory.id AS id_inventory, transaction.id AS id_transaction, transaction.money AS transaction_money, player.nom AS player_nom, player.photo AS player_photo
 FROM transaction 
 LEFT JOIN inventory ON inventory.id = transaction.id_inventory
 LEFT JOIN item ON inventory.id_item = item.id
 LEFT JOIN player ON inventory.id_player = player.id
 WHERE inventory.id_player != ' . $_SESSION['user']->getId() . '
-ORDER BY item.id, transaction_price DESC;');
+ORDER BY item.id, transaction_money DESC;');
 $sth->setFetchMode(PDO::FETCH_ASSOC);
 while ($sth && ($arr = $sth->fetch())) {
 	$item = new Item();
@@ -33,7 +33,7 @@ while ($sth && ($arr = $sth->fetch())) {
 		<td>
 			<img src="<?= $item->getImage(); ?>" class="inventoryImage" title="<?= $item->getNom(); ?>" /><br /><?= $item->getDescription(); ?>
 		</td>
-		<td><?= plus(-1 * $arr['transaction_price'], 1) ?></td>
+		<td><?= plus(-1 * $arr['transaction_money'], 1) ?></td>
 		<td>
 			<?= $arr['id_transaction']?(new Purchase($_SESSION['user']))->setParams(array(Purchase::PARAM_NAME=>$arr['id_transaction']))->link():'' ?></td>
 		<td>

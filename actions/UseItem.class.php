@@ -54,7 +54,7 @@ class UseItem extends AbstractAction {
 			return $res;
 		}
 		// @TODO verifier si l item est bien present dans inventaire du player
-		$this->player->addNotoriete($this->item->getNotoriete());
+		//$this->player->addNotoriete($this->item->getNotoriete());
 		$this->player->addAlcoolemie($this->item->getAlcoolemie());
 		$this->player->addAlcoolemie_optimum($this->item->getAlcoolemie_optimum());
 		$this->player->addAlcoolemie_max($this->item->getAlcoolemie_max());

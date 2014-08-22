@@ -13,7 +13,6 @@ class Sing extends AbstractAction {
 	}
 
 	/**
-	 * (non-PHPdoc)
 	 *
 	 * @see ActionInterface::setParams()
 	 */
@@ -22,7 +21,6 @@ class Sing extends AbstractAction {
 	}
 
 	/**
-	 * (non-PHPdoc)
 	 *
 	 * @see ActionInterface::execute()
 	 * @return ActionResult
@@ -33,30 +31,39 @@ class Sing extends AbstractAction {
 		$stmt = $GLOBALS['DB']->query($sql);
 		$stmt->setFetchMode(PDO::FETCH_ASSOC);
 		$count = $stmt->fetch();
-		if ($count['counter'] >= 4) {
-			if ($this->player->getCalculatedAlcoolemie() > $this->player->getCalculatedAlcoolemie_optimum()) {
-				$this->player->addNotoriete(-1);
-				$this->player->addAlcoolemie(1);
-				$this->player->addFatigue(1);
-				$this->player->addRemaining_time(-1);
-				$res->setMessage('Trop bourré! tu chantes comme une casserole!');
-				$res->setSuccess(ActionResult::FAIL);
-			} else {
-				$notoriete = 1;
-				$itemCondom = Item::loadByName('cle de sol');
-				if (Item::isAssociated($this->player->getId(), $itemCondom->getId())) {
-					$notoriete = 2;
+		if ($count['counter'] >= $this->rule['config']['numberPlayer']) {
+			if ($this->player->hasItem('paillardier')) {
+				if ($this->player->getCalculatedAlcoolemie() > $this->player->getCalculatedAlcoolemie_optimum()) {
+					$this->player->addNotoriete(0);
+					$this->player->addAlcoolemie(1);
+					$this->player->addFatigue(1);
+					$this->player->addRemaining_time(-1);
+					$res->setMessage('Trop bourré! tu chantes comme une casserole!');
+					$res->setSuccess(ActionResult::FAIL);
+				} else if($this->player->hasItem('cle_de_sol')) {
+					$this->player->addPoints(1);
+					$this->player->addNotoriete(0);
+					$this->player->addAlcoolemie(1);
+					$this->player->addFatigue(1);
+					$this->player->addRemaining_time(-1);
+					$res->setMessage('A chaque chanson faut y mettre son cannon! ♬');
+					$res->setSuccess(ActionResult::SUCCESS);
+				} else {
+					$this->player->addPoints(1);
+					$this->player->addNotoriete(0);
+					$this->player->addAlcoolemie(1);
+					$this->player->addFatigue(1);
+					$this->player->addRemaining_time(-1);
+					$this->player->addMoney(5);
+					$res->setMessage('A chaque chanson faut y mettre son cannon! ♬');
+					$res->setSuccess(ActionResult::SUCCESS);
 				}
-				$this->player->addPoints(1);
-				$this->player->addNotoriete($notoriete);
-				$this->player->addAlcoolemie(1);
-				$this->player->addFatigue(1);
-				$this->player->addRemaining_time(-1);
-				$res->setMessage('A chaque chanson faut y mettre son cannon! ♬');
-				$res->setSuccess(ActionResult::SUCCESS);
+			} else {
+				$res->setMessage('Pour chanter il faut un paillardier. On peut l\'acheter au-près de l\'<a href="main.php?page=orga">orga</a>.');
+				$res->setSuccess(ActionResult::IMPOSSIBLE);
 			}
 		} else {
-			$res->setMessage('Seulement ' . $count['counter'] . ' personnes ici. On chante pas tout seul.');
+			$res->setMessage('Seulement ' . $count['counter'] . ' personnes ici. On chante pas tout seul. (Il faut au moins ' . $this->rule['config']['numberPlayer'] . ' personnes)');
 			$res->setSuccess(ActionResult::IMPOSSIBLE);
 		}
 		return $res;
@@ -75,7 +82,7 @@ class Sing extends AbstractAction {
 	<table class="inventory playerTooltip">
 		<tr class="even">
 			<th>
-				<img src="images/items/pins.png" class="inventoryImage" title="Pinser" alt="Pinser" />
+				<img src="images/badges/cle de sol.png" class="inventoryImage" title="Chanter" alt="Chanter" />
 			</th>
 			<td>
 				<img src="images/emotes/face-smile.png" title="Succès" title="Succès">

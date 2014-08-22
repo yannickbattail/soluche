@@ -10,7 +10,7 @@ require_once ('ajaxInit.php');
 <head>
 <meta charset="UTF-8">
 <title>Soluche</title>
-<link rel="icon" type="image/png" href="images/items/cle de fa.png">
+<link rel="icon" type="image/png" href="images/soluche_icon.png">
 <link rel="stylesheet" href="theme/theme.css" type="text/css">
 <link rel="stylesheet" href="theme/other.css" type="text/css">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.9.1/themes/smoothness/jquery-ui.css">

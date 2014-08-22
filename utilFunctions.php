@@ -37,55 +37,62 @@ function linkAction($action, array $actionParams, $text, $page = null, $forceEna
 
 function printUserStats(Player $player) {
 	?>
+<h3>
+	Caractéristiques: <a href="main.php?page=help#dicoItem"><img src="images/util/help.png" alt="aide" title="aide" style="width: 16px; height: 16px;"></a>
+</h3>
+
 <table class="playerStats">
-	<tr class="even">
-		<th></th>
-		<th>Sans inventaire</th>
-		<th>Avec inventaire</th>
-	</tr>
 	<tr class="odd">
 		<th>
 			<img src="images/util/reves.png" title="Rêves vendus" alt="Rêves vendus">
 		</th>
-		<td><?=$player->getPoints(); ?></td>
-		<td></td>
+		<td><?= $player->getPoints() ?> rêves
+		<br />level: <?= $player->getLevel() ?></td>
+	</tr>
+	<tr class="even">
+		<th>
+			<img src="images/util/Dignichose.png" title="Dignichose (la monnaie)" alt="Dignichose">
+		</th>
+		<td><?= moneyDisplay($player->getMoney()) ?><div style="font-size: 10px;">(<?= $player->getMoney() ?>)</div>
+		</td>
 	</tr>
 	<tr class="even">
 		<th>
 			<img src="images/util/notoriété.png" title="Crédibidulité" alt="Crédibidulité">
 		</th>
-		<td><?=$player->getNotoriete(); ?></td>
 		<td><?=$player->getCalculatedNotoriete(); ?></td>
 	</tr>
 	<tr class="odd">
 		<th>
 			<img src="images/util/chope or.png" title="Verres" alt="Verres">
 		</th>
-		<td><?= lifeBarMiddle($player->getAlcoolemie_max(), $player->getAlcoolemie_optimum(), $player->getAlcoolemie()); ?>
-		<?=$player->getAlcoolemie().'/'.$player->getAlcoolemie_max().' optimum à '.$player->getAlcoolemie_optimum(); ?></td>
 		<td><?= lifeBarMiddle($player->getCalculatedAlcoolemie_max(), $player->getCalculatedAlcoolemie_optimum(), $player->getCalculatedAlcoolemie())?>
 		<?=$player->getCalculatedAlcoolemie().'/'.$player->getCalculatedAlcoolemie_max().' optimum à '.$player->getCalculatedAlcoolemie_optimum(); ?></td>
+	</tr>
+	<tr class="even">
+		<th></th>
+		<td>
+			<?php if ($player->getCalculatedAlcoolemie() > $player->getAlcoolemie_optimum()) { ?>
+				<img src="images/util/warning.png" alt="Attention" title="Attention" />
+			Zone rouge, penser à faire un <a href="main.php?page=camping">VT</a>, une <a href="main.php?page=camping">PLS</a> ou <a href="main.php?page=tente">dodo</a>.
+			<?php } ?>
+			<?php if ($player->getCalculatedFatigue_max() == $player->getCalculatedFatigue()) { ?>
+				<img src="images/util/warning.png" alt="Attention" title="Attention" />
+			Crevé, penser à <a href="main.php?page=cuisine">manger</a> ou <a href="main.php?page=tente">dormir</a>.
+			<?php } ?>
+		</td>
 	</tr>
 	<tr class="even">
 		<th>
 			<img src="images/util/sleep.png" title="Fatigue" alt="Fatigue">
 		</th>
-		<td><?=lifeBar($player->getFatigue_max(), $player->getFatigue()).$player->getFatigue().'/'.$player->getFatigue_max(); ?></td>
 		<td><?=lifeBar($player->getCalculatedFatigue_max(), $player->getCalculatedFatigue()).$player->getCalculatedFatigue().'/'.$player->getCalculatedFatigue_max(); ?></td>
 	</tr>
 	<tr class="odd">
 		<th>
 			<img src="images/util/sex appeal.png" title="Sexe appeal" alt="Sexe appeal">
 		</th>
-		<td><?=$player->getSex_appeal(); ?></td>
 		<td><?=$player->getCalculatedSex_appeal(); ?></td>
-	</tr>
-	<tr class="even">
-		<th>
-			<img src="images/util/Dignichose.png" title="Dignichose (la monnaie)" alt="Dignichose">
-		</th>
-		<td colspan="2"><?= moneyDisplay($player->getMoney()) ?><div style="font-size: 10px;">(<?= $player->getMoney() ?>)</div>
-		</td>
 	</tr>
 </table>
 <?php
@@ -301,7 +308,7 @@ function printItem(Item $item, $num = 0) {
 			<th>
 				<img src="images/util/Dignichose.png" title="Coût en dignichose" alt="Coût en dignichose">
 			</th>
-			<td><?= plus($item->getPrice(), 1); ?> refiler à <?= plus(floor(-$item->getPrice()*80/100), 1)?></td>
+			<td><?= plus($item->getMoney(), 1); ?> refiler à <?= plus(floor(-$item->getMoney()*80/100), 1)?></td>
 		</tr>
 		<tr class="even">
 			<td colspan="2"><?= (new Sell($_SESSION['user']))->setParams(array(Sell::PARAM_NAME=>$item))->link()?></td>
@@ -532,6 +539,9 @@ function printTabsLieu() {
 		</td>
 		<td <?= (Dispatcher::getPage() == 'danse')?'class="tabBarSelected"':''  ?>>
 			<a href="main.php?page=danse">Piste de danse</a>
+		</td>
+		<td <?= (Dispatcher::getPage() == 'help')?'class="tabBarSelected"':''  ?>>
+			<a href="main.php?page=help"><img src="images/util/help.png" alt="aide" title="aide" style="width: 16px; height: 16px;"></a>
 		</td>
 	</tr>
 </table>

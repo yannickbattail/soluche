@@ -3,7 +3,7 @@ class Item extends AbstractDbObject {
 
 	const TABLE_NAME = 'item';
 
-	public static $ITEM_TYPES = array('badge', 'drink', 'test', 'food', 'alcohol', 'pins', 'cros');
+	public static $ITEM_TYPES = array('alcohol', 'badge', 'cros', 'drink', 'food', 'level', 'malus', 'objet', 'pins', 'potager', 'valeur', 'test');
 
 	protected $id = 0;
 
@@ -151,17 +151,17 @@ class Item extends AbstractDbObject {
 		$this->remaining_time = $remaining_time;
 	}
 
-	protected $price = 0;
+	protected $money = 0;
 
-	public function getPrice() {
-		return $this->price;
+	public function getMoney() {
+		return $this->money;
 	}
 
-	public function setPrice($price) {
-		if ($price < 0) {
-			$price = 0;
+	public function setMoney($money) {
+		if ($money < 0) {
+			$money = 0;
 		}
-		$this->price = $price;
+		$this->money = $money;
 	}
 
 	public function defaultValues() {
@@ -203,7 +203,7 @@ class Item extends AbstractDbObject {
 	 * @return Item
 	 */
 	public static function loadByName($name) {
-		$sth = $GLOBALS['DB']->prepare('SELECT * FROM ' . self::TABLE_NAME . ' WHERE nom = :nom;');
+		$sth = $GLOBALS['DB']->prepare('SELECT * FROM ' . self::TABLE_NAME . ' WHERE internal_name = :nom;');
 		$sth->bindValue(':nom', $name, PDO::PARAM_STR);
 		$sth->setFetchMode(PDO::FETCH_ASSOC);
 		if ($sth->execute() === false) {
@@ -232,7 +232,7 @@ class Item extends AbstractDbObject {
 	}
 
 	public function create() {
-		$sth = $GLOBALS['DB']->prepare('INSERT INTO ' . self::TABLE_NAME . ' ' . '(nom, description, permanent, notoriete, alcoolemie, alcoolemie_optimum, alcoolemie_max, fatigue, fatigue_max, sex_appeal, image, item_type, remaining_time, price)' . ' VALUES ( :nom, :description, :permanent, :notoriete, :alcoolemie, :alcoolemie_optimum, :alcoolemie_max, :fatigue, :fatigue_max, :sex_appeal, :image, :item_type, :remaining_time, :price);');
+		$sth = $GLOBALS['DB']->prepare('INSERT INTO ' . self::TABLE_NAME . ' ' . '(nom, description, permanent, notoriete, alcoolemie, alcoolemie_optimum, alcoolemie_max, fatigue, fatigue_max, sex_appeal, image, item_type, remaining_time, money)' . ' VALUES ( :nom, :description, :permanent, :notoriete, :alcoolemie, :alcoolemie_optimum, :alcoolemie_max, :fatigue, :fatigue_max, :sex_appeal, :image, :item_type, :remaining_time, :money);');
 		// $sth->bindValue(':id', $this->id, PDO::PARAM_INT);
 		$sth->bindValue(':nom', $this->nom, PDO::PARAM_STR);
 		$sth->bindValue(':description', $this->description, PDO::PARAM_STR);
@@ -247,7 +247,7 @@ class Item extends AbstractDbObject {
 		$sth->bindValue(':image', $this->image, PDO::PARAM_STR);
 		$sth->bindValue(':item_type', $this->item_type, PDO::PARAM_STR);
 		$sth->bindValue(':remaining_time', $this->remaining_time, PDO::PARAM_INT);
-		$sth->bindValue(':price', $this->price, PDO::PARAM_INT);
+		$sth->bindValue(':money', $this->money, PDO::PARAM_INT);
 		if ($sth->execute() === false) {
 			throw new Exception(print_r($sth->errorInfo(), true));
 		}
@@ -255,7 +255,7 @@ class Item extends AbstractDbObject {
 	}
 
 	public function update() {
-		$sth = $GLOBALS['DB']->prepare('UPDATE FROM ' . self::TABLE_NAME . ' SET nom=:nom, description=:description, permanent=:permanent, notoriete=:notoriete, alcoolemie=:alcoolemie, alcoolemie_optimum=:alcoolemie_optimum, alcoolemie_max=:alcoolemie_max, fatigue=:fatigue, fatigue_max=:fatigue_max, sex_appeal=:sex_appeal, image=:image, item_type=:item_type, remaining_time=:remaining_time, price=:price WHERE id=:id;');
+		$sth = $GLOBALS['DB']->prepare('UPDATE FROM ' . self::TABLE_NAME . ' SET nom=:nom, description=:description, permanent=:permanent, notoriete=:notoriete, alcoolemie=:alcoolemie, alcoolemie_optimum=:alcoolemie_optimum, alcoolemie_max=:alcoolemie_max, fatigue=:fatigue, fatigue_max=:fatigue_max, sex_appeal=:sex_appeal, image=:image, item_type=:item_type, remaining_time=:remaining_time, money=:money WHERE id=:id;');
 		$sth->bindValue(':id', $this->id, PDO::PARAM_INT);
 		$sth->bindValue(':nom', $this->nom, PDO::PARAM_STR);
 		$sth->bindValue(':description', $this->description, PDO::PARAM_STR);
@@ -270,7 +270,7 @@ class Item extends AbstractDbObject {
 		$sth->bindValue(':image', $this->image, PDO::PARAM_STR);
 		$sth->bindValue(':item_type', $this->item_type, PDO::PARAM_STR);
 		$sth->bindValue(':remaining_time', $this->remaining_time, PDO::PARAM_STR);
-		$sth->bindValue(':price', $this->price, PDO::PARAM_STR);
+		$sth->bindValue(':money', $this->money, PDO::PARAM_STR);
 		if ($sth->execute() === false) {
 			// var_dump($sth->errorInfo());
 			return false;
@@ -287,14 +287,32 @@ class Item extends AbstractDbObject {
 
 	public static function associate($idPlayer, $idItem) {
 		$GLOBALS['DB']->query('INSERT INTO inventory (id_player, id_item) VALUES (' . $idPlayer . ',' . $idItem . ');');
+		if ($idPlayer == $_SESSION['user']->getId()) {
+			$item = Item::load($idItem);
+			Dispatcher::addMessage('Nouvel Item ajouté à inventaire: <img src="' . $item->getImage() . '" alt="' . $item->getNom() . '" title="' . $item->getNom() . '" style="max-width:32px;max-height:32px;" />' . $item->getNom() . '. (Aller dans la <a href="main.php?page=tente">tente</a> pour le voir.)', Dispatcher::MESSAGE_LEVEL_INFO);
+		}
 	}
 
 	public static function associateItem(Player $player, Item $item) {
-		self::associate($player->getId(), $item->getId());
+		$GLOBALS['DB']->query('INSERT INTO inventory (id_player, id_item) VALUES (' . $player->getId() . ',' . $item->getId() . ');');
+		if ($player->getId() == $_SESSION['user']->getId()) {
+			Dispatcher::addMessage('Nouvel Item ajouté à inventaire: <img src="' . $item->getImage() . '" alt="' . $item->getNom() . '" title="' . $item->getNom() . '" style="max-width:32px;max-height:32px;" />' . $item->getNom() . '. (Aller dans la <a href="main.php?page=tente">tente</a> pour le voir.)', Dispatcher::MESSAGE_LEVEL_INFO);
+		}
 	}
 
 	public static function desassociate($idPlayer, $idItem) {
 		$GLOBALS['DB']->query('DELETE FROM inventory WHERE id_player=' . $idPlayer . ' AND id_item=' . $idItem . ' LIMIT 1;');
+		if ($idPlayer == $_SESSION['user']->getId()) {
+			$item = Item::load($idItem);
+			Dispatcher::addMessage('L\'item <img src="' . $item->getImage() . '" alt="' . $item->getNom() . '" title="' . $item->getNom() . '" style="max-width:32px;max-height:32px;" />' . $item->getNom() . '. a été enlevé de l\'inventaire.', Dispatcher::MESSAGE_LEVEL_INFO);
+		}
+	}
+	
+	public static function desassociateItem(Player $player, Item $item) {
+		$GLOBALS['DB']->query('DELETE FROM inventory WHERE id_player=' . $player->getId() . ' AND id_item=' . $item->getId() . ' LIMIT 1;');
+		if ($idPlayer == $_SESSION['user']->getId()) {
+			Dispatcher::addMessage('L\'item <img src="' . $item->getImage() . '" alt="' . $item->getNom() . '" title="' . $item->getNom() . '" style="max-width:32px;max-height:32px;" />' . $item->getNom() . '. a été enlevé de l\'inventaire.', Dispatcher::MESSAGE_LEVEL_INFO);
+		}
 	}
 
 	/**

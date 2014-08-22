@@ -17,6 +17,10 @@ if (isset($_REQUEST['logout'])) {
 	unset($_SESSION['history']);
 }
 
+if (isset($_SESSION['user']) && ($_SESSION['user'] instanceof Player)) {
+	header('Location: main.php');
+}
+
 if (isset($_POST['ok']) && isset($_POST['login']) && isset($_POST['pass'])) {
 	try {
 		$res = Player::login($_POST['login'], $_POST['pass']);
@@ -67,7 +71,7 @@ if (isset($_POST['new']) && isset($_POST['login']) && isset($_POST['pass']) && i
 <title>Soluche</title>
 <link rel="stylesheet" href="theme/theme.css" type="text/css">
 <link rel="stylesheet" href="theme/other.css" type="text/css">
-<link rel="icon" type="image/png" href="images/items/cle de fa.png">
+<link rel="icon" type="image/png" href="images/soluche_icon.png">
 <style type="text/css">
 th {
 	text-align: right;

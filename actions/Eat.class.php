@@ -53,7 +53,7 @@ class Eat extends AbstractAction {
 			$res->setMessage('Cet item est permanent et ne peut etre utilisé.');
 			return $res;
 		}
-		$this->player->addNotoriete($this->item->getNotoriete());
+		//$this->player->addNotoriete($this->item->getNotoriete());
 		$this->player->addAlcoolemie($this->item->getAlcoolemie());
 		$this->player->addAlcoolemie_optimum($this->item->getAlcoolemie_optimum());
 		$this->player->addAlcoolemie_max($this->item->getAlcoolemie_max());
@@ -61,6 +61,7 @@ class Eat extends AbstractAction {
 		$this->player->addFatigue_max($this->item->getFatigue_max());
 		$this->player->addSex_appeal($this->item->getSex_appeal());
 		$this->player->addRemaining_time($this->item->getRemaining_time());
+		$this->player->addMoney($this->item->getMoney());
 		$res->setSuccess(ActionResult::SUCCESS);
 		$res->setMessage('j\'ai bien mangé, j\'ai bien bu un(e) ' . $this->item->getNom() . '.');
 		return $res;

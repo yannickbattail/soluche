@@ -28,10 +28,13 @@ class Vt extends AbstractAction {
 	public function execute() {
 		$res = new ActionResult();
 		if ($this->player->getAlcoolemie() >= 1) {
-			$this->player->addNotoriete(-1);
+			$this->player->addNotoriete(0);
 			$this->player->addAlcoolemie(-1);
 			$this->player->addFatigue(1);
 			$this->player->addRemaining_time(-1);
+			if (rand(1, 5) <= 1) {
+				Item::associateItem($this->player, Item::loadByName('parapluie_ouvert'));
+			}
 			$res->setMessage('Dégueux!');
 			$res->setSuccess(ActionResult::SUCCESS);
 		} else {

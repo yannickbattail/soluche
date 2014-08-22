@@ -24,55 +24,55 @@ class Congress extends AbstractDbObject {
 	}
 
 	protected $action_number = 48;
-	
+
 	public function getAction_number() {
 		return $this->action_number;
 	}
-	
+
 	public function setAction_number($action_number) {
 		$this->action_number = $action_number;
 	}
 
 	protected $bot_number = 48;
-	
+
 	public function getBot_number() {
 		return $this->bot_number;
 	}
-	
+
 	public function setBot_number($bot_number) {
 		$this->bot_number = $bot_number;
 	}
 
 	protected $bot_coef = 48;
-	
+
 	public function getBot_coef() {
 		return $this->bot_coef;
 	}
-	
+
 	public function setBot_coef($bot_coef) {
 		$this->bot_coef = $bot_coef;
 	}
 
 	protected $level = 48;
-	
+
 	public function getLevel() {
 		return $this->level;
 	}
-	
+
 	public function setLevel($level) {
 		$this->level = $level;
 	}
 
 	protected $budget = 42;
-	
+
 	public function getBudget() {
 		return $this->budget;
 	}
-	
+
 	public function setBudget($budget) {
 		$this->budget = $budget;
 	}
-	
+
 	/**
 	 *
 	 * @param Player $player        	
@@ -85,6 +85,7 @@ class Congress extends AbstractDbObject {
 		$sumUp = $this->sumUpCongress($player);
 		$this->achievment($player, $sumUp);
 		Dispatcher::setPage('congress');
+		Item::desassociateItem($player, Item::loadByName('paillardier'));
 		$res->setMessage('Congrès ' . $this->getNom() . ' terminé.');
 		$res->setSuccess(ActionResult::SUCCESS);
 		return $res;
@@ -132,7 +133,7 @@ class Congress extends AbstractDbObject {
 			}
 		}
 		if (isset($sumUp['Sing_' . ActionResult::SUCCESS]) && ($sumUp['Sing_' . ActionResult::SUCCESS] >= 4)) {
-			$item = Item::loadByName('cle de sol');
+			$item = Item::loadByName('cle_de_sol');
 			if (!Item::isAssociated($player->getId(), $item->getId())) {
 				Item::associateItem($player, $item);
 				Dispatcher::addMessage('Ca va tu chantes plutôt bien, ca mérite une clé de sol ca!', Dispatcher::MESSAGE_LEVEL_SUCCES);
@@ -140,6 +141,22 @@ class Congress extends AbstractDbObject {
 				Dispatcher::addMessage('Ca va tu chantes plutôt bien, ca mériterait une clé de sol, mais t\'en as déjà une.', Dispatcher::MESSAGE_LEVEL_INFO);
 			}
 		}
+		if (isset($sumUp['Duel_' . ActionResult::SUCCESS]) && ($sumUp['Duel_' . ActionResult::SUCCESS] >= 3)) {
+			$item = Item::loadByName('cornue_et_ballon');
+			if (!Item::isAssociated($player->getId(), $item->getId())) {
+				Item::associateItem($player, $item);
+				Dispatcher::addMessage('Tu as défié 3 personne avec succès, ca mérite une cornue et ballon!', Dispatcher::MESSAGE_LEVEL_SUCCES);
+			} else {
+				Dispatcher::addMessage('Tu as défié 3 personne avec succès, ca mériterait ne cornue et ballon, mais t\'en as déjà une.', Dispatcher::MESSAGE_LEVEL_INFO);
+			}
+		}
+		$chopper = isset($sumUp['Chopper_' . ActionResult::SUCCESS]) ? $sumUp['Chopper_' . ActionResult::SUCCESS] : 0;
+		$sing = isset($sumUp['Sing_' . ActionResult::SUCCESS]) ? $sumUp['Sing_' . ActionResult::SUCCESS] : 0;
+		$duel = isset($sumUp['Duel_' . ActionResult::SUCCESS]) ? $sumUp['Duel_' . ActionResult::SUCCESS] : 0;
+		$pins = isset($sumUp['Pins_' . ActionResult::SUCCESS]) ? $sumUp['Pins_' . ActionResult::SUCCESS] : 0;
+		$sumSuccess = $chopper + $sing + $duel + $pins;
+		$player->addMoney($sumSuccess * 5);
+		Dispatcher::addMessage('Tu as cummulé ' . $sumSuccess . ' succès parmis: chopper, chanter, défier et pinser. Cela mérite ' . ($sumSuccess * 5) . ' Cédibidulités.', Dispatcher::MESSAGE_LEVEL_SUCCES);
 	}
 
 	/**

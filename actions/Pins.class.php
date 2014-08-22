@@ -47,12 +47,12 @@ class Pins extends AbstractAction {
 	 */
 	public function execute() {
 		$res = new ActionResult();
-		$item = Item::loadByName('pin\'s');
+		$item = Item::loadByName('1_pins');
 		if (Item::isAssociated($this->player->getId(), $item->getId())) {
 			$this->opponent->addAlcoolemie(1);
 			$this->opponent->addPoints(2);
 			$this->opponent->save();
-			$this->player->addPoints(1);
+			$this->player->addPoints(0);
 			$this->player->addNotoriete(1);
 			$this->player->addFatigue(1);
 			$this->player->addRemaining_time(-1);
@@ -60,7 +60,7 @@ class Pins extends AbstractAction {
 			$res->setMessage('T\'as pinsé '.$this->opponent->getNom());
 			$res->setSuccess(ActionResult::SUCCESS);
 		} else {
-			$res->setMessage('...a plu d\'Pin\'s :-(');
+			$res->setMessage('...a plu d\'Pin\'s :-( On peut en acheter au-près de l\'<a href="main.php?page=orga">orga</a>.');
 			$res->setSuccess(ActionResult::FAIL);
 		}
 		if ($this->opponent->getPnj() == 0) { // si player

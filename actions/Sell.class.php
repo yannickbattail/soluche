@@ -47,16 +47,16 @@ class Sell extends AbstractAction {
 	 */
 	public function execute() {
 		$res = new ActionResult();
-		$price = floor(-$this->item->getPrice() * 80 / 100);
-		if ($this->player->getMoney() < -$price) {
+		$money = floor(-$this->item->getMoney() * 80 / 100);
+		if ($this->player->getMoney() < -$money) {
 			$res->setSuccess(ActionResult::NOTHING);
 			$res->setMessage('Pas assez de dignichose pour ça.');
 			return $res;
 		}
-		$this->player->addMoney($price);
+		$this->player->addMoney($money);
 		Item::desassociate($this->player->getId(), $this->item->getId());
 		$res->setSuccess(ActionResult::NOTHING);
-		$res->setMessage('Item ' . $this->item->getNom() . ' refilé pour ' . $price . ' Dignichose.');
+		$res->setMessage('Item ' . $this->item->getNom() . ' refilé pour ' . $money . ' Dignichose.');
 		return $res;
 	}
 
@@ -80,7 +80,7 @@ class Sell extends AbstractAction {
 			<th>
 				<img src="images/util/Dignichose.png" title="Dignichose (la monnaie)" alt="Dignichose">
 			</th>
-			<td><?= plus(floor(-$this->item->getPrice()*80/100), 1)?> -20% (<?= plus(-$this->item->getPrice(), 1)?>)</td>
+			<td><?= plus(floor(-$this->item->getMoney()*80/100), 1)?> -20% (<?= plus(-$this->item->getMoney(), 1)?>)</td>
 		</tr>
 		<tr class="odd">
 			<th>

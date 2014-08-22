@@ -29,7 +29,7 @@ ALTER TABLE `chat`
 
 ALTER TABLE `item` ADD `description` VARCHAR(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL AFTER `nom`;
 
-INSERT INTO `soluche`.`item` (`id`, `nom`, `permanent`, `notoriete`, `alcoolemie`, `alcoolemie_optimum`, `alcoolemie_max`, `fatigue`, `fatigue_max`, `sex_appeal`, `image`, `item_type`, `remaining_time`, `price`) VALUES
+INSERT INTO `soluche`.`item` (`id`, `nom`, `permanent`, `notoriete`, `alcoolemie`, `alcoolemie_optimum`, `alcoolemie_max`, `fatigue`, `fatigue_max`, `sex_appeal`, `image`, `item_type`, `remaining_time`, `money`) VALUES
 (NULL, 'cle de fa', '1', '1', '0', '0', '0', '0', '0', '0', 'images/items/cle de fa.png', 'badge', '0', '50'),
 (NULL, 'panda', '1', '0', '0', '0', '0', '0', '0', '0', 'images/items/panda.png', 'badge', '0', '50');
 

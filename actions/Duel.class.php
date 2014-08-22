@@ -55,19 +55,20 @@ class Duel extends AbstractAction {
 		if ($secUser > $secOpponent) {
 			$sec = $secOpponent + 1;
 			// $this->opponent->notoriete -= 1;
-			$this->player->addNotoriete(2);
+			$this->player->addNotoriete(0);
 			$this->player->addPoints(5);
+			$this->player->addMoney(10);
 			$res->setMessage('Duel: ' . $this->player->getNom() . ' a gagné après s\'être affligé ' . $sec . ' secs.');
 			$res->setSuccess(ActionResult::SUCCESS);
 		} else if ($secUser < $secOpponent) {
 			$sec = $secUser + 1;
-			$this->opponent->addNotoriete(1);
+			$this->opponent->addNotoriete(0);
 			$this->opponent->addPoints(5);
-			$this->player->addNotoriete(1);
+			$this->player->addNotoriete(0);
 			$res->setMessage('Duel: ' . $this->opponent->getNom() . ' a gagné après s\'être affligé ' . $sec . ' secs.');
 			$res->setSuccess(ActionResult::FAIL);
 		} else { // $secUser == $secOpponent
-			$this->player->addNotoriete(-1);
+			$this->player->addNotoriete(0);
 			// $this->opponent->notoriete -= 1;
 			$sec = $secOpponent + 1;
 			$res->setMessage('Duel: Personne n\'a gagné après s\'être affligé ' . $sec . ' secs.');

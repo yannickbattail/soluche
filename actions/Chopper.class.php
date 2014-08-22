@@ -63,12 +63,16 @@ class Chopper extends AbstractAction {
 		if ($coefPlayer > $coefOpponent) {
 			if ($this->player->getCalculatedAlcoolemie() > $this->player->getCalculatedAlcoolemie_optimum()) {
 				$this->player->addPoints(2);
-				$this->player->addNotoriete(-1);
+				$this->player->addNotoriete(0);
 				$this->player->addFatigue(2);
 				$this->player->addRemaining_time(-4);
-				$this->opponent->addNotoriete(1);
+				$this->player->addMoney(10);
+				$this->opponent->addNotoriete(0);
 				$this->opponent->addPoints(3);
 				// $this->opponent->addFatigue(2);
+				if (rand(1, 5) <= 1) {
+					Item::associateItem($this->player, Item::loadByName('lime'));
+				}
 				if ($this->player->getSex()) {
 					$res->setMessage('T\'as choppé ' . $this->opponent->getNom() . ' mais t\'es trop bourré! Tu bande mou mec...');
 				} else {
@@ -77,20 +81,39 @@ class Chopper extends AbstractAction {
 				$res->setSuccess(ActionResult::FAIL);
 			} else {
 				$this->player->addPoints(5);
-				$this->player->addNotoriete(2);
+				$this->player->addNotoriete(0);
 				$this->player->addFatigue(2);
 				$this->player->addRemaining_time(-4);
-				$this->opponent->addNotoriete(2);
+				$this->player->addMoney(10);
+				$this->opponent->addNotoriete(0);
 				$this->opponent->addPoints(5);
 				// $this->opponent->addFatigue(2);
-				$res->setMessage('T\'as choppé ' . $this->opponent->getNom().'.');
+				$res->setMessage('T\'as choppé ' . $this->opponent->getNom() . '.');
 				$res->setSuccess(ActionResult::SUCCESS);
+			}
+			if (rand(1, 50) <= 1) {
+				Item::associateItem($this->player, Item::loadByName('betterave'));
+			}
+			if (rand(1, 10) <= 1) {
+				Item::associateItem($this->player, Item::loadByName('carotte'));
+			}
+			if (rand(1, 10) <= 1) {
+				Item::associateItem($this->player, Item::loadByName('chou_fleur'));
+			}
+			if (rand(1, 10) <= 1) {
+				Item::associateItem($this->player, Item::loadByName('poireau'));
+			}
+			if (rand(1, 10) <= 1) {
+				Item::associateItem($this->player, Item::loadByName('navet'));
+			}
+			if (rand(1, 10) <= 1) {
+				Item::associateItem($this->player, Item::loadByName('tomate'));
 			}
 			$itemCondom = Item::loadByName('condom');
 			if (Item::isAssociated($this->player->getId(), $itemCondom->getId())) {
 				Item::desassociate($this->player->getId(), $itemCondom->getId());
 			} else {
-				$res->setMessage($res->getMessage().' Plus de capotte, tu t\'es récuppéré un MST.');
+				$res->setMessage($res->getMessage() . ' Plus de capotte, tu t\'es récuppéré un MST.');
 				$itemCrabe = Item::loadByName('crabe');
 				Item::associateItem($this->player, $itemCrabe);
 			}

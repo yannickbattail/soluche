@@ -3,7 +3,7 @@ class Transaction extends AbstractDbObject {
 
 	const TABLE_NAME = 'transaction';
 
-	public static $fieldList = array('id' => PDO::PARAM_INT, 'id_inventory' => PDO::PARAM_INT, 'price' => PDO::PARAM_INT, 'id_item_exchange' => PDO::PARAM_INT, 'done' => PDO::PARAM_INT);
+	public static $fieldList = array('id' => PDO::PARAM_INT, 'id_inventory' => PDO::PARAM_INT, 'money' => PDO::PARAM_INT, 'id_item_exchange' => PDO::PARAM_INT, 'done' => PDO::PARAM_INT);
 
 	protected $id = 0;
 
@@ -25,14 +25,14 @@ class Transaction extends AbstractDbObject {
 		$this->id_inventory = $id_inventory;
 	}
 
-	protected $price = 0;
+	protected $money = 0;
 
-	public function getPrice() {
-		return $this->price;
+	public function getMoney() {
+		return $this->money;
 	}
 
-	public function setPrice($price) {
-		$this->price = $price;
+	public function setMoney($money) {
+		$this->money = $money;
 	}
 
 	protected $id_item_exchange = null;
@@ -56,7 +56,7 @@ class Transaction extends AbstractDbObject {
 	}
 
 	public function defaultValues() {
-		$this->price = 0;
+		$this->money = 0;
 		$this->done = 0;
 	}
 	

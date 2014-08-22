@@ -7,7 +7,7 @@ $sql = 'SELECT player.*, ( ';
 $sql .= '    SELECT count(*) AS count_1';
 $sql .= '    FROM chat WHERE recipient=:id AND sender=player.id AND is_new=1 ';
 $sql .= ') AS new_messages ';
-$sql .= 'FROM player WHERE pnj=0 AND id != :id ORDER BY new_messages DESC;';
+$sql .= 'FROM player WHERE pnj=0 AND id != :id ORDER BY new_messages DESC, player.nom ASC;';
 $sth = $GLOBALS['DB']->prepare($sql);
 $sth->bindValue(':id', $_SESSION['user']->getId(), PDO::PARAM_INT);
 $sth->execute();

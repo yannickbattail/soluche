@@ -69,14 +69,14 @@ class Purchase extends AbstractAction {
 		$this->player->getHistory()->setId_opponent($this->opponent->getId());
 		
 		$res = new ActionResult();
-		if ($this->player->getMoney() < $this->transaction->getPrice()) {
+		if ($this->player->getMoney() < $this->transaction->getMoney()) {
 			$res->setSuccess(ActionResult::IMPOSSIBLE);
 			$res->setMessage('Pas assez de Dignichose pour acheter l\'item ' . $this->item->getNom() . '.');
 		} else {
-			$this->player->addMoney(-1 * $this->transaction->getPrice());
+			$this->player->addMoney(-1 * $this->transaction->getMoney());
 			$this->player->addPoints(1);
 			$this->opponent->addPoints(1);
-			$this->opponent->addMoney($this->transaction->getPrice());
+			$this->opponent->addMoney($this->transaction->getMoney());
 			$this->transaction->delete();
 			Item::associate($this->player->getId(), $this->item->getId());
 			Item::desassociate($this->opponent->getId(), $this->item->getId());
@@ -84,7 +84,7 @@ class Purchase extends AbstractAction {
 			$this->opponent->save();
 			// }
 			$res->setSuccess(ActionResult::SUCCESS);
-			$res->setMessage('Item ' . $this->item->getNom() . ' acheté à '.$this->opponent->getNom().' pour '.$this->transaction->getPrice().' Dignichoses.');
+			$res->setMessage('Item ' . $this->item->getNom() . ' acheté à '.$this->opponent->getNom().' pour '.$this->transaction->getMoney().' Dignichoses.');
 		}
 		return $res;
 	}
@@ -109,7 +109,7 @@ class Purchase extends AbstractAction {
 			<th>
 				<img src="images/util/Dignichose.png" title="Dignichose (la monnaie)" alt="Dignichose">
 			</th>
-			<td><?= plus(-1 * $this->transaction->getPrice(), 1)?></td>
+			<td><?= plus(-1 * $this->transaction->getMoney(), 1)?></td>
 		</tr>
 			<th>
 				<img src="images/util/reves.png" title="Rêves vendus" alt="Rêves vendus">

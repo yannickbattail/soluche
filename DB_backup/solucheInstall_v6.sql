@@ -149,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `item` (
   `image` varchar(1024) DEFAULT NULL,
   `item_type` varchar(128) NOT NULL,
   `remaining_time` int(11) NOT NULL DEFAULT '0',
-  `price` int(11) NOT NULL DEFAULT '0',
+  `money` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=525 ;
 
@@ -157,7 +157,7 @@ CREATE TABLE IF NOT EXISTS `item` (
 -- Dumping data for table `item`
 --
 
-INSERT INTO `item` (`id`, `nom`, `permanent`, `notoriete`, `alcoolemie`, `alcoolemie_optimum`, `alcoolemie_max`, `fatigue`, `fatigue_max`, `sex_appeal`, `image`, `item_type`, `remaining_time`, `price`) VALUES
+INSERT INTO `item` (`id`, `nom`, `permanent`, `notoriete`, `alcoolemie`, `alcoolemie_optimum`, `alcoolemie_max`, `fatigue`, `fatigue_max`, `sex_appeal`, `image`, `item_type`, `remaining_time`, `money`) VALUES
 (1, 'poule', 1, 1, 0, 0, 0, 0, -1, 3, 'images/items/poule.png', 'badge', 0, 0),
 (2, 'pachi', 1, 1, 0, 0, 0, 0, 0, -1, 'images/items/pachi.png', 'badge', 0, 0),
 (3, 'bacchus', 1, 1, 0, 2, 2, 0, 0, 0, 'images/items/bacchus.png', 'badge', 0, 0),

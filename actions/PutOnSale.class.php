@@ -25,7 +25,7 @@ class PutOnSale extends AbstractAction {
 	 *
 	 * @var Inventory
 	 */
-	protected $price;
+	protected $money;
 
 	/**
 	 *
@@ -45,7 +45,7 @@ class PutOnSale extends AbstractAction {
 	 * @param array $params        	
 	 */
 	public function setParams(array $params) {
-		$this->price = $params['price'];
+		$this->money = $params['money'];
 		if (isset($params['id_transaction']) && $params['id_transaction']) {
 			$this->transaction = Transaction::load($params['id_transaction']);
 			$this->inventory = $this->transaction->getInventory();
@@ -73,11 +73,11 @@ class PutOnSale extends AbstractAction {
 		$res = new ActionResult();
 		$res->setSuccess(ActionResult::NOTHING);
 		if ($this->transaction->getId()) {
-			$res->setMessage('Changement du prix de l\'item ' . $this->item->getNom() . ' à ' . $this->price . ' Dignichose.');
+			$res->setMessage('Changement du prix de l\'item ' . $this->item->getNom() . ' à ' . $this->money . ' Dignichose.');
 		} else {
-			$res->setMessage('Item ' . $this->item->getNom() . ' mis en vente à ' . $this->price . ' Dignichose.');
+			$res->setMessage('Item ' . $this->item->getNom() . ' mis en vente à ' . $this->money . ' Dignichose.');
 		}
-		$this->transaction->setPrice($this->price);
+		$this->transaction->setMoney($this->money);
 		$this->transaction->save();
 		return $res;
 	}
@@ -102,7 +102,7 @@ class PutOnSale extends AbstractAction {
 			<th>
 				<img src="images/util/Dignichose.png" title="Dignichose (la monnaie)" alt="Dignichose">
 			</th>
-			<td><?= plus(floor(-$this->item->getPrice()*80/100), 1)?> -20% (<?= plus(-$this->item->getPrice(), 1)?>)</td>
+			<td><?= plus(floor(-$this->item->getMoney()*80/100), 1)?> -20% (<?= plus(-$this->item->getMoney(), 1)?>)</td>
 		</tr>
 		<tr class="odd">
 			<th>

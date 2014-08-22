@@ -60,7 +60,7 @@ if (isset($_POST['savePlayer'])) {
 <body>
 	<h1>admin</h1>
 
-	congres:
+	<h3>congress list:</h3>
 
 	<table class="inventory">
 		<tr>
@@ -97,8 +97,10 @@ if (isset($_POST['savePlayer'])) {
 	<form action="" method="post">
 		<input type="submit" name="addBots" value="create bots" />
 		<input type="submit" name="reorganiseBots" value="reorganise bots" />
+		<a href="adminCongress.php?id_congress=-1">new congress</a>
 	</form>
-
+	
+	<h3>players list:</h3>
 	<table class="inventory">
 		<tr>
 			<th>Nom</th>

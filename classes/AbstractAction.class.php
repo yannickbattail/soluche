@@ -14,7 +14,13 @@ class AbstractAction implements ActionInterface {
 	 * @var Player
 	 */
 	protected $player;
-
+	
+	/**
+	 *
+	 * @var array
+	 */
+	protected $rule;
+	
 	/**
 	 * 
 	 * @return Player
@@ -37,6 +43,7 @@ class AbstractAction implements ActionInterface {
 	 */
 	public function __construct(Player $player) {
 		$this->player = $player;
+		$this->rule = Soluche::$rules['actions'][get_class($this)];
 	}
 
 	/**

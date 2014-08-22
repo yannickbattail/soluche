@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Soluche</title>
-<link rel="icon" type="image/png" href="images/items/cle de fa.png">
+<link rel="icon" type="image/png" href="images/soluche_icon.png">
 <link rel="stylesheet" href="theme/theme.css" type="text/css">
 <link rel="stylesheet" href="theme/other.css" type="text/css">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.9.1/themes/smoothness/jquery-ui.css">
@@ -17,7 +17,7 @@
 	<div>
 	<?php
 	foreach (Dispatcher::getMessages() as $em) {
-		echo '<div class="' . $em['level'] . '">' . htmlentities($em['message']) . '</div>';
+		echo '<div class="' . $em['level'] . '">' . $em['message'] . '</div>';
 	}
 	?>
 	</div>
@@ -30,8 +30,7 @@
 						<br />
 						<?=$_SESSION['user']->getNom(); ?> <?php echo $_SESSION['user']->getSex()?'<span style="color:cyan" title="bite">&#9794;</span>':'<span style="color:pink" title="vagin">&#9792;</span>'; ?>
 						<a href="userCutomisation.php"><img src="images/util/edit_user.png" alt="Editer" title="Editer" style="width: 16px; height: 16px;"></a> <a href="login.php?logout=1"><img
-								src="images/util/system-shutdown.png" alt="Quitter" title="Quitter" style="width: 16px; height: 16px;"></a> <a href="help.php"><img src="images/util/help.png" alt="aide"
-								title="aide" style="width: 16px; height: 16px;"></a>
+								src="images/util/system-shutdown.png" alt="Quitter" title="Quitter" style="width: 16px; height: 16px;"></a>
 					</div>
 					<?php if ($_SESSION['user']->getId_congress() != 0) { ?>
 					<div class="congress" title="Congrès en cours">
@@ -40,7 +39,7 @@
 					</div>
 					<?php } ?>
 					<?php printUserStats($_SESSION['user']); ?>
-					<?php printInventory2($_SESSION['user']); ?>
+					<?php /*printInventory2($_SESSION['user']);*/ ?>
 					Chat:
 					<?php printChat($_SESSION['user']); ?>
 				</div>

@@ -66,10 +66,14 @@ class Player extends AbstractDbObject {
 	}
 
 	public function addPoints($points) {
-		if ($points <= 0) {
-			throw RuleException("on ne peut pas enlever des points.");
+		if ($points < 0) {
+			throw new RuleException("on ne peut pas enlever des points.");
 		}
 		$this->setPoints($this->getPoints() + $points);
+	}
+
+	public function getLevel() {
+		return floor($this->points / 100) + 1;
 	}
 
 	protected $notoriete = 0;
@@ -592,5 +596,33 @@ class Player extends AbstractDbObject {
 			}
 		}
 		return $this;
+	}
+
+	/**
+	 *
+	 * @param int $idPlayer        	
+	 * @param int $idItem        	
+	 * @return Item
+	 */
+	public function hasItem($item_name) {
+		$sth = $GLOBALS['DB']->prepare('SELECT item.* FROM inventory INNER JOIN item ON item.id = inventory.id_item WHERE inventory.id_player = :id_player AND item.internal_name = :name;');
+		$sth->bindValue(':id_player', $this->id, PDO::PARAM_INT);
+		$sth->bindValue(':name', $item_name, PDO::PARAM_STR);
+		$sth->setFetchMode(PDO::FETCH_ASSOC);
+		if ($sth->execute() === false) {
+			// var_dump($sth->errorInfo());
+			return false;
+		}
+		$arr = $sth->fetch();
+		if (!$arr) {
+			return $arr;
+		} else {
+			$obj = new self();
+			// if ($arr['pnj'] > 0) {
+			// $obj = new Bot();
+			// }
+			$obj->populate($arr);
+			return $obj;
+		}
 	}
 }

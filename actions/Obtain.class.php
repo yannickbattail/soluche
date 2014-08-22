@@ -1,5 +1,5 @@
 <?php
-class Buy extends AbstractAction {
+class Obtain extends AbstractAction {
 
 	const PARAM_NAME = 'idItem';
 
@@ -47,16 +47,35 @@ class Buy extends AbstractAction {
 	 */
 	public function execute() {
 		$res = new ActionResult();
-		if ($this->player->getMoney() < -$this->item->getMoney()) {
+		if ($this->item->getItem_type() != 'level') {
 			$res->setSuccess(ActionResult::NOTHING);
-			$res->setMessage('Pas assez de dignichose pour ça.');
+			$res->setMessage('Il ne s\'agit pas d\'un insigne de level.');
 			return $res;
 		}
-		$this->player->addMoney($this->item->getMoney());
+		if ($this->player->getLevel() < $this->item->getMoney()) {
+			$res->setSuccess(ActionResult::NOTHING);
+			$res->setMessage('Vous n\'avez pas le level suffisant pour cet insigne.');
+			return $res;
+		}
+		if ($this->countItemLevel($this->item->getMoney()) >= 2) {
+			$res->setSuccess(ActionResult::NOTHING);
+			$res->setMessage('Vous avez déjà 2 insignes pour ce level. (vas à la <a href="main.php?page=tente">tente</a> pour en enlever.)');
+			return $res;
+		}
 		Item::associateItem($this->player, $this->item);
 		$res->setSuccess(ActionResult::NOTHING);
-		$res->setMessage('Item ' . $this->item->getNom() . ' ajouté pour '.-$this->item->getMoney().' Dignichose.');
+		$res->setMessage('Insigne ' . $this->item->getNom() . ' ajouté pour le level '.$this->item->getMoney().'.');
 		return $res;
+	}
+	
+	protected function countItemLevel($level) {
+		$cunt = 0;
+		foreach ($this->player->getInventory() as $item) {
+			if (($item->getItem_type() == 'level') && ($item->getMoney() == $level)) {
+				$cunt++;
+			}
+		}
+		return $cunt;
 	}
 
 	/**
