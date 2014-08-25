@@ -227,3 +227,17 @@ UPDATE `item` SET `id` = 540,`internal_name` = 'paillardier',`nom` = 'paillardie
 UPDATE `item` SET `id` = 541,`internal_name` = 'tardis',`nom` = 'TARDIS',`description` = 'voyage dans le temps',`permanent` = 0,`notoriete` = 0,`alcoolemie` = 0,`alcoolemie_optimum` = 0,`alcoolemie_max` = 0,`fatigue` = 0,`fatigue_max` = 0,`sex_appeal` = 0,`image` = 'images/items/tardis.png',`item_type` = 'objet',`remaining_time` = 4,`money` = -100 WHERE `item`.`id` = 541;
 UPDATE `item` SET `id` = 542,`internal_name` = 'pins_fal',`nom` = 'pin''s fal',`description` = 'un pin''s FALUS',`permanent` = 1,`notoriete` = 0,`alcoolemie` = 0,`alcoolemie_optimum` = 0,`alcoolemie_max` = 0,`fatigue` = 0,`fatigue_max` = 0,`sex_appeal` = 0,`image` = 'images/items/pins_fal.png',`item_type` = 'pins',`remaining_time` = 0,`money` = -5 WHERE `item`.`id` = 542;
 UPDATE `item` SET `id` = 543,`internal_name` = 'eco_cup',`nom` = 'eco cup',`description` = 'verre à glouglou',`permanent` = 1,`notoriete` = 0,`alcoolemie` = 0,`alcoolemie_optimum` = 0,`alcoolemie_max` = 0,`fatigue` = 0,`fatigue_max` = 0,`sex_appeal` = 1,`image` = 'images/items/eco cup.png',`item_type` = 'level',`remaining_time` = 0,`money` = 1 WHERE `item`.`id` = 543;
+
+
+
+
+INSERT INTO `item` (`id`, `internal_name`, `nom`, `description`, `permanent`, `notoriete`, `alcoolemie`, `alcoolemie_optimum`, `alcoolemie_max`, `fatigue`, `fatigue_max`, `sex_appeal`, `image`, `item_type`, `remaining_time`, `money`) VALUES
+(552, 'verre_de_vin', 'verre de vin', 'verre de vin', 0, 0, 1, 0, 0, 0, 0, 0, 'images/items/verre de vin.png', 'alcohol', 0, -5),
+(551, 'verre_de_biere', 'verre de bière', 'verre de bière', 0, 0, 1, 0, 0, 0, 0, 0, 'images/items/verre de biere.png', 'alcohol', 0, -5),
+(550, 'soupe_a_l_oignon', 'soupe à l''oignon', 'soupe à l''oignon', 0, 0, 0, 0, 0, -1, 0, 0, 'images/items/soupe a l oignon.png', 'food', 0, -5),
+(549, 'saucisse', 'saucisse', 'coucou tu veux voir ma saucisse', 0, 0, 0, 0, 0, -2, 0, 0, 'images/items/saucisse.png', 'food', 0, -14),
+(548, 'salade', 'salade', 'salade', 0, 0, 0, 0, 0, -1, 0, 0, 'images/items/salade.png', 'food', 0, -4),
+(547, 'salade_de_riz', 'salade de riz', 'salade de riz', 0, 0, 0, 0, 0, -2, 0, 0, 'images/items/salade de riz.png', 'food', 0, -8),
+(546, 'salade_de_fruits', 'salade de fruits', 'salade de fruits', 0, 0, 0, 0, 0, -2, 0, 0, 'images/items/salade de fruits.png', 'food', 0, -10),
+(545, 'macedoine_de_legumes', 'macédoine de légumes', 'macédoine de légumes', 0, 0, 0, 0, 0, -2, 0, 0, 'images/items/macedoine de legumes.png', 'food', 0, -8),
+(544, 'cotes_de_porc', 'côtes de porc', 'Humm côtes de porc', 0, 0, 0, 0, 0, -2, 0, 0, 'images/items/cotes de porc.png', 'food', -2, -12);

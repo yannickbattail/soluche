@@ -188,7 +188,7 @@ $levelList = array("moldu" => "moldu", "impétrent" => "impétrent", "faluché" 
 		item dans la cuisine: <br />
 		<select name="itemCuisine[]" multiple="multiple" size="10">
 		<?php
-		$sth = $GLOBALS['DB']->query('SELECT * FROM item WHERE item_type = "food" OR item_type = "drink";');
+		$sth = $GLOBALS['DB']->query('SELECT * FROM item WHERE item_type IN ("food", "drink");');
 		$sth->setFetchMode(PDO::FETCH_ASSOC);
 		while ($sth && ($arr = $sth->fetch())) {
 			$item = new Item();
@@ -205,7 +205,7 @@ $levelList = array("moldu" => "moldu", "impétrent" => "impétrent", "faluché" 
 		item dans la bar: <br />
 		<select name="itemBar[]" multiple="multiple" size="10">
 		<?php
-		$sth = $GLOBALS['DB']->query('SELECT * FROM item WHERE item_type = "alcohol" OR item_type = "drink";');
+		$sth = $GLOBALS['DB']->query('SELECT * FROM item WHERE item_type IN ("alcohol", "drink");');
 		$sth->setFetchMode(PDO::FETCH_ASSOC);
 		while ($sth && ($arr = $sth->fetch())) {
 			$item = new Item();
@@ -222,7 +222,7 @@ $levelList = array("moldu" => "moldu", "impétrent" => "impétrent", "faluché" 
 		item dans le coin des Orgas: <br />
 		<select name="itemOrga[]" multiple="multiple" size="10">
 		<?php
-		$sth = $GLOBALS['DB']->query('SELECT * FROM item WHERE item_type = "badge" OR item_type = "pins" OR item_type = "food" OR item_type = "alcohol" OR item_type = "drink";');
+		$sth = $GLOBALS['DB']->query('SELECT * FROM item WHERE item_type IN ("malus", "objet", "pins", "valeur");');
 		$sth->setFetchMode(PDO::FETCH_ASSOC);
 		while ($sth && ($arr = $sth->fetch())) {
 			$item = new Item();
@@ -239,7 +239,7 @@ $levelList = array("moldu" => "moldu", "impétrent" => "impétrent", "faluché" 
 		item dans le welcome pack: <br />
 		<select name="itemCamping[]" multiple="multiple" size="10">
 		<?php
-		$sth = $GLOBALS['DB']->query('SELECT * FROM item WHERE item_type IN ("badge", "pins", "food", "alcohol", "drink");');
+		$sth = $GLOBALS['DB']->query('SELECT * FROM item WHERE item_type IN ("badge", "objet", "pins", "food", "alcohol", "drink", "valeur");');
 		$sth->setFetchMode(PDO::FETCH_ASSOC);
 		while ($sth && ($arr = $sth->fetch())) {
 			$item = new Item();
