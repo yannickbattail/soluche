@@ -1,5 +1,60 @@
 
 <h2>Info</h2>
+
+<h3 id="plusDeDignichose">Please Help! J'ai plus de sous (de dignichose)</h3>
+
+Vas au près de l'<a href="main.php?page=orga">orga</a> et achète un singe <img src="images/badges/singe.jpg" width="32" height="32" title="singe" alt="singe">.
+<br />Ça fait un gros malus mais au moins tu n'es pas bloqué.
+<br />Tu pourras le refiler plus tard quand tu auras assez de dignichose.
+
+<h3 id="faluchardStats">les caractéristiques du faluchard</h3>
+
+<img src="images/help/caractéristiques.png" alt="détails de l'action" style="border-style: dotted; border-width: 1px;" />
+
+<table>
+	<tr>
+		<th>
+			<img src="images/util/reves.png" width="32" height="32" title="Rêves vendus" alt="Rêves vendus">
+		</th>
+		<td>Rêves vendus: chaque actions réussie vend du rêve
+		<br />Level: tous les 100 rêves vendus, le level augmente de 1 et débloque des nouveaux insignes.</td>
+		
+	</tr>
+	<tr>
+		<th>
+			<img src="images/util/Dignichose.png" width="32" height="32" title="Coût en dignichose" alt="Coût en dignichose">
+		</th>
+		<td>dignichose (la monnaie du jeu)</td>
+	</tr>
+	<tr>
+		<th>
+			<img src="images/util/notoriété.png" width="32" height="32" title="Crédibidulité" alt="Crédibidulité">
+		</th>
+		<td>Crédibidulité (ou notoriété) permet de mieux réussir ces action</td>
+	</tr>
+	<tr>
+		<th>
+			<img src="images/util/chope argent.png" width="32" height="32" title="Verres" alt="Verres">
+		</th>
+		<td class="lifeBarMiddle2">Verres: indique le nombre de verre bu <img alt="ok" title="ok" src="images/util/bier_green.png"> (ou pas <img alt="verre vide" title="verre vide" src="images/util/bier_grey.png">), avec une limite optimum <img alt="verre optimum" title="verre optimum" src="images/util/bier_orange.png"> et une limite max. Au-delà de la limite optimum <img alt="Bourré" title="Bourré" src="images/util/bier_red.png"> plus rien n'est sur ... /!\</td>
+	</tr>
+	<tr>
+		<th>
+			<img src="images/util/sleep.png" width="32" height="32" title="Fatigue" alt="Fatigue">
+		</th>
+		<td>Fatigue: chaque action épuise, quand on est complétement crevé on ne peut plus rien faire., près il faut se reposer ou boire de la cafféine.</td>
+	</tr>
+	<tr>
+		<th>
+			<img src="images/util/sex appeal.png" width="32" height="32" title="Sexe appeal" alt="Sexe appeal">
+		</th>
+		<td>Sexe appeal: non pas à pile, appeal! l'attirance toussa toussa!</td>
+	</tr>
+</table>
+
+
+<h3 id="action">Les actions</h3>
+
 Chaque action est signalée
 <div class="action">comme ca</div>
 .
@@ -103,6 +158,23 @@ Rappel les valeurs des items sont ajoutée au joueur.
 La couleur rouge ou verte indique l'aspect positif ou négatif de la chose.
 
 <h3 id="dicoItem">liste des item et leurs caratéristiques.</h3>
+
+Type d'item:
+<ul>
+  <li>alcohol: boissons alcoolisées (dispo au bar)</li>
+  <li>badge: insignes de faluche, augmente les caratéristiques du faluchard</li>
+  <li>cros: croix de GM GC (pas encore utilisé)</li>
+  <li>drink: boissons non alcoolisées (dispo à la cuisine)</li>
+  <li>food: nourriture (dispo à la cuisine)</li>
+  <li>level: insignes de level, chaque passage de level en débloque plusieurs, on peut en selectionner 2 par niveau.</li>
+  <li>malus: blâme, il faut payer cher pour s'en débarasser</li>
+  <li>objet: à utiliser une fois</li>
+  <li>pins: pin's</li>
+  <li>potager: insignes du potager (pas encore de signification)</li>
+  <li>valeur: nourriture/boisson à partager entre faluchards (pas encore impémenté)</li>
+  <li>test: pas encore utilisé, </li>
+</ul>
+
 
 note: ceux qui n'ont pas de description ne sont pas encore utilisé.
 <table class="inventory inventoryPage">
