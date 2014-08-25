@@ -310,7 +310,7 @@ class Item extends AbstractDbObject {
 	
 	public static function desassociateItem(Player $player, Item $item) {
 		$GLOBALS['DB']->query('DELETE FROM inventory WHERE id_player=' . $player->getId() . ' AND id_item=' . $item->getId() . ' LIMIT 1;');
-		if ($idPlayer == $_SESSION['user']->getId()) {
+		if ($player->getId() == $_SESSION['user']->getId()) {
 			Dispatcher::addMessage('L\'item <img src="' . $item->getImage() . '" alt="' . $item->getNom() . '" title="' . $item->getNom() . '" style="max-width:32px;max-height:32px;" />' . $item->getNom() . '. a été enlevé de l\'inventaire.', Dispatcher::MESSAGE_LEVEL_INFO);
 		}
 	}

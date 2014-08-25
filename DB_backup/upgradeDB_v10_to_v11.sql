@@ -240,4 +240,5 @@ INSERT INTO `item` (`id`, `internal_name`, `nom`, `description`, `permanent`, `n
 (547, 'salade_de_riz', 'salade de riz', 'salade de riz', 0, 0, 0, 0, 0, -2, 0, 0, 'images/items/salade de riz.png', 'food', 0, -8),
 (546, 'salade_de_fruits', 'salade de fruits', 'salade de fruits', 0, 0, 0, 0, 0, -2, 0, 0, 'images/items/salade de fruits.png', 'food', 0, -10),
 (545, 'macedoine_de_legumes', 'macédoine de légumes', 'macédoine de légumes', 0, 0, 0, 0, 0, -2, 0, 0, 'images/items/macedoine de legumes.png', 'food', 0, -8),
-(544, 'cotes_de_porc', 'côtes de porc', 'Humm côtes de porc', 0, 0, 0, 0, 0, -2, 0, 0, 'images/items/cotes de porc.png', 'food', -2, -12);
+(544, 'cotes_de_porc', 'côtes de porc', 'Humm côtes de porc', 0, 0, 0, 0, 0, -2, 0, 0, 'images/items/cotes de porc.png', 'food', -2, -12),
+(553 , 'pins_fal', 'pin''s FAL', 'pin''s du week-end FAL', '1', '0', '0', '0', '0', '0', '0', '0', 'images/items/pins_fal.png', 'pins', '0', '-5');

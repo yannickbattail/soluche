@@ -62,8 +62,7 @@ class StartCongress extends AbstractAction {
 
 	public function welcomePack() {
 		$orgaCamping = Player::loadOrga('camping', $this->congress->getId());
-		$orga = Player::loadOrga('bar', $_SESSION['user']->getId_congress());
-		$sth = $GLOBALS['DB']->query('SELECT O.* FROM item O INNER JOIN inventory I ON I.id_item = O.id WHERE I.id_player = '.$orga->getId().';');
+		$sth = $GLOBALS['DB']->query('SELECT O.* FROM item O INNER JOIN inventory I ON I.id_item = O.id WHERE I.id_player = '.$orgaCamping->getId().';');
 		$sth->setFetchMode(PDO::FETCH_ASSOC);
 		while ($sth && ($arr = $sth->fetch())) {
 			$item = new Item();
