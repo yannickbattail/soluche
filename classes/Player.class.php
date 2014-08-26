@@ -3,7 +3,7 @@ class Player extends AbstractDbObject {
 
 	const TABLE_NAME = 'player';
 
-	protected static $fieldList = array('id' => PDO::PARAM_INT, 'nom' => PDO::PARAM_STR, 'pass' => PDO::PARAM_STR, 'lieu' => PDO::PARAM_STR, 'points' => PDO::PARAM_INT, 'notoriete' => PDO::PARAM_INT, 'alcoolemie' => PDO::PARAM_INT, 'alcoolemie_optimum' => PDO::PARAM_INT, 
+	protected static $fieldList = array('id' => PDO::PARAM_INT, 'nom' => PDO::PARAM_STR, 'pass' => PDO::PARAM_STR, 'email' => PDO::PARAM_STR, 'lieu' => PDO::PARAM_STR, 'points' => PDO::PARAM_INT, 'notoriete' => PDO::PARAM_INT, 'alcoolemie' => PDO::PARAM_INT, 'alcoolemie_optimum' => PDO::PARAM_INT, 
 			'alcoolemie_max' => PDO::PARAM_INT, 'fatigue' => PDO::PARAM_INT, 'fatigue_max' => PDO::PARAM_INT, 'sex_appeal' => PDO::PARAM_INT, 'en_pls' => PDO::PARAM_INT, 'debut_de_pls' => PDO::PARAM_INT, 'sex' => PDO::PARAM_INT, 'photo' => PDO::PARAM_STR, 'pnj' => PDO::PARAM_INT, 
 			'id_congress' => PDO::PARAM_INT, 'remaining_time' => PDO::PARAM_INT, 'money' => PDO::PARAM_INT);
 
@@ -34,15 +34,25 @@ class Player extends AbstractDbObject {
 	}
 
 	protected $pass = '';
-
+	
 	public function getPass() {
 		return $this->pass;
 	}
-
+	
 	public function setPass($pass) {
 		$this->pass = $pass;
 	}
 
+	protected $email = '';
+	
+	public function getEmail() {
+		return $this->email;
+	}
+	
+	public function setEmail($email) {
+		$this->email = $email;
+	}
+	
 	protected $lieu = '';
 
 	public function getLieu() {

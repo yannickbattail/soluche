@@ -355,7 +355,7 @@ class History extends AbstractDbObject {
 		$this->sex = 0;
 		$this->remaining_time = 0;
 		$this->remaining_time = 0;
-		$this->date_action = 0;
+		$this->date_action = time();
 		$this->success = 0;
 		$this->message = '';
 		$this->id_opponent = null;

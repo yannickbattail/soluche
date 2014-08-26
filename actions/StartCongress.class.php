@@ -54,7 +54,7 @@ class StartCongress extends AbstractAction {
 		$this->welcomePack();
 		Bot::resetBots(1, $this->congress->getId());
 		Dispatcher::setPage('camping');
-		$res->setMessage('Début du congrès "'.$this->congress->getNom().'" en ' . $this->congress->getAction_number() . ' heures.');
+		$res->setMessage('Début du congrès "'.$this->congress->getNom().'" en ' . $this->congress->getAction_number() . ' ¼ d\'heure.');
 		$res->setSuccess(ActionResult::SUCCESS);
 		return $res;
 	}

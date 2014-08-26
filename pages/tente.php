@@ -77,7 +77,7 @@ while ($sth && ($arr = $sth->fetch())) {
 		<td><?= plus($item->getSex_appeal(), 1); ?></td>
 		<td><?= plus($item->getRemaining_time(), 1); ?></td>
 		<td><?= $item->getDescription() ?></td>
-		<td><?= $item->getPermanent()?'permanent':(new UseItem($_SESSION['user']))->setParams(array(UseItem::PARAM_NAME=>$item))->link()?></td>
+		<td><?= array_search($item->getItem_type(), array('alcohol','drink','food','object'))?'':(new UseItem($_SESSION['user']))->setParams(array(UseItem::PARAM_NAME=>$item))->link()?></td>
 		<td><?= (new Sell($_SESSION['user']))->setParams(array(Sell::PARAM_NAME=>$item))->link()?></td>
 		<td>
 			<form action="main.php" method="post">

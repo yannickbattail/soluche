@@ -63,6 +63,7 @@ if (isset($_POST['changePass'])) {
 		if ($_POST['pass'] == $_POST['pass2']) {
 			$_SESSION['user']->setNom($_POST['login']);
 			$_SESSION['user']->setPass($_POST['pass']);
+			$_SESSION['user']->setEmail($_POST['email']);
 			$_SESSION['user']->setSex($_POST['sex']);
 			if (($_SESSION['user']->getPhoto() == 'images/tete_faluche_noir_rose.jpg') || ($_SESSION['user']->getPhoto() == 'images/tete_faluche_noir_bleu.jpg')) {
 				if ($_SESSION['user']->getSex()) {
@@ -126,10 +127,17 @@ if (isset($_POST['changePass'])) {
 				</td>
 			</tr>
 			<tr>
+				<th>E-mail</th>
+				<td>
+					<input type="text" name="email" value="<?= $_SESSION['user']->getEmail() ?>" />
+					Facultatif (sert en cas de perte du mot de passe et plus tard pour les notifications)
+				</td>
+			</tr>
+			<tr>
 				<th>Sex</th>
 				<td>
-					<label title="vagin"><input type="radio" name="sex" value="0" <?=$_SESSION['user']->getSex()==0?'checked="checked"':''?> /><span style="color: pink">&#9792;</span></label><br /> <label
-						title="bite"><input type="radio" name="sex" value="1" <?=$_SESSION['user']->getSex()==1?'checked="checked"':''?> /><span style="color: cyan">&#9794;</span></label>
+					<label title="vagin"><input type="radio" name="sex" value="0" <?=$_SESSION['user']->getSex()==0?'checked="checked"':''?> /><span style="color: pink">&#9792;</span></label><br />
+					<label title="bite"><input type="radio" name="sex" value="1" <?=$_SESSION['user']->getSex()==1?'checked="checked"':''?> /><span style="color: cyan">&#9794;</span></label>
 				</td>
 			</tr>
 			<tr>

@@ -16,7 +16,7 @@ FROM `history`
 LEFT JOIN player AS action_doer ON history.id_player = action_doer.id
 LEFT JOIN player AS opponent ON history.id_opponent = opponent.id
 LEFT JOIN congress ON history.id_congress = congress.id
-WHERE action_name IN ("Chopper", "Duel", "StartCongress", "StartPLS", "Vt")
+WHERE action_name IN ("Chopper", "Duel", "StartCongress", "StartPLS", "Vt", "inscription")
 ORDER BY `date_action` DESC
 LIMIT 30';
 $n = 0;
@@ -47,6 +47,8 @@ while ($sth && ($arr = $sth->fetch())) {
 		} else if ($history->getSuccess() == ActionResult::FAIL) {
 			$txt .= ' s\'est fait plié (en 4).';
 		}
+	} else if ($history->getAction_Name() == 'inscription') {
+		$txt .= $arr['action_doer_nom'] . ' vient de s\'inscrire. Souhaitez lui la bienvenue (target).';
 	} else if ($history->getAction_Name() == 'StartCongress') {
 		$txt .= $arr['action_doer_nom'] . ' participe au congrès ' . $arr['congress_nom'];
 	} else if ($history->getAction_Name() == 'StartPLS') {

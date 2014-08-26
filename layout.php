@@ -58,7 +58,7 @@
 	</table>
 	<div id="footer">
 	<?php printChatGlobal(); ?>
-	<div style="font-size: 10px; color: silver;" title="tu as perdu au jeu! ;-)">v 1.11</div>
+	<div style="font-size: 10px; color: silver;" title="tu as perdu au jeu! ;-)">v 1.12</div>
 	</div>
 </body>
 </html>
