@@ -242,3 +242,28 @@ INSERT INTO `item` (`id`, `internal_name`, `nom`, `description`, `permanent`, `n
 (545, 'macedoine_de_legumes', 'macédoine de légumes', 'macédoine de légumes', 0, 0, 0, 0, 0, -2, 0, 0, 'images/items/macedoine de legumes.png', 'food', 0, -8),
 (544, 'cotes_de_porc', 'côtes de porc', 'Humm côtes de porc', 0, 0, 0, 0, 0, -2, 0, 0, 'images/items/cotes de porc.png', 'food', -2, -12),
 (553 , 'pins_fal', 'pin''s FAL', 'pin''s du week-end FAL', '1', '0', '0', '0', '0', '0', '0', '0', 'images/items/pins_fal.png', 'pins', '0', '-5');
+
+INSERT INTO `item` (`id`, `internal_name`, `nom`, `description`, `permanent`, `notoriete`, `alcoolemie`, `alcoolemie_optimum`, `alcoolemie_max`, `fatigue`, `fatigue_max`, `sex_appeal`, `image`, `item_type`, `remaining_time`, `money`) VALUES
+(554, 'cactus', 'cactus', 'pratique la biffle [troll]', 1, 0, 0, 0, 0, 0, 0, 0, 'images/items/cactus.png', 'test', 0, 0),
+(555, 'kitten', 'chatton', 'amour des câlins [troll]', 1, 0, 0, 0, 0, 0, 0, 0, 'images/items/cat.png', 'test', 0, 0),
+(556, 'cle_de_fa_argent', 'cle de fa argent', 'cle de fa argent', 1, 0, 0, 0, 0, 0, 0, 0, 'images/items/cle de fa argent.png', 'test', 0, 0),
+(557, 'etoiles_de_mer', 'étoiles de mer', 'fait l''étoiles de mer [troll]', 1, 0, 0, 0, 0, 0, 0, 0, 'images/items/etoiles de mer.png', 'test', 0, 0),
+(558, 'hippo', 'hippo', 'pachy honorifique [troll]', 1, 0, 0, 0, 0, 0, 0, 0, 'images/items/hippo.png', 'test', 0, 0),
+(559, 'icter', 'icter', 'icter', 0, 0, 1, 0, 0, 0, 0, 0, 'images/items/icter.png', 'alcohol', 0, -5),
+(560, 'langue', 'langue', 'pro du cuni/pipe [troll]', 1, 0, 0, 0, 0, 0, 0, 0, 'images/items/langue.png', 'test', 0, 0),
+(561, 'levrette', 'lévrier femelle', 'amour de la levrette', 1, 0, 0, 0, 0, 0, 0, 0, 'images/items/levrette.png', 'test', 0, 0),
+(562, 'licorne', 'licorne', 'licorne', 1, 0, 0, 0, 0, 0, 0, 0, 'images/items/licorne.png', 'test', 0, 0),
+(563, 'loutre', 'loutre', 'amour de le charcuterie', 1, 0, 0, 0, 0, 0, 0, 0, 'images/items/loutre.png', 'test', 0, 0),
+(564, 'pins_ornithorynque', 'pin''s ornithorynque', '', 1, 0, 0, 0, 0, 0, 0, 0, 'images/items/ornithorynque.png', 'pins', 0, -5),
+(565, 'pelle_mecanique', 'pelle mécanique', 'pelle mécanique', 1, 0, 0, 0, 0, 0, 0, 0, 'images/items/pelle mecanique.png', 'test', 0, 0),
+(566, 'pelle', 'pelle', 'aime rouler des pelles [troll]', 1, 0, 0, 0, 0, 0, 0, 0, 'images/items/pelle.png', 'test', 0, 0),
+(568, 'pins_panda', 'pins panda.png', 'pins panda', 1, 0, 0, 0, 0, 0, 0, 0, 'images/items/pins panda.png', 'pins', 0, -6),
+(569, 'ornithorynque', 'ornithorynque', 'coopulation dans un lieux tres original [troll]', 1, 0, 0, 0, 0, 0, 0, 0, 'images/items/platypus.png', 'test', 0, 0),
+(570, 'rateau', 'rateau', 'droit pour : se prend plein de rateau et à 45 degres, aime mettre des rateaux [troll]', 1, 0, 0, 0, 0, 0, 0, 0, 'images/items/rateau.png', 'test', 0, 0),
+(571, 'robinet', 'robinet', 'Douche dorée [troll]', 1, 0, 0, 0, 0, 0, 0, 0, 'images/items/robinet.png', 'test', 0, 0),
+(572, 'shooter_vert', 'shooter vert', 'shooter vert', 0, 0, 1, 0, 0, 0, 0, 0, 'images/items/shooter vert.png', 'test', 0, -5),
+(573, 'tetine', 'tétine', 'tétine [troll]', 1, 0, 0, 0, 0, 0, 0, 0, 'images/items/tetine.png', 'test', 0, 0),
+(574, 'tnt', 'TNT', 'tip n top', 0, 0, 1, 0, 0, 0, 0, 0, 'images/items/tnt.png', 'alcohol', 0, -5),
+(575, 'panthere', 'panthère', 'aime griffer mordre [troll]', 1, 0, 0, 0, 0, 0, 0, 0, 'images/items/panthere.png', 'test', 0, 0),
+(576, 'rose plamplemouse.png', 'rosé', 'rosé', 0, 0, 2, 0, 0, 0, 0, 0, 'images/items/rose plamplemouse.png', 'alcohol', 0, -10),
+(577, 'bebe', 'bébé', 'amour de l´humour déplacé [troll]', 1, 0, 0, 0, 0, 0, 0, 0, 'images/items/bebe.png', 'test', 0, 0);

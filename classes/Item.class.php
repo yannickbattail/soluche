@@ -15,6 +15,16 @@ class Item extends AbstractDbObject {
 		$this->id = $id;
 	}
 
+	protected $internal_name = '';
+
+	public function getInternal_name() {
+		return $this->internal_name;
+	}
+
+	public function setInternal_name($internal_name) {
+		$this->internal_name = $internal_name;
+	}
+
 	protected $nom = '';
 
 	public function getNom() {
@@ -68,8 +78,7 @@ class Item extends AbstractDbObject {
 	protected $alcoolemie_optimum = 0;
 
 	public function getAlcoolemie_optimum() {
-		return $this->alcoolemie_optimum;
-	}
+		return $this->alcoolemie_optimum;	}
 
 	public function setAlcoolemie_optimum($alcoolemie_optimum) {
 		$this->alcoolemie_optimum = $alcoolemie_optimum;
@@ -232,9 +241,10 @@ class Item extends AbstractDbObject {
 	}
 
 	public function create() {
-		$sth = $GLOBALS['DB']->prepare('INSERT INTO ' . self::TABLE_NAME . ' ' . '(nom, description, permanent, notoriete, alcoolemie, alcoolemie_optimum, alcoolemie_max, fatigue, fatigue_max, sex_appeal, image, item_type, remaining_time, money)' . ' VALUES ( :nom, :description, :permanent, :notoriete, :alcoolemie, :alcoolemie_optimum, :alcoolemie_max, :fatigue, :fatigue_max, :sex_appeal, :image, :item_type, :remaining_time, :money);');
+		$sth = $GLOBALS['DB']->prepare('INSERT INTO ' . self::TABLE_NAME . ' ' . '(nom, internal_name, description, permanent, notoriete, alcoolemie, alcoolemie_optimum, alcoolemie_max, fatigue, fatigue_max, sex_appeal, image, item_type, remaining_time, money)' . ' VALUES ( :nom, :internal_name, :description, :permanent, :notoriete, :alcoolemie, :alcoolemie_optimum, :alcoolemie_max, :fatigue, :fatigue_max, :sex_appeal, :image, :item_type, :remaining_time, :money);');
 		// $sth->bindValue(':id', $this->id, PDO::PARAM_INT);
 		$sth->bindValue(':nom', $this->nom, PDO::PARAM_STR);
+		$sth->bindValue(':internal_name', $this->internal_name, PDO::PARAM_STR);
 		$sth->bindValue(':description', $this->description, PDO::PARAM_STR);
 		$sth->bindValue(':permanent', $this->permanent, PDO::PARAM_INT);
 		$sth->bindValue(':notoriete', $this->notoriete, PDO::PARAM_INT);
@@ -255,9 +265,10 @@ class Item extends AbstractDbObject {
 	}
 
 	public function update() {
-		$sth = $GLOBALS['DB']->prepare('UPDATE FROM ' . self::TABLE_NAME . ' SET nom=:nom, description=:description, permanent=:permanent, notoriete=:notoriete, alcoolemie=:alcoolemie, alcoolemie_optimum=:alcoolemie_optimum, alcoolemie_max=:alcoolemie_max, fatigue=:fatigue, fatigue_max=:fatigue_max, sex_appeal=:sex_appeal, image=:image, item_type=:item_type, remaining_time=:remaining_time, money=:money WHERE id=:id;');
+		$sth = $GLOBALS['DB']->prepare('UPDATE FROM ' . self::TABLE_NAME . ' SET nom=:nom, internal_name=:internal_name, description=:description, permanent=:permanent, notoriete=:notoriete, alcoolemie=:alcoolemie, alcoolemie_optimum=:alcoolemie_optimum, alcoolemie_max=:alcoolemie_max, fatigue=:fatigue, fatigue_max=:fatigue_max, sex_appeal=:sex_appeal, image=:image, item_type=:item_type, remaining_time=:remaining_time, money=:money WHERE id=:id;');
 		$sth->bindValue(':id', $this->id, PDO::PARAM_INT);
 		$sth->bindValue(':nom', $this->nom, PDO::PARAM_STR);
+		$sth->bindValue(':internal_name', $this->internal_name, PDO::PARAM_STR);
 		$sth->bindValue(':description', $this->description, PDO::PARAM_STR);
 		$sth->bindValue(':permanent', $this->permanent, PDO::PARAM_INT);
 		$sth->bindValue(':notoriete', $this->notoriete, PDO::PARAM_INT);

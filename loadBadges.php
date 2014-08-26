@@ -38,18 +38,28 @@ if (!isset($_SESSION['user']) || !$_SESSION['user']) {
 
 <?php
 if (isset($_POST['go'])) {
-	foreach (new DirectoryIterator('images/insignes/') as $key => $file) {
+	foreach (new DirectoryIterator('images/items/') as $key => $file) {
 		if (!$file->isDot()) {
-			$newName = strtolower($file->getBasename());
-			copy('images/insignes/' . $file->getBasename(), 'images/badges/' . $newName);
-			$item = new Item();
-			$item->setNom($newName);
-			$item->setPermanent(1);
-			$item->setImage('images/badges/' . $newName);
-			$item->setItem_type('test');
-			$item->save();
-			Item::associate(1, $item->getId());
-			echo 'images/insignes/' . $file->getBasename() . ' =&gt; images/badges/' . $newName . '<br />';
+			$fileName = 'images/items/' . $file->getBasename();
+			echo $fileName ;
+			$sth = $GLOBALS['DB']->prepare('SELECT * FROM item WHERE image = :image;');
+			$sth->bindValue(':image', $fileName, PDO::PARAM_STR);
+			$sth->setFetchMode(PDO::FETCH_ASSOC);
+			if ($sth->execute() === false) {
+				// var_dump($sth->errorInfo());
+				return false;
+			}
+			if (!$sth->fetch()) {
+				$item = new Item();
+				$item->setInternal_name(str_replace(array(' ', "'"), '_', $file->getBasename()));
+				$item->setNom($file->getBasename());
+				$item->setDescription($file->getBasename());
+				$item->setPermanent(1);
+				$item->setImage($fileName);
+				$item->setItem_type('test');
+				//$item->save();
+				echo '<img src="' . $fileName . '"  />';
+			}
 		}
 	}
 }
