@@ -60,6 +60,7 @@ if (isset($_POST['savePlayer'])) {
 <body>
 	<h1>admin</h1>
 
+	<a href="adminCode.php">admin codes</a>
 	<h3>congress list:</h3>
 
 	<table class="inventory">
