@@ -326,6 +326,29 @@ tr.even {
 	
 }
 
+#NotificationNumber {
+	color: gold;
+	width: 32px;
+	height: 32px;
+	display: inline-block;
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+#NotificationNumber div {
+	font-size: 20px;
+	text-align: center;
+	vertical-align: middle;
+	color: black;
+	width: 32px;
+	height: 32px;
+	display: inline-block;
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
 .int {
 	width: 20px;
 }

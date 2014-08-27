@@ -304,6 +304,14 @@ class Player extends AbstractDbObject {
 		$this->photo = $photo;
 	}
 
+	public function htmlPhoto($size = null) {
+		$html = '<img src="'.$this->photo.'" alt="'.$this->nom.'" title="'.$this->nom.'" ';
+		if ($size)
+		$html .= ' style="max-width: '.$size.'px; max-height: '.$size.'px;"';
+		$html .= ' />';
+		return $html;
+	}
+	
 	/**
 	 *
 	 * @var int

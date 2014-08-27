@@ -58,19 +58,22 @@ class Duel extends AbstractAction {
 			$this->player->addNotoriete(0);
 			$this->player->addPoints(5);
 			$this->player->addMoney(10);
-			$res->setMessage('Duel: ' . $this->player->getNom() . ' a gagné après s\'être affligé ' . $sec . ' secs.');
+			Notification::notifyPlayer($this->opponent, $this->player->htmlPhoto(32) . ' ' . $this->player->getNom() . ' t\'as défié et a gagné après ' . $sec . ' secs.');
+			$res->setMessage('Défi: ' . $this->player->getNom() . ' a gagné après s\'être affligé ' . $sec . ' secs.');
 			$res->setSuccess(ActionResult::SUCCESS);
 		} else if ($secUser < $secOpponent) {
 			$sec = $secUser + 1;
 			$this->opponent->addNotoriete(0);
 			$this->opponent->addPoints(5);
 			$this->player->addNotoriete(0);
-			$res->setMessage('Duel: ' . $this->opponent->getNom() . ' a gagné après s\'être affligé ' . $sec . ' secs.');
+			Notification::notifyPlayer($this->opponent, $this->player->htmlPhoto(32) . ' ' . $this->player->getNom() . ' t\'as défié et a PERDU après ' . $sec . ' secs.');
+			$res->setMessage('Défi: ' . $this->opponent->getNom() . ' a gagné après s\'être affligé ' . $sec . ' secs.');
 			$res->setSuccess(ActionResult::FAIL);
 		} else { // $secUser == $secOpponent
 			$this->player->addNotoriete(0);
 			// $this->opponent->notoriete -= 1;
 			$sec = $secOpponent + 1;
+			Notification::notifyPlayer($this->opponent, $this->player->htmlPhoto(32) . ' ' . $this->player->getNom() . ' t\'as défié et Personne n\'a gagné après ' . $sec . ' secs.');
 			$res->setMessage('Duel: Personne n\'a gagné après s\'être affligé ' . $sec . ' secs.');
 			$res->setSuccess(ActionResult::FAIL);
 		}
@@ -99,9 +102,7 @@ class Duel extends AbstractAction {
 <div id="<?= $htmlId ?>_tooltip" class="hiddenTooltip">
 	<table class="inventory playerTooltip">
 		<tr class="odd">
-			<th>
-				Défier
-			</th>
+			<th>Défier</th>
 			<td>
 				<img src="images/emotes/face-smile.png" title="Succès" title="Succès">
 			</td>
@@ -153,9 +154,7 @@ class Duel extends AbstractAction {
 			<td><?= plus(-2, 1)?></td>
 		</tr>
 		<tr class="even">
-			<th colspan="4">
-				Le nombre mini de verres pour que 1 des 2 finisse en PLS
-			</th>
+			<th colspan="4">Le nombre mini de verres pour que 1 des 2 finisse en PLS</th>
 		</tr>
 	</table>
 </div>

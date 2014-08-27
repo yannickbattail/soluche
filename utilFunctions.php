@@ -482,6 +482,35 @@ function printChat(Player $player) {
 <?php
 }
 
+function printNotificationNumber() {
+	?>
+<div id="NotificationNumber" onclick="showNotification()" title="Notifications"></div>
+<div id="NotificationDialog" title="Chat box" style="display: none;">
+	<div id="NotificationContent" style="overflow: scroll; height: 200px; width: 500px;">
+		<img src="images/loading.gif" alt="loading" title="loading" />
+	</div>
+</div>
+
+<script type="text/javascript">
+	function showNotification() {
+	    $('#NotificationDialog').dialog({
+		    'title': 'Notifications',
+	        'height':280,
+	        'width':540
+	        });
+	    $('#NotificationContent').html('<img src="images/loading.gif" alt="loading" title="loading" />');
+	    $('#NotificationContent').load('notificationList.php');
+	}
+	
+	function refreshNotificationNumber() {
+    	$('#NotificationNumber').load('notificationNumber.php');
+	}
+	setTimeout(refreshNotificationNumber, 2*1000); // the 1st time;
+	setInterval(refreshNotificationNumber, 5*1000);
+</script>
+<?php
+}
+
 function printChatGlobal() {
 	?>
 <div id="globalMessages">

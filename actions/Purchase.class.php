@@ -83,8 +83,9 @@ class Purchase extends AbstractAction {
 			// if ($this->opponent->getPnj() == 0) { // si player
 			$this->opponent->save();
 			// }
+			Notification::notifyPlayer($this->opponent, '' . $this->player->htmlPhoto(32) . ' ' . $this->player->getNom() . ' t\'a acheté l\'item ' . $this->item->htmlImage(32) . ' ' . $this->item->getNom() . ' pour ' . $this->transaction->getMoney() . ' Dignichoses.');
 			$res->setSuccess(ActionResult::SUCCESS);
-			$res->setMessage('Item ' . $this->item->getNom() . ' acheté à '.$this->opponent->getNom().' pour '.$this->transaction->getMoney().' Dignichoses.');
+			$res->setMessage('Item ' . $this->item->getNom() . ' acheté à ' . $this->opponent->getNom() . ' pour ' . $this->transaction->getMoney() . ' Dignichoses.');
 		}
 		return $res;
 	}
@@ -111,10 +112,10 @@ class Purchase extends AbstractAction {
 			</th>
 			<td><?= plus(-1 * $this->transaction->getMoney(), 1)?></td>
 		</tr>
-			<th>
-				<img src="images/util/reves.png" title="Rêves vendus" alt="Rêves vendus">
-			</th>
-			<td><?= plus(1, 1)?></td>
+		<th>
+			<img src="images/util/reves.png" title="Rêves vendus" alt="Rêves vendus">
+		</th>
+		<td><?= plus(1, 1)?></td>
 	</table>
 </div>
 <script type="text/javascript">

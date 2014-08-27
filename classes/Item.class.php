@@ -134,6 +134,14 @@ class Item extends AbstractDbObject {
 		$this->image = $image;
 	}
 
+	public function htmlImage($size = null) {
+		$html = '<img src="'.$this->image.'" alt="'.$this->nom.'" title="'.$this->nom.'" ';
+		if ($size)
+			$html .= ' style="max-width: '.$size.'px; max-height: '.$size.'px;"';
+		$html .= ' />';
+		return $html;
+	}
+	
 	protected $item_type = 'test';
 
 	public function getItem_type() {

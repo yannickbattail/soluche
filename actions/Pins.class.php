@@ -47,8 +47,8 @@ class Pins extends AbstractAction {
 	 */
 	public function execute() {
 		$res = new ActionResult();
-		$item = Item::loadByName('1_pins');
-		if (Item::isAssociated($this->player->getId(), $item->getId())) {
+		$item = $this->get1stPins();
+		if ($item) {
 			$this->opponent->addAlcoolemie(1);
 			$this->opponent->addPoints(2);
 			$this->opponent->save();
@@ -56,7 +56,8 @@ class Pins extends AbstractAction {
 			$this->player->addNotoriete(1);
 			$this->player->addFatigue(1);
 			$this->player->addRemaining_time(-1);
-			Item::desassociate($this->player->getId(), $item->getId());
+			Item::desassociateItem($this->player, $item);
+			Notification::notifyPlayer($this->opponent, 'Tu as reçu un pin\'s '.$item->htmlImage(32).' '.$item->getNom().' de la part de '.$this->player->htmlPhoto(32) . ' ' . $this->player->getNom() . '.');
 			$res->setMessage('T\'as pinsé '.$this->opponent->getNom());
 			$res->setSuccess(ActionResult::SUCCESS);
 		} else {
@@ -69,13 +70,27 @@ class Pins extends AbstractAction {
 		// $this->player->save(); // this is done at the end of the action execution.
 		return $res;
 	}
-
+	/**
+	 * 
+	 * @return Item|boolean
+	 */
+	protected function get1stPins() {
+		$sth = $GLOBALS['DB']->query('SELECT O.* FROM item O INNER JOIN inventory I ON I.id_item = O.id WHERE I.id_player = ' . $this->player->getId() . ' AND O.item_type = "pins" ORDER BY O.internal_name LIMIT 1;');
+		$sth->setFetchMode(PDO::FETCH_ASSOC);
+		if ($sth && ($arr = $sth->fetch())) {
+			$item = new Item();
+			$item->populate($arr);
+			return $item;
+		} else {
+			return false;
+		}
+	}
+	
 	/**
 	 *
 	 * @return string
 	 */
 	public function statsDisplay($page = null) {
-		// @TODO faire tous les champs
 		$htmlId = get_class($this) . '_' . $this->opponent->getId();
 		ob_start();
 		?>
