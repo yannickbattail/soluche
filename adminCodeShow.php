@@ -32,6 +32,7 @@ if ($_SESSION['user']->getId() != 1) {
 <body>
 	<?php 
 	$urlPrefix = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].$_SERVER['CONTEXT_PREFIX'].'/code.php?n=';
+	$urlPrefix = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].'/soluche/code.php?n=';
 	
 	$n = 0;
 	$sth = $GLOBALS['DB']->prepare('SELECT * FROM code LEFT JOIN item ON id_item = item.id WHERE id_player IS NULL AND code.id >= :min AND code.id < :max ORDER BY code.id;');
