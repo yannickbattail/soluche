@@ -195,6 +195,22 @@
 			}
 			
 		},
+		"Share":{
+			"config":{
+				
+			},
+			"success":{
+				"points":4,
+				"alcoolemie":"item",
+				"fatigue":"item",
+				"remaining_time":"item",
+				"opponent_points":1,
+				"opponent_alcoolemie":"item",
+				"opponent_fatigue":"item",
+				"opponent_remaining_time":"item"
+			}
+			
+		},
 		"Sing":{
 			"config":{
 				"numberPlayer":4

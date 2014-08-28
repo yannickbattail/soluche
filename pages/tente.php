@@ -40,8 +40,7 @@
 			<img src="images/util/time.png" title="¼ d'heure" alt="¼ d'heure">
 		</th>
 		<th>Description</th>
-		<th>Utiliser</th>
-		<th>Vendre</th>
+		<th>Utiliser<br />Vendre</th>
 		<th>Mettre en vente</th>
 	</tr>
 <?php
@@ -53,7 +52,7 @@ FROM  inventory
 LEFT JOIN item ON inventory.id_item = item.id
 LEFT JOIN transaction ON inventory.id = transaction.id_inventory
 WHERE inventory.id_player = ' . $_SESSION['user']->getId() . '
-ORDER BY item.permanent, item.item_type, item.nom;');
+ORDER BY item.item_type, item.nom;');
 $sth->setFetchMode(PDO::FETCH_ASSOC);
 while ($sth && ($arr = $sth->fetch())) {
 	if ($arr['id']) {
@@ -77,9 +76,11 @@ while ($sth && ($arr = $sth->fetch())) {
 		<td><?= plus($item->getSex_appeal(), 1); ?></td>
 		<td><?= plus($item->getRemaining_time(), 1); ?></td>
 		<td><?= $item->getDescription() ?></td>
-		<td><?= array_search($item->getItem_type(), array('alcohol','drink','food','object'))?'':(new UseItem($_SESSION['user']))->setParams(array(UseItem::PARAM_NAME=>$item))->link()?></td>
-		<td><?= (new Sell($_SESSION['user']))->setParams(array(Sell::PARAM_NAME=>$item))->link()?></td>
+		<td><?= in_array($item->getItem_type(), array('alcohol','drink','food','objet'))?(new UseItem($_SESSION['user']))->setParams(array(UseItem::PARAM_NAME=>$item))->link():'' ?>
+			<?= in_array($item->getItem_type(), array('badge','malus','potager', 'potager', 'level'))?(new Sell($_SESSION['user']))->setParams(array(Sell::PARAM_NAME=>$item))->link():'' ?>
+			<?= $item->getItem_type() == 'valeur'?(new Share($_SESSION['user']))->setParams(array(Share::PARAM_NAME=>$item))->link():'' ?></td>
 		<td>
+		<?php if (!in_array($item->getItem_type(), array('cros','level','test'))) { ?>
 			<form action="main.php" method="post">
 				<!-- onsubmit="if ($('money').val() == ''){ return false;} else { return confirm('Mettre en vente pour '+$('money').val()+' en dignichoses. Etes-vous sûr?');}" -->
 				<input type="hidden" name="action" value="PutOnSale" />
@@ -89,6 +90,7 @@ while ($sth && ($arr = $sth->fetch())) {
 				<label title="Prix en dignichose">Prix:<input type="text" name="money" id="money" value="<?= $arr['transaction_money'] ?>" class="int" /></label>
 				<input type="submit" name="PutOnSale" <?= $arr['id_transaction']?'value="Changer le prix"':'value="mettre en vente"' ?> class="action" />
 			</form>
+		<?php } ?>
 			<?= $arr['id_transaction']?'En attente d\'achat.':''?>
 			<?= $arr['id_transaction']?(new AbortSale($_SESSION['user']))->setParams(array(AbortSale::PARAM_NAME=>$arr['id_transaction']))->link():'' ?></td>
 	</tr>
@@ -127,7 +129,6 @@ while ($sth && ($arr = $sth->fetch())) {
 		<td>Total des insignes permanents</td>
 		<td></td>
 		<td></td>
-		<td></td>
 	</tr>
 	<?php $odd = ($n++ % 2) ? 'odd' : 'even'; ?>
 	<tr class="<?= $odd ?>">
@@ -146,7 +147,6 @@ while ($sth && ($arr = $sth->fetch())) {
 		<td><?= plus($_SESSION['user']->getSex_appeal(), 1); ?></td>
 		<td><?= plus($_SESSION['user']->getRemaining_time(), 1); ?></td>
 		<td>Le faluchard sans ses insignes</td>
-		<td></td>
 		<td></td>
 		<td></td>
 	</tr>
@@ -169,7 +169,6 @@ while ($sth && ($arr = $sth->fetch())) {
 		<td><?= plus($_SESSION['user']->getSex_appeal() + $sum['sex_appeal'], 1); ?></td>
 		<td><?= plus($_SESSION['user']->getRemaining_time() + $sum['remaining_time'], 1); ?></td>
 		<td>Le faluchard avec ses insignes</td>
-		<td></td>
 		<td></td>
 		<td></td>
 	</tr>
