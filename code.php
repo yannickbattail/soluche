@@ -14,7 +14,7 @@ require_once ('utilFunctions.php');
 $message = '';
 if (!isset($_SESSION['user']) || !$_SESSION['user']) {
 	//header('Location: login.php');
-	$message .= 'Il faut <a href="login.php">se connecter ou s\'inscrire</a> avant.';
+	$message .= 'Il faut <a href="login.php">se connecter ou s\'inscrire</a> avant, puis faire précédent pour revenir à cette page.';
 } else {
 	$_SESSION['user'] = Player::load($_SESSION['user']->getId());
 	$_SESSION['user']->loadInventory();
@@ -58,9 +58,10 @@ if (!isset($_SESSION['user']) || !$_SESSION['user']) {
 </head>
 <body>
 	<h1>Codes</h1>
-	<p><?= $message?></p>
+	<p><div class="infoMessage"><?= $message ?></div>'</p>
+	<br />
 	<form action="" method="get">
-		le code:
+		taper le code à la main:
 		<input type="text" name="n" value="" />
 		<input type="submit" name="go" value="go" />
 	</form>
