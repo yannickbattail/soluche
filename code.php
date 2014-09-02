@@ -18,11 +18,10 @@ if (!isset($_SESSION['user']) || !$_SESSION['user']) {
 } else {
 	$_SESSION['user'] = Player::load($_SESSION['user']->getId());
 	$_SESSION['user']->loadInventory();
-	
 	if (isset($_REQUEST['n'])) {
 		$code = Code::loadByNumber($_REQUEST['n']);
 		if ($code) {
-			if (!$code->getId_player()) {
+			//if (!$code->getId_player()) {
 				$item = Item::load($code->getId_item());
 				if (!$_SESSION['user']->hasItem($item->getInternal_name())) {
 					Item::associateItem($_SESSION['user'], $item);
@@ -32,9 +31,9 @@ if (!isset($_SESSION['user']) || !$_SESSION['user']) {
 				} else {
 					$message .= 'Tu as déjà l\'item ' . $item->getNom();
 				}
-			} else {
-				$message .= 'ce code a déjà été utilisé.';
-			}
+			//} else {
+			//	$message .= 'ce code a déjà été utilisé.';
+			//}
 		} else {
 			$message .= 'ce code n\'existe pas.';
 		}
