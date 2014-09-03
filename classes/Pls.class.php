@@ -23,7 +23,7 @@ class Pls {
 			if (($player->getAlcoolemie() - $recup) < 0) {
 				$recup = $player->getAlcoolemie();
 			}
-			$player->addNotoriete(-1);
+			//$player->addNotoriete(-1);
 			$player->addAlcoolemie(-1 * $recup);
 			$player->addFatigue(-1);
 			$player->addRemaining_time(-1 * $recup);

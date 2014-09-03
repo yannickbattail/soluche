@@ -458,6 +458,12 @@ class Player extends AbstractDbObject {
 	}
 
 	protected $calculated = array();
+	
+	protected $itemLevelCounter = array();
+	
+	public function getItemLevelCounter(){
+		return $this->itemLevelCounter;
+	}
 
 	public function __construct() {
 		$this->history = new History();
@@ -597,6 +603,7 @@ class Player extends AbstractDbObject {
 		$this->calculated['sex_appeal'] = $this->sex_appeal;
 		$this->inventory = array();
 		
+		$this->itemLevelCounter = array();
 		$sth = $GLOBALS['DB']->query('SELECT O.* FROM item O INNER JOIN inventory I ON I.id_item = O.id WHERE I.id_player = ' . $this->id . ' ORDER BY O.id;');
 		$sth->setFetchMode(PDO::FETCH_ASSOC);
 		while ($sth && ($arr = $sth->fetch())) {
@@ -611,6 +618,13 @@ class Player extends AbstractDbObject {
 				$this->calculated['fatigue'] += $item->getFatigue();
 				$this->calculated['fatigue_max'] += $item->getFatigue_max();
 				$this->calculated['sex_appeal'] += $item->getSex_appeal();
+			}
+			if ($item->getItem_type() == 'level') {
+				// money = level, for item type level
+				if (!isset($this->itemLevelCounter[$item->getMoney()])) {
+					$this->itemLevelCounter[$item->getMoney()] = 0;
+				}
+				$this->itemLevelCounter[$item->getMoney()]++;
 			}
 		}
 		return $this;

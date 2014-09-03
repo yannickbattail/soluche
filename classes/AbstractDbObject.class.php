@@ -108,4 +108,27 @@ abstract class AbstractDbObject {
 	public function delete() {
 		$GLOBALS['DB']->query('DELETE FROM ' . static::TABLE_NAME . ' WHERE id=' . $this->id . ';')->execute();
 	}
+	
+	// auto getter and setter
+	/*
+	public function __call($name, $arguments) {
+		if (strpos($name, 'get') === 0) {
+			$member = lcfirst(str_replace('get', '', $name));
+			if (in_array($member, self::$fieldList)) {
+				return $this->$member;
+			} else {
+				throw new Exception('no such member ' . $member . ' in class ' . __CLASS__);
+			}
+		} else if (strpos($name, 'set') === 0) {
+			$member = lcfirst(str_replace('set', '', $name));
+			if (in_array($member, self::$fieldList)) {
+				$this->$member = $arguments[0];
+			} else {
+				throw new Exception('no such member ' . $member . ' in class ' . __CLASS__);
+			}
+		} else {
+			throw new Exception('invalid method ' . $name . ' for class ' . __CLASS__);
+		}
+	}
+	*/
 }

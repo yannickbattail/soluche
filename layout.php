@@ -26,10 +26,10 @@
 			<td style="width: 200px">
 				<div id="menu">
 					<div class="login">
-						<img src="<?=$_SESSION['user']->getPhoto() ?>" title="<?= $_SESSION['user']->getNom() ?>" style="max-width: 200px; max-height: 200px;" />
+						<a href="userCutomisation.php" title="Editer les infos du faluchard"><img src="<?=$_SESSION['user']->getPhoto() ?>" style="max-width: 200px; max-height: 200px;" /></a>
 						<br />
 						<?=$_SESSION['user']->getNom(); ?> <?php echo $_SESSION['user']->getSex()?'<span style="color:cyan" title="bite">&#9794;</span>':'<span style="color:pink" title="vagin">&#9792;</span>'; ?>
-						<a href="userCutomisation.php"><img src="images/util/edit_user.png" alt="Editer" title="Editer" style="width: 16px; height: 16px;"></a> <a href="login.php?logout=1"><img
+						<a href="userCutomisation.php"><img src="images/util/edit_user.png" alt="Editer" title="Editer les infos du faluchard" style="width: 16px; height: 16px;"></a> <a href="login.php?logout=1"><img
 								src="images/util/system-shutdown.png" alt="Quitter" title="Quitter" style="width: 16px; height: 16px;"></a>
 						<?php printNotificationNumber(); ?>
 					</div>

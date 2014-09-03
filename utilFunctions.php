@@ -69,19 +69,7 @@ function printUserStats(Player $player) {
 		<td><?= lifeBarMiddle($player->getCalculatedAlcoolemie_max(), $player->getCalculatedAlcoolemie_optimum(), $player->getCalculatedAlcoolemie())?>
 		<?=$player->getCalculatedAlcoolemie().'/'.$player->getCalculatedAlcoolemie_max().' optimum à '.$player->getCalculatedAlcoolemie_optimum(); ?></td>
 	</tr>
-	<tr class="even">
-		<th></th>
-		<td>
-			<?php if ($player->getCalculatedAlcoolemie() > $player->getAlcoolemie_optimum()) { ?>
-				<img src="images/util/warning.png" alt="Attention" title="Attention" />
-			Zone rouge, penser à faire un <a href="main.php?page=camping">VT</a>, une <a href="main.php?page=camping">PLS</a> ou <a href="main.php?page=tente">dodo</a>.
-			<?php } ?>
-			<?php if ($player->getCalculatedFatigue_max() == $player->getCalculatedFatigue()) { ?>
-				<img src="images/util/warning.png" alt="Attention" title="Attention" />
-			Crevé, penser à <a href="main.php?page=cuisine">manger</a> ou <a href="main.php?page=tente">dormir</a>.
-			<?php } ?>
-		</td>
-	</tr>
+
 	<tr class="even">
 		<th>
 			<img src="images/util/sleep.png" title="Fatigue" alt="Fatigue">
@@ -93,6 +81,36 @@ function printUserStats(Player $player) {
 			<img src="images/util/sex appeal.png" title="Sexe appeal" alt="Sexe appeal">
 		</th>
 		<td><?=$player->getCalculatedSex_appeal(); ?></td>
+	</tr>
+	<tr class="even">
+		<th></th>
+		<td>
+			<?php if ($player->getCalculatedAlcoolemie() > $player->getAlcoolemie_optimum()) { ?>
+				<img src="images/util/warning.png" alt="Attention" title="Attention" />
+			Zone rouge, penser à faire un <a href="main.php?page=camping">VT</a>, une <a href="main.php?page=camping">PLS</a> ou <a href="main.php?page=tente">dodo</a>.
+			<?php } ?>
+			<?php if ($player->getCalculatedFatigue_max() == $player->getCalculatedFatigue()) { ?>
+				<img src="images/util/warning.png" alt="Attention" title="Attention" />
+			Crevé, penser à <a href="main.php?page=cuisine">manger</a> ou <a href="main.php?page=tente">dormir</a>.
+			<?php } ?>
+			<?php 
+			$itemLevelCounter = $player->getItemLevelCounter();
+			$msg = '';
+			for ($i = 1; $i <= $player->getLevel(); $i++) {
+				$itemCounter = 0;
+				if (isset($itemLevelCounter[$i])) {
+					$itemCounter = $itemLevelCounter[$i];
+				}
+				if ($itemLevelCounter[$i] < 2) {
+					$msg .= ' tu peux encore avoir '.(2-$itemCounter).' item(s) pour le level '.$i;
+				}
+			} 
+			if ($msg) {
+				$msg = '<img src="images/util/warning.png" alt="info" title="info" />Vas au <a href="main.php?page=orga#levelItemList">coin des orgas</a>'.$msg;
+			}
+			echo $msg;
+			?>
+		</td>
 	</tr>
 </table>
 <?php

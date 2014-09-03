@@ -72,7 +72,7 @@ while ($sth && ($arr = $sth->fetch())) {
 ?>
 </table>
 
-<h3>Insignes de niveau:</h3>
+<h3 id="levelItemList">Insignes de niveau:</h3>
 Vous ne pouvez avoir que 2 insignes pour chaque niveau.
 <table class="inventory inventoryPage">
 	<tr>

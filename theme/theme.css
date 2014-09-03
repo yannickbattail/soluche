@@ -15,7 +15,6 @@ body {
 
 a {
 	color: #aaaaaa;
-	text-decoration: none;
 }
 
 a:focus {
@@ -71,9 +70,11 @@ div.footer {
 .footer hr {
 	margin: 8px 8px;
 }
+
 #skeleton td {
 	vertical-align: top;
 }
+
 div#menu {
 	display: inline-block;
 	width: 300px;
@@ -114,6 +115,10 @@ div.right {
 	font-size: 16px;
 }
 
+.tabBar a {
+	text-decoration: none;
+}
+
 .tabBarSelected {
 	font-weight: bold;
 	border-color: white;
@@ -129,6 +134,6 @@ div#globalMessages {
 }
 
 form {
-    margin: 0;
-    padding: 0;
+	margin: 0;
+	padding: 0;
 }
