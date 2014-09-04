@@ -31,7 +31,7 @@ if ($_SESSION['user']->getId() != 1) {
 </head>
 <body>
 	<?php 
-	$urlPrefix = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].$_SERVER['CONTEXT_PREFIX'].'/code.php?n=';
+	//$urlPrefix = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].$_SERVER['CONTEXT_PREFIX'].'/code.php?n=';
 	$urlPrefix = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].'/soluche/code.php?n=';
 	
 	$n = 0;

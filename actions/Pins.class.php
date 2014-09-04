@@ -57,7 +57,8 @@ class Pins extends AbstractAction {
 			$this->player->addFatigue(1);
 			$this->player->addRemaining_time(-1);
 			Item::desassociateItem($this->player, $item);
-			Notification::notifyPlayer($this->opponent, 'Tu as reçu un pin\'s '.$item->htmlImage(32).' '.$item->getNom().' de la part de '.$this->player->htmlPhoto(32) . ' ' . $this->player->getNom() . '.');
+			Notification::notifyPlayer($this->opponent, 'Tu as reçu un pin\'s '.$item->htmlImage(32).' '.$item->getNom().' de la part de '.$this->player->htmlPhoto(32) . ' ' . $this->player->getNom() . '.',
+			 'Tu as reçu un pin\'s '.$item->getNom().' de la part de ' . $this->player->getNom() . '.', get_class($this));
 			$res->setMessage('T\'as pinsé '.$this->opponent->getNom());
 			$res->setSuccess(ActionResult::SUCCESS);
 		} else {

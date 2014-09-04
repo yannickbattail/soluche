@@ -17,6 +17,8 @@ if (!isset($_SESSION['user']) || !$_SESSION['user']) {
 $_SESSION['user'] = Player::load($_SESSION['user']->getId());
 $_SESSION['user']->loadInventory();
 
+$message = '';
+
 if (isset($_POST['uploadPhoto'])) {
 	
 	try {
@@ -52,9 +54,9 @@ if (isset($_POST['uploadPhoto'])) {
 		}
 		$_SESSION['user']->setPhoto($fileName);
 		$_SESSION['user']->save();
-		echo 'Photo changée';
+		$message .= 'Photo changée';
 	} catch (RuntimeException $e) {
-		echo $e->getMessage();
+		$message .= $e->getMessage();
 	}
 }
 
@@ -63,7 +65,6 @@ if (isset($_POST['changePass'])) {
 		if ($_POST['pass'] == $_POST['pass2']) {
 			$_SESSION['user']->setNom($_POST['login']);
 			$_SESSION['user']->setPass($_POST['pass']);
-			$_SESSION['user']->setEmail($_POST['email']);
 			$_SESSION['user']->setSex($_POST['sex']);
 			if (($_SESSION['user']->getPhoto() == 'images/tete_faluche_noir_rose.jpg') || ($_SESSION['user']->getPhoto() == 'images/tete_faluche_noir_bleu.jpg')) {
 				if ($_SESSION['user']->getSex()) {
@@ -73,13 +74,24 @@ if (isset($_POST['changePass'])) {
 				}
 			}
 			$_SESSION['user']->save();
-			echo 'Changement OK!';
+			$message .= 'Changement OK!';
 		} else {
-			echo 'pass différents';
+			$message .= 'pass différents';
 		}
 	} else {
-		echo 'Nom ou pass vide';
+		$message .= 'Nom ou pass vide';
 	}
+}
+
+if (isset($_POST['notif'])) {
+	$_SESSION['user']->setEmail($_POST['email']);
+	if (isset($_POST['Notification'])) {
+		$_SESSION['user']->setNotification($_POST['Notification']);
+	} else {
+		$_SESSION['user']->setNotification(array());
+	}
+	$_SESSION['user']->save();
+	$message .= 'Changement OK!';
 }
 
 ?>
@@ -99,51 +111,78 @@ if (isset($_POST['changePass'])) {
 </head>
 <body>
 	<h1>Cutomisation</h1>
-	Changer la photo:
+	<p>
+	
+	
+	<div class="infoMessage"><?= $message ?></div>
+	</p>
+	<h3>Changer la photo:</h3>
 	<form action="" method="post" enctype="multipart/form-data">
 		<img src="<?= $_SESSION['user']->getPhoto() ?>" class="inventoryImage" title="<?= $_SESSION['user']->getNom() ?>" />
 		<input type="file" name="photo" value="" />
 		<input type="submit" name="uploadPhoto" value="upload photo" />
 	</form>
-	<br /> Changer de pass:
-	<form action="" method="post" enctype="multipart/form-data">
-		<table>
-			<tr>
+	<h3>Modifier le faluchard:</h3>
+	<form action="" method="post">
+		<table class="playerStats">
+			<tr class="odd">
 				<th>Nom</th>
 				<td>
 					<input type="text" name="login" value="<?= $_SESSION['user']->getNom() ?>" />
 				</td>
 			</tr>
-			<tr>
+			<tr class="even">
 				<th>pass</th>
 				<td>
 					<input type="password" name="pass" value="<?= $_SESSION['user']->getPass() ?>" />
 				</td>
 			</tr>
-			<tr>
+			<tr class="odd">
 				<th>confirmer</th>
 				<td>
 					<input type="password" name="pass2" value="<?= $_SESSION['user']->getPass() ?>" />
 				</td>
 			</tr>
-			<tr>
-				<th>E-mail</th>
-				<td>
-					<input type="text" name="email" value="<?= $_SESSION['user']->getEmail() ?>" />
-					Facultatif (sert en cas de perte du mot de passe et plus tard pour les notifications)
-				</td>
-			</tr>
-			<tr>
+			<tr class="even">
 				<th>Sex</th>
 				<td>
 					<label title="vagin"><input type="radio" name="sex" value="0" <?=$_SESSION['user']->getSex()==0?'checked="checked"':''?> /><span style="color: pink">&#9792;</span></label><br />
 					<label title="bite"><input type="radio" name="sex" value="1" <?=$_SESSION['user']->getSex()==1?'checked="checked"':''?> /><span style="color: cyan">&#9794;</span></label>
 				</td>
 			</tr>
-			<tr>
+			<tr class="odd">
 				<th>&nbsp;</th>
 				<td>
 					<input type="submit" name="changePass" value="modifier" />
+				</td>
+			</tr>
+		</table>
+	</form>
+	<h3>Changer les notifications:</h3>
+	<form action="" method="post">
+		<table class="playerStats">
+			<tr class="odd">
+				<th>E-mail</th>
+				<td>
+					<input type="text" name="email" value="<?= $_SESSION['user']->getEmail() ?>" />
+					Facultatif (sert en cas de perte du mot de passe et plus tard pour les notifications)
+				</td>
+			</tr>
+			<tr class="even">
+				<th>Notification</th>
+				<td style="text-align: left;">
+					<ul>
+					<?php foreach (Notification::getNotifTypeList() as $notifType) {?>
+							<li><label title="Notification <?= $notifType ?>"><input type="checkbox" name="Notification[]" value="<?= $notifType ?>"
+									<?= in_array($notifType, $_SESSION['user']->getNotification())?'checked="checked"':''?> /> <?= $notifType ?></label></li>
+					<?php } ?>
+					</ul>
+				</td>
+			</tr>
+			<tr class="odd">
+				<th>&nbsp;</th>
+				<td>
+					<input type="submit" name="notif" value="modifier" />
 				</td>
 			</tr>
 		</table>

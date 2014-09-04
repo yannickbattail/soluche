@@ -101,7 +101,7 @@ function printUserStats(Player $player) {
 				if (isset($itemLevelCounter[$i])) {
 					$itemCounter = $itemLevelCounter[$i];
 				}
-				if ($itemLevelCounter[$i] < 2) {
+				if ($itemCounter < 2) {
 					$msg .= ' tu peux encore avoir '.(2-$itemCounter).' item(s) pour le level '.$i;
 				}
 			} 

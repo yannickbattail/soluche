@@ -83,7 +83,7 @@ class Purchase extends AbstractAction {
 			// if ($this->opponent->getPnj() == 0) { // si player
 			$this->opponent->save();
 			// }
-			Notification::notifyPlayer($this->opponent, '' . $this->player->htmlPhoto(32) . ' ' . $this->player->getNom() . ' t\'a acheté l\'item ' . $this->item->htmlImage(32) . ' ' . $this->item->getNom() . ' pour ' . $this->transaction->getMoney() . ' Dignichoses.');
+			Notification::notifyPlayer($this->opponent, '' . $this->player->htmlPhoto(32) . ' ' . $this->player->getNom() . ' t\'a acheté l\'item ' . $this->item->htmlImage(32) . ' ' . $this->item->getNom() . ' pour ' . $this->transaction->getMoney() . ' Dignichoses.', '' . $this->player->getNom() . ' t\'a acheté l\'item ' . $this->item->getNom() . ' pour ' . $this->transaction->getMoney() . ' Dignichoses.', get_class($this));
 			$res->setSuccess(ActionResult::SUCCESS);
 			$res->setMessage('Item ' . $this->item->getNom() . ' acheté à ' . $this->opponent->getNom() . ' pour ' . $this->transaction->getMoney() . ' Dignichoses.');
 		}

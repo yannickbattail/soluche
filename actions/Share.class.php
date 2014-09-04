@@ -94,7 +94,7 @@ class Share extends AbstractAction {
 			$player->addRemaining_time($this->item->getRemaining_time());
 			$player->save();
 			if ($player->getId() != $this->player->getId()) { // pas de notif a soit meme
-				Notification::notifyPlayer($player, $this->player->htmlPhoto(32) . ' ' . $this->player->getNom() . ' a partagé des valeurs ' . $this->item->htmlImage(32) . ' ' . $this->item->getNom() . ' avec vous.');
+				Notification::notifyPlayer($player, $this->player->htmlPhoto(32) . ' ' . $this->player->getNom() . ' a partagé des valeurs ' . $this->item->htmlImage(32) . ' ' . $this->item->getNom() . ' avec vous.', ' ' . $this->player->getNom() . ' a partagé des valeurs ' . $this->item->getNom() . ' avec vous.', get_class($this));
 			}
 		}
 	}

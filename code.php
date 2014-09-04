@@ -57,7 +57,7 @@ if (!isset($_SESSION['user']) || !$_SESSION['user']) {
 </head>
 <body>
 	<h1>Codes</h1>
-	<p><div class="infoMessage"><?= $message ?></div>'</p>
+	<p><div class="infoMessage"><?= $message ?></div></p>
 	<br />
 	<form action="" method="get">
 		taper le code à la main:

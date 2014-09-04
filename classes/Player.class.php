@@ -5,7 +5,7 @@ class Player extends AbstractDbObject {
 
 	protected static $fieldList = array('id' => PDO::PARAM_INT, 'nom' => PDO::PARAM_STR, 'pass' => PDO::PARAM_STR, 'email' => PDO::PARAM_STR, 'lieu' => PDO::PARAM_STR, 'points' => PDO::PARAM_INT, 'notoriete' => PDO::PARAM_INT, 'alcoolemie' => PDO::PARAM_INT, 'alcoolemie_optimum' => PDO::PARAM_INT, 
 			'alcoolemie_max' => PDO::PARAM_INT, 'fatigue' => PDO::PARAM_INT, 'fatigue_max' => PDO::PARAM_INT, 'sex_appeal' => PDO::PARAM_INT, 'en_pls' => PDO::PARAM_INT, 'debut_de_pls' => PDO::PARAM_INT, 'sex' => PDO::PARAM_INT, 'photo' => PDO::PARAM_STR, 'pnj' => PDO::PARAM_INT, 
-			'id_congress' => PDO::PARAM_INT, 'remaining_time' => PDO::PARAM_INT, 'money' => PDO::PARAM_INT);
+			'id_congress' => PDO::PARAM_INT, 'remaining_time' => PDO::PARAM_INT, 'money' => PDO::PARAM_INT, 'notification' => PDO::PARAM_STR);
 
 	const PNJ_PLAYER = 0;
 
@@ -34,25 +34,25 @@ class Player extends AbstractDbObject {
 	}
 
 	protected $pass = '';
-	
+
 	public function getPass() {
 		return $this->pass;
 	}
-	
+
 	public function setPass($pass) {
 		$this->pass = $pass;
 	}
 
 	protected $email = '';
-	
+
 	public function getEmail() {
 		return $this->email;
 	}
-	
+
 	public function setEmail($email) {
 		$this->email = $email;
 	}
-	
+
 	protected $lieu = '';
 
 	public function getLieu() {
@@ -305,13 +305,13 @@ class Player extends AbstractDbObject {
 	}
 
 	public function htmlPhoto($size = null) {
-		$html = '<img src="'.$this->photo.'" alt="'.$this->nom.'" title="'.$this->nom.'" ';
+		$html = '<img src="' . $this->photo . '" alt="' . $this->nom . '" title="' . $this->nom . '" ';
 		if ($size)
-		$html .= ' style="max-width: '.$size.'px; max-height: '.$size.'px;"';
+			$html .= ' style="max-width: ' . $size . 'px; max-height: ' . $size . 'px;"';
 		$html .= ' />';
 		return $html;
 	}
-	
+
 	/**
 	 *
 	 * @var int
@@ -410,6 +410,35 @@ class Player extends AbstractDbObject {
 		$this->setMoney($this->getMoney() + $money);
 	}
 
+	protected $notification = 0;
+
+	/**
+	 *
+	 * @return array:
+	 */
+	public function getNotification() {
+		return explode(',', $this->notification);
+	}
+
+	/**
+	 *
+	 * @param array $notification        	
+	 */
+	public function setNotification(array $notification) {
+		$this->notification = join(',', $notification);
+	}
+
+	public function hasNotifications($notifType) {
+		if ($this->getEmail()) {
+			if (in_array($notifType, $this->getNotification())) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		return false;
+	}
+
 	protected $inventory = array();
 
 	/**
@@ -458,10 +487,10 @@ class Player extends AbstractDbObject {
 	}
 
 	protected $calculated = array();
-	
+
 	protected $itemLevelCounter = array();
-	
-	public function getItemLevelCounter(){
+
+	public function getItemLevelCounter() {
 		return $this->itemLevelCounter;
 	}
 
@@ -487,6 +516,7 @@ class Player extends AbstractDbObject {
 		$this->id_congress = null;
 		$this->remaining_time = 0;
 		$this->money = 0;
+		$this->notification = join(',', Notification::getNotifTypeList());
 	}
 
 	/**

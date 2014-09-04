@@ -117,7 +117,7 @@ class Chopper extends AbstractAction {
 				$itemCrabe = Item::loadByName('crabe');
 				Item::associateItem($this->player, $itemCrabe);
 			}
-			Notification::notifyPlayer($this->opponent, 'Tu t\'es fait choppé par '.$this->player->htmlPhoto(32) . ' ' . $this->player->getNom() . '.');
+			Notification::notifyPlayer($this->opponent, 'Tu t\'es fait choppé par ' . $this->player->htmlPhoto(32) . ' ' . $this->player->getNom() . '.', 'Tu t\'es fait choppé par ' . $this->player->getNom() . '.', get_class($this));
 		} else {
 			$this->player->addFatigue(1);
 			$this->player->addRemaining_time(-1);

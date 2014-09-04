@@ -58,7 +58,7 @@ class Duel extends AbstractAction {
 			$this->player->addNotoriete(0);
 			$this->player->addPoints(5);
 			$this->player->addMoney(10);
-			Notification::notifyPlayer($this->opponent, $this->player->htmlPhoto(32) . ' ' . $this->player->getNom() . ' t\'as défié et a gagné après ' . $sec . ' secs.');
+			Notification::notifyPlayer($this->opponent, $this->player->htmlPhoto(32) . ' ' . $this->player->getNom() . ' t\'as défié et a gagné après ' . $sec . ' secs.', $this->player->getNom() . ' t\'as défié et a gagné après ' . $sec . ' secs.', get_class($this));
 			$res->setMessage('Défi: ' . $this->player->getNom() . ' a gagné après s\'être affligé ' . $sec . ' secs.');
 			$res->setSuccess(ActionResult::SUCCESS);
 		} else if ($secUser < $secOpponent) {
@@ -66,14 +66,14 @@ class Duel extends AbstractAction {
 			$this->opponent->addNotoriete(0);
 			$this->opponent->addPoints(5);
 			$this->player->addNotoriete(0);
-			Notification::notifyPlayer($this->opponent, $this->player->htmlPhoto(32) . ' ' . $this->player->getNom() . ' t\'as défié et a PERDU après ' . $sec . ' secs.');
+			Notification::notifyPlayer($this->opponent, $this->player->htmlPhoto(32) . ' ' . $this->player->getNom() . ' t\'as défié et a PERDU après ' . $sec . ' secs.', $this->player->getNom() . ' t\'as défié et a PERDU après ' . $sec . ' secs.', get_class($this));
 			$res->setMessage('Défi: ' . $this->opponent->getNom() . ' a gagné après s\'être affligé ' . $sec . ' secs.');
 			$res->setSuccess(ActionResult::FAIL);
 		} else { // $secUser == $secOpponent
 			$this->player->addNotoriete(0);
 			// $this->opponent->notoriete -= 1;
 			$sec = $secOpponent + 1;
-			Notification::notifyPlayer($this->opponent, $this->player->htmlPhoto(32) . ' ' . $this->player->getNom() . ' t\'as défié et Personne n\'a gagné après ' . $sec . ' secs.');
+			Notification::notifyPlayer($this->opponent, $this->player->htmlPhoto(32) . ' ' . $this->player->getNom() . ' t\'as défié et Personne n\'a gagné après ' . $sec . ' secs.', $this->player->getNom() . ' t\'as défié et Personne n\'a gagné après ' . $sec . ' secs.', get_class($this));
 			$res->setMessage('Duel: Personne n\'a gagné après s\'être affligé ' . $sec . ' secs.');
 			$res->setSuccess(ActionResult::FAIL);
 		}
