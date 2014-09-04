@@ -79,6 +79,33 @@ if (isset($_POST['Forgotten']) && isset($_POST['login']) && isset($_POST['email'
 	}
 }
 
+if (isset($_POST['Forgotten2']) && isset($_POST['email'])) {
+	try {
+		$sth = $GLOBALS['DB']->prepare('SELECT * FROM player WHERE email=:email;');
+		$sth->bindValue(':email', $_POST['email'], PDO::PARAM_STR);
+		$sth->setFetchMode(PDO::FETCH_ASSOC);
+		if ($sth->execute() !== false) {
+			$arr = $sth->fetch();
+			if ($arr) {
+				$user = new Player();
+				$user->populate($arr);
+				$email = "salut ".$user->getNom().",\r\n\r\n";
+				$email .= "Ton mot de passe est: " . $user->getPass() . "\r\n\r\n";
+				$email .= "a+\r\nSoluche\r\n";
+				MailNotification::sendMailPlayer($user, '[Soluche] recuperation du mot de passe', $email);
+				$successMessage = 'e-mail envoyé.';
+			} else {
+				$errorMessage = 'e-mail invalide.';
+			}
+		} else {
+			$errorMessage = 'e-mail invalide.';
+		}
+	} catch (Exception $e) {
+		echo $e;
+		$errorMessage = 'Soucis de connection a la BDD: ' . $e;
+	}
+}
+
 if (isset($_POST['new']) && isset($_POST['login']) && isset($_POST['pass']) && isset($_POST['robot'])) {
 	if ((strcasecmp($_POST['robot'], 'lourd') == 0) || (strcasecmp($_POST['robot'], 'personne lourde') == 0) || (strcasecmp($_POST['robot'], 'gros lourd') == 0)) {
 		try {
@@ -122,6 +149,10 @@ if (isset($_POST['new']) && isset($_POST['login']) && isset($_POST['pass']) && i
 <link rel="stylesheet" href="theme/theme.css" type="text/css">
 <link rel="stylesheet" href="theme/other.css" type="text/css">
 <link rel="icon" type="image/png" href="images/soluche_icon.png">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.9.1/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/themes/smoothness/jquery-ui.css" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
 <style type="text/css">
 th {
 	text-align: right;
@@ -174,9 +205,9 @@ td {
 		</table>
 	</form>
 	<br />
-	<a onclick="javascript:document.getElementById('FormNew').style.display='block';return false;">s'inscrire.</a>
+	<a onclick="$('#FormNew').show();return false">s'inscrire.</a>
 	<br />
-	<a onclick="javascript:document.getElementById('FormForgotten').style.display='block';return false;">Mot de passe oublié.</a>
+	<a onclick="$('#FormForgotten').show();$('#FormForgotten2').show();return false">Mot de passe oublié.</a>
 	<br />
 	<form action="" method="post" id="FormNew" style="display: none;">
 		<table class="playerStats">
@@ -218,6 +249,22 @@ td {
 				<th></th>
 				<td>
 					<input type="submit" id="new" name="new" value="Ok" />
+				</td>
+			</tr>
+		</table>
+	</form>
+	<form action="" method="post" id="FormForgotten2" style="display: none;">
+		<table class="playerStats">
+			<tr class="even">
+				<th>E-mail</th>
+				<td>
+					<input type="text" id="email" name="email" value="">
+				</td>
+			</tr>
+			<tr class="odd">
+				<th></th>
+				<td>
+					<input type="submit" id="Forgotten2" name="Forgotten2" value="envoie du mot de passe par mail">
 				</td>
 			</tr>
 		</table>
