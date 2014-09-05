@@ -1,17 +1,16 @@
 <?php
-
 class Notification extends AbstractDbObject {
 
 	const TABLE_NAME = 'notification';
 
 	protected static $fieldList = array('id' => PDO::PARAM_INT, 'is_new' => PDO::PARAM_INT, 'time_sent' => PDO::PARAM_INT, 'id_player' => PDO::PARAM_INT, 'message' => PDO::PARAM_STR, 'short_message' => PDO::PARAM_STR, 'notification_type' => PDO::PARAM_STR);
 
-	protected static $notifTypeList = array('Chopper','Duel','Pins','Purchase','Share','Chat','GlobalMessage');
-	
-	public static function getNotifTypeList(){
+	protected static $notifTypeList = array('Chopper', 'Duel', 'Pins', 'Purchase', 'Share', 'Invite', 'AcceptInvite', 'Chat', 'GlobalMessage');
+
+	public static function getNotifTypeList() {
 		return self::$notifTypeList;
 	}
-	
+
 	protected $id = 0;
 
 	public function getId() {
@@ -87,11 +86,11 @@ class Notification extends AbstractDbObject {
 	public function getShort_message() {
 		return $this->short_message;
 	}
-	
+
 	public function setShort_message($short_message) {
 		$this->short_message = $short_message;
 	}
-	
+
 	/**
 	 *
 	 * @var String
@@ -101,14 +100,14 @@ class Notification extends AbstractDbObject {
 	public function getNotification_type() {
 		return $this->notification_type;
 	}
-	
+
 	public function setNotification_type($notification_type) {
 		if (!in_array($notification_type, self::$notifTypeList)) {
 			throw new Exception('notification_type type invalid');
 		}
 		$this->notification_type = $notification_type;
 	}
-	
+
 	public function defaultValues() {
 		$this->is_new = 1;
 		$this->time_sent = time();

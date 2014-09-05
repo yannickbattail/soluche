@@ -32,7 +32,7 @@ while ($sth && ($arr = $sth->fetch())) {
 
 <h3>Personnes au bar:</h3>
 <?php
-$sql = 'SELECT * FROM player WHERE id != ' . $_SESSION['user']->getId() . ' AND id_congress = ' . $_SESSION['user']->getId_congress() . ' AND lieu = "bar" AND pnj < 2;';
+$sql = 'SELECT * FROM player WHERE id != ' . $_SESSION['user']->getId() . ' AND id_congress = ' . $_SESSION['user']->getId_congress() . ' AND lieu = "bar" AND pnj < 2 ORDER BY pnj,nom;';
 $stmt = $GLOBALS['DB']->query($sql);
 printPlayerBox($stmt, array('Défier' => new Duel($_SESSION['user']), 'Pinser' => new Pins($_SESSION['user'])));
 ?>

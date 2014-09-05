@@ -33,7 +33,7 @@ while ($sth && ($arr = $sth->fetch())) {
 
 <h3>personnes dans la cuisine</h3>
 <?php
-$stmt = $GLOBALS['DB']->query('SELECT * FROM player WHERE id != ' . $_SESSION['user']->getId() . ' AND id_congress = ' . $_SESSION['user']->getId_congress() . ' AND lieu = "cuisine" AND pnj < 2;');
+$stmt = $GLOBALS['DB']->query('SELECT * FROM player WHERE id != ' . $_SESSION['user']->getId() . ' AND id_congress = ' . $_SESSION['user']->getId_congress() . ' AND lieu = "cuisine" AND pnj < 2 ORDER BY pnj,nom;');
 printPlayerBox($stmt, array('Pinser' => new Pins($_SESSION['user'])));
 ?>
 

@@ -47,7 +47,7 @@ while ($sth && ($arr = $sth->fetch())) {
 
 <h3>Personnes au camping:</h3>
 <?php
-$stmt = $GLOBALS['DB']->query('SELECT * FROM player WHERE id != ' . $_SESSION['user']->getId() . ' AND id_congress = ' . $_SESSION['user']->getId_congress() . ' AND lieu = "camping" AND pnj < 2;');
+$stmt = $GLOBALS['DB']->query('SELECT * FROM player WHERE id != ' . $_SESSION['user']->getId() . ' AND id_congress = ' . $_SESSION['user']->getId_congress() . ' AND (lieu = "camping" OR lieu = "help" OR lieu = "orga") AND pnj < 2 ORDER BY pnj,nom;');
 printPlayerBox($stmt, array('Pinser' => new Pins($_SESSION['user'])));
 ?>
 

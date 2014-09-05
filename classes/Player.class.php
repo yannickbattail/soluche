@@ -122,6 +122,9 @@ class Player extends AbstractDbObject {
 		if ($alcoolemie < 0) {
 			$alcoolemie = 0;
 		}
+		if ($alcoolemie > $this->getCalculatedAlcoolemie_max()) {
+			$alcoolemie = $this->getCalculatedAlcoolemie_max() + 1;
+		}
 		$this->getHistory()->setAlcoolemie($alcoolemie - $this->alcoolemie);
 		$this->alcoolemie = $alcoolemie;
 		if (Pls::haveToGoToPls($this)) {

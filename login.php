@@ -149,8 +149,8 @@ if (isset($_POST['new']) && isset($_POST['login']) && isset($_POST['pass']) && i
 <link rel="stylesheet" href="theme/theme.css" type="text/css">
 <link rel="stylesheet" href="theme/other.css" type="text/css">
 <link rel="icon" type="image/png" href="images/soluche_icon.png">
-<link rel="stylesheet" href="//code.jquery.com/ui/1.9.1/themes/smoothness/jquery-ui.css">
-<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/themes/smoothness/jquery-ui.css" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.9.1/themes/ui-darkness/jquery-ui.css">
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/themes/ui-darkness/jquery-ui.css" />
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
 <style type="text/css">
@@ -291,6 +291,6 @@ td {
 			</tr>
 		</table>
 	</form>
-	<div style="font-size: 10px; color: silver;" title="tu as perdu au jeu! ;-)">v 1.12</div>
+	<div style="font-size: 10px; color: silver;" title="tu as perdu au jeu! ;-)">v 1.14</div>
 </body>
 </html>

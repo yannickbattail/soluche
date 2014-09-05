@@ -115,6 +115,13 @@
 			}
 			
 		},
+		"Invite":{
+			"config":{
+			},
+			"success":{
+			}
+			
+		},
 		"EndPLS":{
 			"config":{
 				"secPerAlcoolemie":60

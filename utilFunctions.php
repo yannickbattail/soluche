@@ -455,6 +455,22 @@ function plus($nb, $better) {
 }
 
 function printChat(Player $player) {
+	$congressList = array('NULL' => ' - ');
+	$sth = $GLOBALS['DB']->query('SELECT * FROM congress ;');
+	$sth->setFetchMode(PDO::FETCH_ASSOC);
+	while ($sth && ($arr = $sth->fetch())) {
+		$congress = new Congress();
+		$congress->populate($arr);
+		$congressList[$congress->getId()] = $congress->getNom();
+	}
+	$gameList = array('NULL' => ' - ');
+	$sth = $GLOBALS['DB']->query('SELECT * FROM game ORDER BY nom;');
+	$sth->setFetchMode(PDO::FETCH_ASSOC);
+	while ($sth && ($arr = $sth->fetch())) {
+		$game = new Game();
+		$game->populate($arr);
+		$gameList[$game->getId()] = $game->getNom();
+	}
 	?>
 <div id="contactsBox">
 	<img src="images/loading.gif" alt="loading" title="loading" />
@@ -464,9 +480,45 @@ function printChat(Player $player) {
 		<img src="images/loading.gif" alt="loading" title="loading" />
 	</div>
 	<input type="text" name="chatMessage" id="chatMessage" value="" />
-	<input type="hidden" name="id_player" id="id_player" value="" size="2" />
+	<input type="hidden" name="id_player" id="id_player" value="" />
 	<input type="button" name="SendMessage" value="envoyer" onclick="return sendMessage()" />
 </div>
+
+<div id="dialogInvite" title="Chat box" style="display: none;">
+	<form action="main.php" method="post">
+		<!-- onsubmit="if ($('money').val() == ''){ return false;} else { return confirm('Mettre en vente pour '+$('money').val()+' en dignichoses. Etes-vous sûr?');}" -->
+		<input type="hidden" name="action" value="Invite" />
+		<!-- <input type="hidden" name="prevent_reexecute" value="<?= $_SESSION['prevent_reexecute'] ?>" /> -->
+		<input type="hidden" name="id_guest" id="id_guest" value="" />
+		Congrès:<br />
+		<select name="id_congress">
+		<?php foreach ($congressList as $id_congress => $nom_congress) { ?>
+			<option value="<?= $id_congress ?>"><?= $nom_congress ?></option>
+		<?php } ?>
+		</select>
+		<br />
+		Lieu:<br />
+		<select name="location">
+			<option value=""> - </option>
+			<option value="bar">Bar</option>
+			<option value="camping">camping</option>
+			<option value="cuisine">cuisine</option>
+			<option value="danse">piste de danse</option>
+		</select>
+		<br />
+		Jeu:<br />
+		<select name="id_game">
+		<?php foreach ($gameList as $id_game => $nom_game) { ?>
+			<option value="<?= $id_game ?>"><?= $nom_game ?></option>
+		<?php } ?>
+		</select>
+		Message:<br />
+		<input type="text" name="message" value=""/>
+		<br />
+		<input type="submit" name="Invite" value="traquenarder" />
+	</form>
+</div>
+
 <script type="text/javascript">
 	function showChat(id_player, player_name) {
 	    $('#dialog').dialog({
@@ -496,6 +548,16 @@ function printChat(Player $player) {
 	setTimeout(refeshChatList, 2*1000); // the 1st time;
 	setInterval(refeshChatList, 10*1000);
 	setInterval(refreshChat, 5*1000);
+	
+	function showinvite(id_player, player_name) {
+	    $('#dialogInvite').dialog({
+		    'title': 'Traquenarder ' + player_name,
+	        'height':280,
+	        'width':540,
+	        'close': function( event, ui ) {$('#id_guest').val('');}
+	        });
+	    $('#id_guest').val(id_player);
+	}
 </script>
 <?php
 }

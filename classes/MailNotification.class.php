@@ -9,13 +9,14 @@ class MailNotification {
 
 	public static function sendNotification(Player $player, Notification $notif) {
 		if ($player->hasNotifications($notif->getNotification_type())) {
-			$urlPrefix = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['SERVER_NAME'] . '/soluche/userCutomisation.php';
+			$urlPrefix = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['SERVER_NAME'] . '/soluche/userCustomisation.php';
 			$message = "Soluche t'informe:\r\n\r\n";
-			$message .= $notif->getShort_message() . "\r\n";
+			$message .= strip_tags($notif->getMessage()) . "\r\n\r\n";
 			$message .= "\tSoluche" . "\r\n\r\n";
 			$message .= "PS:\r\n";
 			$message .= "Virer les notifications? s'autentifier et suivre le lien " . $urlPrefix;
-			$subject = '[SOLUCHE] ' . strip_tags($notif->getShort_message());
+			$t = explode("\r\n", strip_tags($notif->getShort_message()));
+			$subject = '[SOLUCHE] ' . $t[0];
 			self::sendMailPlayer($player, $subject, $message);
 		}
 	}
