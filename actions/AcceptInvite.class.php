@@ -109,6 +109,15 @@ class AcceptInvite extends AbstractAction {
 		if (rand(1, 50) <= 1) {
 			Item::associateItem($this->player, Item::loadByName('bambou'));
 		}
+		if ($this->congress) {
+			$this->player->setId_congress($this->congress->getId());
+		}
+		if ($this->location) {
+			$this->player->setLieu($this->location);
+		}
+		if ($this->game) {
+			$this->player->setLieu('game:'.$this->game->getId());
+		}
 		Notification::notifyPlayer($this->opponent, $this->player->htmlPhoto(32) . ' ' . $this->player->getNom() . ' est tombé dans ton traquenard.', $this->player->getNom() . ' est tombé dans ton traquenard.', get_class($this));
 		$res->setMessage('Tu t\'es fait traquenardé.');
 		$res->setSuccess(ActionResult::SUCCESS);

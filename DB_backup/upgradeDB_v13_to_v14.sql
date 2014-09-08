@@ -30,3 +30,5 @@ ALTER TABLE `invitation`
   ADD CONSTRAINT `invitation_ibfk_1` FOREIGN KEY (`host`) REFERENCES `player` (`id`),
   ADD CONSTRAINT `invitation_ibfk_2` FOREIGN KEY (`guest`) REFERENCES `player` (`id`),
   ADD CONSTRAINT `invitation_ibfk_3` FOREIGN KEY (`id_congress`) REFERENCES `congress` (`id`);
+
+UPDATE `player` SET `notification` = 'Chopper,Duel,Pins,Purchase,Share,Chat,GlobalMessage,Invite,AcceptInvite'
