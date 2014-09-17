@@ -69,7 +69,6 @@ function printUserStats(Player $player) {
 		<td><?= lifeBarMiddle($player->getCalculatedAlcoolemie_max(), $player->getCalculatedAlcoolemie_optimum(), $player->getCalculatedAlcoolemie())?>
 		<?=$player->getCalculatedAlcoolemie().'/'.$player->getCalculatedAlcoolemie_max().' optimum à '.$player->getCalculatedAlcoolemie_optimum(); ?></td>
 	</tr>
-
 	<tr class="even">
 		<th>
 			<img src="images/util/sleep.png" title="Fatigue" alt="Fatigue">
@@ -102,7 +101,7 @@ function printUserStats(Player $player) {
 					$itemCounter = $itemLevelCounter[$i];
 				}
 				if ($itemCounter < 2) {
-					$msg .= ' tu peux encore avoir '.(2-$itemCounter).' item(s) pour le level '.$i;
+					$msg .= ' Tu peux encore avoir '.(2-$itemCounter).' item(s) pour le level '.$i.'.';
 				}
 			} 
 			if ($msg) {
@@ -648,6 +647,9 @@ function printTabsLieu() {
 		</td>
 		<td <?= (Dispatcher::getPage() == 'danse')?'class="tabBarSelected"':''  ?>>
 			<a href="main.php?page=danse">Piste de danse</a>
+		</td>
+		<td <?= (Dispatcher::getPage() == 'game')?'class="tabBarSelected"':''  ?>>
+			<a href="main.php?page=game">Jeux</a>
 		</td>
 		<td <?= (Dispatcher::getPage() == 'help')?'class="tabBarSelected"':''  ?>>
 			<a href="main.php?page=help"><img src="images/util/help.png" alt="aide" title="aide" style="width: 16px; height: 16px;"></a>

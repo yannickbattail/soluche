@@ -214,7 +214,6 @@ note: ceux qui n'ont pas de description ne sont pas encore utilisé.
 		<th>Description</th>
 	</tr>
 <?php
-$orga = Player::loadOrga('orga', $_SESSION['user']->getId_congress());
 $n = 0;
 $sth = $GLOBALS['DB']->query('SELECT * FROM item ORDER BY item_type, nom;');
 $sth->setFetchMode(PDO::FETCH_ASSOC);

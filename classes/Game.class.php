@@ -1,7 +1,7 @@
 <?php
 class Game extends AbstractDbObject {
 
-	const TABLE_NAME = 'code';
+	const TABLE_NAME = 'game';
 
 	public static $fieldList = array('id' => PDO::PARAM_INT, 'nom' => PDO::PARAM_STR, 'game_type' => PDO::PARAM_STR, 'date_start' => PDO::PARAM_INT, 'game_data' => PDO::PARAM_STR);
 
@@ -18,6 +18,9 @@ class Game extends AbstractDbObject {
 	protected $nom = '';
 
 	public function getNom() {
+		if (!$this->nom) {
+			return $this->game_type . '-' . $this->id;
+		}
 		return $this->nom;
 	}
 
@@ -51,7 +54,7 @@ class Game extends AbstractDbObject {
 	protected $game_data = '';
 
 	/**
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getGame_data() {
@@ -68,9 +71,19 @@ class Game extends AbstractDbObject {
 
 	public function defaultValues() {
 		$this->game_type = 'bizkit';
-		$this->nom = $this->game_type . '-' . $this->id;
+		$this->nom = '';
 		$this->date_start = time();
 		$this->game_data = '{}';
 	}
 
+	public function participate(Player $player) {
+		Dispatcher::setPage('game');
+		$gameBizkit = new GameBizkit();
+		$gameBizkit->populate($this->getGame_data());
+		$gameBizkit->loadParticipants();
+		$gameBizkit->addParticipant($player);
+		$this->setGame_data($gameBizkit->export());
+		$this->save();
+		$_SESSION['game'] = $this->getId();
+	}
 }

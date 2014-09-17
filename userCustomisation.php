@@ -20,7 +20,7 @@ $_SESSION['user']->loadInventory();
 $message = '';
 
 if (isset($_POST['uploadPhoto'])) {
-
+	
 	try {
 		if (!isset($_FILES['photo']['error']) || is_array($_FILES['photo']['error'])) {
 			throw new RuntimeException('Invalid parameters.');
@@ -36,10 +36,10 @@ if (isset($_POST['uploadPhoto'])) {
 			default :
 				throw new RuntimeException('Unknown errors.');
 		}
-
+		
 		/*
 		 * $finfo = new finfo(FILEINFO_MIME_TYPE); if (false === $ext = array_search($finfo->file($_FILES['photo']['tmp_name']), array('jpg' => 'image/jpeg', 'png' => 'image/png', 'gif' => 'image/gif'), true)) { throw new RuntimeException('Invalid file format.'); }
-		*/
+		 */
 		$info = pathinfo($_FILES['photo']['name']);
 		$ext = $info['extension'];
 		// You should name it uniquely.
@@ -94,6 +94,81 @@ if (isset($_POST['notif'])) {
 	$message .= 'Changement OK!';
 }
 
+if (isset($_REQUEST['imgFal'])) {
+	$img = imagecreatefrompng('images/faluche.png');
+	imagealphablending($img, true);
+	imagesavealpha($img, true);
+	$color_1 = hexColorAllocate($img, $_REQUEST['color1']);
+	imagefilledrectangle($img, 10, 100, 210, 120, $color_1);
+	$color_2 = hexColorAllocate($img, $_REQUEST['color2']);
+	imagefilledrectangle($img, 10, 120, 210, 140, $color_2);
+	if (isset($_REQUEST['URL_ecusson']) && $_REQUEST['URL_ecusson']) {
+		$imgContent = file_get_contents($_REQUEST['URL_ecusson']);
+		if ($imgContent) {
+			$ecusson = imagecreatefromstring($imgContent);
+			imagealphablending($ecusson, false);
+			imagesavealpha($ecusson, true);
+			imagecopyresampled($img, $ecusson, 30, 30, 0, 0, 50, 60, imagesx($ecusson), imagesy($ecusson));
+			imagedestroy($ecusson);
+		} else {
+			$message .= 'ERROR récupération de l\'écusson impossible! ';
+		}
+	} else {
+		$message .= 'fal sans écusson. ';
+	}
+	if (isset($_REQUEST['insigne']) && $_REQUEST['insigne']) {
+		$ecusson = imagecreatefrompng($_REQUEST['insigne']);
+		imagealphablending($ecusson, false);
+		imagesavealpha($ecusson, true);
+		imagecopyresampled($img, $ecusson, 20, 100, 0, 0, 40, 40, imagesx($ecusson), imagesy($ecusson));
+		imagedestroy($ecusson);
+	} else {
+		$message .= 'fal sans écusson. ';
+	}
+	$fileName = 'upload/photo_players/' . $_SESSION['user']->getId() . '.png';
+	if (strpos($_SESSION['user']->getPhoto(), 'upload/photo_players/') === 0) {
+		unlink($_SESSION['user']->getPhoto());
+	}
+	imagepng($img, $fileName);
+	$_SESSION['user']->setPhoto($fileName);
+	$_SESSION['user']->save();
+	$message .= 'Photo changée';
+}
+
+function hexColorAllocate($im, $hex) {
+	$hex = ltrim($hex, '#');
+	$a = hexdec(substr($hex, 0, 2));
+	$b = hexdec(substr($hex, 2, 2));
+	$c = hexdec(substr($hex, 4, 2));
+	return imagecolorallocate($im, $a, $b, $c);
+}
+
+$color1 = '#000000';
+if (isset($_REQUEST['color1'])) {
+	$color1 = $_REQUEST['color1'];
+}
+$color2 = '#000000';
+if (isset($_REQUEST['color2'])) {
+	$color2 = $_REQUEST['color2'];
+}
+$itemFiliere = '';
+if (isset($_REQUEST['insigne'])) {
+	$itemFiliere = $_REQUEST['insigne'];
+}
+
+$colorList = array('#000000' => 'noir', '#A9A9A9' => 'gris', '#C0C0C0' => 'agent', '#FFFFFF' => 'blanc', '#9400D3' => 'violet', '#00008B' => 'bleu roy', '#006400' => 'vert foncé', '#008000' => 'vert', '#FFFF00' => 'jaune', '#FA8072' => 'saumon', '#FFA500' => 'orange', '#FFC0CB' => 'rose', 
+		'#FF00FF' => 'fuchsia', '#FF0000' => 'rouge', '#8B0000' => 'bordeau');
+
+$itemList = array('' => '');
+
+$sth = $GLOBALS['DB']->query("SELECT * FROM item WHERE item_type = 'test' ORDER BY nom ;");
+$sth->setFetchMode(PDO::FETCH_ASSOC);
+while ($sth && ($arr = $sth->fetch())) {
+	$item = new Item();
+	$item->populate($arr);
+	$itemList[$item->getImage()] = $item->getNom();
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -110,15 +185,13 @@ if (isset($_POST['notif'])) {
 </style>
 </head>
 <body>
-	<h1>Cutomisation</h1>
-	<p>
-	
-	
-	<div class="infoMessage"><?= $message ?></div>
-	</p>
+	<h1>Customisation</h1>
+	<p><div class="infoMessage"><?= $message ?></div></p>
+	<a href="main.php">retour au jeu</a>
 	<h3>Changer la photo:</h3>
 	<form action="" method="post" enctype="multipart/form-data">
-		<img src="<?= $_SESSION['user']->getPhoto() ?>" class="inventoryImage" title="<?= $_SESSION['user']->getNom() ?>" />
+		<img src="<?= $_SESSION['user']->getPhoto() ?>" title="<?= $_SESSION['user']->getNom() ?>" style="max-width: 100px; max-height: 100px;" />
+		<br />
 		<input type="file" name="photo" value="" />
 		<input type="submit" name="uploadPhoto" value="upload photo" />
 	</form>
@@ -165,7 +238,7 @@ if (isset($_POST['notif'])) {
 				<th>E-mail</th>
 				<td>
 					<input type="text" name="email" value="<?= $_SESSION['user']->getEmail() ?>" />
-					Facultatif (sert en cas de perte du mot de passe et plus tard pour les notifications)
+					Facultatif (sert en cas de perte du mot de passe et pour les notifications)
 				</td>
 			</tr>
 			<tr class="even">
@@ -187,6 +260,55 @@ if (isset($_POST['notif'])) {
 			</tr>
 		</table>
 	</form>
-	<a href="main.php">retour au jeu</a>
+	<h3>Construire sa fal:</h3>
+	<form action="" method="get">
+		<table class="playerStats">
+			<tr class="even">
+				<th>couleur 1</th>
+				<td>
+					<select name="color1">
+					<?php foreach ($colorList as $colorCode => $colorName) { ?>
+						<option value="<?= $colorCode ?>" <?=$color1==$colorCode?'selected="selected"':''?> style="background-color: <?= $colorCode ?>;"><?= $colorName ?></option>
+					<?php } ?>
+					</select>
+				</td>
+			</tr>
+			<tr class="odd">
+				<th>couleur 2</th>
+				<td>
+					<select name="color2">
+					<?php foreach ($colorList as $colorCode => $colorName) { ?>
+						<option value="<?= $colorCode ?>" <?=$color2==$colorCode?'selected="selected"':''?> style="background-color: <?= $colorCode ?>;"><?= $colorName ?></option>
+					<?php } ?>
+					</select>
+				</td>
+			</tr>
+			<tr class="odd">
+				<th>Insigne de filière:</th>
+				<td>
+					<!-- http://www.stadium.fr/boutique/insignes-de-faluche/ -->
+					<select name="insigne">
+					<?php foreach ($itemList as $itemPhoto => $itemName) { ?>
+						<option value="<?= htmlentities($itemPhoto) ?>" <?=$itemFiliere==$itemPhoto?'selected="selected"':''?>><?= $itemName ?></option>
+					<?php } ?>
+					</select>
+				</td>
+			</tr>
+			<tr class="even">
+				<th>URL écusson:</th>
+				<td>
+					<input type="text" name="URL_ecusson" value="<?= isset($_REQUEST['URL_ecusson'])?$_REQUEST['URL_ecusson']:'' ?>" />
+					<br /> <a href="http://fr.wikipedia.org/wiki/Armorial_des_communes_de_France" target="_blanc">wikipedia: Armorial des communes de France</a><br />Chercher sa commune, faire
+					clic droit sur le blason et copier l'adresse de l'image puis coller ici.
+				</td>
+			</tr>
+			<tr class="odd">
+				<th>&nbsp;</th>
+				<td>
+					<input type="submit" name="imgFal" value="créer" />
+				</td>
+			</tr>
+		</table>
+	</form>
 </body>
 </html>

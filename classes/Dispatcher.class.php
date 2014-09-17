@@ -22,11 +22,12 @@ class Dispatcher {
 	private static $page = 'camping';
 
 	public static function setPage($page) {
-		$filename = "./pages/" . $page . ".php";
+		$tab = explode(':', $page);
+		$filename = "./pages/" . $tab[0] . ".php";
 		if (file_exists($filename)) {
 			self::$page = $page;
 		} else {
-			self::addMessage(' La page ' . $page . ' n\'exite pas.', Dispatcher::MESSAGE_LEVEL_ERROR);
+			self::addMessage(' La page ' . $tab[0] . ' n\'exite pas.', Dispatcher::MESSAGE_LEVEL_ERROR);
 		}
 	}
 
@@ -39,7 +40,8 @@ class Dispatcher {
 	}
 	
 	public static function displayPageContent() {
-		$filename = "./pages/" . self::$page . ".php";
+		$tab = explode(':', self::$page);
+		$filename = "./pages/" . $tab[0] . ".php";
 		include_once ($filename);
 	}
 	

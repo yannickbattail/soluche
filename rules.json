@@ -7,8 +7,17 @@
 			"success":{
 				
 			}
+		
+		}, 
+		"AcceptInvite":{
+			"config":{
+				
+			},
+			"success":{
+				
+			}
 			
-		},
+		}, 
 		"Buy":{
 			"config":{
 				
@@ -46,6 +55,24 @@
 			"fail":{
 				"fatigue":1,
 				"remaining_time":-1
+			}
+			
+		},
+		"CreateGame":{
+			"config":{
+				
+			},
+			"success":{
+				
+			}
+			
+		},
+		"DenyInvite":{
+			"config":{
+				
+			},
+			"success":{
+				
 			}
 			
 		},
@@ -117,8 +144,10 @@
 		},
 		"Invite":{
 			"config":{
+				
 			},
 			"success":{
+				
 			}
 			
 		},
@@ -142,6 +171,15 @@
 			},
 			"success":{
 				"addItem":"item"
+			}
+			
+		},
+		"Participate":{
+			"config":{
+				
+			},
+			"success":{
+				
 			}
 			
 		},

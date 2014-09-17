@@ -61,5 +61,29 @@
 	<?php printChatGlobal(); ?>
 	<div style="font-size: 10px; color: silver;" title="tu as perdu au jeu! ;-)">v 1.14</div>
 	</div>
+	<script type="text/javascript">
+	var konamiCode = {
+	    "i": 0,
+	    "list": [ 38, 38, 40, 40, 37, 39, 37, 39, 66, 65 ],
+	    "init": function() {
+	        document.getElementsByTagName('BODY')[0].onkeydown = function(e) {
+	            if (e.keyCode == konamiCode.list[konamiCode.i]) {
+	                if (konamiCode.i == (konamiCode.list.length - 1)) {
+	                    konamiCode.callback();
+	                    konamiCode.i = 0;
+	                } else {
+	                    konamiCode.i++;
+	                }
+	            } else {
+	                konamiCode.i = 0;
+	            }
+	        };
+	    },
+	    "callback": function() {
+	        alert("konami code détecté!");
+	    }
+	};
+	konamiCode.init();
+	</script>	
 </body>
 </html>
