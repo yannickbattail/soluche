@@ -34,7 +34,7 @@ class SendGlobalMessage extends AbstractAction {
 	public function execute() {
 		$res = new ActionResult();
 		$this->player->addMoney(-1);
-		Chat::sendGlobalMessage($this->message);
+		Chat::sendGlobalMessage(htmlentities($this->message));
 		$res->setMessage('Message envoyé.');
 		$res->setSuccess(ActionResult::NOTHING);
 		return $res;

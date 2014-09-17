@@ -16,7 +16,7 @@ while ($sth && ($arr = $sth->fetch())) {
 	$odd = ($n++ % 2) ? 'odd' : 'even';
 	?>
 <div>
-	<span class="chatDate"><?= date('Y/m/d H:i:s', $arr['time_sent']) ?></span> <span class="chatPlayerName"><?= $arr['nom'] ?>:</span> <span class="chatMessage"><?= htmlentities($arr['message']) ?></span>
+	<span class="chatDate"><?= date('Y/m/d H:i:s', $arr['time_sent']) ?></span> <span class="chatPlayerName"><?= $arr['nom'] ?>:</span> <span class="chatMessage"><?= $arr['message'] ?></span>
 </div>
 <?php
 }
