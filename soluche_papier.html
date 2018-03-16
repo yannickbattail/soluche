@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Soluche papier</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body>
+	<div>
+        <table id="tblPlayers" border="1">
+            
+        </table>
+    </div>
+
+	<div id="tests"></div>
+
+    <script>
+var players = [
+    {
+        name:"yaya",
+        turns:[
+            { food: 4, drink: 2 },
+            { food: 0, drink: 0 },
+            { food: 2, drink: 4 }
+        ]
+    },
+    {
+        name:"poulpe",
+        turns:[
+            { food: 2, drink: 2 },
+            { food: 0, drink: 0 },
+            { food: 0, drink: 0 }
+        ]
+    }
+];
+
+function load() {
+    html = '';
+    for (let index = 0; index < players.length; index++) {
+        const player = players[index];
+        html += '<tr>';
+        html += '<th onclick="addTurn('+index+')">'+player.name+' ('+calcCurrentTaux(index)+')</th>'
+        for (let turnIdx = 0; turnIdx < player.turns.length; turnIdx++) {
+            html += '<td>';
+            html += 'food:'+player.turns[turnIdx].food+'<br />';
+            html += 'drink:'+player.turns[turnIdx].drink+'<br />';
+            html += 'taux:'+calcTaux(player, turnIdx, hasFoodAtTurn(player.turns, turnIdx))+'</td>';
+            html += '</td>';
+        }
+        html += '</tr>';
+    }
+    
+    var tblPlayers = document.getElementById("tblPlayers");
+    tblPlayers.innerHTML = html;
+}
+
+function addTurn(playerIdx) {
+    var food = prompt('food?');
+    var drink = prompt('drink?');
+    if (food === null || drink === null || food === '' || drink === '') {
+        return ;
+    }
+    players[playerIdx].turns.unshift(
+        {
+            food: parseInt(food),
+            drink: parseInt(drink)
+            }
+    );
+    load();
+}
+
+function calcCurrentTaux(playerIdx) {
+  var player = players[playerIdx];
+  var taux = 0;
+  for (let turnIdx = 0; turnIdx < player.turns.length; turnIdx++) {
+   var hasFood = hasFoodAtTurn(player.turns, turnIdx);
+   var drink = player.turns[turnIdx].drink;
+   taux += calcTaux(player, turnIdx, hasFood);
+  }
+  return taux;
+}
+
+function calcTaux(drink, turn, hasFood) {
+  var coef = 0;
+  if (hasFood) {
+    if (turn <= 4) {
+        coef = 2 * turn;
+    } else if (turn < 12) {
+        coef = (-1 * turn + 12);
+    }
+  } else {
+    if (turn <= 4) {
+        coef = 3 * turn;
+    } else if (turn < 16) {
+        coef = (-1 * turn + 16);
+    }
+  }
+  return drink * coef;
+}
+
+function hasFoodAtTurn(turns, atTurn) {
+  for (let turnIdx = 0; atTurn + turnIdx < turns.length; turnIdx++) {
+    var food = turns[atTurn + turnIdx].food;
+    if (food >= turnIdx) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function hasFoodAtTurn(turns, atTurn) {
+  for (let turnIdx = 0; atTurn + turnIdx < turns.length; turnIdx++) {
+    var food = turns[atTurn + turnIdx].food;
+    if (food >= turnIdx) {
+      return true;
+    }
+  }
+  return false;
+}
+
+load();
+
+var testNum = 1;
+function test(actual, expected, msg) {
+    var testsDiv = document.getElementById("tests");
+    if (actual === expected) {
+        console.log('test #'+testNum+' OK! is '+expected+' => '+msg);
+        testsDiv.innerHTML += 'test #'+testNum+' <span style="color:green">OK!</span> is '+expected+' => '+msg+'<br />'
+    } else {
+        console.warn('#'+testNum+' FAIL! is '+actual+' must be '+expected+' => '+msg);
+        testsDiv.innerHTML += 'test #'+testNum+' <span style="color:red">FAIL!</span> is '+actual+' must be '+expected+' => '+msg+'<br />'
+    }
+    testNum++;
+}
+
+function runTests() {
+test(calcTaux(1, 0, true), 0, "test with hasFood true");
+test(calcTaux(1, 1, true), 2, "");
+test(calcTaux(1, 2, true), 4, "");
+test(calcTaux(1, 4, true), 8, "");
+test(calcTaux(1, 5, true), 7, "");
+test(calcTaux(1, 8, true), 4, "");
+test(calcTaux(1, 11, true), 1, "");
+test(calcTaux(1, 12, true), 0, "");
+test(calcTaux(1, 13, true), 0, "");
+
+test(calcTaux(1, 0, false), 0, "test with hasFood false");
+test(calcTaux(1, 1, false), 3, "");
+test(calcTaux(1, 2, false), 6, "");
+test(calcTaux(1, 3, false), 9, "");
+test(calcTaux(1, 4, false), 12, "");
+test(calcTaux(1, 5, false), 11, "");
+test(calcTaux(1, 14, false), 2, "");
+test(calcTaux(1, 16, false), 0, "");
+test(calcTaux(1, 17, false), 0, "");
+
+test(hasFoodAtTurn([{food:0}], 0), false, "test hasFoodAtTurn() turn 1");
+test(hasFoodAtTurn([{food:1}], 0), true, "test hasFoodAtTurn() turn 1");
+test(hasFoodAtTurn([{food:0},{food:0}], 0), false, "test hasFoodAtTurn() turn 1");
+test(hasFoodAtTurn([{food:0},{food:1}], 0), true, "test hasFoodAtTurn() turn 1");
+test(hasFoodAtTurn([{food:0},{food:0}], 1), false, "test hasFoodAtTurn() turn 2");
+test(hasFoodAtTurn([{food:0},{food:1}], 1), true, "test hasFoodAtTurn() turn 2");
+test(hasFoodAtTurn([{food:0},{food:0},{food:0}], 2), false, "test hasFoodAtTurn() turn 3");
+test(hasFoodAtTurn([{food:0},{food:0},{food:2}], 2), false, "test hasFoodAtTurn() turn 3");
+test(hasFoodAtTurn([{food:0},{food:0},{food:2}], 4), false, "test hasFoodAtTurn() turn 3");
+}
+runTests();
+    </script>
+	</body>
+</html>
