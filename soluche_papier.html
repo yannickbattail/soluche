@@ -13,8 +13,9 @@
         </table>
     </div>
 
-	<div id="tests"></div>
-
+    <code>
+	    <div id="tests"></div>
+    </code>
     <script>
 var players = [
     {
@@ -40,12 +41,13 @@ function load() {
     for (let index = 0; index < players.length; index++) {
         const player = players[index];
         html += '<tr>';
-        html += '<th onclick="addTurn('+index+')">'+player.name+' ('+calcCurrentTaux(index)+')</th>'
+        html += '<th onclick="addTurn('+index+')">'+player.name+' ('+calcCurrentTaux(player)+')</th>'
         for (let turnIdx = 0; turnIdx < player.turns.length; turnIdx++) {
+            var turn = player.turns[turnIdx];
             html += '<td>';
-            html += 'food:'+player.turns[turnIdx].food+'<br />';
-            html += 'drink:'+player.turns[turnIdx].drink+'<br />';
-            html += 'taux:'+calcTaux(player, turnIdx, hasFoodAtTurn(player.turns, turnIdx))+'</td>';
+            html += 'food:'+turn.food+'<br />';
+            html += 'drink:'+turn.drink+'<br />';
+            html += 'taux:'+calcTaux(turn.drink, turnIdx, hasFoodAtTurn(player.turns, turnIdx))+'</td>';
             html += '</td>';
         }
         html += '</tr>';
@@ -65,18 +67,17 @@ function addTurn(playerIdx) {
         {
             food: parseInt(food),
             drink: parseInt(drink)
-            }
+        }
     );
     load();
 }
 
-function calcCurrentTaux(playerIdx) {
-  var player = players[playerIdx];
+function calcCurrentTaux(player) {
   var taux = 0;
   for (let turnIdx = 0; turnIdx < player.turns.length; turnIdx++) {
    var hasFood = hasFoodAtTurn(player.turns, turnIdx);
    var drink = player.turns[turnIdx].drink;
-   taux += calcTaux(player, turnIdx, hasFood);
+   taux += calcTaux(drink, turnIdx, hasFood);
   }
   return taux;
 }
@@ -100,19 +101,13 @@ function calcTaux(drink, turn, hasFood) {
 }
 
 function hasFoodAtTurn(turns, atTurn) {
-  for (let turnIdx = 0; atTurn + turnIdx < turns.length; turnIdx++) {
-    var food = turns[atTurn + turnIdx].food;
-    if (food >= turnIdx) {
-      return true;
-    }
-  }
-  return false;
+  return hasFood(turns.slice(atTurn));
 }
 
-function hasFoodAtTurn(turns, atTurn) {
-  for (let turnIdx = 0; atTurn + turnIdx < turns.length; turnIdx++) {
-    var food = turns[atTurn + turnIdx].food;
-    if (food >= turnIdx) {
+function hasFood(turns) {
+  for (let turnIdx = 0; turnIdx < turns.length; turnIdx++) {
+    var food = turns[turnIdx].food;
+    if (food && (food >= turnIdx)) {
       return true;
     }
   }
@@ -157,13 +152,15 @@ test(calcTaux(1, 17, false), 0, "");
 
 test(hasFoodAtTurn([{food:0}], 0), false, "test hasFoodAtTurn() turn 1");
 test(hasFoodAtTurn([{food:1}], 0), true, "test hasFoodAtTurn() turn 1");
-test(hasFoodAtTurn([{food:0},{food:0}], 0), false, "test hasFoodAtTurn() turn 1");
-test(hasFoodAtTurn([{food:0},{food:1}], 0), true, "test hasFoodAtTurn() turn 1");
-test(hasFoodAtTurn([{food:0},{food:0}], 1), false, "test hasFoodAtTurn() turn 2");
-test(hasFoodAtTurn([{food:0},{food:1}], 1), true, "test hasFoodAtTurn() turn 2");
-test(hasFoodAtTurn([{food:0},{food:0},{food:0}], 2), false, "test hasFoodAtTurn() turn 3");
-test(hasFoodAtTurn([{food:0},{food:0},{food:2}], 2), false, "test hasFoodAtTurn() turn 3");
-test(hasFoodAtTurn([{food:0},{food:0},{food:2}], 4), false, "test hasFoodAtTurn() turn 3");
+test(hasFoodAtTurn([{food:0},{food:0},{food:0}], 0), false, "test hasFoodAtTurn() turn 1");
+test(hasFoodAtTurn([{food:0},{food:0},{food:1}], 0), false, "test hasFoodAtTurn() turn 1");
+test(hasFoodAtTurn([{food:0},{food:0},{food:2}], 0), true, "test hasFoodAtTurn() turn 1");
+test(hasFoodAtTurn([{food:0},{food:0},{food:4}], 0), true, "test hasFoodAtTurn() turn 1");
+
+test(hasFoodAtTurn([{food:0},{food:0},{food:0}], 1), false, "test hasFoodAtTurn() turn 2");
+test(hasFoodAtTurn([{food:0},{food:0},{food:1}], 1), true, "test hasFoodAtTurn() turn 2");
+test(hasFoodAtTurn([{food:0},{food:0},{food:2}], 1), true, "test hasFoodAtTurn() turn 2");
+test(hasFoodAtTurn([{food:0},{food:0},{food:4}], 1), true, "test hasFoodAtTurn() turn 2");
 }
 runTests();
     </script>
