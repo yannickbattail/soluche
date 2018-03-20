@@ -11,7 +11,9 @@
     .input-drink {
         width : 40px;
     }
-    
+    th {
+        text-align: left;
+    }
     </style>
 </head>
 <body>
@@ -20,6 +22,7 @@
             
         </table>
     </div>
+    <button onclick="saveStats()">Enregistrer les stats</button>
     <button onclick="saveTurn()">Enregistrer le tour</button>
     <button onclick="addPlayer()">Ajouter un joueur</button>
 
@@ -28,9 +31,32 @@
 	    <div id="tests"></div>
     </code>
     <script>
-var players = [];
+var players = [
+    {
+        "name": "yaya",
+        "optimumRate": 5,
+        "maxRate": 7,
+        "turns":[
+            {
+                "food": 1,
+                "drink": 1,
+            }
+        ]
+    },
+    {
+        "name": "platypus",
+        "optimumRate": 5,
+        "maxRate": 7,
+        "turns":[
+            {
+                "food": 0,
+                "drink": 1,
+            }
+        ]
+    },
+];
 
-function load() {
+function display() {
     html = '';
     html += '<tr>';
     html += '<th>Joueurs</th>';
@@ -49,7 +75,9 @@ function load() {
         html += '<tr>';
         html += '<th>';
         html += ''+player.name+'<br />';
-        html += ''+currentTaux+' ('+Math.round(100 * currentTaux/8)/100 +')';
+        html += 'Taux courant: '+Math.round(100 * currentTaux)/100 +'  '+smile(player, currentTaux)+'<br />';
+        html += 'Taux optimum: <input type="number" id="optimumRate_'+index+'" class="input-optimumRate" value="'+player.optimumRate+'" required="required" min="0" max="50" step="1" /><br />';
+        html += 'Taux max:     <input type="number" id="maxRate_'+index+'"     class="input-maxRate"     value="'+player.maxRate+'"     required="required" min="0" max="50" step="1" /><br />';
         html += '</th>';
         html += '<td>';
         html += 'Bouffe:  <input type="number" id="food_'+index+'"  class="input-food"  value="0" required="required" min="0" max="50" step="1" /><br />';
@@ -70,18 +98,29 @@ function load() {
     tblPlayers.innerHTML = html;
 }
 
+function smile(player, currentTaux) {
+  if (currentTaux < player.optimumRate) {
+      return ':-)';
+  } else if (currentTaux < player.maxRate) {
+      return ':-|';
+  } else {
+      return ':-(';
+  }
+}
+
 function addPlayer() {
     var playerName = prompt('Nom du joueur');
     if (playerName === null || playerName == '') {
         return '';
     }
-    players.push(    {
+    players.push({
         "name": playerName,
+        "optimumRate": 5,
+        "maxRate": 7,
         "turns":[]
     });
-    load();
+    display();
 }
-
 
 function saveTurn() {
     for (let playerIdx = 0; playerIdx < players.length; playerIdx++) {
@@ -92,7 +131,15 @@ function saveTurn() {
             }
         );
     }
-    load();
+    display();
+}
+
+function saveStats() {
+    for (let playerIdx = 0; playerIdx < players.length; playerIdx++) {
+        players[playerIdx].optimumRate = parseInt(document.getElementById("optimumRate_"+playerIdx).value);
+        players[playerIdx].maxRate     = parseInt(document.getElementById("maxRate_"+playerIdx).value);
+    }
+    display();
 }
 
 function calcCurrentTaux(player) {
@@ -106,6 +153,7 @@ function calcCurrentTaux(player) {
 }
 
 function calcTaux(drink, turn, hasFood) {
+  var DIVISER = 8;
   var coef = 0;
   if (hasFood) {
     if (turn <= 4) {
@@ -120,7 +168,7 @@ function calcTaux(drink, turn, hasFood) {
         coef = (-1 * turn + 16);
     }
   }
-  return drink * coef;
+  return drink * coef / DIVISER;
 }
 
 function hasFoodAtTurn(turns, atTurn) {
@@ -137,7 +185,7 @@ function hasFood(turns) {
   return false;
 }
 
-load();
+display();
 
 var testNum = 1;
 function test(actual, expected, msg) {
