@@ -21,30 +21,14 @@
         </table>
     </div>
     <button onclick="saveTurn()">Enregistrer le tour</button>
+    <button onclick="addPlayer()">Ajouter un joueur</button>
 
     <code>
         <a href="#" onclick="runTests()">Tests</a>
 	    <div id="tests"></div>
     </code>
     <script>
-var players = [
-    {
-        name:"yaya",
-        turns:[
-            { food: 4, drink: 2 },
-            { food: 0, drink: 0 },
-            { food: 2, drink: 4 }
-        ]
-    },
-    {
-        name:"poulpe",
-        turns:[
-            { food: 2, drink: 2 },
-            { food: 0, drink: 0 },
-            { food: 0, drink: 0 }
-        ]
-    }
-];
+var players = [];
 
 function load() {
     html = '';
@@ -61,8 +45,12 @@ function load() {
     html += '</tr>';
     for (let index = 0; index < players.length; index++) {
         const player = players[index];
+        var currentTaux = calcCurrentTaux(player);
         html += '<tr>';
-        html += '<th>'+player.name+' ('+calcCurrentTaux(player)+')</th>'
+        html += '<th>';
+        html += ''+player.name+'<br />';
+        html += ''+currentTaux+' ('+Math.round(100 * currentTaux/8)/100 +')';
+        html += '</th>';
         html += '<td>';
         html += 'Bouffe:  <input type="number" id="food_'+index+'"  class="input-food"  value="0" required="required" min="0" max="50" step="1" /><br />';
         html += 'Boisson: <input type="number" id="drink_'+index+'" class="input-drink" value="0" required="required" min="0" max="50" step="1" /><br />';
@@ -82,6 +70,19 @@ function load() {
     tblPlayers.innerHTML = html;
 }
 
+function addPlayer() {
+    var playerName = prompt('Nom du joueur');
+    if (playerName === null || playerName == '') {
+        return '';
+    }
+    players.push(    {
+        "name": playerName,
+        "turns":[]
+    });
+    load();
+}
+
+
 function saveTurn() {
     for (let playerIdx = 0; playerIdx < players.length; playerIdx++) {
         players[playerIdx].turns.unshift(
@@ -91,7 +92,7 @@ function saveTurn() {
             }
         );
     }
-    load()
+    load();
 }
 
 function calcCurrentTaux(player) {
