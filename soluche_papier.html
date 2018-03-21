@@ -17,14 +17,17 @@
     </style>
 </head>
 <body>
+
+    <button onclick="saveStats()">Enregistrer les stats</button>
+    <button onclick="saveTurn()">Enregistrer le tour</button>
+    <button onclick="addPlayer()">Ajouter un joueur</button>
+    
 	<div>
         <table id="tblPlayers" border="1">
             
         </table>
     </div>
-    <button onclick="saveStats()">Enregistrer les stats</button>
-    <button onclick="saveTurn()">Enregistrer le tour</button>
-    <button onclick="addPlayer()">Ajouter un joueur</button>
+
 
     <code>
         <a href="#" onclick="runTests()">Tests</a>
@@ -57,45 +60,71 @@ var players = [
 ];
 
 function display() {
-    html = '';
+    var html = '';
     html += '<tr>';
     html += '<th>Joueurs</th>';
-    html += '<th>Nouveau tour</th>';
-    for (let turnIdx = 0; turnIdx < players[0].turns.length; turnIdx++) {
-        if (turnIdx === 0) {
-            html += '<th>Tour courrant</th>';
-        } else {
-            html += '<th>il y a '+turnIdx+' tour'+(turnIdx>=2?'s':'')+'</th>';
-        }
+    for (let playerIdx = 0; playerIdx < players.length; playerIdx++) {
+        const player = players[playerIdx];
+        html += buildPlayerStats(player, playerIdx)
     }
     html += '</tr>';
-    for (let index = 0; index < players.length; index++) {
-        const player = players[index];
-        var currentTaux = calcCurrentTaux(player);
+
+    html += '<tr>';
+    html += '<th>Nouveau tour</th>';
+    for (let playerIdx = 0; playerIdx < players.length; playerIdx++) {
+        const player = players[playerIdx];
+        html += buildPlayerForm(player, playerIdx)
+    }
+    html += '</tr>';
+    
+    for (let turnIdx = 0; turnIdx < players[0].turns.length; turnIdx++) {
         html += '<tr>';
-        html += '<th>';
-        html += ''+player.name+'<br />';
-        html += 'Taux courant: '+Math.round(100 * currentTaux)/100 +'  '+smile(player, currentTaux)+'<br />';
-        html += 'Taux optimum: <input type="number" id="optimumRate_'+index+'" class="input-optimumRate" value="'+player.optimumRate+'" required="required" min="0" max="50" step="1" /><br />';
-        html += 'Taux max:     <input type="number" id="maxRate_'+index+'"     class="input-maxRate"     value="'+player.maxRate+'"     required="required" min="0" max="50" step="1" /><br />';
-        html += '</th>';
-        html += '<td>';
-        html += 'Bouffe:  <input type="number" id="food_'+index+'"  class="input-food"  value="0" required="required" min="0" max="50" step="1" /><br />';
-        html += 'Boisson: <input type="number" id="drink_'+index+'" class="input-drink" value="0" required="required" min="0" max="50" step="1" /><br />';
-        html += '</td>';
-        for (let turnIdx = 0; turnIdx < player.turns.length; turnIdx++) {
-            var turn = player.turns[turnIdx];
-            html += '<td>';
-            html += 'Bouffe:'+turn.food+'<br />';
-            html += 'Boisson:'+turn.drink+'<br />';
-            html += 'Taux:'+calcTaux(turn.drink, turnIdx, hasFoodAtTurn(player.turns, turnIdx));
-            html += '</td>';
+        html += buildTitles(turnIdx)
+        for (let playerIdx = 0; playerIdx < players.length; playerIdx++) {
+            const player = players[playerIdx];
+            html += buildPlayerTurn(player, turnIdx)
         }
         html += '</tr>';
     }
-    
     var tblPlayers = document.getElementById("tblPlayers");
     tblPlayers.innerHTML = html;
+}
+
+function buildTitles(turnIdx) {
+    if (turnIdx === 0) {
+        return '<th>Tour courrant</th>';
+    } else {
+        return '<th>il y a '+turnIdx+' tour'+(turnIdx>=2?'s':'')+'</th>';
+    }
+}
+
+function buildPlayerStats(player, playerIdx) {
+    var currentTaux = calcCurrentTaux(player);
+    var html = '<th>';
+    html += ''+player.name+'<br />';
+    html += 'Taux courant: '+Math.round(100 * currentTaux)/100 +'  '+smile(player, currentTaux)+'<br />';
+    html += 'Taux optimum: <input type="number" id="optimumRate_'+playerIdx+'" class="input-optimumRate" value="'+player.optimumRate+'" required="required" min="0" max="50" step="1" /><br />';
+    html += 'Taux max:     <input type="number" id="maxRate_'+playerIdx+'"     class="input-maxRate"     value="'+player.maxRate+'"     required="required" min="0" max="50" step="1" /><br />';
+    html += '</th>';
+    return html;
+}
+
+function buildPlayerForm(player, playerIdx) {
+    var html = '<td>';
+    html += 'Bouffe:  <input type="number" id="food_'+playerIdx+'"  class="input-food"  value="0" required="required" min="0" max="50" step="1" /><br />';
+    html += 'Boisson: <input type="number" id="drink_'+playerIdx+'" class="input-drink" value="0" required="required" min="0" max="50" step="1" /><br />';
+    html += '</td>';
+    return html;
+}
+
+function buildPlayerTurn(player, turnIdx) {
+    var turn = player.turns[turnIdx];
+    var html = '<td>';
+    html += 'Bouffe:'+turn.food+'<br />';
+    html += 'Boisson:'+turn.drink+'<br />';
+    html += 'Taux:'+calcTaux(turn.drink, turnIdx, hasFoodAtTurn(player.turns, turnIdx));
+    html += '</td>';
+    return html;
 }
 
 function smile(player, currentTaux) {
