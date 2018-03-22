@@ -1,13 +1,13 @@
 class Player {
-    public name : string;
+    public Name : string;
     
     protected _optimumRate : number;
     
-    get optimumRate(): number {
+    get OptimumRate(): number {
         return this._optimumRate;
     }
 
-    set optimumRate(newOptimumRate: number) {
+    set OptimumRate(newOptimumRate: number) {
         if (newOptimumRate < 1) {
             this._optimumRate = 1;
             console.warn("optimumRate < 1 : value forced to 1");
@@ -21,11 +21,11 @@ class Player {
 
     protected _maxRate : number;
 
-    get maxRate(): number {
+    get MaxRate(): number {
         return this._maxRate;
     }
 
-    set maxRate(newMaxRate: number) {
+    set MaxRate(newMaxRate: number) {
         if (newMaxRate < 2) {
             this._maxRate = 2;
             console.warn("maxRate < 2 : value forced to 2");
@@ -37,5 +37,11 @@ class Player {
         }
     }
 
-    public turns : Turn[];
+    public Turns : Turn[] = [];
+
+    public constructor(name : string, optimumRate : number = 1, maxRate : number = 2) {
+        this.Name = name;
+        this.OptimumRate = optimumRate;
+        this.MaxRate = maxRate;
+    }
 }

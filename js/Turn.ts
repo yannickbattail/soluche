@@ -1,11 +1,11 @@
 class Turn {
     protected _food : number;
 
-    get food(): number {
+    get Food(): number {
         return this._food;
     }
 
-    set food(newFood: number) {
+    set Food(newFood: number) {
         if (newFood < 0) {
             this._food = 0;
         } else {
@@ -17,16 +17,21 @@ class Turn {
 
     protected _drink : number;
 
-    get drink(): number {
+    get Drink(): number {
         return this._drink;
     }
 
-    set drink(newDrink: number) {
+    set Drink(newDrink: number) {
         if (newDrink < 0) {
             this._drink = 0;
         } else {
             
             this._drink = newDrink;
         }
+    }
+
+    public constructor(food : number, drink : number) {
+        this.Food = food;
+        this.Drink = drink;
     }
 }
