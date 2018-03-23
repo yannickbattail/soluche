@@ -13,13 +13,26 @@ var Game = /** @class */ (function () {
     };
     Game.prototype.saveTurn = function () {
         for (var playerIdx = 0; playerIdx < this.PlayerList.length; playerIdx++) {
-            this.PlayerList[playerIdx].Turns.unshift(new Turn(parseInt(document.getElementById("food_" + playerIdx).value), parseInt(document.getElementById("drink_" + playerIdx).value)));
+            var food = this.getValue("food_" + playerIdx);
+            var drink = this.getValue("drink_" + playerIdx);
+            this.PlayerList[playerIdx].Turns.unshift(new Turn(food !== null ? parseInt(food) : 0, drink !== null ? parseInt(drink) : 0));
+        }
+    };
+    Game.prototype.getValue = function (id) {
+        var elem = document.getElementById(id);
+        if (elem && elem['value']) {
+            return elem['value'];
+        }
+        else {
+            return null;
         }
     };
     Game.prototype.saveStats = function () {
         for (var playerIdx = 0; playerIdx < this.PlayerList.length; playerIdx++) {
-            this.PlayerList[playerIdx].OptimumRate = parseInt(document.getElementById("optimumRate_" + playerIdx).value);
-            this.PlayerList[playerIdx].MaxRate = parseInt(document.getElementById("maxRate_" + playerIdx).value);
+            var optimumRate = this.getValue("optimumRate_" + playerIdx);
+            var maxRate = this.getValue("maxRate_" + playerIdx);
+            this.PlayerList[playerIdx].OptimumRate = optimumRate !== null ? parseInt(optimumRate) : 0;
+            this.PlayerList[playerIdx].MaxRate = maxRate !== null ? parseInt(maxRate) : 0;
         }
     };
     Game.prototype.calcCurrentTaux = function (player) {

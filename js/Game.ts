@@ -13,17 +13,30 @@ public addPlayer(playerName : string) : void {
 
 public saveTurn() : void {
   for (let playerIdx : number = 0; playerIdx < this.PlayerList.length; playerIdx++) {
+    let food  : string | null = this.getValue("food_"+playerIdx);
+    let drink : string | null = this.getValue("drink_"+playerIdx);
     this.PlayerList[playerIdx].Turns.unshift(new Turn(
-        parseInt(document.getElementById("food_"+playerIdx)!.value),
-        parseInt(document.getElementById("drink_"+playerIdx)!.value),
+        food!==null?parseInt(food):0,
+        drink!==null?parseInt(drink):0,
       ));
+  }
+}
+
+public getValue(id : string) : string | null {
+  let elem : HTMLElement | null = document.getElementById(id);
+  if (elem && elem['value']) {
+    return elem['value'];
+  } else {
+    return null;
   }
 }
 
 public saveStats() : void {
   for (let playerIdx : number = 0; playerIdx < this.PlayerList.length; playerIdx++) {
-    this.PlayerList[playerIdx].OptimumRate = parseInt(document.getElementById("optimumRate_"+playerIdx)!.value);
-    this.PlayerList[playerIdx].MaxRate     = parseInt(document.getElementById("maxRate_"+playerIdx)!.value);
+    let optimumRate  : string | null = this.getValue("optimumRate_"+playerIdx);
+    let maxRate : string | null = this.getValue("maxRate_"+playerIdx);
+    this.PlayerList[playerIdx].OptimumRate = optimumRate!==null?parseInt(optimumRate):0;
+    this.PlayerList[playerIdx].MaxRate     = maxRate!==null?parseInt(maxRate):0;
   }
 }
 

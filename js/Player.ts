@@ -8,9 +8,9 @@ class Player {
     }
 
     set OptimumRate(newOptimumRate: number) {
-        if (newOptimumRate < 1) {
+        if (newOptimumRate <= 0) {
             this._optimumRate = 1;
-            console.warn("optimumRate < 1 : value forced to 1");
+            console.warn("optimumRate <= 0 : value forced to 1");
         } else if (newOptimumRate >= this._maxRate) {
             this._optimumRate = this._maxRate - 1;
             console.warn("optimumRate >= maxRate : value forced to maxRate - 1");
@@ -30,7 +30,7 @@ class Player {
             this._maxRate = 2;
             console.warn("maxRate < 2 : value forced to 2");
         } else if (newMaxRate <= this._optimumRate) {
-            this._maxRate = this._maxRate - 1;
+            this._maxRate = this._optimumRate + 1;
             console.warn("maxRate <= optimumRate : value forced to optimumRate + 1");
         } else {
             this._maxRate = newMaxRate;

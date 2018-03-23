@@ -77,6 +77,21 @@ var Gui = /** @class */ (function () {
             return ':-(';
         }
     };
+    Gui.prototype.saveStats = function () {
+        this.Game.saveStats();
+        this.display();
+    };
+    Gui.prototype.saveTurn = function () {
+        this.Game.saveTurn();
+        this.display();
+    };
+    Gui.prototype.addPlayer = function () {
+        var playerName = window.prompt("Nom du joueur");
+        if (playerName != null && playerName != '') {
+            this.Game.addPlayer(playerName);
+            this.display();
+        }
+    };
     return Gui;
 }());
 //# sourceMappingURL=Gui.js.map

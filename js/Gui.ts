@@ -1,5 +1,5 @@
 class Gui {
-    public Game : Game;
+    private Game : Game;
 
     public constructor() {
         this.Game = new Game();
@@ -83,5 +83,23 @@ class Gui {
       } else {
           return ':-(';
       }
+    }
+
+    public saveStats() : void {
+        this.Game.saveStats();
+        this.display();
+    }
+
+    public saveTurn() : void {
+        this.Game.saveTurn();
+        this.display();
+    }
+
+    public addPlayer() {
+        let playerName : string | null = window.prompt("Nom du joueur");
+        if (playerName != null && playerName != '') {
+            this.Game.addPlayer(playerName);
+            this.display();
+        }
     }
 }

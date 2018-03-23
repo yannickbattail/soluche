@@ -18,9 +18,9 @@
 </head>
 <body>
 
-    <button onclick="saveStats()">Enregistrer les stats</button>
-    <button onclick="saveTurn()">Enregistrer le tour</button>
-    <button onclick="addPlayer()">Ajouter un joueur</button>
+    <button onclick="GUI.saveStats()">Enregistrer les stats</button>
+    <button onclick="GUI.saveTurn()">Enregistrer le tour</button>
+    <button onclick="GUI.addPlayer()">Ajouter un joueur</button>
     
 	<div>
         <table id="tblPlayers" border="1">
@@ -28,241 +28,17 @@
         </table>
     </div>
 
-
     <code>
-        <a href="#" onclick="runTests()">Tests</a>
+        <a href="#" onclick="GUI.runTests()">Tests</a>
 	    <div id="tests"></div>
     </code>
-    <script>
-var players = [
-    {
-        "name": "yaya",
-        "optimumRate": 5,
-        "maxRate": 7,
-        "turns":[
-            {
-                "food": 1,
-                "drink": 1,
-            }
-        ]
-    },
-    {
-        "name": "platypus",
-        "optimumRate": 5,
-        "maxRate": 7,
-        "turns":[
-            {
-                "food": 0,
-                "drink": 1,
-            }
-        ]
-    },
-];
-
-function display() {
-    var html = '';
-    html += '<tr>';
-    html += '<th>Joueurs</th>';
-    for (let playerIdx = 0; playerIdx < players.length; playerIdx++) {
-        const player = players[playerIdx];
-        html += buildPlayerStats(player, playerIdx)
-    }
-    html += '</tr>';
-
-    html += '<tr>';
-    html += '<th>Nouveau tour</th>';
-    for (let playerIdx = 0; playerIdx < players.length; playerIdx++) {
-        const player = players[playerIdx];
-        html += buildPlayerForm(player, playerIdx)
-    }
-    html += '</tr>';
-    
-    for (let turnIdx = 0; turnIdx < players[0].turns.length; turnIdx++) {
-        html += '<tr>';
-        html += buildTitles(turnIdx)
-        for (let playerIdx = 0; playerIdx < players.length; playerIdx++) {
-            const player = players[playerIdx];
-            html += buildPlayerTurn(player, turnIdx)
-        }
-        html += '</tr>';
-    }
-    var tblPlayers = document.getElementById("tblPlayers");
-    tblPlayers.innerHTML = html;
-}
-
-function buildTitles(turnIdx) {
-    if (turnIdx === 0) {
-        return '<th>Tour courrant</th>';
-    } else {
-        return '<th>il y a '+turnIdx+' tour'+(turnIdx>=2?'s':'')+'</th>';
-    }
-}
-
-function buildPlayerStats(player, playerIdx) {
-    var currentTaux = calcCurrentTaux(player);
-    var html = '<th>';
-    html += ''+player.name+'<br />';
-    html += 'Taux courant: '+Math.round(100 * currentTaux)/100 +'  '+smile(player, currentTaux)+'<br />';
-    html += 'Taux optimum: <input type="number" id="optimumRate_'+playerIdx+'" class="input-optimumRate" value="'+player.optimumRate+'" required="required" min="0" max="50" step="1" /><br />';
-    html += 'Taux max:     <input type="number" id="maxRate_'+playerIdx+'"     class="input-maxRate"     value="'+player.maxRate+'"     required="required" min="0" max="50" step="1" /><br />';
-    html += '</th>';
-    return html;
-}
-
-function buildPlayerForm(player, playerIdx) {
-    var html = '<td>';
-    html += 'Bouffe:  <input type="number" id="food_'+playerIdx+'"  class="input-food"  value="0" required="required" min="0" max="50" step="1" /><br />';
-    html += 'Boisson: <input type="number" id="drink_'+playerIdx+'" class="input-drink" value="0" required="required" min="0" max="50" step="1" /><br />';
-    html += '</td>';
-    return html;
-}
-
-function buildPlayerTurn(player, turnIdx) {
-    var turn = player.turns[turnIdx];
-    var html = '<td>';
-    html += 'Bouffe:'+turn.food+'<br />';
-    html += 'Boisson:'+turn.drink+'<br />';
-    html += 'Taux:'+calcTaux(turn.drink, turnIdx, hasFoodAtTurn(player.turns, turnIdx));
-    html += '</td>';
-    return html;
-}
-
-function smile(player, currentTaux) {
-  if (currentTaux < player.optimumRate) {
-      return ':-)';
-  } else if (currentTaux < player.maxRate) {
-      return ':-|';
-  } else {
-      return ':-(';
-  }
-}
-
-function addPlayer() {
-    var playerName = prompt('Nom du joueur');
-    if (playerName === null || playerName == '') {
-        return '';
-    }
-    players.push({
-        "name": playerName,
-        "optimumRate": 5,
-        "maxRate": 7,
-        "turns":[]
-    });
-    display();
-}
-
-function saveTurn() {
-    for (let playerIdx = 0; playerIdx < players.length; playerIdx++) {
-        players[playerIdx].turns.unshift(
-            {
-                "food":  parseInt(document.getElementById("food_"+playerIdx).value),
-                "drink": parseInt(document.getElementById("drink_"+playerIdx).value),
-            }
-        );
-    }
-    display();
-}
-
-function saveStats() {
-    for (let playerIdx = 0; playerIdx < players.length; playerIdx++) {
-        players[playerIdx].optimumRate = parseInt(document.getElementById("optimumRate_"+playerIdx).value);
-        players[playerIdx].maxRate     = parseInt(document.getElementById("maxRate_"+playerIdx).value);
-    }
-    display();
-}
-
-function calcCurrentTaux(player) {
-  var taux = 0;
-  for (let turnIdx = 0; turnIdx < player.turns.length; turnIdx++) {
-   var hasFood = hasFoodAtTurn(player.turns, turnIdx);
-   var drink = player.turns[turnIdx].drink;
-   taux += calcTaux(drink, turnIdx, hasFood);
-  }
-  return taux;
-}
-
-function calcTaux(drink, turn, hasFood) {
-  var DIVISER = 8;
-  var coef = 0;
-  if (hasFood) {
-    if (turn <= 4) {
-        coef = 2 * turn;
-    } else if (turn < 12) {
-        coef = (-1 * turn + 12);
-    }
-  } else {
-    if (turn <= 4) {
-        coef = 3 * turn;
-    } else if (turn < 16) {
-        coef = (-1 * turn + 16);
-    }
-  }
-  return drink * coef / DIVISER;
-}
-
-function hasFoodAtTurn(turns, atTurn) {
-  return hasFood(turns.slice(atTurn));
-}
-
-function hasFood(turns) {
-  for (let turnIdx = 0; turnIdx < turns.length; turnIdx++) {
-    var food = turns[turnIdx].food;
-    if (food && (food >= turnIdx)) {
-      return true;
-    }
-  }
-  return false;
-}
-
-display();
-
-var testNum = 1;
-function test(actual, expected, msg) {
-    var testsDiv = document.getElementById("tests");
-    if (actual === expected) {
-        console.log('test #'+testNum+' OK! is '+expected+' => '+msg);
-        testsDiv.innerHTML += 'test #'+testNum+' <span style="color:green">OK!</span> is '+expected+' => '+msg+'<br />'
-    } else {
-        console.warn('#'+testNum+' FAIL! is '+actual+' must be '+expected+' => '+msg);
-        testsDiv.innerHTML += 'test #'+testNum+' <span style="color:red">FAIL!</span> is '+actual+' must be '+expected+' => '+msg+'<br />'
-    }
-    testNum++;
-}
-
-function runTests() {
-test(calcTaux(1, 0, true), 0, "test with hasFood true");
-test(calcTaux(1, 1, true), 2, "");
-test(calcTaux(1, 2, true), 4, "");
-test(calcTaux(1, 4, true), 8, "");
-test(calcTaux(1, 5, true), 7, "");
-test(calcTaux(1, 8, true), 4, "");
-test(calcTaux(1, 11, true), 1, "");
-test(calcTaux(1, 12, true), 0, "");
-test(calcTaux(1, 13, true), 0, "");
-
-test(calcTaux(1, 0, false), 0, "test with hasFood false");
-test(calcTaux(1, 1, false), 3, "");
-test(calcTaux(1, 2, false), 6, "");
-test(calcTaux(1, 3, false), 9, "");
-test(calcTaux(1, 4, false), 12, "");
-test(calcTaux(1, 5, false), 11, "");
-test(calcTaux(1, 14, false), 2, "");
-test(calcTaux(1, 16, false), 0, "");
-test(calcTaux(1, 17, false), 0, "");
-
-test(hasFoodAtTurn([{food:0}], 0), false, "test hasFoodAtTurn() turn 1");
-test(hasFoodAtTurn([{food:1}], 0), true, "test hasFoodAtTurn() turn 1");
-test(hasFoodAtTurn([{food:0},{food:0},{food:0}], 0), false, "test hasFoodAtTurn() turn 1");
-test(hasFoodAtTurn([{food:0},{food:0},{food:1}], 0), false, "test hasFoodAtTurn() turn 1");
-test(hasFoodAtTurn([{food:0},{food:0},{food:2}], 0), true, "test hasFoodAtTurn() turn 1");
-test(hasFoodAtTurn([{food:0},{food:0},{food:4}], 0), true, "test hasFoodAtTurn() turn 1");
-
-test(hasFoodAtTurn([{food:0},{food:0},{food:0}], 1), false, "test hasFoodAtTurn() turn 2");
-test(hasFoodAtTurn([{food:0},{food:0},{food:1}], 1), true, "test hasFoodAtTurn() turn 2");
-test(hasFoodAtTurn([{food:0},{food:0},{food:2}], 1), true, "test hasFoodAtTurn() turn 2");
-test(hasFoodAtTurn([{food:0},{food:0},{food:4}], 1), true, "test hasFoodAtTurn() turn 2");
-return false;
-}
+    <script src="js/Turn.js"></script>
+    <script src="js/Player.js"></script>
+    <script src="js/Game.js"></script>
+    <script src="js/Gui.js"></script>
+    <script> 
+    var GUI = new Gui();
+    GUI.display();
     </script>
 	</body>
 </html>
