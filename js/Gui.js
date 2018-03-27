@@ -80,10 +80,12 @@ var Gui = /** @class */ (function () {
     Gui.prototype.saveStats = function () {
         this.Game.saveStats();
         this.display();
+        this.Repository.saveGame(this.Game);
     };
     Gui.prototype.saveTurn = function () {
         this.Game.saveTurn();
         this.display();
+        this.Repository.saveGame(this.Game);
     };
     Gui.prototype.addPlayer = function () {
         var playerName = window.prompt("Nom du joueur");
@@ -91,6 +93,7 @@ var Gui = /** @class */ (function () {
             this.Game.addPlayer(playerName);
             this.display();
         }
+        this.Repository.saveGame(this.Game);
     };
     return Gui;
 }());

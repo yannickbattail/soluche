@@ -1,5 +1,6 @@
 class Gui {
     private Game : Game;
+    private Repository : GameRepository;
 
     public constructor() {
         this.Game = new Game();
@@ -88,18 +89,21 @@ class Gui {
     public saveStats() : void {
         this.Game.saveStats();
         this.display();
+        this.Repository.saveGame(this.Game);
     }
 
     public saveTurn() : void {
         this.Game.saveTurn();
         this.display();
+        this.Repository.saveGame(this.Game);
     }
 
-    public addPlayer() {
+    public addPlayer() : void {
         let playerName : string | null = window.prompt("Nom du joueur");
         if (playerName != null && playerName != '') {
             this.Game.addPlayer(playerName);
             this.display();
         }
+        this.Repository.saveGame(this.Game);
     }
 }
