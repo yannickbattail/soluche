@@ -20,6 +20,7 @@ Son taux optimum d'alcool sera égale à note au crieFort en boisson divisée pa
     taux optimum = 4 / 2 + 5 = 8
 
 Son taux max d'alcool sera eagle à son taux optimum d'alcool multiplié par 1,5
+
     ex:  taux optimum : 8
     taux max = 8 x 1,5 = 12
 
