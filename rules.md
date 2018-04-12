@@ -73,37 +73,66 @@ Au debut de la partie distribuer des items pour un nombre = au nombre de tours d
 
 ### Chanter
 
-+10@ ou +0@, -1paillardier
+si taux de boisson est inférieur au taux optimal. gagne +5@
+
+si taux de boisson est supérieur au taux optimal, tu chantes faux. gagne 0, nada
+
+cout: -1 paillardier
+
+durée: 1 tour
 
 ### Partager des valeurs
 
-+X@, X= nombre personnes * la valeur@ de la carte, (nombre de personnes en comptant soi même)
+il prend une carte valeur, choisi des joueurs avec partager ses valeurs dans le même lieu où il se trouve. (avec un max de joueurs (lui compris) qu'il y a de parts indiquées sur la carte)
 
-Ajouter aux participants et soi même, les points de nourriture et boisson.
+le joueur gagne autant de @ qu'il y a de joueurs
 
-### Pinsser
+Les participants et lui même, gagne les points de nourriture et boisson indiquées sur la carte.
 
-+2@ pour moi, +1@ pour lui et +1 en boisson pour lui
+    ex: 2 joueur sont au bar, je les invite à partager un rebloch à 4 parts
+    (à noter qu'une part est PERDU, ben tant pis c'est comme ca)
+    je gagne 2 + 1 = 3@
+    le 2 participants et moi gagnons 1 point en nourriture
+
+cout: -1 carte valeur
+
+durée: 1 tour, 0 tour pour les personnes ciblées
+
+### Pinser
+
++2@ et -1 pin's pour moi
+
++1@ et +1 en boisson pour lui
+
+cout: -1 pin's
+
+durée: 1 tour
 
 ### concours de sec
 
-À tour de rôle les 2 joueurs se donnent des sec jusqu'à ce qu'un des 2 abandonne.
+À tour de rôle les 2 joueurs boivent un sec jusqu'à ce qu'un des 2 abandonnent.
+
+Bien sur on ajoute autant de point de boisson qu'il y a eu de sec
 
 Attention à la PLS après coup.
+
+durée: 1 tour
 
 ### ‎faire un VT
 
 -4@: -4 en boisson
 
+durée: 1 tour
+
 ### PLS volontaire
 
 passe son tour
 
-Le tour suivant, on lance un d6, si > 4 il se réveil, sinon la PLS continue.
+Le tour suivant, on lance un dé7, si > 4 il se réveil, sinon la PLS continue.
 
-Le tour suivant, on lance un d6, si > 3 il se réveil, sinon la PLS continue.
+Le tour suivant, on lance un dé7, si > 3 il se réveil, sinon la PLS continue.
 
-Le tour suivant, on lance un d6, si > 2 il se réveil, sinon la PLS continue.
+Le tour suivant, on lance un dé7, si > 2 il se réveil, sinon la PLS continue.
 
 Le tour suivant il se réveille.
 
@@ -115,7 +144,7 @@ Passe son tour jusqu'à que son taux de boisson passe en dessous du max
 
 Le joueur qui essaye de chopper choisi une cible parmi les PNJ du lieu (tas de cartes) ou parmi les personnages s'y trouvant aussi.
 
-Ensuite le joueur doit sortir une puch line et les autres joueurs vote la qualité de celle-ci.
+Ensuite le joueur doit sortir une punch line et les autres joueurs vote la qualité de celle-ci.
 
 - pouce en haut : ça passe nickel comme papa dans mamie
 - pouce horizontale : bourré ça peut passer
@@ -131,7 +160,7 @@ On calcule la différence de crédibilitruc entre les 2 persos en valeur absolue
 
 au quel on soustrait les bonus/malus de choppe puis on soustrait au résultat un dé7.
 
-Si la valeur finale est négative ou égale à zéro ca va baiser. Sinon ... couilles bleues (rien de se passe)
+Si la valeur finale est négative ou égale à zéro ca va baiser. Sinon ... couilles bleues (rien de se passe, retente ta chance)
 
 Ex:
 
@@ -145,3 +174,38 @@ Ex:
 
 ### Chopper (3 tours)
 
+si taux de boisson est inférieur au taux optimal. gagne +40@
+
+si taux de boisson est supérieur au taux optimal, tu bandes mou ou tu fais l'étoile de mer. gagne +5@
+
+la meme règle s'applique au joueur ciblé (sauf si c'est un PNJ)
+
+si le personnage à une capote, il l'enlève de son inventaire (oui 2 filles ensemble utilisent des capotes)
+
+si il n'en a pas on lance un dé7, si le résultat est inférieur ou égale à 3, le personage reçoit l'insigne du crabe (MST) : malus de -5 en choppe
+
+## fin de la partie
+
+À la fin de la partie (le nombre de tour), on fait le compte de point @ et c'est celui qui en a le plus (pas dans le calçon) qui gagne.
+
+Si il y a égalité, je propose qu'on règle ca au chi fou sec.
+
+## les extensions
+
+les extensions seront disponible tarif suivant: 
+
+- 18€ l'extension
+- 37€ pour les posseurs de produit Apple
+
+### extension 1 : les missions
+
+liste de carte supplémentaire de missions.
+
+les missionnaires (les joueurs) devront réaliser leurs objectifs de mission pour gagner la partie. La misssion doit rester secrete jusqu'a la fin de la partie.
+
+les missions:
+
+- chopper l'orga : tu dois chopper 3 orga. les orgas sont des cartes de PNJ supplémentaires avec la particularité qu'il ont 0 en boisson et pas mal en crédibilitruc.
+- la poule aux yeux d'or: chopper 6 personnes pendant la partie (6 à définir)
+- la foie en son foi : mettre 3 personnes en PLS et gagner 2 concours de sec
+- le gras c'est à vie : 
