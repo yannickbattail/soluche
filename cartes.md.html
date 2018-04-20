@@ -1,0 +1,139 @@
+# cartes
+
+********************************************************
+*     .-----------------.         .-----------------.  
+*    |    Paillardier    |       |      capote       | 
+*    +-------------------+       +-------------------+ 
+*    | TYPE: item        |       | TYPE: item        | 
+*    | permet de chanter |       |  .-. .-.          | 
+*    |      1 fois       |       | |   |   |         | 
+*    |                   |       |  \     /   pour   | 
+*    |                   |       |   \   /  chopper  | 
+*    |                   |       |    \ /            | 
+*    |                   |       |     '             |   
+*    | coup de départ: 1 |       | coup de départ: 1 | 
+*     '-----------------'         '-----------------'  
+*                             
+*     .-----------------.         .-----------------.   
+*    |     eco cup       |       |  verre à pinte    |  
+*    +-------------------+       +-------------------+  
+*    | TYPE: item        |       | TYPE: item        |  
+*    | réserve 8 doses   |       | réserve 8 doses   |  
+*    |                   |       |                   |    
+*    |      |  |         |       |     |   |.-.      |  
+*    |      |  |         |       |     |   |   |     |  
+*    |      +--+         |       |     |   |   |     |  
+*    |                   |       |     +---+'-'      |  
+*    | coup de départ: 1 |       | coup de départ: 1 |  
+*     '-----------------'         '-----------------'   
+*
+*     .-----------------.         .-----------------.   
+*    |       gôle        |       |    chartreuse     |  
+*    +-------------------+       +-------------------+  
+*    | TYPE: item        |       | TYPE: item        |  
+*    | 4 doses           |       | 6 doses           |  
+*    | gagne: +5@ /perso |       | gagne: +6@ /perso |  
+*    |                   |       |                   |  
+*    |                   |       |                   |  
+*    |                   |       |                   |  
+*    |                   |       |                   |    
+*    | coup de départ: 1 |       | coup de départ: 1 |  
+*     '-----------------'         '-----------------'   
+*   
+*     .-----------------.         .-----------------.     
+*    |     rebloch'      |       |     saucisson     |    
+*    +-------------------+       +-------------------+    
+*    | TYPE: item        |       | TYPE: item        |    
+*    | 4 parts           |       | 4 parts           |    
+*    | gagne: +4@ /perso |       | gagne: +5@ /perso |    
+*    |                   |       |                   |    
+*    |                   |       |                   |    
+*    |                   |       |                   |    
+*    |                   |       |                   |    
+*    | coup de départ: 1 |       | coup de départ: 1 |    
+*     '-----------------'         '-----------------'     
+* 
+*     .-----------------.     
+*    |    bière belge    |    
+*    +-------------------+    
+*    | TYPE: item        |    
+*    | 3 doses           |    
+*    | gagne: +5@ /perso |    
+*    |                   |    
+*    |                   |    
+*    |                   |    
+*    |                   |    
+*    | coup de départ: 1 |    
+*     '-----------------'     
+*
+*     .-----------------.     
+*    |       pin's       |    
+*    +-------------------+    
+*    | TYPE: item        |    
+*    | 3 doses           |    
+*    | gagne: +2@ /perso |    
+*    |                   |    
+*    |                   |    
+*    |                   |    
+*    |                   |    
+*    | coup de départ: 1 |    
+*     '-----------------'     
+********************************************************
+
+## PNJ
+
+<script>
+
+var filieres = [
+	"rose",
+	"droit",
+	"sciences",
+	"jaune",
+	"sage-pouf",
+	"pharma",
+	"médecine",
+	"ingé",
+];
+
+var villes = [
+	"Annecy",
+	"Grenoble",
+	"Lyon",
+	"Monpeul",
+	"Valence",
+	"Aix",
+	"Marseille",
+	"Dijon"
+]
+
+document.write("\r\n\r\n\r\n");
+document.write("*******************************\r\n");
+for (var filiereIndex = 0; filiereIndex < filieres.length; filiereIndex++) {
+	var filiere = filieres[filiereIndex].padEnd(19);
+	for (var villeIndex = 0; villeIndex < villes.length; villeIndex++) {
+		var ville = villes[villeIndex].padEnd(19);
+		var boisson       = ("boisson:"       + (7 + villeIndex)  ).toString().padEnd(19);
+		var boissonOpti   = ("boissonOpti:"   + (10)              ).toString().padEnd(19);
+		var boissonMax    = ("boisson:"       + (15)              ).toString().padEnd(19);
+		var credibilitruc = ("credibilitruc:" + (7 + filiereIndex)).toString().padEnd(19);
+		document.write("*\r\n");
+		document.write("*     .-----------------.     \r\n");
+		document.write("*    |        PNJ        |    \r\n");
+		document.write("*    +-------------------+    \r\n");
+		document.write("*    |" + filiere +     "|    \r\n");
+		document.write("*    |" + ville +       "|    \r\n");
+		document.write("*    |                   |    \r\n");
+		document.write("*    |" + boisson +     "|    \r\n");
+		document.write("*    |" + boissonOpti + "|    \r\n");
+		document.write("*    |" + boissonMax +  "|    \r\n");
+		document.write("*    |" + credibilitruc+"|    \r\n");
+		document.write("*    |                   |    \r\n");
+		document.write("*     '-----------------'     \r\n");
+		document.write("*\r\n");		
+	}
+}
+document.write("*******************************\r\n");
+</script>
+
+
+<!-- Markdeep: --><style class="fallback">body{visibility:hidden;white-space:pre;font-family:monospace}</style><script src="markdeep.min.js"></script><script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script><script>window.alreadyProcessedMarkdeep||(document.body.style.visibility="visible")</script>

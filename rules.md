@@ -195,17 +195,17 @@ Si il y a égalité, je propose qu'on règle ca au chi fou sec.
 les extensions seront disponible tarif suivant: 
 
 - 18€ l'extension
-- 37€ pour les posseurs de produit Apple
+- 37€ pour les possesseurs de produit Apple
 
 ### extension 1 : les missions
 
 liste de carte supplémentaire de missions.
 
-les missionnaires (les joueurs) devront réaliser leurs objectifs de mission pour gagner la partie. La misssion doit rester secrete jusqu'a la fin de la partie.
+les missionnaires (les joueurs) devront réaliser leurs objectifs de mission pour gagner la partie. La mission doit rester secrete jusqu'a la fin de la partie.
 
 les missions:
 
 - chopper l'orga : tu dois chopper 3 orga. les orgas sont des cartes de PNJ supplémentaires avec la particularité qu'il ont 0 en boisson et pas mal en crédibilitruc.
 - la poule aux yeux d'or: chopper 6 personnes pendant la partie (6 à définir)
 - la foie en son foi : mettre 3 personnes en PLS et gagner 2 concours de sec
-- le gras c'est à vie : 
+- le gras c'est à vie :
