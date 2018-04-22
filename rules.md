@@ -69,7 +69,80 @@ Choisir le type de partie: apéro 12 tours, soiree 24 tours, congres 42 tours. (
 
 Au debut de la partie distribuer des items pour un nombre = au nombre de tours divisé pas 2. Ex : partie de 3h = 12 tours donc 6 cartes
 
-## Actions possibles
+## le plateau de jeux
+
+Prendre une feuille de papier A3 (c'est mieux, un plan a3) et dessinez le plan du congrès.
+Il aura 4 parties:
+- Le bar : pour faire le plein de boisson
+- la piste de danse : pour tenter de chopper
+- la sale à manger : pour se rassasier
+- la tente : pour être tranquille pour chopper ou faire une pls
+
+## Déroulement d'un tour
+Les joueurs jouent les uns à la suite des autres dans l'ordre des aiguilles d'une montre si la partie a lieu dans l'hémisphère nord, sinon dans l'autre sens.
+
+Au début du tour on récupère les cartes PNJ (sauf celles occupées) qu'on remet dans le tas de cartes PNJ, on mélange ce tas. Puis on distribue autant de carte PNJ qu'il y a de joueurs et cela sur chaque lieu (sauf la tente).
+    Ex: partie à 4 joueurs, 
+    4 cartes au bar
+    4 cartes sur la piste de danse
+    4 cartes à la salle à manger
+
+### déroulement du tour du joueur
+Le joueur ne joue que s'il ne fait pas déjà une autre action (actions en plusieurs tours).
+
+Au début de son tour, le joueur peut se déplacer dans un autre lieu.
+
+Puis il effectue l'action qu'il souhaite. Et reste dans ce lieu jusqu'à son prochain tour.
+
+Note: le perso peut être la cible des autres et même plusieurs fois.
+
+## rôle des différents lieux
+
+### le bar
+Sert à faire le plein de boisson. On peu y re-remplir son verre.
+
+On peu faire les actions suivantes : chanter, partager des valeurs, pin'ser, concours de secs, faire un VT, essayer de chopper.
+
+Actions que l'on peut vous faire : chanter, valeurs, pin'ser concours de secs, essayer de chopper
+
+### la piste de danse
+Sert à chauffer. Tant que le perso est dans ce lieu, il gagne +1 en bonus de choppe.
+
+On peu faire les actions suivantes : chanter, pin'ser, concours de sec, faire un VT, essayer de chopper.
+
+Actions que l'on peut vous faire : chanter, valeurs, pin'ser concours de secs, essayer de chopper
+
+### la cuisine
+Là où l'on fait les repas
+
+On peu faire les actions suivantes : chanter, partager des valeurs, pin'ser, concours de secs, faire un VT, essayer de chopper.
+
+Actions que l'on peut vous faire : chanter, valeurs, pin'ser concours de secs, essayer de chopper
+
+### la tente
+Là où on est tranquille pour chopper ou faire un effort PLS.
+
+On peu faire les actions suivantes : chopper, faire une PLS
+
+Actions que l'on peut vous faire : chopper, chasse au potager.
+
+## actions possibles
+
+### chasse au potager
+Vous en avez vu 2 partir en direction des tentes, vous vous doutez bien de ce qu'ils vont faire.
+Vous décidez de partir à leur recherche pour les prendre en flagrant délit.
+
+Est-ce que vous les avez trouvé ? Pour cela lancez un dé7 et vous divisé la valeur par 2.
+
+Et heu? Est-ce qu'il a été discret ? Pour cela lancez un dé7 et vous divisé la valeur par 2. (Si il s'agit de 2 perso (pas 1 perso et 1 PNJ) un seul lancé de dé pour les 2.
+
+Si vous avez la même valeur, boom! Potager !
+
+Vous gagnez +5@.
+
+Et lui/ ils gagne/nt un insigne de potager.
+
+Durée: 1 tour.
 
 ### Chanter
 
