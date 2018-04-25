@@ -75,21 +75,21 @@ La crédibilitruc sera la note au crieFort en sesque divisée par 3, plus 4, plu
 
 Prendre une feuille A4 la plier en 2 pour la rigidifier, ca nous donne donc une feuille A5.
 
-    ____________________
-    |                  |
-    |__________________| 3 cm pliage arrière
-    |                  |
-    |__________________| 3 cm pliage avant
-    |                  |
-  A |__________________| 3 cm pliage avant
-    |                  |
-    |                  |
-    |                  | X cm pliage arrière, X = la moitié de AB
-    |__________________|
-    |                  |
-    |                  |
-    |                  |
-  B |__________________|
+        ____________________
+        |                  |
+        |__________________| 2 cm pliage arrière
+        |                  |
+        |__________________| 2 cm pliage avant
+        |                  |
+    A |__________________| 2 cm pliage avant
+        |                  |
+        |                  |
+        |                  | X cm pliage arrière, X = la moitié de AB
+        |__________________|
+        |                  |
+        |                  |
+        |                  |
+    B |__________________|
 
 de profile on doit avoir ça
 
