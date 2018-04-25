@@ -81,7 +81,7 @@ Prendre une feuille A4 la plier en 2 pour la rigidifier, ca nous donne donc une 
         |                  |
         |__________________| 2 cm pliage avant
         |                  |
-    A |__________________| 2 cm pliage avant
+      A |__________________| 2 cm pliage avant
         |                  |
         |                  |
         |                  | X cm pliage arrière, X = la moitié de AB
@@ -89,7 +89,7 @@ Prendre une feuille A4 la plier en 2 pour la rigidifier, ca nous donne donc une 
         |                  |
         |                  |
         |                  |
-    B |__________________|
+      B |__________________|
 
 de profile on doit avoir ça
 
