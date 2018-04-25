@@ -8,12 +8,6 @@ Idée: l'effet de l'alcool est retardé Et où tu ne connais pas trop les quanti
 
 La réussite de tes actions dépend des effets de l'alcool. Plus tu as bu plus tu réussiras, jusqu’à une limite optimum, après cette limite tes actions auront des comportement plutôt aléatoire. et au delà d'une limite max ca sera la PLS (ca se traduit par le fait que le joueur doive passer ses tours jusqu'a ce que sont taux redescende en dessous du max)
 
-### Comment récupérer le taux du joueur ?
-
-Manger : pour chaque repas on a la durée pendant laquelle on est rassasié. les durées ne s'ajoutent pas.
-Ex : un repas 16T puis un T plus tard un gouté de 4T vous tiendras rassasié juste 15T (1T viens de se passer).
-Si le verre est bu pendant qu'on est dans une période rassasié on suis la courbe verte et quand on est à jeun la courbe rouge.
-
 ### un dé7
 
 - je sais plus si je t'ai dit? soluche papier se joue avec un dé7
@@ -24,28 +18,6 @@ Si le verre est bu pendant qu'on est dans une période rassasié on suis la cour
 - Mouais,c'est pas très équiprobable
 - oui mais c'est les règles!
 - remarque sanglante. cinglante*
-
-## Le début de partie
-
-### Création des persos
-
-Chaque joueur doit passer le test du crie fort. Une fois fini il doit avoir 2 notes sur 14 en sesque et en boisson.
-
-Son taux optimum d'alcool sera égale à note au crieFort en boisson divisée par 2 plus .
-
-    ex:  note au crieFort en boisson : 4
-    taux optimum = 4 / 2 + 5 = 8
-
-Son taux max d'alcool sera eagle à son taux optimum d'alcool multiplié par 1,5
-
-    ex:  taux optimum : 8
-    taux max = 8 x 1,5 = 12
-
-La crédibilitruc sera la note au crieFort en sesque divisée par 3 plus 4 plus de résultat d'un lancé d'un dé 7
-
-    note au crieFort en sesque : 12
-    dé6 : 5
-    credibilitruc = 12 / 3 + 4 + 5 = 13
 
 #### note sur les arrondis des nombres à virgule
 
@@ -63,31 +35,107 @@ else
 end
 ```
 
+## Le début de partie
+
+### le plateau de jeux
+
+Prendre une feuille de papier A3 (c'est mieux, un plan a3) et dessinez le plan du congrès.
+
+Il aura 4 parties:
+
+- Le bar : pour faire le plein de boisson
+
+- la piste de danse : pour tenter de chopper
+
+- la sale à manger : pour se rassasier
+
+- la tente : pour être tranquille pour chopper ou faire une pls
+
+### Création des persos
+
+Chaque joueur doit passer le test du crie fort. Une fois fini il doit avoir 2 notes sur 14 en sesque et en boisson.
+
+Son taux optimum d'alcool sera égale à note au crieFort en boisson divisée par 2 plus .
+
+    ex:  note au crieFort en boisson : 4
+    taux optimum = 4 / 2 + 5 = 8
+
+Son taux max d'alcool sera eagle à son taux optimum d'alcool multiplié par 1,5
+
+    ex:  taux optimum : 8
+    taux max = 8 x 1,5 = 12
+
+La crédibilitruc sera la note au crieFort en sesque divisée par 3, plus 4, plus de résultat d'un lancé d'un dé 7
+
+    note au crieFort en sesque : 12
+    dé6 : 5
+    credibilitruc = 12 / 3 + 4 + 5 = 13
+
+### le support du joueur
+
+Prendre une feuille A4 la plier en 2 pour la rigidifier, ca nous donne donc une feuille A5.
+
+    ____________________
+    |                  |
+    |__________________| 3 cm pliage arrière
+    |                  |
+    |__________________| 3 cm pliage avant
+    |                  |
+  A |__________________| 3 cm pliage avant
+    |                  |
+    |                  |
+    |                  | X cm pliage arrière, X = la moitié de AB
+    |__________________|
+    |                  |
+    |                  |
+    |                  |
+  B |__________________|
+
+de profile on doit avoir ça
+
+    *********************
+    *                   *
+    *    /\             *
+    *   /  \            *
+    *  /    \    /\     *
+    * /      \__/  \    *
+    *                   *
+    *********************
+
+là où il y a le "U" on écrit les taux optimal et taux Max
+
+là où il y a le "O" on met les jetons qui permettent de compter le taux courant
+
+    *********************
+    *                   *
+    *    /\ U           *
+    *   /  \            *
+    *  /    \  O /\     *
+    * /      \__/  \    *
+    *                   *
+    *********************
+
+Le joueur est placé derrière, de telle sort qu'il ne puisse pas voire les taux et le nombre de jetons.
+
 ### préparation
 
 Choisir le type de partie: apéro 12 tours, soiree 24 tours, congres 42 tours. (sachant que 1 tours correspond à peu pres à 1/4 d'heure réelle)
 
 Au debut de la partie distribuer des items pour un nombre = au nombre de tours divisé pas 2. Ex : partie de 3h = 12 tours donc 6 cartes
 
-## le plateau de jeux
-
-Prendre une feuille de papier A3 (c'est mieux, un plan a3) et dessinez le plan du congrès.
-Il aura 4 parties:
-- Le bar : pour faire le plein de boisson
-- la piste de danse : pour tenter de chopper
-- la sale à manger : pour se rassasier
-- la tente : pour être tranquille pour chopper ou faire une pls
-
 ## Déroulement d'un tour
+
 Les joueurs jouent les uns à la suite des autres dans l'ordre des aiguilles d'une montre si la partie a lieu dans l'hémisphère nord, sinon dans l'autre sens.
 
 Au début du tour on récupère les cartes PNJ (sauf celles occupées) qu'on remet dans le tas de cartes PNJ, on mélange ce tas. Puis on distribue autant de carte PNJ qu'il y a de joueurs et cela sur chaque lieu (sauf la tente).
-    Ex: partie à 4 joueurs, 
+
+    Ex: partie à 4 joueurs,
     4 cartes au bar
     4 cartes sur la piste de danse
     4 cartes à la salle à manger
 
 ### déroulement du tour du joueur
+
 Le joueur ne joue que s'il ne fait pas déjà une autre action (actions en plusieurs tours).
 
 Au début de son tour, le joueur peut se déplacer dans un autre lieu.
@@ -99,6 +147,7 @@ Note: le perso peut être la cible des autres et même plusieurs fois.
 ## rôle des différents lieux
 
 ### le bar
+
 Sert à faire le plein de boisson. On peu y re-remplir son verre.
 
 On peu faire les actions suivantes : chanter, partager des valeurs, pin'ser, concours de secs, faire un VT, essayer de chopper.
@@ -106,6 +155,7 @@ On peu faire les actions suivantes : chanter, partager des valeurs, pin'ser, con
 Actions que l'on peut vous faire : chanter, valeurs, pin'ser concours de secs, essayer de chopper
 
 ### la piste de danse
+
 Sert à chauffer. Tant que le perso est dans ce lieu, il gagne +1 en bonus de choppe.
 
 On peu faire les actions suivantes : chanter, pin'ser, concours de sec, faire un VT, essayer de chopper.
@@ -113,6 +163,7 @@ On peu faire les actions suivantes : chanter, pin'ser, concours de sec, faire un
 Actions que l'on peut vous faire : chanter, valeurs, pin'ser concours de secs, essayer de chopper
 
 ### la cuisine
+
 Là où l'on fait les repas
 
 On peu faire les actions suivantes : chanter, partager des valeurs, pin'ser, concours de secs, faire un VT, essayer de chopper.
@@ -120,6 +171,7 @@ On peu faire les actions suivantes : chanter, partager des valeurs, pin'ser, con
 Actions que l'on peut vous faire : chanter, valeurs, pin'ser concours de secs, essayer de chopper
 
 ### la tente
+
 Là où on est tranquille pour chopper ou faire un effort PLS.
 
 On peu faire les actions suivantes : chopper, faire une PLS
@@ -127,22 +179,6 @@ On peu faire les actions suivantes : chopper, faire une PLS
 Actions que l'on peut vous faire : chopper, chasse au potager.
 
 ## actions possibles
-
-### chasse au potager
-Vous en avez vu 2 partir en direction des tentes, vous vous doutez bien de ce qu'ils vont faire.
-Vous décidez de partir à leur recherche pour les prendre en flagrant délit.
-
-Est-ce que vous les avez trouvé ? Pour cela lancez un dé7 et vous divisé la valeur par 2.
-
-Et heu? Est-ce qu'il a été discret ? Pour cela lancez un dé7 et vous divisé la valeur par 2. (Si il s'agit de 2 perso (pas 1 perso et 1 PNJ) un seul lancé de dé pour les 2.
-
-Si vous avez la même valeur, boom! Potager !
-
-Vous gagnez +5@.
-
-Et lui/ ils gagne/nt un insigne de potager.
-
-Durée: 1 tour.
 
 ### Chanter
 
@@ -171,9 +207,9 @@ cout: -1 carte valeur
 
 durée: 1 tour, 0 tour pour les personnes ciblées
 
-### Pinser
+### Pin'ser
 
-+2@ et -1 pin's pour moi
++2@
 
 +1@ et +1 en boisson pour lui
 
@@ -256,6 +292,23 @@ la meme règle s'applique au joueur ciblé (sauf si c'est un PNJ)
 si le personnage à une capote, il l'enlève de son inventaire (oui 2 filles ensemble utilisent des capotes)
 
 si il n'en a pas on lance un dé7, si le résultat est inférieur ou égale à 3, le personage reçoit l'insigne du crabe (MST) : malus de -5 en choppe
+
+### chasse au potager
+
+Vous en avez vu 2 partir en direction des tentes, vous vous doutez bien de ce qu'ils vont faire.
+Vous décidez de partir à leur recherche pour les prendre en flagrant délit.
+
+Est-ce que vous les avez trouvé ? Pour cela lancez un dé7 et vous divisé la valeur par 2.
+
+Et heu? Est-ce qu'il a été discret ? Pour cela lancez un dé7 et vous divisé la valeur par 2. (Si il s'agit de 2 perso (pas 1 perso et 1 PNJ) un seul lancé de dé pour les 2.
+
+Si vous avez la même valeur, boom! Potager !
+
+Vous gagnez +5@.
+
+Et lui/ ils gagne/nt un insigne de potager.
+
+Durée: 1 tour.
 
 ## fin de la partie
 
