@@ -4,9 +4,9 @@
 
 ## Les concepts
 
-Idée: l'effet de l'alcool est retardé Et où tu ne connais pas trop les quantités d'alcool Ni combien tu tiens. Tu prends un verre et son effet augmente rapidement jusqu’à 1h apres où il atteint sont effet max et ensuite il décrois doucement les heures qui suivent. Note si tu n'a pas mangé avant c'est bien pire
+Idée: l'effet de l'alcool est retardé et où tu ne connais pas trop les quantités d'alcool ni combien tu tiens. Si tu n'as pas mangé avant, c'est bien pire!
 
-La réussite de tes actions dépend des effets de l'alcool. Plus tu as bu plus tu réussiras, jusqu’à une limite optimum, après cette limite tes actions auront des comportement plutôt aléatoire. et au delà d'une limite max ca sera la PLS (ca se traduit par le fait que le joueur doive passer ses tours jusqu'a ce que sont taux redescende en dessous du max)
+La réussite de tes actions dépend des effets de l'alcool. Plus tu as bu plus tu réussiras, jusqu’à une limite optimum, après cette limite tes actions auront des comportement plutôt aléatoire. Au delà d'une limite max ca sera la PLS (ca se traduit par le fait que le joueur doive passer ses tours jusqu'à ce que sont taux redescende en dessous du max).
 
 ### un dé7
 
@@ -15,7 +15,7 @@ La réussite de tes actions dépend des effets de l'alcool. Plus tu as bu plus t
 - oui, mais non. Un dé7 c'est un dé à avec les faces numérotées de 0 à 6. Et si tu as pas de dé7
 - tu utilise un d6 auquel tu rajoute une face?
 - Non, enfin si! Donc si le dé est cassé ou en dehors du plateau ca fait 0
-- Mouais,c'est pas très équiprobable
+- Mouais, c'est pas très équiprobable
 - oui mais c'est les règles!
 - remarque sanglante. cinglante*
 
@@ -54,6 +54,8 @@ Il aura 4 parties:
 ### Création des persos
 
 Chaque joueur doit passer le test du crie fort. Une fois fini il doit avoir 2 notes sur 14 en sesque et en boisson.
+
+Attention, ces calculs doivent être fait par le personne de gauche. Le joueur **NE DOIT PAS** connaître les caractéristiques de son perso.
 
 Son taux optimum d'alcool sera égale à note au crieFort en boisson divisée par 2 plus .
 
@@ -117,11 +119,11 @@ là où il y a le "O" on met les jetons qui permettent de compter le taux couran
 
 Le joueur est placé derrière, de telle sort qu'il ne puisse pas voire les taux et le nombre de jetons.
 
-### préparation
+### Préparation
 
 Choisir le type de partie: apéro 12 tours, soiree 24 tours, congres 42 tours. (sachant que 1 tours correspond à peu pres à 1/4 d'heure réelle)
 
-Au debut de la partie distribuer des items pour un nombre = au nombre de tours divisé pas 2. Ex : partie de 3h = 12 tours donc 6 cartes
+Au debut de la partie distribuer des 4 cartes items chaque joueurs.
 
 ## Déroulement d'un tour
 
@@ -148,6 +150,10 @@ ATTENTION: si la pile de nourriture est vide, multiplié par 2 les jetons de boi
 
 Les jetons de nourriture sont ajouté directement.
 
+Tirer tes cartes pour jusqu'à en avoir 4 dans la main.
+
+Les objets permanents peuvent être utilisé tout de suite.
+
 #### l'action
 
 Le joueur ne joue que s'il ne fait pas déjà une autre action (actions en plusieurs tours).
@@ -164,7 +170,7 @@ Le but c'est que le verre ne soit pas vide quand on en a besoin.
 
 Quand est-ce qu'on peux remplir son verre?
 
-- au bar quand on veux (tant que je perso est présent dans ce lieu)
+- au bar quand on veut (tant que je perso est présent dans ce lieu)
 
 - avec une carte type valeur boisson, on ajoute dans le verre les doses écrites sur la carte. (mais on ne gagne pas les points de partage de valeur)
 
@@ -196,7 +202,7 @@ Note: vu que 2 tours ce sont passés, on a perdu (-1 en boisson et nourriture, c
 
 ### le bar
 
-Sert à faire le plein de boisson. On peu y re-remplir son verre.
+Sert à faire le plein de boisson. On peu y re-remplir son verre quand on veut.
 
 On peu faire les actions suivantes : chanter, partager des valeurs, pin'ser, concours de secs, faire un VT, essayer de chopper.
 
@@ -370,7 +376,7 @@ Si il y a égalité, je propose qu'on règle ça au chi fou sec.
 
 ## les extensions
 
-les extensions seront disponible tarif suivant: 
+les extensions seront disponible tarif suivant:
 
 - 18€ l'extension
 - 37€ pour les possesseurs de produit Apple
