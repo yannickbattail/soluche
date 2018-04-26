@@ -136,6 +136,20 @@ Au début du tour on récupère les cartes PNJ (sauf celles occupées) qu'on rem
 
 ### déroulement du tour du joueur
 
+#### début du tour
+
+Enlever 1 jeton de boisson et de nourriture de la pile du perso.
+
+S'il y a des jetons de boisson en attente les ajouter sur la pile du perso.
+
+Pour la suite du tour, tous les jetons de boisson gagné sont placé en attente devant le joueur (mais caché de lui). Ils seront ajouté au début du prochain tour du joueur.
+
+ATTENTION: si la pile de nourriture est vide, multiplié par 2 les jetons de boisson ajoutés en attente.
+
+Les jetons de nourriture sont ajouté directement.
+
+#### l'action
+
 Le joueur ne joue que s'il ne fait pas déjà une autre action (actions en plusieurs tours).
 
 Au début de son tour, le joueur peut se déplacer dans un autre lieu.
@@ -143,6 +157,40 @@ Au début de son tour, le joueur peut se déplacer dans un autre lieu.
 Puis il effectue l'action qu'il souhaite. Et reste dans ce lieu jusqu'à son prochain tour.
 
 Note: le perso peut être la cible des autres et même plusieurs fois.
+
+### le verre du joueur
+
+Le but c'est que le verre ne soit pas vide quand on en a besoin.
+
+Quand est-ce qu'on peux remplir son verre?
+
+- au bar quand on veux (tant que je perso est présent dans ce lieu)
+
+- avec une carte type valeur boisson, on ajoute dans le verre les doses écrites sur la carte. (mais on ne gagne pas les points de partage de valeur)
+
+- on peut demande une dose à un autre joueur, -1@ pour moi, +1@ pour lui.
+
+Si on a besoin de boire mais que son verre est vide -2@.
+
+Note: On peut avoir des verres avec plus de contenance que l'eco-cup du welcome pack.
+
+## les événements
+
+### les repas
+
+Tous les 10 tours on lance un repas. Tout le monde se retrouve à la cuisine pour manger.
+
+Comme une action, on est occupé pendant toute la durée de l'événement.
+
+Si un personnage est occupé (action en plusieurs tours (chopper, PLS)), il rate la moitié ou la totalité du repas, du il ne gagne respectivement que la moitié ou rien des parts de boisson et nourritures.
+
+Boisson: +2 (1 par tour)
+
+Nourriture: +5
+
+Durée: 2 tours
+
+Note: vu que 2 tours ce sont passés, on a perdu (-1 en boisson et nourriture, comme un tour normal)
 
 ## rôle des différents lieux
 
@@ -182,9 +230,13 @@ Actions que l'on peut vous faire : chopper, chasse au potager.
 
 ### Chanter
 
-si taux de boisson est inférieur au taux optimal. gagne +5@
+Plus tu as bu, mieux tu chantes.
 
-si taux de boisson est supérieur au taux optimal, tu chantes faux. gagne 0, nada
+si taux de boisson est inférieur au taux optimal. gagne de +1@ à +6@ au prorata du taux de boisson / taux optimal.
+
+si taux de boisson est supérieur au taux optimal, tu chantes faux. -1@
+
+Boisson : +1, Chanson! Cannon!
 
 cout: -1 paillardier
 
@@ -300,21 +352,21 @@ Vous décidez de partir à leur recherche pour les prendre en flagrant délit.
 
 Est-ce que vous les avez trouvé ? Pour cela lancez un dé7 et vous divisé la valeur par 2.
 
-Et heu? Est-ce qu'il a été discret ? Pour cela lancez un dé7 et vous divisé la valeur par 2. (Si il s'agit de 2 perso (pas 1 perso et 1 PNJ) un seul lancé de dé pour les 2.
+Et heu? Est-ce qu'ils ont été discrets ? Pour cela lancez un dé7 et vous divisé la valeur par 2. (Si il s'agit de 2 perso (pas 1 perso et 1 PNJ) un seul lancé de dé pour les 2.
 
 Si vous avez la même valeur, boom! Potager !
 
 Vous gagnez +5@.
 
-Et lui/ ils gagne/nt un insigne de potager.
+Et lui/ils gagne/nt un insigne de potager.
 
 Durée: 1 tour.
 
 ## fin de la partie
 
-À la fin de la partie (le nombre de tour), on fait le compte de point @ et c'est celui qui en a le plus (pas dans le calçon) qui gagne.
+À la fin de la partie (le nombre de tour), on fait le compte de point @ et c'est celui qui en a le plus (pas dans le caleçon) qui gagne.
 
-Si il y a égalité, je propose qu'on règle ca au chi fou sec.
+Si il y a égalité, je propose qu'on règle ça au chi fou sec.
 
 ## les extensions
 
@@ -334,4 +386,5 @@ les missions:
 - chopper l'orga : tu dois chopper 3 orga. les orgas sont des cartes de PNJ supplémentaires avec la particularité qu'il ont 0 en boisson et pas mal en crédibilitruc.
 - la poule aux yeux d'or: chopper 6 personnes pendant la partie (6 à définir)
 - la foie en son foi : mettre 3 personnes en PLS et gagner 2 concours de sec
+- le SAM : doit finir sa partie avec 0 zéro en boisson. Il peut refuser de boire.
 - le gras c'est à vie :
