@@ -150,7 +150,7 @@ ATTENTION: si la pile de nourriture est vide, multiplié par 2 les jetons de boi
 
 Les jetons de nourriture sont ajouté directement.
 
-Tirer tes cartes pour jusqu'à en avoir 4 dans la main.
+Tirer des cartes items jusqu'à en avoir 4 dans la main.
 
 Les objets permanents peuvent être utilisé tout de suite.
 
@@ -204,25 +204,25 @@ Note: vu que 2 tours ce sont passés, on a perdu (-1 en boisson et nourriture, c
 
 Sert à faire le plein de boisson. On peu y re-remplir son verre quand on veut.
 
-On peu faire les actions suivantes : chanter, partager des valeurs, pin'ser, concours de secs, faire un VT, essayer de chopper.
+On peu faire les actions suivantes : chanter, pin'ser, concours de secs, faire un VT, essayer de chopper.
 
-Actions que l'on peut vous faire : chanter, valeurs, pin'ser concours de secs, essayer de chopper
+Actions que l'on peut vous faire :  pin'ser, concours de secs, essayer de chopper
 
 ### la piste de danse
 
 Sert à chauffer. Tant que le perso est dans ce lieu, il gagne +1 en bonus de choppe.
 
-On peu faire les actions suivantes : chanter, pin'ser, concours de sec, faire un VT, essayer de chopper.
+On peu faire les actions suivantes : pin'ser, faire un VT, essayer de chopper.
 
-Actions que l'on peut vous faire : chanter, valeurs, pin'ser concours de secs, essayer de chopper
+Actions que l'on peut vous faire : valeurs, pin'ser, essayer de chopper
 
 ### la cuisine
 
 Là où l'on fait les repas
 
-On peu faire les actions suivantes : chanter, partager des valeurs, pin'ser, concours de secs, faire un VT, essayer de chopper.
+On peu faire les actions suivantes : chanter, partager des valeurs, pin'ser, faire un VT, essayer de chopper.
 
-Actions que l'on peut vous faire : chanter, valeurs, pin'ser concours de secs, essayer de chopper
+Actions que l'on peut vous faire : valeurs, pin'ser, essayer de chopper
 
 ### la tente
 
