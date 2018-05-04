@@ -19,6 +19,60 @@ La réussite de tes actions dépend des effets de l'alcool. Plus tu as bu plus t
 - oui mais c'est les règles!
 - remarque sanglante. cinglante*
 
+## Les cartes
+
+### les PNJ
+
+C'est des perso avec leurs caractéristiques.
+
+64 = 8 filière x 8 villes
+
+### les items
+
+#### one shot
+
+##### Les items valeurs
+
+À utiliser qu'une fois pour le partage de valeurs ou pour soi
+même. Ce sont soit de la nourriture soit de la boisson.
+
+- 4 rebloch' : 4 part +5@
+- 4 Saucisson : 5 part +5@
+- 2 bière : 3 doses +5@
+- 2 génépi : 4 doses +6@
+- 2 gnôle : 6 doses +5@
+- 2 poire : 4 doses +5@
+
+##### Les items "objets"
+
+Qui ont une utilité pour une action précise.
+- 4 capote : pour chopper
+- 4 paillardier : pour chanter
+- 8 pin's : pour ...
+
+#### les permanents
+
+Les verres spéciaux
+- 0 eco cup: 6 doses, tout le monde en a un au début
+- 1 corne: 8 doses
+- 1 pinte: 8 doses
+
+### Les bonus malus
+
+- un potager
+- un crabe : MST , malus en choppe de -4
+
+### récap : le dec item
+
+Le dec items contient :
+- 16 items valeurs
+- 16 items objets
+- 2 verres spéciaux
+Un total de 34 cartes (encore un multiple de 7!)
+
+Note : il n'y a pas d'éco cup, puisque c'est 
+le verre de base que tout le monde à au départ.
+
 #### note sur les arrondis des nombres à virgule
 
 Si les calcules donnent des nombres non entiers, il faut arrondir ces nombres de gré ou de force.
