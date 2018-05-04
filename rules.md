@@ -376,6 +376,8 @@ Si il y a égalité, je propose qu'on règle ça au chi fou sec.
 
 ## les extensions
 
+*Pour le moment c'est juste une blague*
+
 les extensions seront disponible tarif suivant:
 
 - 18€ l'extension
