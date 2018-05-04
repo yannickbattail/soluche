@@ -23,17 +23,7 @@ La réussite de tes actions dépend des effets de l'alcool. Plus tu as bu plus t
 
 Si les calcules donnent des nombres non entiers, il faut arrondir ces nombres de gré ou de force.
 
-Pour savoir si l'on doit arrondir à l'entier supérieur au inférieur, on joue ça au lancé de chat.
-
-La méthode est simple: on prend un chat, on le lance, puis on applique l'algorithme suivant:
-
-```lua
-if (face sur laquelle retombe le chat = pattes) then
-    arrondi supérieur
-else
-    arrondi supérieur
-end
-```
+arrondi supérieur
 
 ## Le début de partie
 
@@ -48,7 +38,6 @@ Il aura 4 parties:
 - la piste de danse : pour tenter de chopper
 
 - la sale à manger : pour se rassasier
-
 - la tente : pour être tranquille pour chopper ou faire une pls
 
 ### Création des persos
@@ -57,7 +46,7 @@ Chaque joueur doit passer le test du crie fort. Une fois fini il doit avoir 2 no
 
 Attention, ces calculs doivent être fait par le personne de gauche. Le joueur **NE DOIT PAS** connaître les caractéristiques de son perso.
 
-Son taux optimum d'alcool sera égale à note au crieFort en boisson divisée par 2 plus .
+Son taux optimum d'alcool sera égale à note au crieFort en boisson divisée par 2 plus 5
 
     ex:  note au crieFort en boisson : 4
     taux optimum = 4 / 2 + 5 = 8
@@ -70,7 +59,7 @@ Son taux max d'alcool sera eagle à son taux optimum d'alcool multiplié par 1,5
 La crédibilitruc sera la note au crieFort en sesque divisée par 3, plus 4, plus de résultat d'un lancé d'un dé 7
 
     note au crieFort en sesque : 12
-    dé6 : 5
+    dé7 : 5
     credibilitruc = 12 / 3 + 4 + 5 = 13
 
 ### le support du joueur
